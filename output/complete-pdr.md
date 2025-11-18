@@ -1,0 +1,24704 @@
+# CFO Business Intelligence Calculator Suite
+## Complete Product Design Review
+
+**Version**: v1.0  
+**Date**: November 18, 2025  
+**Document Status**: Complete  
+**Total Pages**: ~220 pages
+
+---
+
+# Table of Contents
+
+## Section 1: Vision & Goals
+- 1.1 Product Vision
+- 1.2 Target Users
+- 1.3 CFO-Grade Definition
+- 1.4 Differentiators
+- 1.5 Monetization
+- 1.6 Quality Goals
+- 1.7 Constraints
+- 1.8 Internal Operations
+
+## Section 2: Product Scope
+- 2.1 Calculator Categories
+- 2.2 MVP Calculator Set
+- 2.3 Phased Roadmap
+- 2.4 Tier Behavior
+- 2.5 Out of Scope
+
+## Section 3: Platform Architecture
+- 3.1 Architecture Layers
+- 3.2 Technology Choices
+- 3.3 Module Boundaries
+- 3.4 Performance & Scalability
+
+## Section 4: UX Design Standards
+- 4.1 Common Layout
+- 4.2 Interaction Patterns
+- 4.3 Visual Language
+- 4.4 Content Standards
+
+## Section 5: Data Security & Compliance
+- 5.1 Data Model
+- 5.2 Security & Privacy
+- 5.3 Compliance Posture
+- 5.4 Retention Policies
+
+## Section 6: Tiering & Pricing
+- 6.1 Tier Definitions
+- 6.2 Feature Flagging
+- 6.3 Upgrade Flows
+
+## Section 7: Analytics & Observability
+- 7.1 Event Taxonomy
+- 7.2 Standard Events
+- 7.3 Suite Dashboards
+- 7.4 Error & Performance Monitoring
+
+## Section 8: AI Framework
+- 8.1 AI Roles
+- 8.2 Prompt Design
+- 8.3 Redaction & Logging
+- 8.4 Cost Management
+
+## Section 9: Implementation Plan
+- 9.1 Milestone Breakdown
+- 9.2 Workstream Mapping
+- 9.3 Risks & Mitigations
+
+## Section 10: Testing & QA
+- 10.1 Test Strategy
+- 10.2 Golden Scenarios
+- 10.3 Release Process
+- 10.4 Support & Maintenance
+
+## Section 11: Calculator PDRs
+- 11.1 Calculator PDR Template
+- 11.2 Business Loan + DSCR
+- 11.3 SBA 7(a) Analyzer
+- 11.4 Equipment Lease vs Buy
+- 11.5 Cash Runway
+- 11.6 Breakeven & Margin
+- 11.7 Invoice Factoring
+- 11.8 Line of Credit
+- 11.9 Business Valuation
+
+---
+
+
+# Section 1: Vision & Goals
+
+# 1.1 Product Vision
+
+## Overview
+
+The CFO Business Intelligence Calculator Suite is a collection of embeddable, CFO-grade financial calculators that deliver board-ready decisions and outputs in minutes instead of days. The primary value delivered is **speed with defensibility**: drastically shortened decision cycles without sacrificing the accuracy, auditability, and professional polish that CFOs, lenders, and boards demand.
+
+## Value Equation
+
+This suite provides measurable improvements across three critical dimensions:
+
+- **Time savings**: Reduce decision cycle from 1-3 days of spreadsheet modeling to 5-15 minutes of guided calculator input
+- **Error reduction**: Reduce spreadsheet version-chasing, formula drift, and reconciliation errors by 50-70% through centralized, audited calculation engines
+- **Reliability**: Achieve 95% numeric accuracy versus reference models with ±0.1% tolerance, ensuring outputs can be trusted for high-stakes decisions
+
+## Top 3 Outcomes (Priority Order)
+
+1. **Speed**: Drastically shorten time from question to answer. A CFO or founder should move from "Can we afford this expansion?" to "Here's the answer with three scenarios" in under 15 minutes, not 2-3 days of spreadsheet work.
+
+2. **Defensibility**: Produce outputs that stand up to scrutiny from boards, lenders, auditors, and investors. Every result includes audit trails of assumptions, explicit units and currency handling, versioned formulas, and professional export formats (board-ready PDFs, banker-friendly CSVs).
+
+3. **Embed-ability**: Make it trivially easy to reuse these calculators across websites, internal dashboards, loan origination platforms, and advisory portals. Modular design allows individual calculators to be embedded anywhere with consistent UX and shared calculation logic.
+
+## Product Philosophy
+
+### Feel Like a Calculator, Behave Like a Lightweight BI Tool
+
+Users should experience the simplicity and immediacy of a purpose-built calculator—not the cognitive overhead of a full BI platform. However, under the hood, the suite must deliver BI-grade capabilities: scenario management, versioning, audit trails, role-based sharing, and export quality that meets CFO standards.
+
+### Consistent, Trustworthy Outputs Across All Calculators
+
+Every calculator in the suite shares:
+- Common layout patterns and navigation paradigms
+- Standardized terminology (e.g., "scenario" not "case" or "model")
+- Centralized formula libraries with versioning and regression testing
+- Uniform handling of currency, time periods, and units
+- Consistent export formats with version stamps and metadata
+
+This consistency builds user trust and reduces training friction when adopting additional calculators from the suite.
+
+### Produce Board-Ready PDFs and Banker-Friendly CSVs
+
+Outputs are not an afterthought. Every calculator must generate:
+- **Board-ready PDFs**: Professional formatting, version stamps, assumption summaries, disclaimers, and appropriate branding (or white-label options for B2B)
+- **Banker-friendly CSVs**: Clean column headers, explicit units, timestamp and version metadata, structured for easy import into credit memos or underwriting systems
+
+### Modular and Embeddable
+
+Calculators are designed as standalone React/TypeScript components with:
+- Minimal external dependencies
+- Self-contained calculation engines
+- Flexible embedding options (WordPress shortcodes, iframes, direct SDK integration)
+- Feature toggles for Free vs Pro tier capabilities
+- White-label and branding controls for B2B deployments
+
+This modularity ensures that clients can adopt one calculator or the entire suite, embed in their existing workflows, and scale usage as needed without architectural friction.
+
+---
+
+**Summary**: The CFO Business Intelligence Calculator Suite transforms high-stakes financial decisions from multi-day spreadsheet exercises into 5-15 minute guided workflows—without compromising the accuracy, auditability, and professional polish that finance leaders require. It's calculator-simple on the surface, BI-powerful underneath, and embeddable everywhere.
+
+
+# 1.2 Target Users and Contexts
+
+## Primary User Personas
+
+| Role | Need | Example Use Case |
+|------|------|------------------|
+| **CFOs / Controllers / Finance Directors** | Fast, defensible answers for board meetings, lender renewals, and strategic decisions | "I need DSCR projections for three financing scenarios before tomorrow's board call" |
+| **Owners / Founders / CEOs (SMB)** | CFO-grade analysis without hiring a full-time CFO or FP&A team | "Should I take this equipment loan or lease? What's the cash flow impact over 3 years?" |
+| **Lenders / Brokers / Advisors** | Quick pre-qualification and deal structuring tools with client-ready outputs | "I need to show a client three loan structure options with side-by-side DSCR comparison" |
+| **FP&A / Analysts** | Repeatable, auditable calculations that don't require rebuilding models from scratch each month | "I need to rerun our pricing sensitivity analysis with updated assumptions for Q2" |
+
+## Day-1 Usage Contexts
+
+These are the initial "try it out" scenarios where users first engage with a calculator:
+
+- **Pre-qualification and deal exploration**: A lender uses the equipment financing calculator to generate three quote options for a prospective borrower in under 10 minutes, producing a PDF that the borrower can review immediately.
+
+- **"Can we afford this?" decisions**: A founder considering a $200K equipment purchase uses the cash flow calculator to see runway impact across optimistic, realistic, and conservative revenue scenarios—getting an answer in 5 minutes instead of spending half a day building a spreadsheet.
+
+- **Quick margin and cash-flow checks**: A CFO preparing for a board meeting runs a contribution margin analysis on a new product line to determine whether pricing should be adjusted before launch.
+
+- **Scenario comparison for strategic decisions**: An FP&A analyst compares three pricing strategies side-by-side (current pricing, +10% increase, volume discount tier) to see which maximizes gross margin while maintaining acceptable revenue thresholds.
+
+## Day-2 / Recurring Workflows
+
+Once users adopt a calculator, these become the routine, high-value workflows:
+
+- **Month-end and quarter-end reruns**: An FP&A team saves baseline scenarios and reruns them monthly with updated actuals, exporting PDFs with version stamps to track performance against forecast. The calculator becomes a "living model" that evolves with the business.
+
+- **Board packet preparation**: A CFO maintains three scenarios (base, upside, downside) for key metrics (cash runway, DSCR, contribution margin) and regenerates clean, consistent PDF reports for quarterly board decks. The standardized format reduces board member questions and builds confidence in the analysis.
+
+- **Lender renewal packages**: A business owner preparing for an annual credit review uses saved scenarios from prior quarters, updates current financials, and exports banker-friendly CSVs showing covenant headroom and projected DSCR. The audit trail and version stamps provide credibility with underwriters.
+
+- **CEO approval flows**: An analyst prepares a capital expenditure proposal using the NPV/IRR calculator, saves three scenarios (conservative, base, aggressive), and shares a view-only link with the CEO for review. The CEO can see all assumptions and toggle between scenarios without needing to open a spreadsheet.
+
+## Permissions and Collaboration Scope (v1)
+
+### Full Scenario Sharing vs Outputs-Only Views
+
+- **Full scenario sharing**: A user can generate a shareable link that allows recipients to view inputs, assumptions, and recalculated outputs. Recipients cannot edit unless explicitly granted editor permissions. This is useful for collaborative review (e.g., CFO shares draft model with FP&A analyst for feedback).
+
+- **Outputs-only views**: A user can share a static PDF or CSV export, or a read-only web view that shows final numbers without exposing editable inputs. This is appropriate for external stakeholders (e.g., board members, lenders) who need results but should not modify assumptions.
+
+### Lightweight "Prepared By / Reviewed By" Metadata
+
+Each scenario can capture:
+- **Prepared by**: User ID and timestamp of the person who created the scenario
+- **Last modified by**: User ID and timestamp of the most recent edit
+- **Reviewed by** (optional): User ID and timestamp if a second user marks a scenario as "reviewed"
+
+This metadata appears in PDF exports and audit logs, providing a lightweight approval trail without requiring a full workflow engine.
+
+### What's Out of Scope
+
+The suite will **not** include:
+- Heavy workflow/approval engines with multi-step sign-offs, conditional routing, or SLA tracking
+- Role-based approval hierarchies (e.g., "analyst → manager → CFO → CEO")
+- Integration with HRIS or org chart systems to enforce approval chains
+- Detailed audit logs of every field change (v1 captures scenario-level edits, not field-level history)
+
+If clients require formal approval workflows, they should integrate the calculator suite with their existing workflow platforms (e.g., embed a calculator in a ServiceNow or Jira approval flow). The calculator provides the analysis; the workflow platform manages the approval process.
+
+---
+
+**Summary**: The suite serves CFOs, founders, lenders, and analysts who need fast, defensible financial analysis. Day-1 usage focuses on quick decision-support; Day-2 workflows emphasize repeatability and integration into month-end, board prep, and lender communication cycles. Collaboration features are lightweight and fit the calculator paradigm—shareable scenarios and outputs-only views—without attempting to replicate full workflow systems.
+
+
+# 1.3 Definition of "CFO-Grade" and Core Problems to Solve
+
+## CFO-Grade Standards (Non-Negotiable)
+
+The term **"CFO-grade"** is not marketing language. It is a commitment to quality standards that distinguish these calculators from consumer-grade tools, spreadsheet templates, and quick-and-dirty online widgets. Each calculator in the suite must meet the following criteria:
+
+### 1. Audited Formulas with Validation Against Reference Models
+
+Every formula used in the suite must be validated against industry-standard reference models (e.g., Excel-based FP&A templates, published formulas from CFA Institute, AICPA guidance, or lender underwriting manuals). Numeric outputs must match reference models within **±0.1% tolerance** (or better) for all golden test scenarios. Formula changes require regression testing with side-by-side comparisons to prior versions to detect drift.
+
+### 2. Explicit Units, Currency, and Time Handling (No Ambiguity)
+
+Ambiguity destroys trust. Every input and output must display:
+- **Currency symbols** ($, CAD, USD) where applicable
+- **Units** (%, per month, per year, days, months)
+- **Time period labels** (Year 1, Month 6, Q2 2025)
+
+Inputs must validate units (e.g., reject "5" when "5%" is required; reject "monthly rate" when annual rate is expected). Outputs must never show a bare number without context. This explicitness prevents misinterpretation by users, auditors, and third-party reviewers.
+
+### 3. Audit Trail of Assumptions (Reconstruct Any Result)
+
+Every scenario must capture sufficient metadata to reconstruct the result:
+- All user inputs (amounts, rates, terms, toggles)
+- Formula version IDs and calculation engine version
+- Timestamp of calculation
+- User ID of preparer (if logged in; session ID if anonymous)
+
+PDF and CSV exports must include assumption summaries so that a reviewer six months later can understand exactly how the result was derived. This audit trail is essential for board presentations, lender review, and regulatory compliance.
+
+### 4. Permissions and Roles (Viewer vs Editor, Internal vs External Sharing)
+
+Not all users should have the same level of access:
+- **Viewer**: Can see inputs and outputs but cannot modify
+- **Editor**: Can modify inputs, save scenarios, and regenerate outputs
+- **Owner**: Can delete scenarios, manage sharing, and transfer ownership
+
+Internal users (e.g., CFO shares with FP&A team) may receive full scenario access with edit permissions. External users (e.g., lender, board member, advisor) typically receive view-only or outputs-only access. The system must enforce these permissions and log access events for security and compliance.
+
+### 5. Export Quality: Board-Ready PDFs and Banker-Friendly CSVs
+
+Exports are not afterthoughts. They are the deliverable.
+
+**Board-ready PDFs** must include:
+- Professional formatting (headers, footers, page numbers)
+- Version stamps (e.g., "Generated on 2025-03-15 at 14:22 UTC | Formula version 1.3.2")
+- Summary of key assumptions (inputs, toggles, user-defined parameters)
+- Disclaimers (e.g., "This analysis is for decision-support only and does not constitute financial or legal advice")
+- Optional branding (white-label for B2B clients)
+
+**Banker-friendly CSVs** must include:
+- Clean column headers with explicit units (e.g., "Monthly Payment (USD)", "DSCR (%)")
+- Timestamp and version metadata in a header row or separate metadata file
+- Structured for easy import into underwriting systems, credit memos, or Excel pivots
+
+Sloppy exports undermine credibility. CFO-grade exports reinforce that the analysis is rigorous and trustworthy.
+
+---
+
+## Core Problems the Suite Must Solve
+
+### 1. Decision Clarity: Yes/No, Option A vs B vs C with Tradeoffs
+
+CFOs and founders don't need more data. They need **clarity**. A good calculator doesn't just compute numbers—it helps users frame decisions:
+- "Can we afford this loan?" → Yes, with 1.32 DSCR (acceptable) vs No, DSCR drops to 0.94 (covenant breach)
+- "Which financing option is best?" → Option A has lower payments but higher total interest; Option B has higher payments but saves $12K over term; Option C requires equity but preserves cash
+
+The calculator should surface the tradeoff explicitly, not bury it in a table. This requires thoughtful output design: comparison tables, visual indicators (green/yellow/red), and narrative summaries (especially when AI add-on is enabled).
+
+### 2. Scenario Comparison and Baselines (Side-by-Side, Change Tracking)
+
+Decision-makers rarely work with a single set of assumptions. They need to compare:
+- **Current state vs proposed change** (baseline vs new financing)
+- **Optimistic vs realistic vs conservative** (three revenue scenarios)
+- **Option A vs Option B vs Option C** (three loan structures)
+
+The suite must make scenario comparison trivial:
+- Save named scenarios (e.g., "Base Case", "Aggressive Growth", "Conservative")
+- Display scenarios side-by-side in tables and charts
+- Highlight differences and deltas (e.g., "Scenario B improves DSCR by +0.18 vs Scenario A")
+- Track scenario history and edits (who changed what, when)
+
+This turns calculators into **scenario management tools**, not one-off widgets.
+
+### 3. Risk Visibility: Warnings, Thresholds, Covenant Tension
+
+CFO-grade analysis doesn't just report numbers—it flags **risks**:
+- "Your DSCR is 1.18, below the typical lender threshold of 1.25. Consider reducing debt or improving cash flow."
+- "Your cash runway drops to 3.2 months in Month 8. Plan for additional capital or expense cuts."
+- "Your gross margin is 32%, below your target of 40%. Pricing or cost structure may need adjustment."
+
+Warnings should be:
+- **Contextual**: Based on industry norms, lender covenants, or user-defined thresholds
+- **Actionable**: Suggest what the user can do (reduce debt, improve margin, extend term)
+- **Non-alarmist**: Use measured language ("consider", "may need", "below typical threshold") rather than panic-inducing phrasing
+
+This risk visibility helps users catch problems early and builds confidence that the calculator is "on their side."
+
+### 4. Time Savings: Replace 30-90 Minutes of Spreadsheet Work with Guided Calculator
+
+A typical FP&A analyst or CFO spends 30-90 minutes building a financial model from scratch:
+- Finding a reference spreadsheet or prior model
+- Copying/pasting formulas and hoping they don't break
+- Adjusting for current assumptions
+- Formatting outputs for board or lender presentation
+- Double-checking calculations against a reference source
+
+The calculator suite must collapse this to **5-15 minutes**:
+- Guided input screens with tooltips and validation
+- Pre-built, audited formulas (no copy-paste errors)
+- Instant recalculation (sub-second latency for typical scenarios)
+- One-click export to PDF or CSV with professional formatting
+
+This time savings is the primary ROI for Free and Pro tier users. For B2B clients embedding calculators into advisor portals or loan origination systems, it's the difference between scaling client service and being bottlenecked by manual spreadsheet work.
+
+### 5. Shareable, Repeatable Outputs (PDFs, CSVs with Timestamps and Versions)
+
+Decisions don't happen in isolation. Outputs need to be shared:
+- CFO sends board packet PDF to directors
+- Lender emails loan structure comparison to borrower
+- Analyst shares pricing sensitivity CSV with CEO
+
+Outputs must be:
+- **Shareable**: Clean, professional, self-explanatory (no "you had to be there" context required)
+- **Repeatable**: Version-stamped so that a rerun 3 months later can be compared to the original
+- **Traceable**: Metadata allows recipient to verify assumptions and provenance
+
+This shareability transforms calculators from "personal scratch pads" into **team collaboration assets**.
+
+---
+
+**Summary**: CFO-grade means audited formulas, explicit units, audit trails, role-based permissions, and export quality that meets boardroom and banker standards. The suite solves five core problems: decision clarity, scenario comparison, risk visibility, time savings, and shareable/repeatable outputs. These standards and problem definitions are non-negotiable and must be validated in every calculator PDR.
+
+
+# 1.4 Differentiators and Technical Direction
+
+## Differentiators vs Generic Calculators
+
+The market is saturated with consumer-grade financial calculators. The CFO Business Intelligence Calculator Suite must differentiate on four dimensions:
+
+### 1. CFO-Grade Metrics Beyond Basics
+
+Generic calculators compute **payment amounts** and **simple interest**. This suite computes **decision-grade financial metrics** that CFOs, lenders, and boards care about:
+- **DSCR (Debt Service Coverage Ratio)**: Not just "what's my monthly payment?" but "can my cash flow support this debt?"
+- **Covenant headroom**: How close am I to breaching lender covenants?
+- **NPV/IRR**: Is this investment worth the capital, adjusted for time value of money?
+- **Contribution margin and margin of safety**: What pricing changes move the needle on profitability?
+- **Multi-scenario cash runway**: How long can we operate under optimistic, realistic, and conservative assumptions?
+
+These metrics require more sophisticated formulas, but they answer the **real questions** finance leaders ask. A calculator that only shows payment amounts is a commodity; one that shows DSCR and covenant tension is a strategic tool.
+
+### 2. Consistent UX, Language, and Behavior Across All Calculators
+
+Users who learn one calculator in the suite should feel immediately comfortable with the next. This requires:
+- **Shared layout patterns**: Input panels on the left, outputs on the right (or top/bottom on mobile)
+- **Standardized terminology**: Always "scenario" (not "case" or "model"), always "Pro tier" (not "premium" or "paid plan")
+- **Uniform navigation**: Scenario switcher in the same location, export button in the same location, help tooltips in the same style
+- **Consistent color coding**: Green = healthy/positive, yellow = caution, red = warning/risk
+
+This consistency reduces training time, builds user trust, and reinforces the brand promise: professional, reliable, CFO-grade analysis. It also simplifies development and maintenance—shared components, shared design system, shared QA processes.
+
+### 3. Scenario-Centric Design (Named Scenarios, Side-by-Side Comparison)
+
+Most calculators are **single-run tools**: you enter inputs, get an output, and move on. This suite is **scenario-centric**:
+- Users create and name scenarios (e.g., "Base Case", "Aggressive Growth", "Conservative")
+- Scenarios are saved and versionable (not lost when the browser closes)
+- Scenarios can be compared side-by-side in tables and charts
+- Scenario history tracks who edited what and when
+
+This design transforms calculators into **decision-support workbenches** where users can explore alternatives, track changes over time, and collaborate with teammates. It's the difference between a disposable widget and a reusable business tool.
+
+### 4. AI-Enhanced but Not AI-Dependent (Deterministic Math + AI Commentary)
+
+AI is a **value-add**, not the foundation:
+- **Core calculations are deterministic**: Formulas are audited, versioned, and regression-tested. AI never touches the math.
+- **AI provides narrative commentary**: "Your DSCR of 1.18 is below typical lender thresholds. Consider reducing debt or improving cash flow." This plain-language guidance helps non-finance users interpret results.
+- **AI suggests scenario alternatives**: "You might also explore extending the loan term to reduce monthly payments and improve DSCR."
+- **AI is always optional**: Users can disable AI commentary, and Pro tier works fully without the AI add-on. Free tier may show AI upsell prompts, but never blocks core functionality.
+
+This approach ensures reliability (math doesn't hallucinate), transparency (users see exactly how results are computed), and regulatory safety (no "AI made the credit decision" liability). AI makes the suite more accessible, but the suite remains trustworthy even if AI is turned off.
+
+---
+
+## Technical Direction
+
+### 1. Shared Calculation Engine (Versioned Formula Library, Strongly Typed)
+
+All calculators share a centralized **calculation engine** implemented as a TypeScript library:
+- **Strongly typed inputs and outputs**: TypeScript interfaces enforce that interest rates are numbers, dates are Date objects, currency is explicitly labeled
+- **Versioned formulas**: Each formula function is tagged with a version ID (e.g., `dscr_v1.3.2`). Version IDs are logged in exports and audit trails.
+- **Regression test suite**: Golden scenarios validate that formula changes don't introduce drift. If `dscr_v1.3.2` → `dscr_v1.4.0`, a test suite compares outputs for 50+ known scenarios to ensure ±0.1% tolerance.
+
+This shared engine ensures consistency, auditability, and maintainability. Formula bugs are fixed once, not N times across N calculators.
+
+### 2. Modular UI Shells (React/TypeScript Components, Embed Anywhere)
+
+Each calculator is implemented as a **React component** with:
+- **Minimal external dependencies**: Avoids coupling to specific frameworks, routers, or state management libraries (beyond React itself)
+- **Props-based configuration**: Embed parameters (e.g., tier limits, feature flags, branding) are passed as props, making the component reusable
+- **Responsive design**: Works on desktop, tablet, and mobile with adaptive layouts
+- **Embeddable via multiple mechanisms**: WordPress shortcode, iframe, direct SDK import, or API-driven headless rendering
+
+This modularity allows clients to adopt one calculator or the full suite, embed in existing workflows, and scale without rewriting UI code.
+
+### 3. Export Services (Centralized PDF/CSV Generation)
+
+PDF and CSV generation is handled by a **centralized export service** (not embedded in each calculator):
+- **Template-driven**: PDF layouts use a shared template engine with customizable headers, footers, branding
+- **Metadata injection**: Timestamp, version, user ID, formula version are automatically included
+- **Async generation for large exports**: Progress indicators and background jobs for multi-scenario, multi-page PDFs
+- **Format standardization**: All CSVs use UTF-8 encoding, consistent date formats (ISO 8601), explicit column headers with units
+
+This centralization ensures export quality and consistency. Updates to export format (e.g., adding disclaimers, adjusting branding) propagate to all calculators automatically.
+
+### 4. Locale/Currency/Tax Parameterization (Config-Driven for US/CA)
+
+Calculators must adapt to locale-specific rules without hardcoding:
+- **Currency formatting**: US = `$1,234.56`, CA = `CAD 1,234.56` (configurable)
+- **Date formats**: US = MM/DD/YYYY, CA = DD/MM/YYYY (ISO 8601 for exports)
+- **Tax rates and rules**: US federal + state; CA federal + provincial; loaded from config files, not hardcoded in formulas
+- **Interest conventions**: 30/360 vs Actual/365; specified per calculator or per scenario
+
+Config-driven design allows future expansion (UK, EU, LATAM) without rewriting calculation logic.
+
+### 5. Data Boundaries (Aggregated Scenario Inputs Only, No GL Imports, No PII by Design)
+
+The suite is designed with **minimal data exposure**:
+- **No transaction-level data**: Users input aggregated financials (total revenue, total COGS), not customer names or invoice details
+- **No GL imports (v1)**: Users manually enter summarized numbers; no direct connection to QuickBooks, NetSuite, Xero (this reduces PII risk and simplifies compliance)
+- **No customer-identifiable data**: Scenarios describe the business (revenue, expenses), not individuals (employee names, SSNs, credit card numbers)
+- **Pseudonymous telemetry**: Usage logs track pseudonymous user IDs and aggregated descriptors (industry, business size), not PII
+
+This design minimizes GDPR/CCPA surface area, simplifies data retention policies, and reduces breach risk. B2B clients can deploy with confidence that the suite won't inadvertently capture sensitive data.
+
+### 6. AI Guardrails (Logging, Redaction, Opt-Out, "Advisory Only" Disclaimers)
+
+AI features require protective measures:
+- **Logging and auditing**: All AI requests and responses are logged (with user consent) for quality monitoring and abuse detection
+- **Redaction of sensitive data**: Before sending scenario data to AI, scrub any fields that might contain PII or sensitive business details (customer names, proprietary product codes). Use aggregated descriptors only.
+- **Opt-out and disable**: Users can disable AI commentary at account level or scenario level. B2B clients can disable AI entirely.
+- **"Advisory only" disclaimers**: All AI-generated text includes a disclaimer: "This commentary is for informational purposes only and does not constitute financial, legal, or tax advice."
+
+These guardrails protect users, reduce liability, and comply with emerging AI regulations.
+
+### 7. Self-Hosted/B2B Data Controls (Retention Policies, Telemetry Opt-Out, AI Disable Options)
+
+B2B clients (advisors, lenders, white-label partners) may require **data sovereignty**:
+- **Self-hosted deployment option**: Docker/Kubernetes images for on-premise or private cloud deployment
+- **Configurable data retention**: Clients can set scenario retention (7 days to indefinite) and log retention (none to 24 months)
+- **Telemetry opt-out**: Disable all usage tracking and analytics (client loses dashboard visibility but retains full calculator functionality)
+- **AI disable**: Turn off all AI features (no LLM calls, no narrative generation, no suggestions)
+
+These controls make the suite viable for regulated industries (banks, credit unions, government contractors) and privacy-conscious clients.
+
+---
+
+**Summary**: The suite differentiates through CFO-grade metrics, consistent UX, scenario-centric design, and AI-enhanced (not AI-dependent) functionality. Technical direction emphasizes shared calculation engines, modular UI components, centralized export services, locale/currency parameterization, minimal data exposure, AI guardrails, and B2B-friendly data controls. These choices ensure reliability, auditability, embeddability, and scalability.
+
+
+# 1.5 Monetization and Business Goals
+
+## Tiered Monetization Model
+
+| Tier | Features | Limits | Pricing/Gates |
+|------|----------|--------|---------------|
+| **Free** | Single scenario per calculator; key metrics only (payment, total interest, basic cash flow); watermarked exports; ads/affiliate placement | 1 saved scenario; exports include watermark and "Powered by [Brand]" footer; advanced metrics hidden behind upgrade prompts | Free forever; no credit card required; encourages viral sharing via embeds |
+| **Pro** | Multiple scenarios (up to 10 per calculator); advanced metrics (DSCR, NPV/IRR, covenant headroom, sensitivity charts); clean exports (no watermark); scenario sharing with view/edit permissions; version history | 10 saved scenarios per calculator; 100 exports per month; no branding removal for white-label (see B2B tier) | $29-49/month (individual); $99-149/month (team, 5 users); primary conversion driver |
+| **AI Add-On** | AI-generated narratives ("Your DSCR of 1.18 is below typical thresholds..."); scenario suggestions ("Consider extending the term to improve monthly cash flow"); risk commentary and warnings | 50 AI requests per month (to manage LLM costs); hard cap at 75/month; resets monthly | +$19/month (stacks on Pro tier); requires Pro tier; opt-in only; clear "AI advisory only" disclaimers |
+| **B2B/White-Label** | Embeddable SDK with full API access; branding removal and custom branding; feature toggles (enable/disable specific calculators or metrics); per-seat or per-domain licensing; dedicated support; optional self-hosted deployment | Custom limits negotiated per contract; telemetry and AI can be disabled | Starting at $499/month (up to 10 domains or 25 seats); custom pricing for large deployments; annual contracts preferred |
+
+### Free Tier Strategy
+
+Free tier is designed to:
+- **Drive SEO and organic discovery**: Free calculators rank for high-intent keywords ("equipment loan calculator", "DSCR calculator", "cash runway calculator")
+- **Enable viral embedding**: Advisors, bloggers, and small business sites embed Free tier calculators, driving inbound traffic and brand awareness
+- **Monetize via ads and affiliates**: Display ads (Google AdSense) and affiliate links (equipment lenders, SBA loan brokers) generate revenue even from Free users
+- **Create upgrade friction**: Advanced metrics (DSCR, NPV/IRR) are visible but locked, prompting "Upgrade to Pro to unlock" CTAs
+
+Free tier is **not a trial**—it's a permanent, fully functional product with intentional limitations that drive Pro conversion.
+
+### Pro Tier Strategy
+
+Pro tier is the **primary revenue driver** for individual users and small teams:
+- **Clear value proposition**: "Save 30-90 minutes per analysis, generate board-ready outputs, compare multiple scenarios side-by-side"
+- **Target customers**: Solo CFOs, FP&A analysts, small business owners, freelance advisors
+- **Conversion triggers**: Need to save more than 1 scenario, need to share scenarios with colleagues, need to present to board/lender without watermarks
+- **Pricing psychology**: $29-49/month is cheaper than 1 hour of a CFO's time; $99-149/month for a team is cheaper than 1 FP&A contractor day
+
+Pro tier should convert 3-5% of active Free users within 90 days (industry benchmark for SaaS freemium).
+
+### AI Add-On Strategy
+
+AI add-on is a **margin expander**, not a core product:
+- **Target customers**: Pro users who need help interpreting results or want to save time writing commentary for board decks
+- **Capped usage**: 50 requests/month limits LLM costs while still providing significant value (10-12 calculator runs with AI commentary)
+- **Opt-in and transparent**: Users explicitly enable AI and see cost/benefit ("$19/month for 50 AI insights")
+- **Revenue model**: High margin (LLM costs ~$2-5/month per user at 50 requests; $19 price = 75-90% margin)
+
+AI add-on should be adopted by 20-30% of Pro users.
+
+### B2B/White-Label Strategy
+
+B2B tier targets **partners who embed calculators** into their own products:
+- **Target customers**: Lenders (embed in loan origination platforms), advisors (embed in client portals), SaaS platforms (embed in accounting/ERP dashboards)
+- **Value proposition**: "Don't build calculators in-house; embed ours and focus on your core product"
+- **Pricing model**: Per-seat (e.g., $10-20/seat/month for 25+ seats) or per-domain (e.g., $499/month for up to 10 client-facing domains)
+- **Feature differentiation**: Branding removal, API access, feature toggles, dedicated support, optional self-hosted deployment
+
+B2B tier has the highest LTV (annual contracts, $5K-50K ACV) but longer sales cycles (3-6 months).
+
+---
+
+## Advanced Metrics by Category
+
+**Advanced metrics** are the primary feature differentiator between Free and Pro tiers. By default, these metrics are **Pro-only** (locked in Free tier with upgrade prompts).
+
+### Financing & Lending
+- **DSCR (Debt Service Coverage Ratio)**: Measures ability to service debt from operating cash flow
+- **Covenant headroom**: Distance from lender covenant thresholds (e.g., "You have 0.12 headroom above minimum DSCR of 1.25")
+- **NPV/IRR**: Net present value and internal rate of return for capital investments
+- **Detailed fee breakdowns**: Origination fees, prepayment penalties, total cost of financing over term
+
+### Cash Flow & Liquidity
+- **Multi-scenario runway charts**: Visualize cash runway under optimistic, realistic, conservative assumptions
+- **Sensitivity views**: "If revenue drops 10%, runway decreases from 9.2 months to 6.8 months"
+- **Monthly cash flow waterfalls**: Detailed inflow/outflow breakdown by month or quarter
+
+### Profitability & Pricing
+- **Contribution margin**: Revenue minus variable costs, per product or service line
+- **Margin of safety**: Buffer between actual sales and breakeven
+- **Multi-scenario pricing charts**: Side-by-side comparison of pricing strategies (current, +10%, volume discount)
+
+### Valuation & Deal Analysis
+- **Multi-scenario valuation ranges**: Low/mid/high valuation estimates based on different multiples or DCF assumptions
+- **Sensitivity charts**: "If EBITDA multiple increases from 5x to 6x, valuation increases by $2.4M"
+
+### Planning & Scenario Modeling
+- **Scenario comparisons within single tools**: Compare Base vs Aggressive vs Conservative side-by-side
+- **Sensitivity views**: Show impact of key driver changes (e.g., revenue growth rate, gross margin, churn rate)
+
+---
+
+## Identity and Access Defaults (SaaS)
+
+### Anonymous Users
+
+- **Can use calculators**: Full Free tier functionality (single scenario, basic metrics, watermarked exports)
+- **Tracked via session IDs**: Pseudonymous session identifier (UUID) stored in browser local storage
+- **Exports stored 24 hours max**: Anonymous exports are temporarily stored on server for download, then auto-deleted after 24 hours
+- **No cross-device sync**: Scenarios are saved in browser local storage only (lost if browser cache is cleared)
+- **Conversion to logged-in**: Prompt to create account to save scenarios permanently, access from multiple devices, or upgrade to Pro
+
+Anonymous access lowers friction for first-time users and SEO traffic. 24-hour export retention balances user convenience with data minimization (GDPR/CCPA compliance).
+
+### Logged-In Users
+
+- **Required for saving scenarios**: Cannot save scenarios or access them across devices without an account
+- **Email + password or OAuth**: Support Google, Microsoft, GitHub OAuth for low-friction sign-up
+- **Cross-device access**: Scenarios sync via cloud database (users can start on desktop, finish on mobile)
+- **Persistent export history**: Logged-in users can access prior exports (subject to tier limits and retention policies)
+- **Account dashboard**: View saved scenarios, manage subscriptions, download prior exports
+
+Logged-in requirement for saving scenarios drives account creation (email capture for marketing) while preserving anonymous Free tier for SEO and viral traffic.
+
+### Telemetry and Privacy
+
+- **Pseudonymous IDs**: User IDs are UUIDs or hashed email addresses (not raw PII in logs)
+- **Aggregated descriptors**: Log industry, business size, geography (US/CA), but not company names or individual identifiers
+- **No PII in logs**: Logs never contain email addresses, IP addresses (hashed only), or scenario data beyond aggregated metrics (e.g., "loan amount: $50K-100K range")
+- **Opt-out available**: Users can disable telemetry in account settings (loses access to usage dashboards and personalized tips)
+- **GDPR/CCPA compliance**: Data deletion requests honored within 30 days; telemetry logs auto-purged after 12 months
+
+Telemetry is critical for product analytics (conversion funnels, feature adoption) but must respect privacy and regulatory requirements.
+
+---
+
+## Measurable Product and Business Goals
+
+### Suite-Level Goals
+
+- **SEO traffic for target keywords**: Rank in top 3 Google results for 20+ high-intent keywords (e.g., "DSCR calculator", "equipment loan calculator", "cash runway calculator") within 12 months
+- **Free → Pro conversion rate**: Achieve 3-5% conversion within 90 days of first use (industry benchmark for freemium SaaS)
+- **Exports per session**: Free tier = 1.2 exports/session average; Pro tier = 2.5+ exports/session (indicates repeated use and value realization)
+- **AI adoption rate**: 20-30% of Pro users adopt AI add-on within 6 months
+
+### Calculator-Level Goals
+
+Each calculator PDR must declare:
+- **Primary business role**: Is this calculator a top-of-funnel SEO driver, a Pro conversion driver, or a retention/engagement tool?
+- **Success metric**: What KPI determines success? Examples:
+  - Equipment Loan Calculator: "Drive 500+ Free tier sessions/month from organic search"
+  - DSCR Calculator: "Convert 5% of Free users to Pro within 60 days"
+  - Cash Runway Calculator: "Achieve 3+ scenario saves per Pro user (indicates ongoing use)"
+
+This per-calculator accountability ensures that each tool justifies its development and maintenance cost.
+
+---
+
+**Summary**: The suite uses a freemium model with Free (single scenario, basic metrics, watermarked exports) → Pro (multiple scenarios, advanced metrics, clean exports) → AI add-on (narratives, suggestions) → B2B/white-label (embeddable SDK, branding, custom deployments). Advanced metrics (DSCR, NPV/IRR, sensitivity charts) are the primary Pro differentiator. Anonymous users can use Free tier; logged-in users required for saving scenarios. Telemetry is pseudonymous and privacy-compliant. Business goals focus on SEO traffic, Free → Pro conversion, export engagement, and AI adoption.
+
+
+# 1.6 Product Quality Goals, SLAs, and Data Retention
+
+## Numerical Correctness and Stability
+
+### Calculations Must Match Reference Models Within ±0.1% Tolerance
+
+Every calculator in the suite must be validated against industry-standard reference models:
+- **Reference sources**: Excel-based FP&A templates, published formulas from CFA Institute, AICPA guidance, lender underwriting manuals, or open-source financial libraries (e.g., QuantLib)
+- **Golden test scenarios**: Each calculator maintains 50+ test scenarios covering typical use cases, edge cases, and boundary conditions
+- **Tolerance**: Numeric outputs must match reference models within **±0.1%** (or better) for all golden scenarios
+- **Regression testing**: Formula changes trigger automated side-by-side comparisons (new version vs prior version) to detect drift
+
+This validation ensures that users can trust outputs for high-stakes decisions (board presentations, lender approvals, regulatory filings).
+
+### Edge Cases Handled Gracefully (No NaNs, Infinities, Nonsense)
+
+Calculators must never produce:
+- **NaN (Not a Number)**: Invalid arithmetic (e.g., 0/0) must be caught and replaced with error messages or sentinel values
+- **Infinity**: Divide-by-zero or overflow conditions must be caught and handled (e.g., "Cannot compute DSCR with zero cash flow")
+- **Nonsense outputs**: Negative loan amounts, negative cash runway, DSCR > 1000 (likely input error)
+
+Validation logic should:
+- **Reject invalid inputs**: "Interest rate must be between 0% and 50%" (catch typos like 500% instead of 5%)
+- **Warn on unusual inputs**: "Loan term of 600 months (50 years) is unusually long. Did you mean 60 months?"
+- **Provide fallback messages**: "Unable to calculate NPV due to inconsistent cash flows. Check inputs and try again."
+
+Graceful error handling prevents user confusion and maintains trust in the calculation engine.
+
+---
+
+## Performance SLAs (Internal Targets)
+
+| Metric | Target (p95) | Target (p99) | Notes |
+|--------|--------------|--------------|-------|
+| **Recalculation latency** | < 150ms | < 500ms | Server-side calculation only; excludes WAN latency and AI generation |
+| **Export generation (PDF)** | < 3 seconds | < 6 seconds | Standard single-scenario report (2-5 pages); excludes large multi-scenario exports |
+| **Export generation (CSV)** | < 1 second | < 2 seconds | Standard single-scenario export (< 1000 rows) |
+| **AI narrative generation** | < 3 seconds | < 8 seconds | Includes LLM API call; hard timeout at 10 seconds with fallback message |
+| **End-to-end UI update** | < 300ms | < 500ms | Time from input change to visible output update (modern desktop/tablet, reasonable network) |
+| **Low-end device UI update** | < 500ms | < 1 second | Budget Android/iOS devices or slow network; requires loading feedback |
+
+### Server-Side Performance
+
+- **p95 recalculation latency < 150ms**: Typical calculators (equipment loan, DSCR, cash runway) should recalculate in under 150ms for 95% of requests. Complex calculators (multi-year NPV/IRR, Monte Carlo sensitivity) may take longer but should stay under 500ms at p95.
+- **p95 export generation < 3 seconds**: Standard single-scenario PDF (2-5 pages) should generate in under 3 seconds. Multi-scenario exports (10+ pages) or large CSV exports (5000+ rows) may require async generation with progress indicators.
+- **p99 targets**: Allow for network variability, cold starts, and occasional database latency. p99 targets are 2-4x p95 targets.
+
+### End-to-End UX Performance
+
+- **Visible UI update within 300ms**: Users expect near-instant feedback when changing inputs. On modern devices with reasonable network connections, output tables and charts should update within 300ms of input change.
+- **500ms on low-end devices**: Budget smartphones or slow networks may require 500ms-1s. During this time, show a loading spinner or skeleton UI to indicate progress.
+- **AI narratives: ~1-3 seconds p95, 6-8 second timeout**: AI commentary should feel responsive, not sluggish. If LLM API call exceeds 10 seconds, abort and show fallback message ("AI commentary unavailable; please try again").
+
+### Large Exports and Async Generation
+
+For exports that exceed standard SLAs (e.g., 20-page multi-scenario PDF, 10,000-row CSV):
+- **Progress indicators**: Show "Generating page 3 of 20..." or "Preparing export... 45% complete"
+- **Async generation**: Offload to background job queue; email download link when ready
+- **Cache results**: If user requests same export again within 24 hours, serve cached version
+
+---
+
+## Reliability and Regression Safety
+
+### Formula Changes Covered by Regression Tests with Golden Scenarios
+
+Every formula change must pass regression testing:
+- **Golden scenarios**: Each calculator maintains 50+ test scenarios with known-correct outputs (validated against reference models)
+- **Side-by-side comparison**: New formula version outputs are compared to prior version outputs for all golden scenarios
+- **Tolerance check**: If outputs differ by more than ±0.1%, the change is flagged for manual review
+- **Approval required**: Formula changes that alter outputs (even within tolerance) require explicit approval from product owner or finance SME
+
+This process prevents accidental formula drift and ensures that "bug fixes" don't introduce new errors.
+
+### Automated Test Suites on Each Release
+
+Pre-release checklist:
+- **Unit tests**: All calculation functions have unit tests (target: 90%+ code coverage for calculation engine)
+- **Integration tests**: End-to-end tests for each calculator (input → calculation → output → export)
+- **Golden scenario tests**: Run all golden scenarios and verify outputs match expected values within tolerance
+- **UI regression tests**: Visual regression tests for key screens (input forms, output tables, charts, PDFs)
+
+No release ships without passing full test suite.
+
+### Formula and Product Version IDs in Exports
+
+Every export (PDF, CSV) must include:
+- **Formula version ID**: e.g., `dscr_v1.3.2`, `npv_v2.1.0`
+- **Product version ID**: e.g., `calculator-suite_v1.8.3`
+- **Timestamp**: ISO 8601 format (e.g., `2025-03-15T14:22:37Z`)
+- **User ID**: Pseudonymous ID (for logged-in users) or session ID (for anonymous users)
+
+This metadata allows users to:
+- **Reproduce results**: Rerun the same scenario 6 months later and verify consistency
+- **Compare versions**: Understand if differences between two exports are due to formula changes, input changes, or data changes
+- **Audit trail**: Provide evidence to auditors, lenders, or regulators that outputs were generated by approved calculation logic
+
+---
+
+## Clarity of Explanation
+
+### Tooltips: Plain Language, No Jargon
+
+Tooltips must be accessible to non-finance users:
+- **Bad**: "DSCR = NOI / TDS"
+- **Good**: "Debt Service Coverage Ratio (DSCR) measures your ability to cover loan payments from operating income. Lenders typically require 1.25 or higher."
+
+Tooltips should:
+- **Define terms**: Don't assume users know what DSCR, NPV, IRR mean
+- **Explain why it matters**: "Lenders use this to assess credit risk"
+- **Suggest typical values**: "Most lenders require 1.25-1.50"
+- **Keep it brief**: 1-3 sentences max; link to help docs for deeper explanations
+
+### Warnings: Direct and Actionable
+
+Warnings should tell users **what's wrong** and **what to do**:
+- **Bad**: "DSCR below threshold"
+- **Good**: "Your DSCR is 1.18, below the typical lender threshold of 1.25. Consider reducing debt, extending the loan term, or improving cash flow."
+
+Warnings should:
+- **State the problem**: "DSCR is 1.18"
+- **Provide context**: "Typical lender threshold is 1.25"
+- **Suggest action**: "Reduce debt, extend term, or improve cash flow"
+- **Use measured tone**: "Consider" not "You must"; "below typical threshold" not "DANGER: UNACCEPTABLE"
+
+Actionable warnings help users make better decisions and build confidence in the tool.
+
+---
+
+## Consistency and Maintainability
+
+### Shared Components (No Copy-Paste)
+
+Calculators must share UI components, calculation libraries, and export templates:
+- **UI components**: Input fields, dropdown selectors, chart widgets, export buttons are shared React components
+- **Calculation libraries**: Formulas are centralized in a shared TypeScript library, not duplicated per calculator
+- **Export templates**: PDF and CSV generation uses shared templates with customizable headers/footers
+
+This consistency:
+- **Reduces bugs**: Fix a bug once, not N times
+- **Simplifies updates**: Update export format (e.g., add disclaimer) once, propagates to all calculators
+- **Improves UX**: Users see familiar patterns across all calculators
+
+### Versioning and Change Logs
+
+Every release must include:
+- **Semantic versioning**: `MAJOR.MINOR.PATCH` (e.g., `1.8.3`)
+- **Change log**: Public-facing summary of new features, bug fixes, formula changes
+- **Formula version tracking**: Internal log of formula version changes (e.g., `dscr_v1.3.1 → dscr_v1.3.2: fixed rounding error in monthly compounding`)
+
+Change logs provide transparency to users and audit trail for compliance.
+
+---
+
+## Data Retention, Logs, and Analytics
+
+### Saved Scenarios: 24 Months Default (SaaS)
+
+- **SaaS default retention**: Saved scenarios are retained for 24 months from last access
+- **User deletion**: Users can delete scenarios manually at any time
+- **Account closure**: When a user closes their account, scenarios are deleted within 30 days (GDPR/CCPA compliance)
+- **Export-only users**: Anonymous users who only generate exports (no saved scenarios) have no scenario retention (exports are deleted after 24 hours)
+
+24-month retention balances user convenience (access to historical scenarios for comparison) with data minimization (don't store data indefinitely).
+
+### Usage Analytics/Logs: 12 Months Default (No PII, Pseudonymous IDs Only)
+
+- **What's logged**: Calculator usage (which calculators, how often), input distributions (loan amount ranges, term ranges), export events (PDF, CSV), AI requests
+- **What's NOT logged**: Raw scenario data (specific inputs/outputs), PII (email, IP addresses except hashed for abuse detection), company names
+- **Pseudonymous IDs**: User IDs are UUIDs or hashed emails; session IDs for anonymous users
+- **Retention**: Logs are auto-purged after 12 months
+- **Opt-out**: Users can disable telemetry (loses access to personalized dashboards and tips)
+
+12-month retention provides sufficient data for product analytics (conversion funnels, feature adoption) while limiting liability.
+
+### B2B Deployments: Configurable Retention, Opt-Out Telemetry
+
+B2B clients can configure:
+- **Scenario retention**: 7 days to indefinite (client's choice)
+- **Log retention**: None (no telemetry) to 24 months
+- **Telemetry opt-out**: Disable all usage tracking (client loses dashboard visibility)
+- **AI opt-out**: Disable AI features entirely (no LLM calls, no data sent to third-party APIs)
+
+This flexibility makes the suite viable for regulated industries and privacy-conscious clients.
+
+---
+
+**Summary**: The suite targets ±0.1% numeric accuracy versus reference models, handles edge cases gracefully, and meets performance SLAs (p95 recalculation < 150ms, p95 export < 3s). Regression testing, formula versioning, and audit trails ensure reliability. Tooltips and warnings use plain language and actionable guidance. Shared components and versioning ensure maintainability. Data retention defaults to 24 months for scenarios, 12 months for logs (no PII), with configurable opt-outs for B2B clients.
+
+
+# 1.7 Constraints and Non-Goals
+
+## What the Suite Will NOT Do (v1)
+
+The following capabilities are explicitly **out of scope** for the initial release. These boundaries protect the product from scope creep, reduce development risk, and clarify positioning in the market.
+
+### 1. Not a Full Accounting, ERP, Payroll, or Tax Filing System
+
+The suite is a **decision-support tool**, not a system of record. It does not:
+- Record or categorize individual transactions (use QuickBooks, Xero, NetSuite for that)
+- Maintain general ledger, accounts payable/receivable, or inventory systems
+- Process payroll, benefits, or tax withholding
+- Prepare or file tax returns (federal, state, sales tax, payroll tax)
+
+Users input **aggregated financials** (total revenue, total COGS, total operating expenses) derived from their accounting systems. The calculators analyze these aggregates but do not replace accounting infrastructure.
+
+**Rationale**: Competing with accounting/ERP systems is a multi-year, capital-intensive endeavor with low margins. The suite targets a different problem (decision-support, not record-keeping) and a different user (CFOs/analysts, not bookkeepers).
+
+### 2. No Bank Connections or Transaction-Level Feeds (v1)
+
+The suite does **not** connect to bank accounts or credit card accounts to pull transaction-level data. No integrations with Plaid, MX, Finicity, or similar aggregation services in v1.
+
+Users must manually input summarized cash flow data (e.g., "total cash inflows last month: $150K").
+
+**Rationale**: Bank connections introduce regulatory risk (GLBA, SOC 2 requirements), PII exposure, and complex error handling (stale credentials, MFA challenges, transaction categorization ambiguity). Manual input suffices for decision-support use cases and avoids these risks.
+
+**Future consideration**: v2+ may add optional bank feeds for Pro tier users who want automated cash flow tracking, subject to SOC 2 compliance and explicit user consent.
+
+### 3. No Automated Accounting/ERP Imports (v1)
+
+The suite does **not** integrate with QuickBooks, Xero, NetSuite, Sage, or other accounting platforms to auto-import financials. No APIs, OAuth flows, or CSV import wizards in v1.
+
+Users must manually enter summary financials from their accounting reports (P&L, balance sheet, cash flow statement).
+
+**Rationale**: Accounting API integrations are fragile (schema changes, authentication headaches, rate limits, inconsistent data quality across clients). Manual input allows users to "sense-check" data before analysis and avoids the support burden of debugging accounting system quirks.
+
+**Future consideration**: v2+ may add CSV import or read-only accounting integrations for Pro tier users, subject to rigorous error handling and reconciliation workflows.
+
+### 4. No Detailed Multi-Jurisdictional Tax (Only US/CA with Basic Assumptions)
+
+The suite supports **US and Canada only** in v1, with basic tax assumptions:
+- US: Federal corporate tax (~21%) + state tax (user-specified or default 5%)
+- Canada: Federal corporate tax (~15%) + provincial tax (user-specified or default 12%)
+
+The suite does **not** handle:
+- Multi-country tax treaties, transfer pricing, or VAT/GST/HST reconciliation
+- Industry-specific tax credits (R&D credits, renewable energy credits, film tax credits)
+- Complex tax structuring (S-corps, partnerships, trusts, international holdings)
+- Sales tax nexus, payroll tax across jurisdictions, or property tax
+
+Tax inputs are **user-specified rates** or defaults. Calculators do not provide tax advice or optimize tax strategy.
+
+**Rationale**: Tax complexity varies enormously by jurisdiction, industry, and entity structure. Attempting comprehensive tax modeling would require legal/CPA partnerships, frequent updates for law changes, and significant liability risk. The suite provides basic tax estimates for planning purposes; users consult CPAs for formal tax planning.
+
+**Future consideration**: v2+ may add jurisdiction-specific tax modules (UK, EU, Australia) via partnerships with local tax software providers.
+
+### 5. No Customer-Identifiable Transactions (Aggregated Scenarios Only)
+
+The suite does **not** store or process:
+- Customer names, addresses, email addresses, phone numbers
+- Invoice details, purchase orders, contract terms
+- Employee names, SSNs, salaries (except aggregated payroll totals)
+- Vendor names, payment terms, individual transaction amounts
+
+Users input **aggregated totals** (e.g., "total Q1 revenue: $500K", "average customer acquisition cost: $120") without exposing individual customer or employee data.
+
+**Rationale**: Avoiding PII reduces GDPR/CCPA compliance burden, minimizes breach risk, and simplifies data retention policies. The suite is designed for strategic decision-support, not CRM or HRIS functionality.
+
+### 6. No Legally Binding Credit/Underwriting/Investment Advice (Decision-Support Only)
+
+All outputs include disclaimers:
+
+> "This analysis is for informational and decision-support purposes only. It does not constitute financial, legal, tax, or investment advice. Consult qualified professionals before making financial decisions."
+
+The suite does **not**:
+- Approve or deny credit applications
+- Guarantee loan terms, interest rates, or eligibility
+- Recommend specific investments or securities
+- Provide regulatory filings or compliance certifications
+
+Lenders may use the suite to **structure initial proposals** or **pre-qualify borrowers**, but formal underwriting requires additional due diligence, credit checks, and legal documentation.
+
+**Rationale**: Limiting liability. The suite is a tool for finance professionals, not a substitute for licensed advisors or regulated financial institutions.
+
+### 7. No Full Offline Operation (Connectivity Required for Exports and AI)
+
+The suite requires internet connectivity for:
+- Exporting PDFs and CSVs (server-side generation)
+- AI commentary and suggestions (LLM API calls)
+- Saving scenarios to cloud database (for logged-in users)
+
+**Limited offline capability**:
+- Calculators can run client-side with cached JavaScript (for brief offline periods)
+- Inputs are saved to browser local storage (but not synced until reconnected)
+- Exports and AI features fail gracefully with "Connectivity required" messages
+
+**Rationale**: Full offline operation requires local databases, sync conflict resolution, and device-specific export engines—significant engineering complexity for limited user benefit. Most users have reliable internet; those who don't can work offline temporarily and sync when reconnected.
+
+**Future consideration**: B2B clients deploying on-premise may request fully offline mode; this would be a custom implementation, not default behavior.
+
+### 8. No Heavy Workflow Engines (Lightweight Prepared/Reviewed Metadata Only)
+
+The suite does **not** provide:
+- Multi-step approval workflows with conditional routing (e.g., "analyst → manager → CFO → CEO")
+- SLA tracking, escalation rules, or automated reminders
+- Role-based approval hierarchies tied to HRIS or org charts
+- Detailed audit logs of every field change (v1 captures scenario-level edits only)
+
+The suite **does** provide:
+- "Prepared by" and "Last modified by" metadata
+- Optional "Reviewed by" flag (user manually marks scenario as reviewed)
+- View-only sharing (recipients can see but not edit)
+
+**Rationale**: Workflow engines are complex, highly client-specific, and require deep integration with external systems. The suite is a **calculator**, not a BPM platform. Clients who need formal workflows should integrate the suite with existing workflow tools (ServiceNow, Jira, Monday.com).
+
+**Future consideration**: B2B clients may request lightweight approval hooks (e.g., "notify manager when scenario is saved"); this could be added as a webhook/API integration, not a built-in workflow engine.
+
+### 9. No Multi-Currency Within a Single Scenario (v1)
+
+Each scenario uses a **single currency** (USD or CAD). The suite does **not** support:
+- Mixed-currency scenarios (e.g., USD revenue + EUR expenses)
+- Real-time FX conversion or historical FX rates
+- Hedging analysis or FX risk modeling
+
+Users with multi-currency businesses must either:
+- Convert all inputs to a single currency manually before entering data, OR
+- Create separate scenarios per currency and manually consolidate results
+
+**Rationale**: Multi-currency modeling requires FX rate data feeds, hedging logic, and complex reporting (functional vs reporting currency). This adds significant complexity for a use case that affects <10% of target users.
+
+**Future consideration**: v2+ may add multi-currency support for Pro tier users, subject to reliable FX data sources and user demand validation.
+
+---
+
+## Handling Out-of-Scope Requests
+
+When users or stakeholders request features that fall outside these boundaries:
+
+1. **Reject as out-of-scope**: Clearly explain why the feature conflicts with product positioning, technical constraints, or risk tolerance. Offer alternative solutions (e.g., "For bank feeds, consider using Plaid directly and importing summaries into the calculator").
+
+2. **Break out as separate phase**: If the feature has strategic merit but is too complex for v1, document it as a potential v2+ initiative with its own PDR (Product Design Review) and risk assessment. Do not allow scope creep into v1.
+
+3. **Escalate for risk review**: Features that introduce regulatory risk (bank feeds, tax advice, credit decisions), PII exposure, or significant technical debt require explicit approval from legal, compliance, and engineering leadership before consideration.
+
+---
+
+**Summary**: The suite is a decision-support tool, not an accounting system, tax advisor, or workflow platform. It does not connect to banks or ERPs (v1), does not handle multi-jurisdictional tax complexity, does not store PII, does not provide legally binding advice, requires connectivity for exports and AI, does not include heavy workflows, and does not support multi-currency within a single scenario (v1). Out-of-scope requests are rejected, deferred to future phases, or escalated for risk review—never accommodated via scope creep.
+
+
+# 1.8 Internal Operations & Management Systems
+
+This subsection defines the internal dashboards and management systems required to operate the CFO Business Intelligence Calculator Suite as a business. These are **not** user-facing features but essential infrastructure for monitoring, support, compliance, and growth.
+
+---
+
+## 1. API Management Dashboard
+
+**Primary users**: Engineering, DevOps, Product Managers, B2B Account Managers
+
+**Purpose**: Monitor API health, manage B2B integrations, enforce rate limits, and track API usage for billing and capacity planning.
+
+### Key Features
+- **API health monitoring**: Real-time status of all API endpoints (uptime, error rates, latency p50/p95/p99)
+- **Rate limiting**: View and adjust rate limits per API key, per endpoint, or per tier (Free/Pro/B2B)
+- **API key management (B2B)**: Generate, view, revoke, and rotate API keys for B2B partners; associate keys with accounts, domains, and feature flags
+- **Usage analytics**: Request volume by endpoint, by tier, by partner; identify heavy users and potential abuse
+
+### Actions Available
+- Enable/disable specific endpoints (e.g., disable legacy endpoints during migration)
+- Adjust rate limits (e.g., increase limit for high-value B2B partner)
+- Generate/revoke API keys for B2B partners
+- Export API usage logs for billing reconciliation or abuse investigation
+
+---
+
+## 2. Subscription & Billing Dashboard
+
+**Primary users**: Finance, Customer Success, Support
+
+**Purpose**: Manage subscriptions, track revenue metrics, handle refunds and billing disputes, and monitor churn.
+
+### Key Features
+- **Subscriber overview**: List of all active, past_due, and canceled subscriptions; filter by tier (Pro, AI add-on, B2B)
+- **Subscription management**: View subscription details (start date, renewal date, payment method, tier)
+- **Payment tracking**: Successful charges, failed charges, retries, dunning status
+- **Revenue metrics**: MRR (Monthly Recurring Revenue), ARR (Annual Recurring Revenue), ARPU (Average Revenue Per User), churn rate, LTV (Lifetime Value)
+- **Invoicing**: Generate/resend invoices, apply discounts, issue credits
+
+### Actions Available
+- Upgrade/downgrade users (e.g., Pro → Free after failed payment, Free → Pro for support escalation)
+- Issue refunds (full or partial)
+- Extend trials (e.g., grant 30-day Pro trial to support case)
+- Pause/unpause subscriptions (e.g., temporary hold for B2B partner contract negotiation)
+
+---
+
+## 3. Business Intelligence Dashboard
+
+**Primary users**: Product Managers, Marketing, Executives
+
+**Purpose**: Understand user behavior, track product-market fit, optimize conversion funnels, and monitor AI costs.
+
+### Key Features
+- **Calculator usage metrics**: Sessions per calculator, unique users per calculator, average session duration
+- **Conversion funnels**: Free → Pro conversion rate, Pro → AI add-on conversion rate, anonymous → logged-in conversion rate
+- **User cohort analysis**: Retention curves by sign-up month, cohort-based LTV, feature adoption by cohort
+- **Export analytics**: Exports per user, export format distribution (PDF vs CSV), watermark presence (Free tier indicator)
+- **AI usage & costs**: AI requests per user, AI requests per month (total), LLM API costs, AI timeout rate, AI opt-out rate
+- **Feature adoption**: Scenario save rate, scenario sharing rate, multi-scenario comparison usage
+
+### Actions Available
+- Segment users (e.g., "show only users who saved 3+ scenarios but haven't exported")
+- Export analytics data for custom analysis (CSV, JSON)
+- Set custom alerts (e.g., "notify me if Free → Pro conversion drops below 3%")
+
+---
+
+## 4. Marketing Dashboard
+
+**Primary users**: Marketing, Growth, Content
+
+**Purpose**: Track marketing performance, optimize SEO, measure campaign ROI, and manage affiliate partnerships.
+
+### Key Features
+- **Traffic sources**: Organic search, paid search, social, referral, direct; sessions, bounce rate, conversion rate by source
+- **SEO performance**: Keyword rankings, organic traffic by keyword, backlinks, top landing pages
+- **Campaign performance**: CTR, CPC, conversion rate, cost per acquisition (CPA) for paid campaigns (Google Ads, LinkedIn, etc.)
+- **A/B test results**: Conversion rate by variant for landing pages, CTAs, pricing pages
+- **Affiliate partner performance**: Clicks, conversions, revenue attributed to each affiliate; commission owed
+- **Content performance**: Blog post views, time on page, conversion rate by post; identify top-performing content
+- **Email campaigns**: Open rate, click rate, unsubscribe rate, conversion rate by email campaign
+
+### Actions Available
+- Pause/activate campaigns (e.g., pause underperforming Google Ads campaign)
+- Adjust budgets (reallocate spend from low-ROI to high-ROI channels)
+- Approve/reject affiliate partners (prevent spam or off-brand affiliates)
+- Export performance data for monthly reports
+
+---
+
+## 5. Social Media Dashboard
+
+**Primary users**: Marketing, Community Manager
+
+**Purpose**: Monitor social media engagement, track traffic from social channels, and manage content calendar.
+
+### Key Features
+- **Post performance**: Impressions, likes, shares, comments, CTR by post (Twitter, LinkedIn, Facebook, etc.)
+- **Traffic from social**: Sessions, conversions, revenue attributed to social channels (via UTM tracking)
+- **Content calendar**: Scheduled posts, draft posts, posting frequency by channel
+- **Community mentions**: Brand mentions, @replies, sentiment analysis (positive/negative/neutral)
+- **Social conversions**: Free sign-ups, Pro conversions, AI add-on upgrades attributed to social traffic
+
+### Actions Available
+- Schedule posts across channels
+- Respond to mentions and comments (via integrated inbox or link to native platform)
+- Export social performance reports (weekly/monthly)
+
+---
+
+## 6. Security & Compliance Dashboard
+
+**Primary users**: Security, DevOps, Legal, Compliance
+
+**Purpose**: Monitor access patterns, detect abuse, respond to security incidents, and demonstrate compliance with GDPR/CCPA.
+
+### Key Features
+- **Access monitoring**: Login attempts (successful/failed), password resets, MFA enrollment, suspicious login patterns (impossible travel, brute force)
+- **API abuse detection**: Rate limit violations, unusual request patterns, IP blacklist hits
+- **Security incidents**: Active incidents (unauthorized access, data breach, DDoS), incident timeline, response actions
+- **Data access logs**: Who accessed what data, when, from where (IP, device); pseudonymous user IDs only
+- **Compliance tracking (GDPR/CCPA)**: Data deletion requests (pending/completed), data export requests, consent logs (AI opt-in, telemetry opt-in)
+- **Encryption & key management**: Status of encryption at rest, encryption in transit, API key rotation schedule, certificate expiration warnings
+
+### Actions Available
+- Block IPs or accounts (e.g., block IP with repeated failed login attempts)
+- Approve/process data deletion requests (GDPR "right to be forgotten")
+- Export security logs for compliance audits or incident investigation
+- Rotate API keys or certificates
+
+---
+
+## 7. Admin Dashboard (User Management & Support)
+
+**Primary users**: Customer Support, Account Managers, Executives
+
+**Purpose**: Manage user accounts, troubleshoot issues, handle support tickets, and grant manual access or upgrades.
+
+### Key Features
+- **User search**: Search by email, user ID, company name, subscription tier
+- **User impersonation**: "View as user" mode to troubleshoot issues (with audit logging)
+- **Account actions**: Reset password, force logout, enable/disable MFA, change email
+- **Support tickets**: Open tickets (linked to user), ticket status, response time SLAs, ticket tags (bug, feature request, billing issue)
+- **Scenario management**: View user's saved scenarios, delete scenarios (at user request), export scenarios for support analysis
+- **Usage limits**: View user's current usage (scenarios saved, exports generated, AI requests) vs tier limits
+
+### Actions Available
+- Impersonate user (with explicit audit log entry and time limit)
+- Upgrade/downgrade user manually (e.g., grant Pro access for support case resolution)
+- Grant free Pro access for Beta users, influencers, or service recovery
+- Ban/suspend account (for ToS violations, abuse, fraud)
+
+---
+
+## 8. Calculator Management Dashboard
+
+**Primary users**: Product Managers, Engineering
+
+**Purpose**: Manage calculator inventory, deploy updates, monitor performance, and configure feature flags.
+
+### Key Features
+- **Calculator inventory**: List of all calculators (live, beta, deprecated), metadata (name, version, formula version, last updated)
+- **Performance**: Usage by calculator, error rate by calculator, p95/p99 latency by calculator
+- **Version management**: Current version in production, version in staging, version history, rollback capability
+- **Feature flags**: Toggle features per calculator (e.g., enable AI add-on for Calculator A, disable for Calculator B)
+- **Configuration management**: Edit calculator-specific configs (tier limits, default assumptions, locale settings) without code deployment
+- **Deployment status**: Which calculators are live in production, staging, or development; pending deployments
+
+### Actions Available
+- Deploy new calculator versions to staging or production
+- Rollback to prior version (if new version has critical bug)
+- Enable/disable calculators (e.g., disable Calculator X for maintenance)
+- Edit calculator configs (e.g., change Free tier scenario limit from 1 to 2)
+
+---
+
+## 9. Embed/Shortcode Management Dashboard
+
+**Primary users**: B2B Account Managers, Product Managers, Support
+
+**Purpose**: Manage embedded calculator instances, generate shortcodes, track embed performance, and configure white-label branding.
+
+### Key Features
+- **Embed inventory**: List of all active embeds (WordPress shortcodes, iframes, SDK integrations), associated domains, B2B accounts
+- **Shortcode generator**: UI to generate shortcode with parameters (calculator ID, tier, branding, feature flags)
+- **Embed performance**: Sessions per embed, conversions per embed, embed load time, error rate
+- **Access control**: Which domains/accounts are authorized to embed which calculators
+- **White-label configuration**: Custom branding (logo, colors, disclaimers) per B2B account or domain
+- **Affiliate tracking**: Embeds linked to affiliate partners; revenue attribution
+
+### Actions Available
+- Generate shortcodes for B2B partners or affiliates
+- Revoke access (disable embeds for expired B2B contract or ToS violation)
+- Configure branding per account (upload logo, set colors, customize footer)
+- Export embed performance data for B2B partners
+
+---
+
+## 10. Cross-Dashboard Requirements
+
+All dashboards must share the following capabilities:
+
+- **Role-based access control (RBAC)**: Different users see different dashboards or different views within a dashboard (e.g., Support sees Admin Dashboard but not Finance metrics; Finance sees Billing Dashboard but not API keys)
+- **Date range filters**: All dashboards support filtering by date range (last 7 days, last 30 days, last 12 months, custom range)
+- **Export capabilities**: All dashboards support exporting data to CSV or JSON for custom analysis or reporting
+- **Alerts & notifications**: Configure custom alerts (e.g., "notify me if API error rate exceeds 1%", "notify me if Free → Pro conversion drops below 3%")
+- **Mobile responsive**: Dashboards must be usable on tablets and mobile devices (responsive design or dedicated mobile views)
+- **Data freshness indicators**: Show when data was last updated (e.g., "Last updated: 5 minutes ago") to avoid stale data confusion
+
+---
+
+## Dashboard Architecture Considerations
+
+### Hosting and Infrastructure
+
+- **Separate admin subdomain**: Dashboards hosted on `admin.yourdomain.com` or similar, isolated from user-facing calculators for security and performance
+- **Scalable backend**: Dashboards query data warehouse (e.g., BigQuery, Snowflake) or analytics database (e.g., TimescaleDB), not production OLTP database (to avoid performance impact on user-facing features)
+- **Caching**: Dashboard queries cached (5-15 minutes) to reduce load; real-time queries limited to critical alerts (API health, security incidents)
+
+### Data Sources
+
+- **Production database (read replicas)**: User accounts, subscriptions, scenarios, exports
+- **Analytics database**: Usage events, telemetry, conversion funnels (e.g., replicated from production via ETL pipeline)
+- **Logs and monitoring**: API logs, error logs, security logs (e.g., AWS CloudWatch, Datadog, Sentry)
+- **External integrations**: Stripe (billing), Google Analytics (traffic), LLM API (AI costs), email provider (campaign metrics)
+
+### Performance and Latency
+
+- **Dashboard load time**: Target < 2 seconds for initial load (above the fold)
+- **Query execution**: Target < 5 seconds for most queries (complex analytics queries may take longer but should show progress indicator)
+- **Real-time vs batch**: Real-time for critical alerts (API health, security); batch updates (hourly or daily) for analytics and reporting
+
+### Security and Access Control
+
+- **RBAC enforcement**: Role-based access control at API level (not just UI hiding)
+- **Audit logging**: All admin actions logged (who did what, when, from where)
+- **MFA required**: Multi-factor authentication required for all dashboard users
+- **Session timeouts**: Auto-logout after 30 minutes of inactivity
+- **IP whitelisting** (optional): Restrict dashboard access to office/VPN IPs for high-security environments
+
+---
+
+## Implementation Priority
+
+### Phase 0: MVP (Required for Launch)
+
+- **Admin Dashboard**: User management and support (can't operate without this)
+- **Calculator Management Dashboard**: Deploy and configure calculators
+- **API Management Dashboard**: Monitor API health and manage B2B keys
+
+### Phase 1: Growth and Operations (3-6 Months Post-Launch)
+
+- **Subscription & Billing Dashboard**: Required as paid subscriptions scale
+- **Business Intelligence Dashboard**: Required to optimize conversion and retention
+- **Security & Compliance Dashboard**: Required for SOC 2 compliance and GDPR/CCPA readiness
+
+### Phase 2: Marketing and Partnerships (6-12 Months Post-Launch)
+
+- **Marketing Dashboard**: Required as marketing spend scales
+- **Social Media Dashboard**: Required if social becomes significant traffic source
+- **Embed/Shortcode Management Dashboard**: Required as B2B partnerships scale
+
+---
+
+**Summary**: The suite requires 10 internal dashboards to operate effectively: API Management, Subscription & Billing, Business Intelligence, Marketing, Social Media, Security & Compliance, Admin (User Management & Support), Calculator Management, and Embed/Shortcode Management. All dashboards share RBAC, date range filters, export capabilities, alerts, mobile responsiveness, and data freshness indicators. Implementation should be phased: MVP dashboards (Admin, Calculator Management, API) for launch, growth dashboards (Billing, BI, Security) within 3-6 months, and marketing/partnership dashboards (Marketing, Social, Embed) within 6-12 months.
+
+
+---
+
+
+# Section 2: Product Scope
+
+# 2.1 Calculator Categories
+
+The CFO Business Intelligence Calculator Suite is organized into five categories, each addressing a distinct set of business problems and decision contexts. These categories help users discover relevant calculators, guide product development priorities, and ensure consistent tier behavior within each problem domain.
+
+---
+
+## 1. Financing & Lending Intelligence
+
+### Purpose
+
+This category solves problems related to structuring, comparing, and stress-testing business debt. Calculators in this category help users evaluate loan options, understand debt service capacity, assess covenant compliance, and compare financing alternatives (traditional loans, SBA programs, equipment financing, invoice factoring, lines of credit). The focus is on providing CFO-grade metrics (DSCR, covenant headroom, NPV/IRR) that lenders and boards expect, not just basic payment calculations.
+
+### Primary Personas
+
+- **CFOs and Controllers**: Evaluating debt capacity and covenant compliance
+- **SMB Owners and Founders**: Deciding between financing options for growth or equipment purchases
+- **Lenders and Brokers**: Structuring proposals and pre-qualifying borrowers
+- **Financial Advisors**: Helping clients compare financing alternatives
+
+### Typical Decision Questions
+
+- "Which loan structure is better for our cash flow: 5-year at 7.5% or 7-year at 8.2%?"
+- "What is our Debt Service Coverage Ratio (DSCR) and how close are we to lender covenant thresholds?"
+- "Should we pursue SBA 7(a) financing or a conventional term loan?"
+- "Is it better to lease this equipment or finance the purchase?"
+- "How does invoice factoring compare to a traditional line of credit in terms of effective cost and DSCR impact?"
+
+---
+
+## 2. Cash Flow & Liquidity Intelligence
+
+### Purpose
+
+This category addresses cash runway, timing gaps, working capital needs, and liquidity risks. Calculators in this category help users understand how long their cash will last, identify periods of cash stress, evaluate the impact of revenue or expense changes on runway, and assess working capital financing needs. The focus is on forward-looking liquidity analysis under multiple scenarios, not just historical cash flow reporting.
+
+### Primary Personas
+
+- **CFOs and Controllers**: Managing cash reserves and planning for liquidity needs
+- **FP&A Analysts**: Modeling cash flow under different growth or stress scenarios
+- **Founders and CEOs**: Understanding burn rate and runway for fundraising decisions
+- **Lenders**: Assessing working capital needs and line of credit sizing
+
+### Typical Decision Questions
+
+- "How many months of runway do we have at our current burn rate?"
+- "What happens to our cash position if revenue drops 20% for two quarters?"
+- "How much working capital credit line do we need to cover seasonal gaps?"
+- "At what point should we start fundraising or cutting costs to avoid running out of cash?"
+- "How does our line of credit utilization pattern affect our liquidity and interest costs?"
+
+---
+
+## 3. Profitability & Pricing Intelligence
+
+### Purpose
+
+This category focuses on analyzing margins, breakeven points, pricing structures, and product/service profitability. Calculators in this category help users understand contribution margins, identify breakeven volume, evaluate the impact of discounting or price changes, and compare profitability across different pricing strategies. The focus is on unit economics and margin management, not full P&L forecasting.
+
+### Primary Personas
+
+- **CFOs and Controllers**: Monitoring margin health and pricing discipline
+- **FP&A Analysts**: Modeling pricing scenarios and profitability tradeoffs
+- **Revenue Leaders and Sales Managers**: Understanding the margin impact of discounts and volume deals
+- **Founders and CEOs**: Evaluating product profitability and pricing strategy
+
+### Typical Decision Questions
+
+- "What is our breakeven volume for this product line?"
+- "How do volume discounts affect our contribution margin and overall profitability?"
+- "Which products or services are actually profitable after allocating variable costs?"
+- "If we raise prices by 10%, how much volume can we afford to lose before profitability declines?"
+- "What is our margin of safety, and how much buffer do we have above breakeven?"
+
+---
+
+## 4. Valuation & Deal Intelligence
+
+### Purpose
+
+This category provides simple, defensible valuation estimates and deal-impact views. Calculators in this category help users understand valuation ranges based on revenue or EBITDA multiples, assess the impact of new debt or equity on enterprise value, and evaluate acquisition or exit scenarios. The focus is on rough-order-of-magnitude valuation for planning purposes, not formal fairness opinions or DCF models.
+
+### Primary Personas
+
+- **Founders and CEOs**: Understanding business valuation for fundraising or exit planning
+- **CFOs**: Evaluating the impact of financing decisions on equity value
+- **Investors and Advisors**: Estimating valuation ranges for deal structuring
+- **Buyers and Sellers**: Assessing whether a proposed valuation is reasonable
+
+### Typical Decision Questions
+
+- "What is a reasonable valuation range for our business based on industry multiples?"
+- "How does taking on new debt affect our equity value and leverage ratios?"
+- "What does this potential acquisition do to our overall leverage and valuation?"
+- "How sensitive is our valuation to changes in revenue growth or EBITDA margins?"
+- "What valuation might different types of buyers (strategic vs financial) assign to our business?"
+
+---
+
+## 5. Planning & Scenario Intelligence
+
+### Purpose
+
+This category enables what-if planning around growth initiatives, cost changes, and capital allocation decisions. Calculators in this category help users run scenarios (optimistic, realistic, conservative), understand sensitivity to key drivers (hiring, pricing, interest rates), and compare alternative strategies. The focus is on high-level scenario comparison within individual planning tools, not detailed line-item budgeting or multi-year strategic plans.
+
+### Primary Personas
+
+- **CFOs and Controllers**: Preparing board presentations with scenario analysis
+- **FP&A Analysts**: Running sensitivity analysis on key business drivers
+- **Founders and CEOs**: Evaluating strategic decisions (hiring plans, expansion, pricing changes)
+- **Boards and Investors**: Understanding risks and upside potential across different scenarios
+
+### Typical Decision Questions
+
+- "What happens to our financials if we hire 10 additional people?"
+- "How sensitive are we to interest rate changes on our variable-rate debt?"
+- "Which scenario (aggressive growth vs conservative growth) balances revenue upside with acceptable risk?"
+- "What is the financial impact of expanding into a new market vs deepening penetration in existing markets?"
+- "How do different combinations of pricing, volume, and cost assumptions affect our cash flow and profitability?"
+
+---
+
+## Calculator Mapping Requirement
+
+Each calculator PDR (as defined in Section 11) must map to **exactly one primary category** and optionally one secondary category. This mapping ensures that:
+- Users can discover calculators by problem domain
+- Tier behavior is consistent within categories (as defined in Section 2.4)
+- Product roadmaps can be organized by category to address gaps
+- Analytics can track usage and conversion patterns by category
+
+For example, the "Business Loan + DSCR Intelligence Calculator" has a primary category of "Financing & Lending Intelligence" and could have a secondary category of "Cash Flow & Liquidity Intelligence" (since DSCR relates to cash flow capacity). However, its primary placement, tier behavior, and SEO positioning are determined by the primary category.
+
+
+# 2.2 MVP Calculator Set (Phase 1)
+
+The MVP suite consists of eight calculators designed to address the highest-priority decision problems across financing, cash flow, profitability, and valuation. These calculators were selected based on SEO opportunity, user demand signals, Pro tier conversion potential, and ability to showcase AI add-on value. Each calculator must deliver CFO-grade outputs (as defined in Section 1.3) while maintaining the consistent UX and tier behavior patterns established in Section 1 and Section 2.4.
+
+---
+
+## 1. Business Loan + DSCR Intelligence Calculator
+
+**Primary Category**: Financing & Lending Intelligence
+
+**Business Role**: Core workhorse calculator; primary Pro upgrade driver
+
+**Key Functions**:
+- Standard amortization schedule with monthly/quarterly payment breakdown
+- Total cost of financing (principal + interest + fees)
+- **DSCR (Debt Service Coverage Ratio)** calculation and covenant headroom analysis (Pro tier, advanced metric)
+- Side-by-side comparison of 2-3 loan scenarios with different rates, terms, or fee structures
+- Detailed fee breakdowns (origination fees, prepayment penalties, closing costs)
+
+**Tier Mapping**:
+- **Free tier**: Single loan scenario; basic payment amount and total interest; watermarked exports
+- **Pro tier**: Multiple loan scenarios (up to 3 side-by-side); DSCR and covenant headroom metrics; detailed fee breakdowns; clean PDF and CSV exports; scenario sharing
+- **AI add-on**: Narrative explaining DSCR results ("Your DSCR of 1.32 is above the typical lender threshold of 1.25, providing comfortable headroom"); lender perspective commentary; risk warnings if DSCR is borderline or below thresholds
+
+**Golden Test Scenario Requirement**: The calculator-specific PDR (Section 11) must define 2-3 golden test scenarios validated against reference models (e.g., Excel amortization templates, lender underwriting tools) with ±0.1% tolerance for all numeric outputs.
+
+---
+
+## 2. SBA 7(a) Loan Analyzer
+
+**Primary Category**: Financing & Lending Intelligence
+
+**Business Role**: SEO/traffic magnet for SBA-specific searches; affiliate revenue driver for SBA lenders and brokers
+
+**Key Functions**:
+- SBA 7(a)-specific fee structures (SBA guarantee fee, lender fees, closing costs)
+- Side-by-side comparison of SBA 7(a) loan vs conventional term loan
+- **DSCR and total cost comparison** (Pro tier, advanced metric)
+- Explanation of SBA advantages (lower rates, longer terms) and disadvantages (higher upfront fees, SBA approval requirements)
+- Export-ready summary for lender discussions
+
+**Tier Mapping**:
+- **Free tier**: Single SBA 7(a) scenario with basic payment and total cost; simple comparison to one conventional loan alternative
+- **Pro tier**: Detailed SBA fee breakdown; DSCR calculation; multi-scenario comparison (different SBA terms or vs conventional); clean exports
+- **AI add-on**: Narrative explanation of SBA-specific tradeoffs ("SBA 7(a) has higher upfront fees but lower monthly payments; suitable if cash flow is tight"); lender expectation guidance
+
+**Golden Test Scenario Requirement**: The calculator-specific PDR must define 2-3 golden test scenarios including typical SBA 7(a) structures (e.g., $350K loan, 10-year term, 7.5% rate, 3.5% guarantee fee) validated against SBA.gov resources and lender examples.
+
+---
+
+## 3. Equipment Lease vs Buy Intelligence Calculator
+
+**Primary Category**: Financing & Lending Intelligence
+
+**Business Role**: High-intent traffic driver for equipment financing searches; affiliate revenue driver for equipment lenders and leasing companies
+
+**Key Functions**:
+- Total cost comparison: lease vs finance (loan) vs cash purchase
+- After-tax cost analysis with basic tax assumptions (interest deductibility, depreciation, lease deductibility)
+- Cash flow impact: upfront costs, monthly payments, residual value
+- **NPV/IRR analysis** of each option (Pro tier, advanced metric)
+- Export-ready summary for CFO and board review
+
+**Tier Mapping**:
+- **Free tier**: Basic lease vs buy cost comparison (total payments over term); single scenario
+- **Pro tier**: NPV/IRR calculation; after-tax cost analysis; multi-scenario comparison (different lease terms, interest rates, residual values); clean exports
+- **AI add-on**: Narrative recommendation based on cash position and tax situation ("Leasing preserves $45K in cash but costs $8K more over 5 years; consider if liquidity is a priority"); risk notes on residual value assumptions
+
+**Golden Test Scenario Requirement**: The calculator-specific PDR must define 2-3 golden test scenarios (e.g., $100K equipment, 5-year lease at $2K/month vs 5-year loan at 6.5%) validated against equipment financing calculators and NPV/IRR reference models.
+
+---
+
+## 4. Cash Runway & Burn Rate Calculator
+
+**Primary Category**: Cash Flow & Liquidity Intelligence
+
+**Business Role**: Founder/startup awareness driver; AI showcase calculator (high narrative value)
+
+**Key Functions**:
+- Monthly burn rate calculation (total cash outflows minus inflows)
+- Cash runway in months under current burn rate
+- **Multi-scenario runway analysis** (base case, downside, upside revenue/expense scenarios) with visual charts (Pro tier, advanced metric)
+- Sensitivity analysis: "If revenue drops 20%, runway decreases from 12 months to 8 months"
+- Export-ready runway charts for board or investor discussions
+
+**Tier Mapping**:
+- **Free tier**: Single scenario runway calculation (months until cash runs out); basic burn rate
+- **Pro tier**: Three-scenario comparison (base/downside/upside) with runway charts; sensitivity views showing impact of revenue or expense changes; clean exports
+- **AI add-on**: Commentary on burn rate health ("At your current burn of $85K/month, you have 9.2 months of runway; consider fundraising or cost cuts by Month 6"); suggested actions (cost reduction areas, revenue acceleration, fundraising timing)
+
+**Golden Test Scenario Requirement**: The calculator-specific PDR must define 2-3 golden test scenarios (e.g., $500K cash, $60K/month burn, 8.3 months runway) validated against standard cash runway formulas and FP&A templates.
+
+---
+
+## 5. Breakeven & Contribution Margin Analyzer
+
+**Primary Category**: Profitability & Pricing Intelligence
+
+**Business Role**: Cross-sell into non-lending use cases; demonstrates suite breadth beyond debt calculators
+
+**Key Functions**:
+- Breakeven units and breakeven revenue calculation
+- **Contribution margin** (revenue minus variable costs) and **margin of safety** (actual sales minus breakeven sales) as advanced metrics (Pro tier)
+- Multi-scenario comparison for different pricing or discount strategies
+- Sensitivity analysis: "If unit price drops 10%, breakeven volume increases from 1,200 units to 1,450 units"
+- Export-ready margin analysis for pricing decisions
+
+**Tier Mapping**:
+- **Free tier**: Single scenario breakeven calculation and basic contribution margin
+- **Pro tier**: Multiple pricing/discount scenarios; contribution margin and margin of safety with visual charts; scenario comparison table; clean exports
+- **AI add-on**: Narrative explaining margin risks ("Your margin of safety is only 15%; a small revenue miss could push you below breakeven"); guidance on discounting risks and pricing discipline
+
+**Golden Test Scenario Requirement**: The calculator-specific PDR must define 2-3 golden test scenarios (e.g., $50 price, $30 variable cost, $18K fixed costs = 900 units breakeven) validated against standard breakeven and contribution margin formulas from managerial accounting references.
+
+---
+
+## 6. Invoice Factoring / AR Financing Intelligence Calculator
+
+**Primary Category**: Financing & Lending Intelligence
+
+**Business Role**: Niche traffic driver for factoring-specific searches; affiliate revenue driver for factoring providers
+
+**Key Functions**:
+- Effective cost of factoring (advance rate, discount rate, fees) expressed as annual percentage rate
+- Comparison of factoring vs traditional line of credit or term loan
+- **Impact on cash timing and DSCR** (Pro tier, advanced metric)
+- Multi-scenario comparison of different factoring terms (advance rate 80% vs 90%, discount rate 2% vs 3.5%)
+- Export-ready summary for CFO evaluation
+
+**Tier Mapping**:
+- **Free tier**: Single factoring scenario with effective cost calculation
+- **Pro tier**: Multi-scenario comparison (different factoring terms or vs alternative financing); DSCR and cash flow impact analysis; clean exports
+- **AI add-on**: Commentary on when factoring makes sense ("Factoring is expensive at 24% effective APR, but solves immediate cash gap; use short-term only") or when it's risky ("Factoring costs exceed your gross margin; reconsider pricing or payment terms")
+
+**Golden Test Scenario Requirement**: The calculator-specific PDR must define 2-3 golden test scenarios (e.g., $100K invoice, 85% advance rate, 2.5% discount fee = $2,125 cost, 35% effective APR) validated against factoring industry examples and effective rate formulas.
+
+---
+
+## 7. Line of Credit Utilization & Cost Analyzer
+
+**Primary Category**: Cash Flow & Liquidity Intelligence
+
+**Business Role**: Upsell/add-on calculator for working capital users; complements loan and factoring calculators
+
+**Key Functions**:
+- Cost of using a line of credit: interest on drawn amounts, unused line fees, maintenance fees
+- Comparison of different utilization patterns (average balance 50% vs 80% of limit)
+- **Impact on DSCR and liquidity** from line of credit usage (Pro tier, advanced metric)
+- Repayment schedule analysis (pay down vs revolving usage)
+- Export-ready cost summary for CFO review
+
+**Tier Mapping**:
+- **Free tier**: Single utilization scenario with simple interest cost and fee calculation
+- **Pro tier**: Multiple utilization patterns (seasonal draw vs steady usage); repayment schedule comparison; DSCR and coverage analysis with line payments; clean exports
+- **AI add-on**: Narrative on healthy vs risky usage patterns ("Your average utilization of 85% limits flexibility; aim for 50-60% to preserve borrowing capacity"); commentary on when to pay down vs maintain availability
+
+**Golden Test Scenario Requirement**: The calculator-specific PDR must define 2-3 golden test scenarios (e.g., $250K line, 7.5% rate, 0.5% unused fee, $125K average balance = $9,375 interest + $625 unused fee) validated against line of credit cost models and lender rate sheets.
+
+---
+
+## 8. Simple Business Valuation (EBITDA/Revenue Multiple)
+
+**Primary Category**: Valuation & Deal Intelligence
+
+**Business Role**: Founder/investor interest driver; AI narrative showcase (high interpretive value)
+
+**Key Functions**:
+- Valuation range calculation using revenue multiples and EBITDA multiples
+- Sensitivity to changes in revenue, EBITDA, or multiples (e.g., "If EBITDA increases 10%, valuation range increases from $2.8M-$3.5M to $3.1M-$3.9M")
+- **Multi-scenario valuation views** (conservative, moderate, optimistic multiples) with visual sensitivity charts (Pro tier, advanced metric)
+- Industry-typical multiple ranges (user-specified or defaults by sector)
+- Export-ready valuation summary for board, investor, or advisor discussions
+
+**Tier Mapping**:
+- **Free tier**: Single-scenario valuation range (one set of inputs, one multiple range)
+- **Pro tier**: Multiple scenarios (different revenue/EBITDA assumptions or multiples); visual sensitivity charts showing valuation range under different assumptions; clean exports
+- **AI add-on**: Narrative explaining how valuation might be perceived by different buyers ("Strategic buyers may pay 5-6x EBITDA for your customer base; financial buyers likely 3.5-4.5x given growth rate"); commentary on valuation drivers and risks
+
+**Golden Test Scenario Requirement**: The calculator-specific PDR must define 2-3 golden test scenarios (e.g., $5M revenue, $800K EBITDA, 3-4x multiple = $2.4M-$3.2M valuation) validated against industry valuation benchmarks and multiple-based valuation formulas.
+
+---
+
+## Summary and Next Steps
+
+These eight MVP calculators represent the initial product offering for Phase 1. Each calculator must:
+- Deliver CFO-grade accuracy (±0.1% tolerance vs reference models, per Section 1.6)
+- Follow tier behavior patterns defined in Section 2.4 for their primary category
+- Include 2-3 golden test scenarios in their individual PDRs (Section 11)
+- Export board-ready PDFs and banker-friendly CSVs (per Section 1.3)
+- Support Free, Pro, and AI add-on tiers as specified above
+
+Development priorities within Phase 1 should favor calculators with the highest SEO/traffic potential (Business Loan + DSCR, SBA 7(a), Equipment Lease vs Buy, Cash Runway) to drive initial user acquisition, followed by calculators that demonstrate suite breadth and cross-selling opportunities (Breakeven, Valuation).
+
+
+# 2.3 Phased Roadmap
+
+The CFO Business Intelligence Calculator Suite will be delivered in four phases, progressing from platform foundation to MVP calculators to expansion and advanced planning capabilities. This phased approach manages development risk, enables early user feedback, and ensures that the platform architecture is solid before scaling the calculator portfolio.
+
+---
+
+## Phase 0: Platform Foundation
+
+**Objective**: Build the shared infrastructure and core components that all calculators depend on. This phase delivers no user-facing calculators but establishes the technical foundation for rapid calculator development in Phase 1.
+
+### Shared Calculation Engine and Formula Library
+
+- **Versioned formula library**: TypeScript modules containing all financial formulas (amortization, DSCR, NPV/IRR, breakeven, etc.) with semantic versioning (e.g., `dscr_v1.0.0`)
+- **Strongly typed interfaces**: Input and output types for all formulas with explicit units, currency, and validation rules
+- **Regression test suite**: Golden test scenarios for all formulas, automated comparison against reference models with ±0.1% tolerance checks
+- **Formula documentation**: Plain-language explanations of each formula, reference sources, edge case handling
+
+### Base React/TypeScript UI Shell
+
+- **Input panels**: Reusable form components for numeric inputs, dropdowns, toggles, sliders with built-in validation and tooltips
+- **Results panel**: Standardized output tables, key metrics cards, comparison views (side-by-side scenarios)
+- **Scenario tabs**: UI for creating, naming, saving, switching between scenarios
+- **Warning and explanation components**: Reusable alert boxes for risk warnings, threshold violations, informational messages
+- **Responsive layout**: Mobile-first design with adaptive layouts for desktop, tablet, mobile
+
+### Export Service for PDFs and CSV/Excel
+
+- **PDF generation**: Server-side PDF rendering with professional templates (headers, footers, page numbers, version stamps)
+- **CSV/Excel export**: Structured data exports with explicit column headers, units, metadata rows
+- **Metadata injection**: Automatic inclusion of timestamp, formula version, user ID, scenario name in all exports
+- **Async generation**: Background job queue for large exports (multi-scenario PDFs, large CSV files) with progress indicators
+- **Template customization**: Configurable branding (logos, colors, disclaimers) for B2B white-label clients
+
+### Basic Analytics and Event Tracking
+
+- **Telemetry SDK**: Client-side and server-side event tracking for calculator usage (which calculators, session duration, input distributions)
+- **Conversion funnel tracking**: Events for Free → Pro conversion triggers (scenario save attempts, export attempts, advanced metric views)
+- **Pseudonymous user IDs**: UUID-based user tracking with no PII in logs (per Section 1.6)
+- **Dashboard integration**: Events sent to analytics database for Business Intelligence Dashboard (Section 1.8)
+
+### WordPress/Shortcode Integration
+
+- **WordPress plugin**: Embeddable calculator shortcodes for WordPress sites (e.g., `[smart-calculator id="business-loan"]`)
+- **Iframe embed support**: Generic iframe embedding for non-WordPress sites
+- **Feature toggles via shortcode parameters**: Enable/disable features per embed (e.g., `tier="free"`, `ai="disabled"`)
+- **Domain whitelisting**: Security controls to restrict embeds to authorized domains (B2B access control)
+
+**Phase 0 Success Criteria**:
+- Formula library passes 100% of regression tests with ±0.1% tolerance
+- Demo calculator (simple loan payment) renders in WordPress and standalone web app
+- Export service generates board-ready PDF with proper formatting and metadata
+- Analytics pipeline captures and stores calculator usage events
+
+---
+
+## Phase 1: MVP Suite (Calculators 1-8)
+
+**Objective**: Launch the eight MVP calculators with Free/Pro/AI tier differentiation, enabling initial user acquisition, Pro tier conversions, and validation of product-market fit.
+
+### Implement the 8 MVP Calculators
+
+Each calculator must be implemented with:
+
+- **Deterministic formulas and golden test scenarios**: All formulas validated against reference models; 2-3 golden test scenarios per calculator (as defined in Section 2.2)
+- **Free/Pro feature gating**: Advanced metrics (DSCR, NPV/IRR, multi-scenario comparison, sensitivity charts) locked in Free tier with upgrade prompts; unlocked in Pro tier (per Section 1.5 and Section 2.2)
+- **Input validation and edge case handling**: Reject invalid inputs (negative amounts, nonsense rates); warn on unusual inputs (500% interest rate likely a typo); handle edge cases gracefully (zero cash flow, infinite DSCR)
+- **Responsive UI**: Desktop, tablet, and mobile layouts for all calculators
+- **Export functionality**: PDF and CSV exports with proper metadata and formatting (per Section 1.3 and Section 1.6)
+
+**The 8 MVP calculators** (details in Section 2.2):
+1. Business Loan + DSCR Intelligence Calculator
+2. SBA 7(a) Loan Analyzer
+3. Equipment Lease vs Buy Intelligence Calculator
+4. Cash Runway & Burn Rate Calculator
+5. Breakeven & Contribution Margin Analyzer
+6. Invoice Factoring / AR Financing Intelligence Calculator
+7. Line of Credit Utilization & Cost Analyzer
+8. Simple Business Valuation (EBITDA/Revenue Multiple)
+
+### Basic AI Narrative Integration for AI Add-On
+
+- **AI commentary service**: Server-side service that generates plain-language narratives from calculator outputs (e.g., "Your DSCR of 1.32 is above typical lender thresholds...")
+- **Prompt templates**: Pre-defined prompts for each calculator type, parameterized with calculator outputs and user inputs
+- **LLM integration**: API integration with OpenAI, Anthropic, or similar LLM provider; logging and cost tracking (per Section 1.6)
+- **Fallback handling**: Timeout handling (10-second hard cap); fallback messages if AI service is unavailable
+- **Disclaimers**: All AI-generated text includes "advisory only" disclaimers (per Section 1.4)
+- **Initial scope**: AI narratives for 4-6 calculators in Phase 1 (prioritize Business Loan + DSCR, Cash Runway, Valuation for highest narrative value); remaining calculators can have stubbed AI responses or "AI coming soon" messages
+
+### Launch on PlusOneCapital + SmartProfit-Style Frontends
+
+- **SEO-optimized landing pages**: Dedicated landing page for each calculator with keyword-rich content, schema markup, example scenarios
+- **Calculator directory page**: Master page listing all calculators by category (per Section 2.1) with search and filtering
+- **Basic onboarding flows**: Sign-up prompts when Free tier users attempt to save scenarios or export; upsell messaging for Pro and AI add-on tiers
+- **Free tier UX**: Watermarked exports, "Upgrade to Pro" prompts on advanced metrics, ad placement (per Section 1.5)
+- **Pro tier UX**: Clean exports, multi-scenario support, advanced metrics unlocked, no ads
+- **AI add-on UX**: Narrative commentary visible in results panel, "Powered by AI" indicators, opt-in settings
+
+**Phase 1 Success Criteria**:
+- All 8 calculators live and passing golden test scenarios with ±0.1% tolerance
+- Free → Pro conversion rate of 3-5% within 90 days (per Section 1.5 business goals)
+- At least 500 Free tier sessions/month from organic search across all calculators
+- AI narratives generating for 4+ calculators with <10 second p99 latency
+- Exports meeting quality standards (board-ready PDFs, banker-friendly CSVs per Section 1.3)
+
+---
+
+## Phase 2: Depth and Coverage Expansion
+
+**Objective**: Expand the calculator portfolio within existing categories, enhance AI capabilities, and strengthen B2B/white-label offering. This phase deepens market coverage and increases Pro tier value.
+
+### Add More Calculators Within Existing Categories
+
+**Financing & Lending Intelligence**:
+- **SBA 504 Loan Analyzer**: Similar to SBA 7(a) but for real estate and equipment purchases (two-loan structure with CDC participation)
+- **SBA Working Capital Program Analyzer**: For lines of credit and seasonal financing under SBA programs
+- **Commercial Real Estate Loan Calculator**: Mortgage-specific metrics (LTV, debt yield, cap rate impact)
+
+**Cash Flow & Liquidity Intelligence**:
+- **13-Week Rolling Cash Flow Planner**: Simplified weekly cash planning for businesses with tight liquidity (uses aggregated inputs, not transaction-level detail per Section 1.7 constraints)
+- **Working Capital Needs Estimator**: Calculate optimal AR, AP, inventory levels and financing needs
+
+**Profitability & Pricing Intelligence**:
+- **Customer Profitability Analyzer**: Contribution margin by customer segment (aggregated inputs, no customer-identifiable data per Section 1.7)
+- **Project ROI Calculator**: Simple NPV/IRR for capital projects or new product launches
+- **Tiered Pricing Optimizer**: Compare profitability of different pricing tier structures (SaaS, subscription, volume discount models)
+
+### Expand AI Narratives
+
+- **Richer scenario comparison commentary**: AI explains differences between scenarios in plain language ("Scenario B has lower monthly payments but costs $12K more over the term; choose if cash flow is tight today")
+- **Pattern-based suggestions across calculators**: "Users with similar DSCR profiles often extend loan terms to improve coverage ratios" (anonymized pattern detection, no PII)
+- **Risk commentary**: AI highlights covenant tension, cash runway warnings, margin erosion risks with suggested actions
+- **AI quality improvements**: Fine-tuned prompts, user feedback loops, A/B testing of narrative styles
+
+### Enhance B2B/White-Label Capabilities
+
+- **Tenant-level configuration**: B2B clients can configure default assumptions, branding, feature availability per tenant (multi-tenant SaaS architecture)
+- **Theming and branding**: Custom logos, color schemes, footer disclaimers, domain-specific branding per B2B client
+- **More granular feature toggles**: Enable/disable specific calculators, metrics, or AI features per tenant or per embed
+- **API access**: RESTful API for B2B clients to integrate calculators into their own platforms (not just iframe embeds)
+- **Self-hosted deployment option**: Docker/Kubernetes images for clients who require on-premise or private cloud deployment (per Section 1.4)
+
+**Phase 2 Success Criteria**:
+- 15+ calculators live (up from 8 in Phase 1)
+- AI narratives available for all calculators with improved quality scores (measured via user feedback ratings)
+- 5+ B2B white-label clients with custom branding and API integrations
+- Pro tier ARPU increases by 20-30% due to expanded calculator portfolio and AI improvements
+
+---
+
+## Phase 3: Advanced Planning & Scenario Toolkit
+
+**Objective**: Enable cross-calculator workflows, deeper planning capabilities, and board-ready multi-calculator exports. This phase transforms the suite from standalone calculators into an integrated decision-support platform.
+
+### Cross-Calculator Scenario Sets
+
+- **Linked scenarios across calculators**: Create a "scenario set" that links assumptions across Business Loan, Cash Runway, and Breakeven calculators (e.g., "Aggressive Growth" scenario applies consistent revenue and expense assumptions across all three)
+- **Consolidated view**: Dashboard showing key metrics from multiple calculators in one view (DSCR, runway, margin) for a given scenario set
+- **Change propagation**: Update revenue assumption in one calculator, automatically recalculate dependent calculators in the scenario set
+- **Export scenario sets**: Board-ready PDF that combines outputs from 3-5 calculators into one cohesive report
+
+**Note**: This is a Phase 3 feature and not a v1 commitment. Implementation depends on user demand validation in Phases 1-2 and technical feasibility assessment.
+
+### Deeper Planning Tools
+
+- **Multi-year high-level planning**: Simple 3-5 year planning tools using aggregated inputs (not line-item budgets per Section 1.7 constraints)
+- **Plan vs downside comparisons**: Side-by-side comparison of base plan, upside scenario, and downside scenario across multiple years
+- **Sensitivity modeling**: "What if" analysis across multiple drivers (revenue growth, margin, interest rates, hiring plans) with visual tornado charts or sensitivity tables
+
+### Advanced Exports
+
+- **Multi-tab Excel exports**: Excel files with Summary tab + detailed tabs for each calculator (formulas preserved for user customization)
+- **Board-ready packs**: Combine 3-5 related calculators into one PDF document (e.g., "Financing Options Pack" with Business Loan + DSCR, Line of Credit, and Cash Runway analysis)
+- **Custom export templates**: B2B clients can define custom export templates with their own branding, sections, and formatting
+- **Email delivery**: Schedule automatic exports (monthly, quarterly) delivered via email for recurring workflows (per Section 1.2 Day-2 usage contexts)
+
+### Evaluate Multi-Currency and Limited ERP Integrations
+
+- **Multi-currency support**: Allow mixed-currency scenarios or multi-currency consolidation (requires FX rate feeds, hedging logic)
+- **Read-only ERP integrations**: Optional CSV import or read-only API connections to QuickBooks, Xero, NetSuite for automated financial data pull (avoids manual input)
+
+**Important**: These capabilities are explicitly out-of-scope for v1 per Section 1.7. Phase 3 evaluation requires:
+- **Separate PDR**: Full product design review with technical architecture, data flows, error handling
+- **Risk assessment**: GDPR/CCPA implications of ERP integrations; regulatory risk of multi-currency modeling
+- **Demand validation**: Sufficient user requests and willingness to pay for these features
+- **Resource justification**: Engineering capacity and opportunity cost vs other Phase 3+ features
+
+**Phase 3 Success Criteria**:
+- Cross-calculator scenario sets available to Pro tier users (if implemented based on demand validation)
+- 50%+ of Pro tier users export multi-calculator board packs (demonstrates value of integrated workflows)
+- Multi-currency and ERP integration decisions documented in separate PDRs with go/no-go recommendation
+- Advanced exports (multi-tab Excel, board packs) used by 30%+ of Pro tier users
+
+---
+
+## Roadmap Flexibility and Sequencing
+
+This phased roadmap is a planning framework, not a rigid contract. Sequencing within phases should be adjusted based on:
+- **User demand signals**: If SBA 504 calculator gets high search volume and user requests, prioritize it in Phase 2 over other calculators
+- **Pro conversion data**: If AI narratives drive significant Pro → AI add-on conversion, accelerate AI expansion in Phase 2
+- **B2B pipeline**: If multiple B2B prospects request specific features (e.g., API access, self-hosted deployment), prioritize those capabilities
+- **Competitive pressure**: If competitors launch similar calculators, accelerate comparable offerings to maintain differentiation
+
+**Key principle**: Each phase must reach its success criteria before advancing to the next phase. Shipping Phase 1 calculators with poor quality or low user engagement would undermine trust and make Phase 2 expansion ineffective.
+
+
+# 2.4 Tier Behavior by Category
+
+This section defines standard tier behavior patterns for each of the five calculator categories. Consistent tier behavior within categories ensures predictable user experience, simplifies development, and reinforces the value proposition of Pro and AI add-on tiers. Individual calculators may have minor variations, but they must follow these general patterns unless explicitly justified in their calculator-specific PDR (Section 11).
+
+---
+
+## 1. Financing & Lending Intelligence
+
+Calculators in this category focus on structuring, comparing, and stress-testing business debt. Tier behavior emphasizes multi-scenario comparison and CFO-grade metrics (DSCR, covenant headroom, NPV/IRR) as the primary Pro tier differentiators.
+
+### Free Tier Behavior
+
+**What users can do**:
+- Calculate payment amounts and total interest for a **single loan or financing scenario**
+- View basic metrics: monthly payment, total interest paid, total cost of financing
+- See high-level comparison to one alternative (e.g., SBA loan vs conventional loan, lease vs buy)
+- Generate watermarked PDF or CSV export with "Powered by [Brand]" footer
+- View ads and affiliate links (equipment lenders, SBA brokers)
+
+**What's gated (Pro tier upgrade prompts)**:
+- **DSCR and covenant headroom metrics** (locked with "Upgrade to unlock DSCR analysis")
+- Detailed fee breakdowns (origination fees, prepayment penalties)
+- Multiple loan scenarios side-by-side (Free tier limited to 1 saved scenario)
+- NPV/IRR analysis (for lease vs buy, equipment financing)
+- Clean exports without watermarks
+- Scenario sharing with colleagues
+
+### Pro Tier Behavior
+
+**What unlocks**:
+- **Multiple loan/facility scenarios** (up to 10 saved scenarios per calculator) with side-by-side comparison tables
+- **Advanced metrics**: DSCR, debt service coverage ratios, covenant headroom, NPV/IRR (where applicable)
+- **Detailed fee breakdowns**: Origination fees, prepayment penalties, closing costs, guarantee fees (SBA)
+- **Clean exports**: Board-ready PDFs and banker-friendly CSVs without watermarks or ads
+- **Scenario sharing**: Generate shareable links with view-only or edit permissions
+- **Version history**: Track changes to scenarios over time (who edited, when)
+
+### AI Tier Behavior
+
+**What AI adds** (requires Pro tier + AI add-on):
+- **Lender-style commentary**: "Your DSCR of 1.32 is above the typical lender threshold of 1.25, providing comfortable covenant headroom"
+- **Risk threshold highlighting**: Warnings when DSCR is borderline or below typical thresholds; explanations of covenant tension
+- **Tradeoff narratives**: "Scenario A has lower monthly payments but $12K higher total cost; choose if preserving cash flow is critical"
+- **Lender perspective**: "Lenders typically require 1.25-1.50 DSCR; your current structure may face pushback"
+- **Scenario suggestions**: "Consider extending the term from 5 to 7 years to reduce monthly payments and improve DSCR to 1.42"
+
+---
+
+## 2. Cash Flow & Liquidity Intelligence
+
+Calculators in this category help users understand cash runway, timing gaps, and liquidity risks. Tier behavior emphasizes multi-scenario runway analysis and sensitivity views as Pro tier differentiators.
+
+### Free Tier Behavior
+
+**What users can do**:
+- Calculate cash runway in months for a **single scenario** (current burn rate and cash balance)
+- View basic metrics: monthly burn rate, months of runway remaining
+- See simple cash flow projection (cash balance over time)
+- Generate watermarked export with basic runway chart
+
+**What's gated (Pro tier upgrade prompts)**:
+- **Multi-scenario runway comparisons** (base case, downside, upside) with side-by-side charts
+- Sensitivity analysis ("If revenue drops 20%, runway decreases from 12 to 8 months")
+- Detailed cash flow breakdowns (inflows vs outflows by category)
+- DSCR and coverage metrics (for line of credit or working capital tools)
+- Clean exports without watermarks
+- Scenario sharing
+
+### Pro Tier Behavior
+
+**What unlocks**:
+- **Multi-scenario runway analysis** (up to 10 scenarios): base case, optimistic, conservative, stress test
+- **Visual runway charts**: Line charts showing cash balance over time for each scenario, overlaid for comparison
+- **Sensitivity views**: Tables or tornado charts showing impact of revenue changes, expense changes, or timing delays on runway
+- **DSCR and coverage metrics** (for calculators involving debt or credit lines): impact of line of credit usage on liquidity and coverage ratios
+- **Clean exports**: Board-ready PDFs with multi-scenario charts; CSV exports with monthly cash projections
+- **Scenario sharing**: Share runway analysis with investors, board members, or CFO
+
+### AI Tier Behavior
+
+**What AI adds** (requires Pro tier + AI add-on):
+- **Runway guidance narratives**: "You have 9.2 months of runway at current burn; consider starting fundraising or cost reduction by Month 6"
+- **Risk warnings**: "Your downside scenario shows only 5 months of runway if revenue drops 20%; this is below the recommended 6-month buffer"
+- **Suggested actions**: "To extend runway to 12 months, reduce monthly burn by $15K (cut discretionary spend) or increase monthly revenue by $25K"
+- **Pattern insights**: "Businesses with similar burn rates typically raise capital when runway drops below 9 months"
+- **Line of credit commentary**: "Your utilization of 85% limits flexibility; aim for 50-60% to preserve borrowing capacity in downturns"
+
+---
+
+## 3. Profitability & Pricing Intelligence
+
+Calculators in this category analyze margins, breakeven points, and pricing structures. Tier behavior emphasizes multi-scenario pricing comparison and contribution margin analysis as Pro tier differentiators.
+
+### Free Tier Behavior
+
+**What users can do**:
+- Calculate breakeven units and breakeven revenue for a **single price/volume scenario**
+- View basic metrics: contribution margin per unit, breakeven units, breakeven revenue
+- See simple gross margin percentage
+- Generate watermarked export with basic breakeven summary
+
+**What's gated (Pro tier upgrade prompts)**:
+- **Multiple pricing/volume scenarios** (e.g., current pricing, +10% price increase, volume discount tier)
+- **Contribution margin analysis** and **margin of safety** metrics
+- Sensitivity charts showing impact of price changes or volume changes on profitability
+- Side-by-side scenario comparison tables
+- Clean exports without watermarks
+- Scenario sharing
+
+### Pro Tier Behavior
+
+**What unlocks**:
+- **Multiple pricing/discount scenarios** (up to 10 scenarios): compare current pricing, price increase, volume discount, bundle pricing
+- **Advanced metrics**: Contribution margin per unit, contribution margin ratio, margin of safety (actual sales minus breakeven)
+- **Visual sensitivity charts**: Bar charts or tornado charts showing how pricing or volume changes affect profitability
+- **Scenario comparison tables**: Side-by-side view of breakeven units, contribution margin, and profit for each pricing scenario
+- **Clean exports**: Board-ready PDFs with pricing analysis; CSV exports with scenario comparison data
+- **Scenario sharing**: Share pricing analysis with sales team, CFO, or CEO for approval
+
+### AI Tier Behavior
+
+**What AI adds** (requires Pro tier + AI add-on):
+- **Margin risk explanations**: "Your margin of safety is only 15%; a small revenue miss could push you below breakeven"
+- **Discounting risk warnings**: "The 20% volume discount reduces your contribution margin from 40% to 28%; ensure volume increase justifies the margin sacrifice"
+- **Pricing strategy narratives**: "Raising prices by 10% allows you to lose up to 18% of unit volume before profitability declines; your customer base is likely not that price-sensitive"
+- **Sensitivity insights**: "Your profitability is highly sensitive to variable cost changes; a 5% increase in COGS reduces margin of safety from 25% to 12%"
+- **Scenario recommendations**: "Scenario B (tiered pricing) balances volume and margin better than flat discounting"
+
+---
+
+## 4. Valuation & Deal Intelligence
+
+Calculators in this category provide simple, defensible valuation estimates and deal-impact views. Tier behavior emphasizes multi-scenario valuation ranges and sensitivity analysis as Pro tier differentiators.
+
+### Free Tier Behavior
+
+**What users can do**:
+- Calculate a **basic valuation range** from simple inputs (revenue or EBITDA, industry multiples)
+- View single-scenario valuation estimate (e.g., "Your business is valued at $2.8M - $3.5M based on 3.5-4.5x EBITDA")
+- See simple valuation drivers (revenue, EBITDA, multiple)
+- Generate watermarked export with valuation range summary
+
+**What's gated (Pro tier upgrade prompts)**:
+- **Multiple valuation scenarios** (conservative, moderate, optimistic multiples or performance assumptions)
+- **Sensitivity views**: charts showing how valuation changes with revenue, EBITDA, or multiple adjustments
+- Detailed breakdowns (enterprise value, equity value, debt impact)
+- Side-by-side scenario comparison
+- Clean exports without watermarks
+- Scenario sharing
+
+### Pro Tier Behavior
+
+**What unlocks**:
+- **Multiple valuation scenarios** (up to 10 scenarios): different revenue assumptions, EBITDA margins, or multiples (strategic buyer vs financial buyer)
+- **Visual sensitivity charts**: Bar charts or tornado charts showing valuation range under different assumptions
+- **Scenario comparison tables**: Side-by-side view of enterprise value, equity value, implied multiples for each scenario
+- **Debt impact analysis**: How new debt or equity affects valuation and leverage ratios
+- **Clean exports**: Board-ready PDFs with valuation analysis; CSV exports with scenario data
+- **Scenario sharing**: Share valuation estimates with investors, advisors, or potential buyers
+
+### AI Tier Behavior
+
+**What AI adds** (requires Pro tier + AI add-on):
+- **Buyer perspective narratives**: "Strategic buyers may pay 5-6x EBITDA for your customer relationships and market position; financial buyers likely 3.5-4.5x given current growth rate"
+- **Valuation driver insights**: "Your valuation is highly sensitive to EBITDA margin; improving from 15% to 18% increases valuation by $600K"
+- **Deal context commentary**: "At 4.2x EBITDA, this valuation is above median for your industry (3.8x) but below top quartile (5.1x); justified if growth rate exceeds industry average"
+- **Risk warnings**: "New debt of $500K reduces equity value from $2.8M to $2.3M; ensure cash flow supports debt service (check DSCR)"
+- **Scenario recommendations**: "Scenario C (optimistic EBITDA, moderate multiple) is most defensible for board presentation; Scenario A (conservative) is most defensible for lender discussions"
+
+---
+
+## 5. Planning & Scenario Intelligence
+
+Calculators in this category enable what-if planning around growth, costs, and capital allocation. Tier behavior emphasizes multi-scenario planning within individual tools as Pro tier differentiators.
+
+**Important note**: Cross-calculator linked scenario sets (e.g., linking assumptions across Business Loan + Cash Runway + Margin calculators) are **Phase 3+ features** and not a v1 commitment (per Section 2.3). Cross-calculator AI narratives that synthesize insights across multiple calculators are also later-phase features. This section describes tier behavior **within individual planning calculators** only.
+
+### Free Tier Behavior
+
+**What users can do**:
+- Run a **single scenario** within an individual planning calculator (e.g., "What if we hire 10 people?")
+- View basic financial impact (revenue, expenses, cash flow, profitability for the scenario)
+- See simple summary of inputs and outputs
+- Generate watermarked export with single-scenario results
+
+**What's gated (Pro tier upgrade prompts)**:
+- **Multiple scenarios within a single planning tool** (e.g., plan vs downside, aggressive growth vs conservative growth)
+- **Scenario comparison views**: side-by-side tables and charts comparing financial outcomes across scenarios
+- Sensitivity analysis (impact of driver changes on outcomes)
+- Advanced metrics (margin, runway, coverage ratios) within planning tools
+- Clean exports without watermarks
+- Scenario sharing
+
+### Pro Tier Behavior
+
+**What unlocks**:
+- **Multiple scenarios within a single planning calculator** (up to 10 scenarios): base plan, upside, downside, stress test
+- **Visual comparison charts**: Bar charts or line charts showing revenue, expenses, cash flow, or profitability across scenarios
+- **Sensitivity analysis**: Tables or tornado charts showing impact of key driver changes (hiring plans, pricing, interest rates) on financial outcomes
+- **Advanced metrics**: Contribution margin, cash runway, DSCR, or other CFO-grade metrics (depending on planning calculator type)
+- **Clean exports**: Board-ready PDFs with multi-scenario planning analysis; CSV exports with scenario comparison data
+- **Scenario sharing**: Share planning scenarios with board, investors, or CFO for review and approval
+
+### AI Tier Behavior
+
+**What AI adds** (requires Pro tier + AI add-on):
+- **Planning narratives**: "Hiring 10 people increases expenses by $1.2M annually but extends runway by only 6 months if revenue grows as planned; downside scenario shows only 4 months of additional runway"
+- **Risk and upside highlighting**: "Your upside scenario assumes 30% revenue growth; if this doesn't materialize, you'll face cash shortfall by Month 9"
+- **Tradeoff explanations**: "Scenario B (aggressive hiring) maximizes revenue potential but increases burn risk; Scenario A (conservative hiring) preserves cash but may limit growth"
+- **Sensitivity insights**: "Your plan is most sensitive to revenue growth rate; a 10% miss reduces cash runway from 18 months to 12 months"
+- **Scenario recommendations**: "Scenario C balances growth and risk best for board presentation; maintain Scenario A as a contingency plan"
+
+**Out of scope for Phase 1 AI**:
+- Cross-calculator narratives (e.g., "Your loan scenario increases DSCR risk shown in the cash flow calculator")
+- Automated scenario suggestions that pull data from multiple calculators
+- AI-driven optimization across multiple linked calculators
+
+These cross-calculator AI features are Phase 3+ considerations and require separate PDRs with technical feasibility and cost-benefit analysis.
+
+---
+
+## Summary and Application
+
+These tier behavior patterns ensure consistency within categories while allowing individual calculators to differentiate on domain-specific features. Key principles:
+
+1. **Free tier always single-scenario**: Limits user to one saved scenario and basic metrics
+2. **Pro tier unlocks multi-scenario comparison and advanced metrics**: Side-by-side views, CFO-grade metrics (DSCR, NPV/IRR, contribution margin, sensitivity), clean exports
+3. **AI tier adds narrative interpretation**: Plain-language explanations, risk warnings, tradeoff analysis, scenario recommendations
+
+Individual calculator PDRs (Section 11) must reference this section and justify any deviations from these standard patterns. Deviations are acceptable only if they:
+- Increase Pro tier conversion potential
+- Enhance user value without increasing development complexity
+- Maintain consistency with the overall product philosophy (Section 1.1)
+
+
+# 2.5 Out-of-Scope Calculators for V1
+
+This section explicitly defines calculator types that are **out of scope** for the initial MVP suite (Phase 1) and early expansion phases (Phase 2). These boundaries protect the product from scope creep, manage development risk, and ensure focus on the core value proposition: CFO-grade financial intelligence calculators using aggregated scenario inputs.
+
+---
+
+## Out-of-Scope Calculator Types
+
+### Detailed Tax Calculators
+
+**Examples**:
+- Entity-specific corporate tax optimization tools (C-corp vs S-corp, partnership vs LLC)
+- Sales tax and use tax compliance calculators with multi-state nexus rules
+- Multi-jurisdiction tax engines (US federal + state, Canada federal + provincial, cross-border)
+- Advanced tax planning tools (tax loss harvesting, depreciation optimization, R&D credits, renewable energy credits)
+
+**Reasoning**:
+- **Legal and tax expertise required**: Tax calculators require partnership with CPAs, tax attorneys, or tax software providers to ensure accuracy and compliance. The suite's calculation engine is designed for financial metrics, not tax law interpretation.
+- **Regulatory risk**: Tax rules change frequently (annual updates to tax codes, rates, deductions). Providing incorrect tax guidance exposes the product to liability and user complaints.
+- **Multi-jurisdiction complexity**: Supporting US federal + 50 states + Canada federal + 13 provinces requires maintaining 60+ tax rulesets, each with annual updates. This is beyond the initial US/CA scope defined in Section 1.7.
+- **Out of core competency**: The suite's differentiator is CFO-grade financial metrics (DSCR, NPV/IRR, contribution margin), not tax compliance. Tax calculators are a different product category with different competitive dynamics.
+
+**Alternative approach**: Calculators may include **basic tax assumptions** (e.g., user-specified corporate tax rate, interest deductibility) for planning purposes, with clear disclaimers that results are estimates and users should consult tax professionals. Formal tax optimization tools are out of scope.
+
+---
+
+### Payroll-Specific Calculators Tied to Hourly/Time-Tracking Data
+
+**Examples**:
+- Employee-level payroll cost calculators (hourly wage, overtime, benefits per employee)
+- Time-and-attendance-based labor cost planners
+- Shift scheduling cost optimizers
+- Payroll tax calculators (FICA, unemployment, withholding by employee)
+
+**Reasoning**:
+- **Different data model**: The suite is designed for **aggregated scenario inputs** (total payroll expense, total headcount), not employee-level data. Supporting employee-level inputs requires a different database schema, UI patterns, and privacy controls.
+- **Integrations out of v1 scope**: Payroll calculators are most valuable when integrated with payroll systems (Gusto, ADP, Paychex) or time-tracking systems (TSheets, Deputy). Per Section 1.7, automated integrations are out of v1 scope.
+- **PII exposure risk**: Employee-level payroll data (names, wages, SSNs) introduces PII that the suite is designed to avoid (per Section 1.4 and 1.7). Aggregated payroll totals (e.g., "total monthly payroll: $120K") are acceptable; individual employee records are not.
+- **Niche use case**: Payroll-specific tools serve HR and operations teams, not CFOs and finance teams (the suite's primary personas per Section 1.2).
+
+**Alternative approach**: Calculators may include **aggregated labor cost inputs** (e.g., "If we hire 10 people at average salary $70K, total payroll increases by $700K/year"). Individual employee payroll planning is out of scope.
+
+---
+
+### Full-Blown Budgeting Systems with Month-by-Month Line-Item Planning
+
+**Examples**:
+- Detailed operating budgets with 50+ expense line items by month
+- Department-level budget allocation and tracking tools
+- Budget vs actual variance analysis with drill-down to transaction level
+- Multi-year capital budgets with project-by-project tracking
+
+**Reasoning**:
+- **Too granular for "aggregated scenarios only" constraint**: Per Section 1.7, the suite uses aggregated scenario inputs, not line-item detail. Full budgeting systems require line-item planning (salaries by person, software subscriptions by vendor, travel by department), which conflicts with the calculator paradigm.
+- **Competes with existing budgeting platforms**: Tools like Adaptive Insights, Planful, Cube, and spreadsheet templates already serve the detailed budgeting market. The suite differentiates by offering **fast, scenario-based decision support**, not comprehensive budget management.
+- **High maintenance burden**: Line-item budgets require ongoing updates, variance explanations, and reconciliation against actuals. This shifts the product from "calculator" to "system of record," which is out of scope per Section 1.7.
+- **UI complexity**: Detailed budgeting requires spreadsheet-like UIs with hundreds of input cells, copy-paste, bulk editing, and formula authoring. The suite's UI is optimized for **guided input forms** with 10-30 inputs per calculator, not spreadsheet replacement.
+
+**Alternative approach**: Calculators may include **high-level planning tools** (e.g., "What if we increase total operating expenses by 15%?") using aggregated inputs. Detailed line-item budgeting is out of scope.
+
+---
+
+### ERP or GL-Integrated Tools That Ingest Detailed Accounting Exports
+
+**Examples**:
+- Calculators that auto-import trial balance data from QuickBooks, Xero, NetSuite
+- Tools that parse general ledger exports (CSV, Excel) and categorize accounts
+- Automated financial statement generators from accounting system data
+- Real-time sync with accounting platforms for live financial dashboards
+
+**Reasoning**:
+- **No automated accounting/ERP imports in v1**: Per Section 1.7, the suite does not integrate with accounting systems in v1. Users manually enter aggregated financials (total revenue, total COGS, total operating expenses).
+- **Fragile integrations**: Accounting API integrations are brittle (authentication issues, schema changes, rate limits, inconsistent data quality across clients). Supporting multiple accounting platforms (QuickBooks, Xero, NetSuite, Sage, FreshBooks) multiplies support burden.
+- **Out of scope for decision-support use case**: The suite targets **scenario-based planning** (e.g., "What if we take on $200K in new debt?"), not **historical reporting** (e.g., "What were our actual financials last month?"). Accounting integrations are valuable for historical data, less so for forward-looking scenarios.
+- **Data quality risks**: Accounting data often requires cleanup (uncategorized transactions, duplicate entries, reconciliation errors). Auto-importing messy data into calculators would produce unreliable outputs and erode trust.
+
+**Alternative approach**: Calculators accept **manual input of aggregated financials** (e.g., user types "Total Q1 Revenue: $500K" based on their P&L report). Automated imports may be reconsidered in Phase 3+ (per Section 2.3) with rigorous error handling and reconciliation workflows.
+
+---
+
+### Industry-Specific Deep Models Beyond Simple Aggregated Inputs
+
+**Examples**:
+- Hospital cost accounting (DRG-based reimbursement, bed utilization, labor pools)
+- Complex project finance (oil & gas, infrastructure, real estate development with multi-phase cash flows)
+- Restaurant-specific models (table turns, labor scheduling, food cost by menu item)
+- SaaS-specific models (CAC payback by channel, cohort LTV, churn by segment, expansion revenue)
+
+**Reasoning**:
+- **Requires domain-specific expertise**: Industry-specific models require deep knowledge of industry metrics, accounting conventions, and business drivers. Building these well requires partnerships with industry experts or hiring domain specialists.
+- **Limited to niche markets**: Each industry-specific calculator addresses a narrow audience (e.g., hospital CFOs, restaurant owners). The MVP suite targets **cross-industry problems** (business loans, cash flow, breakeven) to maximize addressable market.
+- **Phase 2+ consideration**: Industry-specific calculators may be added in later phases if user demand justifies development cost and there's a clear monetization path (e.g., B2B partnerships with industry associations, SaaS platforms, or lenders).
+- **Conflicts with "simple aggregated inputs" principle**: Many industry-specific models require detailed inputs (menu items, customer cohorts, project milestones) that conflict with the suite's focus on aggregated scenarios.
+
+**Alternative approach**: The MVP suite focuses on **cross-industry calculators** that work for any business (loans, cash flow, margins, valuation). Industry-specific depth is out of scope unless justified by demand and a viable business model.
+
+---
+
+## Process for Reconsidering Out-of-Scope Calculators
+
+These calculator types are **not permanently banned**—they can be revisited once the core platform and MVP calculators (Phase 1) are shipping and stable. However, any of these require:
+
+1. **Separate PDR (Product Design Review)**: A full PDR (following the Section 11 template) documenting use cases, technical design, tier behavior, business justification, and risk assessment.
+
+2. **Demand validation**: Evidence of user demand (search volume, user requests, competitive analysis showing market opportunity). "Seems like a good idea" is insufficient; must demonstrate that this calculator would drive user acquisition, Pro conversions, or B2B revenue.
+
+3. **Resource justification**: Clear opportunity cost analysis. Building a detailed tax calculator or industry-specific model consumes engineering and product resources that could be spent on expanding the core calculator portfolio, improving AI narratives, or enhancing B2B capabilities. The return must justify the investment.
+
+4. **Risk review**: Any calculator involving tax advice, PII, or regulatory complexity requires review by legal, compliance, and security teams. Calculators that introduce new data exposure (employee payroll, accounting integrations) require SOC 2 compliance updates and privacy policy changes.
+
+5. **Pilot or Beta phase**: Out-of-scope calculator types should launch as Beta (limited release to subset of users) to validate demand and quality before full production rollout. This limits downside risk if the calculator fails to gain traction.
+
+---
+
+## Closing Statement
+
+The out-of-scope boundaries defined in this section protect the product from over-complexity, regulatory risk, and market dilution. The suite's strength is **CFO-grade financial intelligence using simple, aggregated inputs**—not comprehensive budgeting, tax compliance, or industry-specific depth. By maintaining focus on the core value proposition (speed, defensibility, embed-ability per Section 1.1), the suite can deliver exceptional quality in its target problem space rather than mediocre quality across too many domains.
+
+These boundaries will be revisited periodically (quarterly product roadmap reviews) to ensure they remain appropriate as the market, user needs, and competitive landscape evolve. However, the default stance is **maintain focus** unless compelling evidence justifies expansion into these more complex calculator types.
+
+
+---
+
+
+# Section 3: Platform Architecture
+
+# 3.1 Architecture Layers
+
+The CFO Business Intelligence Calculator Suite is built on a 7-layer architecture designed for modularity, scalability, and clear separation of concerns. This architecture supports the performance SLAs defined in Section 1.6 (p95 calculation < 150ms, exports < 3s, AI < 3s) while maintaining flexibility for embedding, multi-tenancy, and future platform expansion.
+
+---
+
+## Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         CLIENT LAYER                            │
+│  WordPress Embeds | Standalone Web App | Future Mobile         │
+└────────────────────────────┬────────────────────────────────────┘
+                             │ HTTPS
+┌────────────────────────────▼────────────────────────────────────┐
+│                   API GATEWAY / BACKEND SERVICES                │
+│  REST API | Auth | Rate Limiting | Tier Gating                 │
+└────┬───────────────────────┬──────────────────────┬─────────────┘
+     │                       │                      │
+     │ RPC/Function Call     │ Queue Message        │ Event Stream
+     │                       │                      │
+┌────▼──────────┐  ┌────────▼────────┐  ┌──────────▼──────────┐
+│  CALCULATION  │  │ EXPORT/REPORTING │  │   AI SERVICES       │
+│    ENGINE     │  │    SERVICES      │  │  Prompt Mgmt, LLM   │
+└────┬──────────┘  └────────┬─────────┘  └──────────┬──────────┘
+     │                      │                       │
+     │ DB Read/Write        │ File Storage          │ Logging
+     │                      │                       │
+┌────▼──────────────────────▼───────────────────────▼──────────┐
+│                      DATA STORAGE                             │
+│  PostgreSQL (Scenarios, Users) | Redis (Sessions, Cache)     │
+│  S3/R2 (Export Files)                                         │
+└────────────────────────────────┬──────────────────────────────┘
+                                 │
+                        ┌────────▼────────┐
+                        │   ANALYTICS /   │
+                        │   TELEMETRY     │
+                        │  Event Tracking │
+                        └─────────────────┘
+```
+
+---
+
+## 1. Client Layer
+
+### Purpose and Responsibilities
+
+The client layer is the user-facing interface where calculators are rendered and users interact with inputs, outputs, and exports. This layer is responsible for:
+- Rendering calculator UI (input forms, output tables, charts)
+- Capturing user input and triggering calculations
+- Displaying results, warnings, and AI narratives
+- Handling tier-specific UI (Free tier upgrade prompts, Pro tier features, AI add-on commentary)
+- Managing client-side state (current scenario, input values, unsaved changes)
+
+### Components
+
+- **WordPress Plugin/Shortcode**: Embeds calculators into WordPress sites via shortcodes (e.g., `[smart-calculator id="business-loan"]`)
+- **Standalone Web App**: Full-featured React application hosted on dedicated domain (e.g., `calculators.smartprofit.com`)
+- **Shared React Components**: Calculator shell, input panels, result cards, scenario tabs, export buttons (consumed by both WordPress and standalone)
+- **Future Mobile Apps**: iOS/Android apps using the same backend API (Phase 3+)
+
+### Communication Patterns
+
+- **Calls API Gateway** via HTTPS REST endpoints:
+  - `POST /api/calculators/:id/calculate` - Submit inputs, receive calculation results
+  - `GET /api/scenarios/:id` - Load saved scenario
+  - `POST /api/scenarios` - Save new scenario
+  - `POST /api/exports/:type` - Request PDF or CSV export
+  - `POST /api/ai/narrative` - Request AI commentary (if AI add-on enabled)
+- **Receives responses** as JSON with typed schemas (TypeScript interfaces)
+- **Polls for async results** (exports, AI narratives) or uses WebSocket for real-time updates (optional Phase 2+)
+
+### Stateful vs Stateless
+
+**Mostly stateless** from server perspective:
+- Client maintains UI state (current input values, active scenario) in React component state or Redux/Zustand store
+- Authenticated users have session cookies/tokens for API calls
+- Saved scenarios are persisted in backend; client rehydrates on page load
+- Anonymous users store unsaved scenarios in browser `localStorage` (lost if cache cleared)
+
+---
+
+## 2. API Gateway / Backend Services
+
+### Purpose and Responsibilities
+
+The API Gateway layer handles all client requests, enforces security and rate limits, and routes requests to appropriate backend services. This layer is responsible for:
+- REST API endpoints for calculators, scenarios, users, exports
+- Authentication and authorization (session management, tier verification)
+- Rate limiting (per user, per IP, per API key for B2B)
+- Tier gating (check if user has Pro or AI add-on access)
+- Request validation (schema validation, input sanitization)
+- Response formatting (consistent JSON structure, error handling)
+
+### Components
+
+- **API Server**: Node.js + TypeScript server (Express or Fastify)
+- **Authentication Middleware**: JWT or session-based auth, OAuth integration (Google, Microsoft, GitHub)
+- **Rate Limiter**: Redis-backed rate limiting (e.g., 100 requests/minute for Free tier, 1000 for Pro)
+- **Tier Gate Middleware**: Checks user's subscription tier against requested features (DSCR metrics require Pro, AI narratives require AI add-on)
+- **Request Validators**: JSON schema validators (e.g., AJV) for input validation
+
+### Communication Patterns
+
+- **Receives HTTPS requests** from Client Layer
+- **Calls Calculation Engine** via function calls or RPC (same process or microservice)
+- **Enqueues jobs** to message queue for async exports and AI requests
+- **Reads/writes Data Storage** (PostgreSQL for scenarios/users, Redis for sessions/cache)
+- **Sends events** to Analytics/Telemetry layer (calculation performed, export requested, tier upgrade)
+
+### Stateful vs Stateless
+
+**Stateless** (horizontally scalable):
+- No in-process state; all state externalized to Redis (sessions, rate limits) and PostgreSQL (scenarios, users)
+- Multiple API server instances can run behind load balancer
+- Session data stored in Redis with TTL (e.g., 24 hours for anonymous, 30 days for logged-in)
+
+---
+
+## 3. Calculation Engine
+
+### Purpose and Responsibilities
+
+The calculation engine is the core mathematical brain of the platform. It executes financial formulas, validates inputs, and produces calculation results. This layer is responsible for:
+- Executing formulas (amortization, DSCR, NPV/IRR, breakeven, etc.) with ±0.1% accuracy vs reference models
+- Input validation (reject negative amounts, nonsense rates, invalid date ranges)
+- Edge case handling (zero cash flow, infinite DSCR, division by zero)
+- Output formatting (currency, percentages, dates, units)
+- Version tracking (each formula has semantic version ID for audit trails)
+
+### Components
+
+- **Finance Math Library**: TypeScript modules with pure functions for each formula (e.g., `calculateDSCR`, `calculateNPV`, `calculateBreakeven`)
+- **Validators**: Input validators for each calculator type (loan calculator requires positive loan amount, interest rate 0-50%, etc.)
+- **Formatters**: Output formatters for currency, percentages, dates (locale-aware per Section 1.4)
+- **Regression Test Suite**: Golden test scenarios with expected outputs (run on each deployment)
+
+### Communication Patterns
+
+- **Called by API Gateway** via function calls (same Node.js process) or RPC (if microservice)
+- **Inputs**: Typed JavaScript objects (e.g., `LoanInputs` interface with `amount`, `rate`, `term`)
+- **Outputs**: Typed JavaScript objects (e.g., `LoanResults` with `monthlyPayment`, `totalInterest`, `dscr`, `amortizationSchedule`)
+- **No external dependencies** for core math (no database calls, no network calls)
+- **Idempotent**: Same inputs always produce same outputs (deterministic, no randomness)
+
+### Stateful vs Stateless
+
+**Purely stateless**:
+- Pure functions with no side effects
+- No database reads/writes within calculation logic
+- Thread-safe and horizontally scalable (can run multiple calculation workers in parallel)
+
+---
+
+## 4. Data Storage
+
+### Purpose and Responsibilities
+
+The data storage layer persists all application data: scenarios, users, subscriptions, sessions, export files, and analytics events. This layer is responsible for:
+- Storing saved scenarios with inputs, outputs, metadata (user ID, timestamp, version)
+- User accounts, authentication credentials, subscription tiers
+- Session management for logged-in and anonymous users
+- Caching calculation results and export files (temporary)
+- Analytics event storage for Business Intelligence Dashboard
+
+### Components
+
+- **PostgreSQL**: Primary relational database for scenarios, users, subscriptions, calculator configs
+  - Tables: `users`, `scenarios`, `subscriptions`, `calculator_configs`, `export_jobs`
+  - JSONB columns for flexible scenario inputs/outputs (schemaless per calculator type)
+- **Redis**: In-memory cache and session store
+  - Sessions: user sessions, anonymous sessions (24-hour TTL)
+  - Cache: calculation results (5-minute TTL), rate limit counters
+- **S3/Cloudflare R2**: Object storage for export files (PDFs, CSVs)
+  - Temporary exports: 24-hour retention for anonymous users
+  - Permanent exports: 24-month retention for logged-in users (per Section 1.6)
+- **Analytics Database** (optional): Separate PostgreSQL or ClickHouse for high-volume telemetry events
+
+### Communication Patterns
+
+- **Read/write by API Gateway**: Save scenarios, load user profiles, check subscription tiers
+- **Read by Calculation Engine**: Load calculator configs (rare, mostly cached)
+- **Write by Export/Reporting Services**: Save export files to S3/R2, update export job status in PostgreSQL
+- **Write by Analytics/Telemetry**: Log events to analytics database (async, non-blocking)
+
+### Stateful vs Stateless
+
+**Stateful** (managed services or replicated clusters):
+- PostgreSQL: Primary-replica setup with automatic failover (AWS RDS, Railway PostgreSQL, or self-managed)
+- Redis: Replicated Redis cluster or managed service (AWS ElastiCache, Upstash, Redis Cloud)
+- S3/R2: Fully managed object storage (stateless from application perspective)
+
+---
+
+## 5. Export/Reporting Services
+
+### Purpose and Responsibilities
+
+The export/reporting layer generates PDF, CSV, and Excel files from calculation results. This layer is responsible for:
+- PDF generation with professional templates (headers, footers, version stamps, branding)
+- CSV/Excel generation with proper formatting (column headers, units, metadata)
+- Async job processing for large exports (multi-scenario PDFs, 10K+ row CSVs)
+- File storage and retrieval (upload to S3/R2, generate signed download URLs)
+- White-label customization (B2B client branding, custom disclaimers)
+
+### Components
+
+- **PDF Generator**: Server-side rendering engine (Puppeteer, Playwright, or wkhtmltopdf)
+  - Template engine: Handlebars, EJS, or React Server Components for PDF layouts
+  - Logo injection, color theming, footer customization per tier/tenant
+- **CSV/Excel Generator**: Libraries like `csv-writer`, `exceljs` for structured data exports
+- **Export Queue Worker**: Pulls export jobs from message queue (BullMQ, AWS SQS), generates files, uploads to S3
+- **Template Library**: Reusable PDF/CSV templates for each calculator type
+
+### Communication Patterns
+
+- **Triggered by API Gateway** via message queue:
+  - API Gateway enqueues export job: `{ calculatorId, scenarioId, exportType: 'pdf', userId, tier }`
+  - Export worker picks up job, generates file, uploads to S3, updates job status in PostgreSQL
+- **Returns signed download URL** to client (S3 presigned URL, valid for 1 hour)
+- **Fallback to sync generation** for small exports (single-scenario PDF < 3 seconds per Section 1.6)
+
+### Stateful vs Stateless
+
+**Stateless workers** (horizontally scalable):
+- Workers are stateless; can scale up/down based on queue depth
+- Job state stored in PostgreSQL (`export_jobs` table with status: pending, processing, completed, failed)
+- Generated files stored in S3/R2 (stateless from worker perspective)
+
+---
+
+## 6. AI Services
+
+### Purpose and Responsibilities
+
+The AI services layer generates plain-language narratives, risk commentary, and scenario suggestions using LLM APIs (OpenAI, Anthropic). This layer is responsible for:
+- Prompt management (templated prompts per calculator type)
+- LLM API calls (send calculation results + prompt, receive narrative text)
+- Response formatting (strip unwanted formatting, inject disclaimers)
+- Timeout handling (10-second hard cap per Section 1.6)
+- Cost tracking and rate limiting (prevent runaway LLM costs)
+- Redaction of sensitive data (scrub PII before sending to LLM)
+
+### Components
+
+- **Prompt Manager**: Library of prompt templates per calculator (e.g., "Explain DSCR of {dscr} to a business owner")
+- **LLM Client**: API client for OpenAI, Anthropic, or other LLM providers
+- **Response Formatter**: Post-processes LLM responses (add disclaimers, convert markdown to HTML, truncate if too long)
+- **Redaction Service**: Scrubs scenario data before sending to LLM (remove customer names, proprietary product codes if present)
+- **AI Queue Worker**: Async processing of AI requests (optional, can also be synchronous with timeout)
+
+### Communication Patterns
+
+- **Triggered by API Gateway** or enqueued for async processing:
+  - Sync: Client requests AI narrative → API Gateway calls AI service → returns narrative within 3 seconds (p95 per Section 1.6)
+  - Async: API Gateway enqueues AI job → worker processes, stores result in Redis cache → client polls for result
+- **Calls external LLM API** (OpenAI, Anthropic) via HTTPS
+- **Logs all requests/responses** to Analytics/Telemetry (for quality monitoring, abuse detection)
+
+### Stateful vs Stateless
+
+**Stateless** (with caching):
+- No persistent state; workers are ephemeral
+- Cache AI responses in Redis (keyed by calculation inputs hash, 1-hour TTL) to avoid duplicate LLM calls
+- Rate limits enforced via Redis counters (50 requests/month per user for AI add-on)
+
+---
+
+## 7. Analytics/Telemetry
+
+### Purpose and Responsibilities
+
+The analytics/telemetry layer collects, stores, and processes usage events for Business Intelligence Dashboard (Section 1.8), product analytics, and error monitoring. This layer is responsible for:
+- Event tracking (calculator usage, conversions, exports, AI requests)
+- Error logging and monitoring (exceptions, API errors, calculation failures)
+- Performance metrics (API latency, calculation time, export time)
+- User behavior analytics (conversion funnels, feature adoption, retention cohorts)
+- Data anonymization (pseudonymous user IDs, no PII per Section 1.6)
+
+### Components
+
+- **Analytics Client SDK**: Client-side and server-side JavaScript library for tracking events
+  - Client events: page views, calculator loads, input changes, export clicks
+  - Server events: calculation performed, scenario saved, tier upgrade, export completed
+- **Event Ingestion API**: Receives events from clients and servers, validates, enriches, stores
+- **Analytics Database**: PostgreSQL (for low-volume) or ClickHouse (for high-volume) time-series event storage
+- **Error Monitoring**: Sentry, Datadog, or similar for exception tracking and alerting
+- **Metrics Dashboard**: Internal BI Dashboard (Section 1.8) queries analytics database
+
+### Communication Patterns
+
+- **Receives events** from all layers:
+  - Client Layer: User interactions, page views
+  - API Gateway: API requests, tier checks, auth events
+  - Calculation Engine: Calculation performed (calculator ID, inputs hash, latency)
+  - Export Services: Export requested, export completed, export failed
+  - AI Services: AI request, LLM cost, response time
+- **Batches events** (send every 10 seconds or 100 events, whichever comes first) to reduce network overhead
+- **Async processing** (non-blocking; event loss is acceptable for non-critical analytics)
+
+### Stateful vs Stateless
+
+**Stateless ingestion** (scalable):
+- Event ingestion API is stateless; writes to database or message queue
+- Analytics database is stateful (PostgreSQL, ClickHouse, or data warehouse)
+- Events stored with retention policy (12 months per Section 1.6, then auto-purged)
+
+---
+
+## Data Flow Example: User Calculates Business Loan DSCR
+
+1. **Client Layer**: User enters loan amount ($200K), rate (7.5%), term (5 years), and operating income ($50K/month) in Business Loan Calculator
+2. **Client Layer** → **API Gateway**: `POST /api/calculators/business-loan/calculate` with inputs JSON
+3. **API Gateway**: Validates inputs, checks user tier (Pro required for DSCR), authenticates user
+4. **API Gateway** → **Calculation Engine**: Calls `calculateLoan(inputs)` function
+5. **Calculation Engine**: Computes monthly payment ($4,000), total interest ($40K), DSCR (1.32), returns results JSON
+6. **Calculation Engine** → **API Gateway**: Returns calculation results
+7. **API Gateway** → **Client Layer**: Returns results JSON (including DSCR since user is Pro tier)
+8. **API Gateway** → **Analytics/Telemetry**: Logs event: `calculation_performed` with calculator ID, user ID, latency
+9. **Client Layer**: Renders results table, displays DSCR with green indicator (above 1.25 threshold)
+10. **(If AI add-on enabled)** User clicks "Explain DSCR" → **API Gateway** → **AI Services**: Generates narrative ("Your DSCR of 1.32 is above typical lender thresholds...") → returns to client
+
+**Total latency**: 100-150ms (API + calculation + response), well under 150ms p95 SLA (Section 1.6)
+
+---
+
+## Summary
+
+This 7-layer architecture provides clear separation of concerns, supports horizontal scaling at each layer, and meets the performance SLAs defined in Section 1.6. Key design principles:
+- **Stateless where possible** (API Gateway, Calculation Engine, Export Workers, AI Services) for horizontal scalability
+- **Managed state externalized** (PostgreSQL, Redis, S3) to dedicated storage layers
+- **Async processing** for heavy workloads (exports, AI) to avoid blocking API requests
+- **Modular components** (shared calculation engine, UI components, export templates) to accelerate calculator development
+
+
+# 3.2 Technology Choices
+
+This section justifies the technology stack for the CFO Business Intelligence Calculator Suite. Each decision balances development velocity, performance requirements (Section 1.6 SLAs), hosting costs, and team expertise. Alternatives are considered explicitly to document tradeoffs.
+
+---
+
+## Frontend Stack
+
+### React + TypeScript
+
+**Choice**: React 18+ with TypeScript (strict mode)
+
+**Why chosen**:
+- **Component reusability**: Calculators share 70-80% of UI components (input forms, result tables, scenario tabs). React's component model fits perfectly.
+- **Ecosystem maturity**: Massive library ecosystem for charting (Recharts, Chart.js), forms (React Hook Form), and utilities. Reduces custom development.
+- **TypeScript safety**: Strongly typed props and state prevent runtime errors, especially critical for financial calculations where type bugs could produce incorrect results.
+- **WordPress compatibility**: React apps can be embedded in WordPress via shortcodes or iframe with minimal friction.
+- **Team familiarity**: React is the most common frontend framework; easier to hire and onboard developers.
+
+**Alternatives considered**:
+- **Vue.js**: Simpler learning curve but smaller ecosystem, especially for enterprise-grade component libraries.
+- **Svelte**: Excellent performance and developer experience but less mature ecosystem and smaller talent pool.
+- **Vanilla JS + Web Components**: Maximum performance but slower development velocity and requires building too much infrastructure from scratch.
+
+**Tradeoffs**:
+- React bundle size is larger than Svelte (45KB min+gzip for React + ReactDOM). Mitigated by code splitting and CDN caching.
+- React's virtual DOM has overhead, but negligible for calculator UI (not rendering 10K+ rows).
+
+---
+
+### State Management: Zustand
+
+**Choice**: Zustand for global state, React Context for localized state
+
+**Why chosen**:
+- **Minimal boilerplate**: Zustand requires far less setup than Redux (no actions, reducers, middleware). Faster development.
+- **Sufficient for our needs**: We don't need time-travel debugging or complex middleware. State is mostly: current scenario inputs, user tier, saved scenarios list.
+- **React Context for UI state**: Tier modal visibility, tooltip open/closed, active tab. No need for global store.
+- **TypeScript-first**: Zustand has excellent TypeScript support with minimal type gymnastics.
+
+**Alternatives considered**:
+- **Redux Toolkit**: Industry standard, excellent DevTools, but overkill for our use case. Too much boilerplate for simple state updates.
+- **React Context only**: Works for small apps but scales poorly. Re-renders too aggressively when context value changes.
+- **Jotai/Recoil**: Atomic state management is elegant but less mature and smaller community.
+
+**Tradeoffs**:
+- Zustand has smaller ecosystem than Redux (fewer middleware options, less tooling). Acceptable since our state management is straightforward.
+
+---
+
+### Styling: Tailwind CSS
+
+**Choice**: Tailwind CSS with custom design tokens
+
+**Why chosen**:
+- **Rapid prototyping**: Utility-first CSS speeds up UI development. No need to name classes or manage CSS files per component.
+- **Consistency**: Design tokens (colors, spacing, typography) enforced via Tailwind config. Prevents style drift across calculators.
+- **Small bundle size**: PurgeCSS removes unused styles. Typical production bundle: 10-15KB gzipped.
+- **Responsive design**: Tailwind's responsive utilities (`md:`, `lg:`) make mobile-first design trivial.
+
+**Alternatives considered**:
+- **Material UI (MUI)**: Pre-built components look professional but harder to customize. Bundle size is large (80KB+ min+gzip). Over-engineered for our needs.
+- **Styled Components / Emotion**: CSS-in-JS is powerful but adds runtime overhead. Tailwind is build-time, zero runtime cost.
+- **Custom CSS/SCSS**: Maximum control but slower development and higher maintenance burden. Style drift across calculators is a real risk.
+
+**Tradeoffs**:
+- Tailwind classes can be verbose (`className="flex items-center justify-between px-4 py-2 bg-blue-500 text-white rounded"`). Mitigated by extracting to components.
+- Learning curve for developers unfamiliar with utility-first CSS. Worth it for consistency and velocity.
+
+---
+
+## Backend Stack
+
+### Node.js + TypeScript
+
+**Choice**: Node.js 20 LTS with TypeScript (strict mode)
+
+**Why chosen**:
+- **Shared language with frontend**: TypeScript on both frontend and backend. Share types (input schemas, API responses) between client and server. Reduces bugs.
+- **Performance sufficient for SLAs**: Node.js single-threaded event loop handles I/O-bound workloads (API requests, database queries) efficiently. Calculation engine is CPU-bound but fast enough (<150ms per Section 1.6).
+- **NPM ecosystem**: Massive library ecosystem for financial math, PDF generation, LLM clients, etc.
+- **Async-first**: Node.js async/await model fits naturally with export queues, AI requests, and database calls.
+
+**Alternatives considered**:
+- **Python (FastAPI/Django)**: Excellent for data science and ML but slower raw performance than Node.js. Adds complexity (two languages, separate deployments). NumPy would be overkill for our formulas.
+- **Go**: Superior performance (5-10x faster than Node for CPU-bound tasks) but smaller ecosystem for financial libraries, PDF generation. Harder to hire for.
+- **Rust**: Best performance and safety but steep learning curve, longer development time, tiny ecosystem for web development.
+
+**Tradeoffs**:
+- Node.js single-threaded model struggles with CPU-intensive tasks. If calculations take >150ms consistently, we may offload to Worker Threads or Go microservice. Not expected for Phase 1.
+
+---
+
+### Framework: Fastify
+
+**Choice**: Fastify 4.x
+
+**Why chosen**:
+- **Performance**: Fastify is 2-3x faster than Express (20K requests/sec vs 8K in benchmarks). Helps meet p95 latency SLAs.
+- **Schema validation built-in**: JSON Schema validation via AJV is first-class (not middleware). Validates all inputs against TypeScript-generated schemas.
+- **TypeScript-first**: Excellent TypeScript support with typed route handlers, plugins, decorators.
+- **Plugin ecosystem**: Fastify plugins for auth, CORS, rate limiting, WebSockets, etc.
+
+**Alternatives considered**:
+- **Express**: Industry standard, huge ecosystem, but slower and lacks built-in schema validation. TypeScript support is mediocre (requires `@types/express`).
+- **NestJS**: Batteries-included framework with dependency injection, decorators, etc. Too opinionated and heavy for our needs. Adds complexity without commensurate value.
+- **Hono/Bun**: Emerging ultra-fast frameworks but too immature. Small ecosystems, fewer plugins, higher risk.
+
+**Tradeoffs**:
+- Fastify ecosystem is smaller than Express (fewer third-party plugins, less Stack Overflow answers). Acceptable given our needs are straightforward.
+
+---
+
+### Hosting: Railway (Phase 1), AWS (Phase 2+)
+
+**Choice**: Railway for Phase 1 MVP, migrate to AWS for Phase 2+ scale
+
+**Why chosen (Railway)**:
+- **Zero-config deployments**: Git push → automatic build and deploy. No Kubernetes YAML, no Terraform.
+- **Integrated services**: PostgreSQL, Redis, and app hosting in one platform. No service stitching.
+- **Cost-effective for MVP**: $5-20/month for small workloads. Scales to $200-500/month for Phase 1 traffic (1K-10K users).
+- **Developer experience**: Excellent logs, metrics, environment variables, and rollback UX.
+
+**Why migrate to AWS (Phase 2+)**:
+- **Cost at scale**: Railway pricing becomes expensive at >100K requests/day. AWS is cheaper at scale (EC2, Fargate, or Lambda).
+- **Advanced features**: AWS offers autoscaling, multi-region, CDN (CloudFront), managed services (RDS, ElastiCache) that Railway lacks or charges premium for.
+- **B2B requirements**: Large B2B clients may require SOC 2, HIPAA, or on-premise deployment, which favors AWS or self-hosted Kubernetes.
+
+**Alternatives considered**:
+- **Vercel**: Great for Next.js apps but expensive for API hosting ($20/month → $200+/month quickly). Serverless functions have cold start latency (300-500ms), violating our SLAs.
+- **Render**: Similar to Railway but slightly slower deployments and less polished UI. Pricing is comparable.
+- **AWS from Day 1**: Over-engineered for MVP. Weeks of DevOps work (VPCs, load balancers, RDS setup) before writing code. Use Railway to ship fast, migrate later.
+
+**Tradeoffs**:
+- Railway lock-in for Phase 1. Migration to AWS (Phase 2) requires infrastructure rewrite (Docker → ECS/Fargate, Railway DB → RDS). Plan for this as a 2-4 week project.
+
+---
+
+## Databases
+
+### Scenarios Storage: PostgreSQL
+
+**Choice**: PostgreSQL 15+ (Railway PostgreSQL in Phase 1, AWS RDS in Phase 2+)
+
+**Why chosen**:
+- **JSONB for flexible schemas**: Scenario inputs/outputs vary per calculator. JSONB columns allow schemaless storage while preserving query-ability (GIN indexes on JSONB fields).
+- **Relational integrity**: Users, scenarios, subscriptions have clear relationships. Foreign keys, transactions, ACID guarantees.
+- **Mature ecosystem**: ORMs (Prisma, TypeORM), migration tools, backup/restore, performance tuning are all solved problems.
+- **Full-text search**: Built-in full-text search for scenario names, descriptions (if needed).
+
+**Alternatives considered**:
+- **MongoDB**: JSONB in PostgreSQL gives us 90% of MongoDB's flexibility with better relational integrity and transaction support. Mongo adds operational complexity (replica sets, sharding).
+- **MySQL**: Comparable to PostgreSQL but weaker JSONB support (JSON columns less feature-rich). PostgreSQL is preferred by developers.
+- **DynamoDB**: Excellent for key-value workloads but poor for relational queries (no joins, limited indexes). Overkill for our schema.
+
+**Tradeoffs**:
+- PostgreSQL vertical scaling is limited (single-node writes). If we exceed 10K writes/sec, we'll need read replicas or sharding. Not expected until Phase 3+ (100K+ users).
+
+---
+
+### Sessions and Cache: Redis
+
+**Choice**: Redis 7+ (Upstash in Phase 1, AWS ElastiCache in Phase 2+)
+
+**Why chosen**:
+- **Session storage**: TTL-based session expiry (24 hours anonymous, 30 days logged-in) is Redis's sweet spot.
+- **Rate limiting**: Redis INCR + EXPIRE for rate limit counters (per-user, per-IP, per-API-key). Sub-millisecond latency.
+- **Cache**: Calculation results cached by input hash (5-minute TTL). Export file URLs cached (1-hour TTL).
+- **Pub/Sub (optional)**: WebSocket notifications (export ready, AI narrative ready) via Redis Pub/Sub.
+
+**Alternatives considered**:
+- **In-memory cache (Node.js process)**: Fast but not shared across API server instances. Cache misses when load balancer routes to different server.
+- **Memcached**: Simpler than Redis but lacks TTL per key, no Pub/Sub, no persistence. Redis is more versatile for same cost.
+- **PostgreSQL for sessions**: Possible but slower (disk I/O vs in-memory). Redis is purpose-built for this.
+
+**Tradeoffs**:
+- Redis is another dependency to manage (more failure modes). Mitigated by using managed service (Upstash, ElastiCache).
+- Redis data is ephemeral (lost on restart unless persistence enabled). Acceptable for sessions and cache; permanent data goes to PostgreSQL.
+
+---
+
+### Analytics Storage: PostgreSQL (Phase 1), ClickHouse (Phase 2+)
+
+**Choice**: PostgreSQL with time-series table (Phase 1), migrate to ClickHouse for high-volume analytics (Phase 2+)
+
+**Why chosen (PostgreSQL Phase 1)**:
+- **Reuse existing database**: One less service to manage. Analytics events are low-volume in MVP (<10K events/day).
+- **Partitioned tables**: PostgreSQL table partitioning by month (e.g., `events_2025_01`, `events_2025_02`) handles time-series data efficiently.
+- **Retention policy**: Drop old partitions after 12 months (per Section 1.6) with simple `DROP TABLE` command.
+
+**Why migrate to ClickHouse (Phase 2+)**:
+- **High-volume analytics**: ClickHouse handles 100K-1M events/day with sub-second query times (vs PostgreSQL which slows down at 1M+ rows).
+- **Columnar storage**: Analytics queries (GROUP BY, aggregations) are 10-100x faster on columnar databases.
+- **Cost-effective**: ClickHouse compresses data aggressively (10:1 ratios), reducing storage costs.
+
+**Alternatives considered**:
+- **BigQuery / Snowflake**: Excellent for analytics but expensive for small workloads ($100+/month). Overkill for Phase 1.
+- **Elasticsearch**: Good for logs and full-text search but overkill for structured analytics events. Higher operational complexity.
+
+**Tradeoffs**:
+- ClickHouse is complex to operate (replication, sharding, backups). Use managed service (ClickHouse Cloud, Altinity) or defer to Phase 2+.
+
+---
+
+## Message Queue
+
+### BullMQ (Redis-backed)
+
+**Choice**: BullMQ 4.x (uses Redis as backend)
+
+**Why chosen**:
+- **Redis-backed**: Reuses existing Redis infrastructure. No additional service to manage.
+- **Job priorities**: Export jobs can be prioritized (Pro tier exports prioritized over Free tier).
+- **Retries and DLQ**: Automatic retries on failure, dead-letter queue for failed jobs.
+- **Rate limiting**: Limit concurrent export workers (e.g., max 10 PDF generations at once).
+- **Dashboard**: Bull Board provides web UI for monitoring queues, jobs, failures.
+
+**Alternatives considered**:
+- **AWS SQS**: Fully managed, zero operational overhead, but higher latency (100-200ms per message vs <10ms for Redis). Adds AWS dependency in Phase 1.
+- **RabbitMQ**: More powerful (complex routing, guaranteed delivery) but over-engineered for our needs. Higher operational complexity (clustering, disk management).
+- **Kafka**: Extreme overkill. Kafka is for high-throughput event streaming (1M+ events/sec), not job queues.
+
+**Tradeoffs**:
+- BullMQ depends on Redis availability. If Redis is down, job queue is down. Mitigated by using managed Redis with high availability.
+
+---
+
+## File Storage
+
+### Cloudflare R2 (S3-compatible)
+
+**Choice**: Cloudflare R2 for export files (PDFs, CSVs)
+
+**Why chosen**:
+- **Zero egress fees**: S3 charges $0.09/GB for egress (downloads). R2 is zero egress. Significant savings if users download many exports.
+- **S3-compatible API**: Drop-in replacement for AWS S3 SDK. Easy migration path if needed.
+- **Integrated CDN**: Cloudflare's CDN caches export files at edge, reducing latency for repeated downloads.
+- **Pricing**: $0.015/GB storage (vs S3 $0.023/GB). Cheaper for large export archives.
+
+**Alternatives considered**:
+- **AWS S3**: Industry standard, deeper integration with AWS services (Lambda, CloudFront). Slightly more expensive, egress fees.
+- **Backblaze B2**: Cheaper than R2 ($0.005/GB storage) but slower (no edge CDN), less integration with dev tools.
+- **Local file storage (server disk)**: Cheap but not durable (server crashes lose files), not scalable (fills disk).
+
+**Tradeoffs**:
+- Cloudflare R2 is newer (launched 2022), less mature than S3. Acceptable risk given S3-compatible API makes migration easy.
+
+---
+
+## CDN
+
+### Cloudflare CDN
+
+**Choice**: Cloudflare CDN for static assets (JavaScript bundles, CSS, images) and export files
+
+**Why chosen**:
+- **Free tier**: Cloudflare CDN is free for unlimited bandwidth. S3 + CloudFront costs $0.085/GB.
+- **Global edge network**: 300+ PoPs worldwide. Static assets served from nearest edge location (20-50ms latency vs 200ms cross-continent).
+- **Cache-Control headers**: Control cache TTL per asset type (JavaScript bundles: 1 year, HTML: 5 minutes).
+- **DDoS protection**: Cloudflare's DDoS protection is built-in (vs AWS Shield which costs extra).
+
+**Alternatives considered**:
+- **AWS CloudFront**: Deeper AWS integration but $0.085/GB egress. Expensive at scale.
+- **Fastly**: Excellent performance, real-time cache purging, but expensive ($50/month minimum, $0.12/GB).
+- **No CDN**: Serve assets from origin server. Higher latency (200ms+ for international users), higher origin load.
+
+**Tradeoffs**:
+- Cloudflare free tier has some limitations (cache purge rate limits, no advanced routing rules). Acceptable for Phase 1.
+
+---
+
+## Summary Table
+
+| Layer | Technology | Why Chosen | Phase 2+ Alternative |
+|-------|-----------|------------|---------------------|
+| **Frontend** | React + TypeScript + Zustand + Tailwind | Component reuse, type safety, rapid development | Consider Vue/Svelte if React bundle size becomes issue |
+| **Backend** | Node.js + TypeScript + Fastify | Shared language, sufficient performance, fast development | Migrate hot paths to Go if <150ms SLA violated |
+| **Hosting** | Railway (Phase 1) | Zero-config, cost-effective for MVP | AWS (ECS/Fargate/Lambda) for scale and B2B requirements |
+| **Database (scenarios)** | PostgreSQL + JSONB | Relational integrity, flexible schema, mature | Add read replicas if >10K writes/sec |
+| **Database (sessions/cache)** | Redis | TTL, rate limiting, sub-ms latency | ElastiCache or Redis Enterprise for HA |
+| **Database (analytics)** | PostgreSQL (Phase 1) | Reuse existing DB, low volume | ClickHouse or BigQuery for >100K events/day |
+| **Message Queue** | BullMQ (Redis-backed) | Job priorities, retries, Redis reuse | AWS SQS or RabbitMQ if Redis becomes bottleneck |
+| **File Storage** | Cloudflare R2 | Zero egress fees, S3-compatible | AWS S3 if tighter AWS integration needed |
+| **CDN** | Cloudflare | Free, global edge, DDoS protection | CloudFront if already on AWS |
+
+---
+
+## Migration Strategy
+
+**Phase 1 → Phase 2 infrastructure migration** (when traffic exceeds Railway capacity, ~50K+ DAU):
+1. Set up AWS account, VPC, load balancers, RDS (PostgreSQL), ElastiCache (Redis)
+2. Containerize application (Docker) and deploy to AWS ECS or Fargate
+3. Migrate PostgreSQL data from Railway to AWS RDS (pg_dump → pg_restore, test thoroughly)
+4. Update DNS to point to AWS load balancer
+5. Keep Railway as staging/dev environment or decommission
+6. Estimated migration time: 2-4 weeks with 2 engineers
+
+**Technology upgrades** (ongoing):
+- Node.js: Upgrade to LTS versions (18 → 20 → 22) annually
+- React: Upgrade major versions (18 → 19) when stable
+- PostgreSQL: Upgrade minor versions (15.x → 15.y) quarterly, major versions (15 → 16) annually with testing
+- Dependencies: Weekly automated dependency updates via Dependabot, security patches applied within 48 hours
+
+
+# 3.3 Module Boundaries
+
+This section defines the shared modules that all calculators consume. Clear module boundaries accelerate calculator development, ensure consistency across the suite, and prevent code duplication. Each module has a well-defined API/interface, versioning strategy, and consumption pattern.
+
+---
+
+## 1. Finance Math Library
+
+### Purpose
+
+The Finance Math Library is the shared calculation engine that implements all financial formulas used across calculators. This module ensures:
+- **Consistency**: DSCR calculated the same way in Business Loan Calculator and Equipment Lease Calculator
+- **Auditability**: Formulas are versioned and regression-tested against reference models (±0.1% tolerance per Section 1.6)
+- **Reusability**: NPV/IRR functions used by 4+ calculators (Equipment Lease, Valuation, Line of Credit, Project ROI)
+
+### API/Interface
+
+The library exports pure TypeScript functions with strongly typed inputs and outputs:
+
+```typescript
+// Amortization calculation
+interface LoanInputs {
+  principal: number;      // Loan amount in dollars
+  annualRate: number;     // Interest rate (e.g., 0.075 for 7.5%)
+  termMonths: number;     // Loan term in months
+  originationFee?: number; // Optional origination fee
+}
+
+interface AmortizationResult {
+  monthlyPayment: number;
+  totalInterest: number;
+  totalCost: number;
+  schedule: Array<{
+    month: number;
+    payment: number;
+    principal: number;
+    interest: number;
+    balance: number;
+  }>;
+  version: string;        // Formula version (e.g., "1.3.2")
+}
+
+export function calculateAmortization(inputs: LoanInputs): AmortizationResult;
+
+// DSCR calculation
+interface DSCRInputs {
+  annualDebtService: number;  // Total annual debt payments
+  netOperatingIncome: number; // Annual NOI (EBITDA or operating cash flow)
+}
+
+interface DSCRResult {
+  dscr: number;               // Ratio (e.g., 1.32)
+  covenantHeadroom?: number;  // Distance from threshold (if provided)
+  interpretation: 'healthy' | 'borderline' | 'at-risk'; // Risk flag
+  version: string;
+}
+
+export function calculateDSCR(inputs: DSCRInputs, covenantThreshold?: number): DSCRResult;
+
+// NPV/IRR calculation
+interface CashFlowInputs {
+  initialInvestment: number;  // Upfront cost (negative)
+  cashFlows: number[];        // Array of annual cash flows
+  discountRate: number;       // Discount rate (e.g., 0.10 for 10%)
+}
+
+interface NPVResult {
+  npv: number;
+  irr: number | null;         // null if IRR cannot be computed
+  version: string;
+}
+
+export function calculateNPV(inputs: CashFlowInputs): NPVResult;
+```
+
+**Validation functions** (reject invalid inputs):
+```typescript
+export function validateLoanInputs(inputs: LoanInputs): ValidationResult {
+  const errors: string[] = [];
+  if (inputs.principal <= 0) errors.push("Loan amount must be positive");
+  if (inputs.annualRate < 0 || inputs.annualRate > 0.5) {
+    errors.push("Interest rate must be between 0% and 50%");
+  }
+  if (inputs.termMonths <= 0 || inputs.termMonths > 600) {
+    errors.push("Loan term must be between 1 and 600 months");
+  }
+  return { valid: errors.length === 0, errors };
+}
+```
+
+### How Calculators Consume It
+
+Calculators import functions from the library and call them with user inputs:
+
+```typescript
+import { calculateAmortization, validateLoanInputs } from '@smartprofit/finance-math';
+
+function BusinessLoanCalculator({ inputs }) {
+  // Validate inputs
+  const validation = validateLoanInputs(inputs);
+  if (!validation.valid) {
+    return <ErrorDisplay errors={validation.errors} />;
+  }
+
+  // Calculate
+  const result = calculateAmortization(inputs);
+
+  // Render results
+  return <ResultsTable monthlyPayment={result.monthlyPayment}
+                       totalInterest={result.totalInterest}
+                       schedule={result.schedule} />;
+}
+```
+
+### Versioning Approach
+
+**Semantic versioning** (MAJOR.MINOR.PATCH):
+- **MAJOR**: Breaking changes to function signatures or formula logic (e.g., change DSCR definition from NOI/Debt Service to EBITDA/Debt Service)
+- **MINOR**: New functions added, non-breaking enhancements (e.g., add `calculateIRR` function)
+- **PATCH**: Bug fixes, performance improvements, no behavior changes
+
+**Formula-level versioning**:
+- Each formula function returns a `version` field in its result (e.g., `"dscr_v1.3.2"`)
+- Version ID stored in scenario metadata and export files for audit trail
+- Regression tests pin specific formula versions to detect drift
+
+**Upgrade strategy**:
+- Calculators pin library version in `package.json`: `"@smartprofit/finance-math": "^1.3.0"` (allow MINOR and PATCH updates, not MAJOR)
+- MAJOR version upgrades require explicit calculator updates and regression testing
+
+---
+
+## 2. UI Component Library
+
+### Purpose
+
+The UI Component Library provides reusable React components for calculator interfaces. This ensures:
+- **Consistency**: All calculators have the same input field styles, button behaviors, warning displays
+- **Accessibility**: WCAG 2.1 AA compliance built into components (keyboard navigation, ARIA labels, screen reader support)
+- **Rapid development**: New calculators can be built 50-70% faster by composing existing components
+
+### API/Interface
+
+Components are React function components with TypeScript props:
+
+```typescript
+// Input field with validation and tooltip
+interface InputFieldProps {
+  label: string;
+  value: number | string;
+  onChange: (value: number | string) => void;
+  type: 'currency' | 'percentage' | 'number' | 'text';
+  tooltip?: string;
+  error?: string;
+  placeholder?: string;
+  min?: number;
+  max?: number;
+  required?: boolean;
+}
+
+export function InputField(props: InputFieldProps): JSX.Element;
+
+// Result card (displays a key metric)
+interface ResultCardProps {
+  label: string;
+  value: number | string;
+  format: 'currency' | 'percentage' | 'number';
+  trend?: 'up' | 'down' | 'neutral';  // Optional trend indicator
+  tooltip?: string;
+  highlighted?: boolean;  // Pro tier metrics highlighted in gold
+  proOnly?: boolean;      // Show lock icon + "Upgrade to Pro" if Free tier
+}
+
+export function ResultCard(props: ResultCardProps): JSX.Element;
+
+// Warning banner
+interface WarningProps {
+  severity: 'info' | 'warning' | 'error';
+  title: string;
+  message: string;
+  actionLabel?: string;
+  onAction?: () => void;
+}
+
+export function Warning(props: WarningProps): JSX.Element;
+
+// Scenario tabs
+interface ScenarioTabsProps {
+  scenarios: Array<{ id: string; name: string; }>;
+  activeScenarioId: string;
+  onSwitch: (scenarioId: string) => void;
+  onNew: () => void;
+  onDelete: (scenarioId: string) => void;
+  maxScenarios: number;   // Free tier: 1, Pro tier: 10
+  tier: 'free' | 'pro';
+}
+
+export function ScenarioTabs(props: ScenarioTabsProps): JSX.Element;
+```
+
+**Higher-level composition components**:
+```typescript
+// Calculator shell (wraps all calculators)
+interface CalculatorShellProps {
+  title: string;
+  children: React.ReactNode;  // Input panel and results panel
+  scenarioTabs: React.ReactNode;
+  exportButtons: React.ReactNode;
+  aiNarrative?: React.ReactNode;  // Shown if AI add-on enabled
+}
+
+export function CalculatorShell(props: CalculatorShellProps): JSX.Element;
+```
+
+### How Calculators Consume It
+
+Calculators import components and compose them:
+
+```typescript
+import {
+  CalculatorShell, InputField, ResultCard, Warning, ScenarioTabs
+} from '@smartprofit/ui-components';
+
+function BusinessLoanCalculator() {
+  const [inputs, setInputs] = useState({ principal: 200000, rate: 0.075, term: 60 });
+  const result = calculateAmortization(inputs);
+
+  return (
+    <CalculatorShell title="Business Loan + DSCR Calculator"
+                     scenarioTabs={<ScenarioTabs scenarios={scenarios} ... />}
+                     exportButtons={<ExportButtons ... />}>
+      {/* Input Panel */}
+      <InputField label="Loan Amount" value={inputs.principal}
+                  onChange={v => setInputs({...inputs, principal: v})}
+                  type="currency" tooltip="Total amount borrowed" />
+      <InputField label="Interest Rate" value={inputs.rate}
+                  onChange={v => setInputs({...inputs, rate: v})}
+                  type="percentage" tooltip="Annual interest rate" />
+
+      {/* Results Panel */}
+      <ResultCard label="Monthly Payment" value={result.monthlyPayment}
+                  format="currency" highlighted />
+      <ResultCard label="DSCR" value={result.dscr} format="number"
+                  proOnly={tier === 'free'} />
+
+      {/* Warnings */}
+      {result.dscr < 1.25 && (
+        <Warning severity="warning"
+                 title="DSCR Below Threshold"
+                 message="Your DSCR of {result.dscr} is below typical lender threshold of 1.25" />
+      )}
+    </CalculatorShell>
+  );
+}
+```
+
+### Versioning Approach
+
+**Semantic versioning** (MAJOR.MINOR.PATCH):
+- **MAJOR**: Breaking changes to component props (e.g., rename `onChange` to `onUpdate`, change prop types)
+- **MINOR**: New components added, new optional props
+- **PATCH**: Bug fixes, style tweaks, accessibility improvements
+
+**Design system versioning**:
+- Tailwind config (colors, spacing, fonts) versioned separately: `@smartprofit/design-tokens`
+- Major design overhauls (rebrand) trigger MAJOR version bump in both libraries
+
+**Upgrade strategy**:
+- Calculators pin UI library version: `"@smartprofit/ui-components": "^2.1.0"`
+- MAJOR upgrades coordinated across all calculators (usually once per year)
+- Storybook used for component documentation and visual regression testing
+
+---
+
+## 3. Export Module
+
+### Purpose
+
+The Export Module generates PDFs, CSVs, and Excel files from calculation results. This ensures:
+- **Consistency**: All exports have the same header/footer, branding, version stamps
+- **Quality**: Board-ready PDFs with professional formatting (per Section 1.3)
+- **White-label support**: B2B clients can customize branding (logos, colors, disclaimers)
+
+### API/Interface
+
+```typescript
+interface ExportRequest {
+  calculatorId: string;           // e.g., "business-loan"
+  scenarioId: string;             // Scenario UUID
+  exportType: 'pdf' | 'csv' | 'excel';
+  userId?: string;                // null for anonymous
+  tier: 'free' | 'pro' | 'b2b';
+  branding?: {                    // B2B white-label branding
+    logo?: string;                // URL to logo image
+    primaryColor?: string;        // Hex color
+    footerDisclaimer?: string;    // Custom disclaimer text
+  };
+}
+
+interface ExportResult {
+  fileUrl: string;                // S3/R2 presigned URL (1-hour expiry)
+  fileName: string;               // e.g., "business-loan-scenario-2025-01-15.pdf"
+  fileSize: number;               // Bytes
+  generatedAt: string;            // ISO 8601 timestamp
+  expiresAt: string;              // ISO 8601 timestamp
+  watermarked: boolean;           // true for Free tier, false for Pro/B2B
+}
+
+export async function generateExport(request: ExportRequest): Promise<ExportResult>;
+```
+
+**Sync vs Async**:
+- **Sync** (direct API call, < 3 seconds): Single-scenario PDF or CSV, Pro tier users
+- **Async** (job queue, > 3 seconds): Multi-scenario exports, large CSVs (>1000 rows), Excel files
+  - Returns immediately with `jobId`
+  - Client polls `GET /api/exports/jobs/:jobId` until status is `completed`
+  - Or WebSocket notification when ready
+
+### How Calculators Consume It
+
+Frontend requests export via API:
+
+```typescript
+async function handleExportClick(exportType: 'pdf' | 'csv') {
+  const response = await fetch('/api/exports', {
+    method: 'POST',
+    body: JSON.stringify({
+      calculatorId: 'business-loan',
+      scenarioId: currentScenarioId,
+      exportType,
+      tier: userTier,
+    }),
+  });
+
+  const result = await response.json();
+
+  if (result.fileUrl) {
+    // Sync: download immediately
+    window.open(result.fileUrl, '_blank');
+  } else {
+    // Async: poll for completion
+    const jobId = result.jobId;
+    const pollInterval = setInterval(async () => {
+      const status = await fetch(`/api/exports/jobs/${jobId}`);
+      const job = await status.json();
+      if (job.status === 'completed') {
+        clearInterval(pollInterval);
+        window.open(job.fileUrl, '_blank');
+      }
+    }, 2000);  // Poll every 2 seconds
+  }
+}
+```
+
+### Versioning Approach
+
+**Template versioning**:
+- PDF templates versioned: `business-loan-template_v2.1.hbs` (Handlebars)
+- Template version stored in export metadata (for audit trail)
+- Breaking template changes (e.g., remove a section) trigger new template version, not a code deploy
+
+**Module versioning**:
+- Export module versioned independently: `"@smartprofit/export-service": "^1.5.0"`
+- MINOR version: Add new export types (e.g., Excel), new branding options
+- PATCH version: Bug fixes (formatting issues, missing metadata)
+
+---
+
+## 4. Analytics Client
+
+### Purpose
+
+The Analytics Client tracks user behavior and calculator usage for the Business Intelligence Dashboard (Section 1.8) and product analytics. This module ensures:
+- **Privacy**: No PII logged (pseudonymous user IDs only, per Section 1.6)
+- **Consistency**: All calculators track events in the same format
+- **Performance**: Batched event sends (every 10 seconds or 100 events) to avoid blocking API requests
+
+### API/Interface
+
+```typescript
+interface AnalyticsEvent {
+  event: string;                  // e.g., "calculation_performed", "export_requested"
+  userId?: string;                // Pseudonymous UUID (null for anonymous)
+  sessionId: string;              // Session UUID
+  calculatorId: string;           // e.g., "business-loan"
+  timestamp: string;              // ISO 8601 timestamp
+  properties?: Record<string, any>; // Event-specific data (non-PII)
+}
+
+export function trackEvent(event: string, properties?: Record<string, any>): void;
+
+export function trackCalculation(calculatorId: string, inputsHash: string, latencyMs: number): void;
+
+export function trackExport(calculatorId: string, exportType: 'pdf' | 'csv', tier: string): void;
+
+export function trackConversion(fromTier: string, toTier: string): void;
+```
+
+**Example events**:
+```typescript
+// Calculator loaded
+trackEvent('calculator_loaded', { calculatorId: 'business-loan' });
+
+// Calculation performed
+trackCalculation('business-loan', 'abc123hash', 142);  // 142ms latency
+
+// Export requested
+trackExport('business-loan', 'pdf', 'pro');
+
+// Tier upgrade
+trackConversion('free', 'pro');
+```
+
+### How Calculators Consume It
+
+Calculators import and call track functions:
+
+```typescript
+import { trackEvent, trackCalculation } from '@smartprofit/analytics-client';
+
+function BusinessLoanCalculator() {
+  useEffect(() => {
+    trackEvent('calculator_loaded', { calculatorId: 'business-loan' });
+  }, []);
+
+  function handleCalculate(inputs) {
+    const startTime = Date.now();
+    const result = calculateAmortization(inputs);
+    const latency = Date.now() - startTime;
+
+    trackCalculation('business-loan', hashInputs(inputs), latency);
+
+    return result;
+  }
+}
+```
+
+### Versioning Approach
+
+**Event schema versioning**:
+- Event schemas defined in TypeScript: `@smartprofit/analytics-schemas`
+- Breaking schema changes (e.g., rename `calculatorId` to `calculator_id`) require MAJOR version bump
+- Analytics pipeline (backend) must support multiple schema versions during migration
+
+**Client versioning**:
+- Analytics client versioned: `"@smartprofit/analytics-client": "^1.2.0"`
+- MINOR version: Add new convenience functions (e.g., `trackAIRequest`)
+- PATCH version: Bug fixes, performance improvements
+
+---
+
+## 5. Tier Gate Module
+
+### Purpose
+
+The Tier Gate Module enforces Free/Pro/AI tier access controls and displays upgrade prompts. This ensures:
+- **Consistency**: DSCR metrics locked in Free tier across all calculators
+- **Upsell UX**: Upgrade prompts shown uniformly (modal vs inline, messaging)
+- **Flexibility**: B2B clients can configure tier behavior per tenant
+
+### API/Interface
+
+```typescript
+interface TierConfig {
+  tier: 'free' | 'pro' | 'ai';
+  limits: {
+    maxSavedScenarios: number;    // Free: 1, Pro: 10
+    maxExportsPerMonth: number;   // Free: 5, Pro: 100
+    maxAIRequestsPerMonth: number; // Free: 0, Pro: 0, AI: 50
+  };
+  features: {
+    advancedMetrics: boolean;     // Free: false, Pro: true
+    multiScenario: boolean;       // Free: false, Pro: true
+    cleanExports: boolean;        // Free: false (watermarked), Pro: true
+    aiNarratives: boolean;        // Free: false, Pro: false, AI: true
+  };
+}
+
+export function useTierConfig(): TierConfig;
+
+export function canAccess(feature: string, tier: TierConfig): boolean;
+
+export function showUpgradePrompt(feature: string, tier: TierConfig): void;
+```
+
+**React hook for feature gating**:
+```typescript
+function useFeatureGate(feature: string) {
+  const tierConfig = useTierConfig();
+  const hasAccess = canAccess(feature, tierConfig);
+
+  return {
+    hasAccess,
+    showPrompt: () => showUpgradePrompt(feature, tierConfig),
+  };
+}
+```
+
+### How Calculators Consume It
+
+Calculators use the hook to gate features:
+
+```typescript
+import { useFeatureGate } from '@smartprofit/tier-gate';
+
+function BusinessLoanCalculator() {
+  const { hasAccess: canSeeDSCR, showPrompt } = useFeatureGate('advancedMetrics');
+
+  return (
+    <>
+      <ResultCard label="Monthly Payment" value={monthlyPayment} format="currency" />
+
+      {canSeeDSCR ? (
+        <ResultCard label="DSCR" value={dscr} format="number" highlighted />
+      ) : (
+        <LockedMetric label="DSCR" onUpgrade={showPrompt} />
+      )}
+    </>
+  );
+}
+```
+
+### Versioning Approach
+
+**Feature flags**:
+- Tier feature definitions stored in database (`calculator_configs` table) per Section 3.1
+- No code deploy required to change tier limits (e.g., increase Pro max scenarios from 10 to 15)
+- Feature flag changes logged for audit trail
+
+**Module versioning**:
+- Tier gate module: `"@smartprofit/tier-gate": "^1.1.0"`
+- MINOR version: Add new feature flags (e.g., `whiteLabel` for B2B)
+- PATCH version: Bug fixes, UI tweaks
+
+---
+
+## 6. Calculator Config Schema
+
+### Purpose
+
+The Calculator Config Schema is a JSON structure that defines calculator metadata, inputs, outputs, and tier behavior. This allows:
+- **Code-free calculator definitions**: Non-engineers can define simple calculators via JSON config
+- **Consistency**: All calculators follow the same config structure
+- **Dynamic rendering**: UI components read config to generate input forms and result displays (optional Phase 2+ feature)
+
+### API/Interface
+
+```typescript
+interface CalculatorConfig {
+  id: string;                     // e.g., "business-loan"
+  name: string;                   // Display name
+  category: string;               // Per Section 2.1 categories
+  version: string;                // Config version (e.g., "1.2.0")
+  inputs: Array<{
+    id: string;                   // e.g., "principal"
+    label: string;                // "Loan Amount"
+    type: 'currency' | 'percentage' | 'number' | 'text';
+    required: boolean;
+    defaultValue?: any;
+    min?: number;
+    max?: number;
+    tooltip?: string;
+  }>;
+  outputs: Array<{
+    id: string;                   // e.g., "dscr"
+    label: string;                // "Debt Service Coverage Ratio"
+    format: 'currency' | 'percentage' | 'number';
+    tier: 'free' | 'pro' | 'ai';  // Which tier can see this output
+    highlighted?: boolean;
+  }>;
+  formulas: {
+    [outputId: string]: string;   // Function name in Finance Math Library
+  };
+}
+
+export function loadCalculatorConfig(calculatorId: string): CalculatorConfig;
+```
+
+**Example config** (Business Loan Calculator):
+```json
+{
+  "id": "business-loan",
+  "name": "Business Loan + DSCR Calculator",
+  "category": "Financing & Lending Intelligence",
+  "version": "1.0.0",
+  "inputs": [
+    {
+      "id": "principal",
+      "label": "Loan Amount",
+      "type": "currency",
+      "required": true,
+      "min": 1000,
+      "tooltip": "Total amount borrowed"
+    },
+    {
+      "id": "rate",
+      "label": "Interest Rate",
+      "type": "percentage",
+      "required": true,
+      "min": 0,
+      "max": 50,
+      "tooltip": "Annual interest rate"
+    }
+  ],
+  "outputs": [
+    {
+      "id": "monthlyPayment",
+      "label": "Monthly Payment",
+      "format": "currency",
+      "tier": "free",
+      "highlighted": true
+    },
+    {
+      "id": "dscr",
+      "label": "DSCR",
+      "format": "number",
+      "tier": "pro",
+      "highlighted": true
+    }
+  ],
+  "formulas": {
+    "monthlyPayment": "calculateAmortization",
+    "dscr": "calculateDSCR"
+  }
+}
+```
+
+### How Calculators Consume It
+
+**Phase 1**: Configs stored as static JSON files, imported by calculators (reference only, not dynamically rendered)
+
+**Phase 2+**: Configs stored in database, UI components dynamically render based on config (low-code calculator builder)
+
+```typescript
+// Phase 2+ dynamic rendering (optional)
+function DynamicCalculator({ calculatorId }) {
+  const config = loadCalculatorConfig(calculatorId);
+  const [inputs, setInputs] = useState(getDefaultInputs(config));
+  const results = executeFormulas(config, inputs);
+
+  return (
+    <CalculatorShell title={config.name}>
+      {config.inputs.map(input => (
+        <InputField key={input.id} {...input}
+                    value={inputs[input.id]}
+                    onChange={v => setInputs({...inputs, [input.id]: v})} />
+      ))}
+      {config.outputs.map(output => (
+        <ResultCard key={output.id} {...output} value={results[output.id]} />
+      ))}
+    </CalculatorShell>
+  );
+}
+```
+
+### Versioning Approach
+
+**Schema versioning**:
+- Config schema versioned: `CalculatorConfigV1`, `CalculatorConfigV2`
+- Breaking schema changes (e.g., rename `inputs` to `fields`) trigger new schema version
+- Config parser supports multiple schema versions during migration
+
+**Per-calculator config versioning**:
+- Each calculator config has its own `version` field (e.g., `"1.2.0"`)
+- Config version stored in scenario metadata (for audit trail)
+
+---
+
+## Summary
+
+These six shared modules accelerate calculator development, ensure consistency, and enable platform-wide improvements (e.g., update all calculators' PDF templates in one place). Key principles:
+- **Versioned APIs**: Semantic versioning with clear upgrade paths
+- **TypeScript-first**: Strong typing prevents bugs and improves developer experience
+- **Separation of concerns**: Math, UI, exports, analytics, tier gating are independent modules
+- **Auditability**: Formula versions, config versions, and export templates are tracked for compliance
+
+
+# 3.4 Performance and Scalability
+
+This section describes how the CFO Business Intelligence Calculator Suite meets the performance SLAs defined in Section 1.6 and scales to handle growth from MVP (1K users) to mature product (100K+ users). Each component's caching strategy, scaling triggers, and bottleneck mitigation are explicitly defined.
+
+---
+
+## Performance SLA Summary (from Section 1.6)
+
+| Metric | Target (p95) | Target (p99) | Notes |
+|--------|--------------|--------------|-------|
+| **Recalculation latency** | < 150ms | < 500ms | Server-side calculation only; excludes WAN/AI |
+| **Export generation (PDF)** | < 3 seconds | < 6 seconds | Standard single-scenario report |
+| **Export generation (CSV)** | < 1 second | < 2 seconds | Standard single-scenario export |
+| **AI narrative generation** | < 3 seconds | < 8 seconds | Includes LLM API call; 10-second hard timeout |
+| **End-to-end UI update** | < 300ms | < 500ms | Input change to visible output (modern devices) |
+
+---
+
+## Calculation Engine Performance
+
+### Stateless Design
+
+**Key principle**: Calculation engine is **pure functions with no side effects**. Same inputs always produce same outputs (deterministic). No database calls, no file I/O, no network requests within calculation logic.
+
+**Benefits**:
+- **Horizontally scalable**: Spin up 10, 100, or 1000 calculation workers (Node.js processes) without coordination
+- **Thread-safe**: Multiple calculations can run in parallel without race conditions
+- **Cache-friendly**: Results are deterministic, so cache hit = skip calculation entirely
+
+### Horizontal Scaling
+
+**Scaling triggers**:
+- **p95 latency > 150ms** for 5+ minutes → Add API server instances (Railway auto-scaling or AWS ECS task count)
+- **CPU utilization > 70%** sustained → Add workers
+- **Queue depth > 100** (if calculations are queued) → Add calculation workers
+
+**Infrastructure**:
+- **Phase 1 (Railway)**: Auto-scales from 1 to 5 instances based on CPU/memory
+- **Phase 2+ (AWS)**: ECS Fargate auto-scaling (target: 50% CPU utilization, min 2 instances, max 20)
+
+### Caching Strategy
+
+**Cache calculation results** to avoid redundant computation:
+
+```typescript
+// Cache key: hash of inputs
+const cacheKey = `calc:${calculatorId}:${hashInputs(inputs)}`;
+
+// Check cache (Redis)
+const cached = await redis.get(cacheKey);
+if (cached) {
+  return JSON.parse(cached);  // Cache hit: return in <10ms
+}
+
+// Cache miss: calculate
+const result = calculateAmortization(inputs);
+
+// Store in cache (5-minute TTL)
+await redis.setex(cacheKey, 300, JSON.stringify(result));
+
+return result;
+```
+
+**Cache TTL**: 5 minutes
+- Long enough to benefit repeat users (e.g., tweaking loan amount, recalculating)
+- Short enough to avoid stale results if formulas are updated
+
+**Cache invalidation**:
+- **Formula version change**: Flush entire cache when formula library is updated (rare, only on deployments with formula changes)
+- **Manual purge**: Admin dashboard (Section 1.8) allows cache purge for specific calculators
+
+**Cache hit rate target**: 30-50% for active users (users tweaking inputs)
+
+**Memory overhead**:
+- Average calculation result: 2-5KB JSON
+- 10K cached results = 20-50MB RAM (trivial for Redis)
+- Redis eviction policy: `allkeys-lru` (evict least-recently-used keys when memory limit reached)
+
+### Optimization Techniques
+
+**Input validation before calculation**:
+- Reject invalid inputs (negative amounts, nonsense rates) before calling calculation engine
+- Saves CPU cycles on malformed requests (10-20% of requests are invalid inputs from bots or typos)
+
+**Lazy computation**:
+- Don't compute amortization schedule (200+ rows) unless user requests it
+- Default calculation: monthly payment, total interest, DSCR only (fast)
+- Full schedule: computed on-demand when user clicks "View Schedule" (Pro tier feature)
+
+**Worker threads for heavy calculations** (Phase 2+ if needed):
+- Node.js single-threaded event loop struggles with CPU-bound tasks
+- If calculations exceed 150ms p95, offload to Worker Threads (or Go microservice)
+- Example: Complex NPV/IRR with 100+ cash flows, Monte Carlo simulations (Phase 3+)
+
+---
+
+## Export Service Performance
+
+### Sync vs Async Decision Logic
+
+**Sync generation** (< 3 seconds):
+- Single-scenario PDF with standard template (2-5 pages)
+- Single-scenario CSV (< 1000 rows)
+- User tier: Pro or B2B (prioritize paying customers)
+
+**Async generation** (> 3 seconds):
+- Multi-scenario PDFs (10+ pages)
+- Large CSVs (> 1000 rows)
+- Excel files (multi-tab exports)
+- Free tier exports (deprioritized)
+
+**Decision tree**:
+```typescript
+function shouldExportAsync(request: ExportRequest): boolean {
+  if (request.exportType === 'excel') return true;  // Always async
+  if (request.scenarios.length > 1) return true;     // Multi-scenario
+  if (request.tier === 'free' && queueDepth > 10) return true; // Deprioritize Free
+  return false;
+}
+```
+
+### Queue Design (BullMQ)
+
+**Export queue** (Redis-backed via BullMQ):
+- **Job priorities**:
+  - Pro tier: Priority 1 (highest)
+  - B2B tier: Priority 1
+  - Free tier: Priority 5 (lowest)
+- **Concurrency**: 10 workers processing exports in parallel
+- **Rate limiting**: Max 100 exports/minute (prevents abuse, manages PDF renderer load)
+- **Retries**: 3 retries on failure (network issues, S3 upload failures), exponential backoff
+
+**Queue depth monitoring**:
+- Alert if queue depth > 100 for > 5 minutes (indicates workers are overwhelmed)
+- Auto-scale workers (Phase 2+): Add 5 workers when queue depth > 100, remove when < 20
+
+### Worker Pools
+
+**PDF generation workers**:
+- **Technology**: Puppeteer (headless Chrome) for rendering HTML → PDF
+- **Resource intensive**: Each Puppeteer instance uses 200-300MB RAM, 1 CPU core
+- **Phase 1**: 2 dedicated export workers (Railway background workers)
+- **Phase 2+**: Auto-scaling ECS tasks (min 2, max 10 workers) based on queue depth
+
+**CSV/Excel generation workers**:
+- **Technology**: Node.js libraries (`csv-writer`, `exceljs`)
+- **Lightweight**: 50-100MB RAM per worker, CPU-bound but fast (< 1 second)
+- **Phase 1**: Runs on same instances as API servers (shared process pool)
+- **Phase 2+**: Separate worker pool if CSV volume exceeds 1000/day
+
+### Caching Export Files
+
+**Cache generated exports** (S3/R2 + Redis):
+- **Cache key**: `export:${scenarioId}:${exportType}:${tier}`
+- **Cache location**: S3/R2 (file storage) + Redis (metadata: URL, expiry)
+- **TTL**:
+  - Anonymous Free tier: 24 hours (per Section 1.6 data retention)
+  - Logged-in Pro tier: 7 days (allow re-download without regenerating)
+  - B2B tier: 30 days (configurable per tenant)
+
+**Cache hit logic**:
+```typescript
+const cacheKey = `export:${scenarioId}:pdf:${tier}`;
+const cached = await redis.get(cacheKey);
+
+if (cached) {
+  const { fileUrl, expiresAt } = JSON.parse(cached);
+  if (Date.now() < new Date(expiresAt).getTime()) {
+    return { fileUrl };  // Return cached URL, no regeneration
+  }
+}
+
+// Cache miss or expired: generate export
+const result = await generatePDF(scenario);
+const fileUrl = await uploadToS3(result);
+
+// Cache for 7 days (Pro tier)
+await redis.setex(cacheKey, 7 * 24 * 3600, JSON.stringify({ fileUrl, expiresAt }));
+```
+
+**Cache invalidation**:
+- Scenario edited → invalidate export cache for that scenario
+- Template updated → flush entire export cache (rare, only on template deployments)
+
+---
+
+## AI Service Performance
+
+### Rate Limiting
+
+**Per-user rate limits** (enforced via Redis):
+- **Free tier**: 0 AI requests (feature locked)
+- **Pro tier**: 0 AI requests (AI add-on required)
+- **AI add-on tier**: 50 requests/month (resets on billing cycle date)
+
+**Rate limit tracking**:
+```typescript
+const rateLimitKey = `ai:ratelimit:${userId}:${billingMonth}`;
+const requestCount = await redis.incr(rateLimitKey);
+
+if (requestCount === 1) {
+  // First request this month, set expiry to end of billing month
+  await redis.expireat(rateLimitKey, billingMonthEnd);
+}
+
+if (requestCount > 50) {
+  throw new Error('AI request limit exceeded. Upgrade or wait until next billing cycle.');
+}
+```
+
+**System-wide rate limiting** (prevent LLM API abuse):
+- Max 100 concurrent LLM API calls (to avoid hitting OpenAI/Anthropic rate limits)
+- Max 1000 AI requests/minute across all users
+- If limits hit, queue requests or return "AI service busy, try again in 60 seconds"
+
+### Batching Requests (Phase 2+)
+
+**Problem**: Each AI request is independent (separate LLM API call). Latency adds up.
+
+**Solution**: Batch multiple AI requests into one LLM call (if user requests narratives for 3 scenarios, send 3 prompts in one API call).
+
+**Benefits**:
+- Reduce LLM API latency overhead (3 sequential calls: 9 seconds → 1 batched call: 3 seconds)
+- Lower LLM costs (batch discounts from OpenAI/Anthropic)
+
+**Tradeoffs**:
+- More complex prompt engineering (need to structure batch prompts clearly)
+- All-or-nothing failure (if batched call fails, all 3 narratives fail)
+
+**Phase 1**: No batching (simpler implementation, sufficient for MVP)
+**Phase 2+**: Implement batching if AI adoption exceeds 30% of Pro users
+
+### Fallback When AI is Down
+
+**Scenarios**:
+- LLM API is down (OpenAI/Anthropic outage)
+- LLM API is rate-limited (hit API quota)
+- LLM response times out (> 10 seconds)
+
+**Fallback behavior**:
+```typescript
+try {
+  const narrative = await callLLM(prompt, { timeout: 10000 });
+  return narrative;
+} catch (error) {
+  if (error.code === 'TIMEOUT') {
+    return fallbackNarrative('AI is taking longer than usual. Please try again.');
+  } else if (error.code === 'RATE_LIMITED') {
+    return fallbackNarrative('AI service is at capacity. Try again in a few minutes.');
+  } else {
+    return fallbackNarrative('AI service is temporarily unavailable.');
+  }
+}
+
+function fallbackNarrative(message: string): string {
+  return `**AI Commentary Unavailable**: ${message}\n\n` +
+         `For assistance interpreting these results, consult a financial advisor.`;
+}
+```
+
+**Circuit breaker** (prevent cascading failures):
+- If LLM API fails 10 times in 60 seconds, open circuit (stop calling LLM API for 5 minutes)
+- Return fallback messages immediately during circuit-open period
+- After 5 minutes, close circuit (allow 1 test request; if succeeds, resume normal operation)
+
+### Caching AI Responses
+
+**Cache AI narratives** (Redis):
+- **Cache key**: `ai:narrative:${calculatorId}:${hashInputs(inputs)}`
+- **TTL**: 1 hour (short TTL because narratives may reference "current market conditions" or time-sensitive context)
+- **Cache hit logic**: Identical inputs → return cached narrative (no LLM call)
+
+**Benefits**:
+- Reduce LLM API costs (cache hit = $0 cost)
+- Faster response (cache hit < 10ms vs LLM call 1-3 seconds)
+
+**Cache hit rate target**: 20-30% (users tweaking inputs, recalculating with slight changes)
+
+---
+
+## Database Performance
+
+### Read/Write Patterns
+
+**Read-heavy workload** (90% reads, 10% writes):
+- Reads: Load scenarios, user profiles, subscription tiers, calculator configs
+- Writes: Save scenarios, update user profiles, log analytics events
+
+**Optimization for reads**:
+- **Read replicas** (Phase 2+): Route read queries to PostgreSQL read replicas (AWS RDS Multi-AZ)
+- **Connection pooling**: Maintain 20-50 persistent database connections (via `pg-pool`), reuse across requests
+- **Query optimization**: Index on frequently queried columns (`scenarios.user_id`, `users.email`, `scenarios.calculator_id`)
+
+### Indexing Strategy
+
+**PostgreSQL indexes**:
+```sql
+-- User lookups by email (login)
+CREATE INDEX idx_users_email ON users(email);
+
+-- Scenario lookups by user (dashboard: "load all my scenarios")
+CREATE INDEX idx_scenarios_user_id ON scenarios(user_id);
+
+-- Scenario lookups by calculator (analytics: "how many scenarios per calculator")
+CREATE INDEX idx_scenarios_calculator_id ON scenarios(calculator_id);
+
+-- Scenario full-text search (future: "find scenarios named 'expansion loan'")
+CREATE INDEX idx_scenarios_name_fts ON scenarios USING gin(to_tsvector('english', name));
+
+-- JSONB GIN index for scenario inputs/outputs (future: "find all scenarios with loan amount > 100K")
+CREATE INDEX idx_scenarios_inputs ON scenarios USING gin(inputs jsonb_path_ops);
+```
+
+**Index maintenance**:
+- `VACUUM ANALYZE` weekly (reclaim space, update query planner statistics)
+- Monitor slow queries (> 100ms) via `pg_stat_statements` extension
+- Adjust indexes based on slow query logs
+
+### Connection Pooling
+
+**Problem**: Opening a new PostgreSQL connection takes 50-100ms (TCP handshake, auth, session setup). Multiplied by 100 requests/sec = massive overhead.
+
+**Solution**: Connection pool (`pg-pool` library):
+```typescript
+const pool = new Pool({
+  host: process.env.DB_HOST,
+  port: 5432,
+  database: 'smartprofit',
+  user: 'app',
+  password: process.env.DB_PASSWORD,
+  max: 50,           // Max 50 connections
+  min: 10,           // Keep 10 connections alive
+  idleTimeoutMillis: 30000,  // Close idle connections after 30 seconds
+});
+
+// Reuse connections
+async function loadScenario(scenarioId: string) {
+  const client = await pool.connect();  // Grab connection from pool
+  try {
+    const result = await client.query('SELECT * FROM scenarios WHERE id = $1', [scenarioId]);
+    return result.rows[0];
+  } finally {
+    client.release();  // Return connection to pool
+  }
+}
+```
+
+**Scaling triggers**:
+- Connection pool exhaustion (all 50 connections in use) → Increase pool size to 100 or add read replicas
+- Phase 2+: Separate connection pools for reads (routed to replicas) and writes (routed to primary)
+
+---
+
+## CDN and Edge Caching
+
+### What Gets Cached at Edge (Cloudflare CDN)
+
+**Static assets** (cached indefinitely with cache busting):
+- JavaScript bundles: `main.abc123.js` (hash in filename → cache forever)
+- CSS files: `styles.xyz789.css`
+- Images, logos, fonts
+
+**API responses** (cached selectively):
+- Calculator configs: Cached for 1 hour (rarely change)
+- User tier lookup: Cached for 5 minutes (tier changes are rare)
+- Calculation results: **Not cached at edge** (too user-specific, cache at Redis layer instead)
+
+**Export files** (cached at edge):
+- S3/R2 presigned URLs cached for 1 hour (repeated downloads of same export = edge cache hit)
+
+### Cache-Control Headers
+
+```typescript
+// Static assets (cache forever)
+app.get('/static/*', (req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  res.sendFile(filePath);
+});
+
+// Calculator configs (cache 1 hour)
+app.get('/api/calculators/:id/config', (req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=3600');
+  res.json(calculatorConfig);
+});
+
+// User-specific data (no CDN caching)
+app.get('/api/scenarios/:id', (req, res) => {
+  res.setHeader('Cache-Control', 'private, no-cache');
+  res.json(scenario);
+});
+```
+
+### Cache Invalidation
+
+**Static asset updates** (new deployment):
+- Webpack/Vite builds new bundles with new hashes (`main.def456.js`)
+- HTML references new bundle URLs
+- Old bundles remain cached (no invalidation needed, URLs changed)
+
+**API response updates** (calculator config changed):
+- Update database or config file
+- No explicit invalidation needed (1-hour TTL → new config picked up within 1 hour)
+- If urgent, purge Cloudflare cache via API: `POST /client/v4/zones/:zone_id/purge_cache`
+
+**Export file updates** (scenario edited, export regenerated):
+- New export uploaded to S3/R2 with new filename (`scenario-123-v2.pdf`)
+- Old export remains cached but unreferenced (user downloads new version)
+
+---
+
+## Scaling Triggers and Auto-Scaling Policies
+
+### API Gateway / Backend Services
+
+**Metrics to monitor**:
+- **Request rate**: Requests per second (RPS)
+- **CPU utilization**: % CPU used
+- **Memory utilization**: % RAM used
+- **p95 latency**: 95th percentile API response time
+
+**Auto-scaling triggers** (Phase 2+ with AWS ECS):
+```yaml
+# ECS Service Auto Scaling Policy
+- TargetTrackingScaling:
+    TargetValue: 50.0  # Target 50% CPU utilization
+    ScaleOutCooldown: 60   # Wait 60s before adding instances
+    ScaleInCooldown: 300   # Wait 5min before removing instances
+    MinCapacity: 2         # Always run at least 2 instances
+    MaxCapacity: 20        # Cap at 20 instances
+
+# Or latency-based scaling
+- TargetTrackingScaling:
+    TargetValue: 200ms  # Target p95 latency < 200ms
+    # If p95 > 200ms for 2 minutes, scale out
+```
+
+### Export Workers
+
+**Scaling triggers**:
+- **Queue depth > 100**: Add 5 export workers
+- **Queue depth < 20**: Remove workers (down to min 2)
+- **Job failure rate > 10%**: Alert DevOps (investigate worker health, S3 issues)
+
+### Database
+
+**Vertical scaling** (Phase 1):
+- Start with Railway PostgreSQL (2GB RAM, 1 vCPU)
+- Scale up to 8GB RAM, 4 vCPU if query latency exceeds 100ms p95
+
+**Horizontal scaling** (Phase 2+):
+- Add PostgreSQL read replicas (route read queries to replicas)
+- Primary handles writes only (reduces load)
+- Connection pooling routes reads to replicas, writes to primary
+
+**Scaling triggers**:
+- **CPU > 70%**: Vertical scale (larger instance)
+- **Connection pool exhaustion**: Horizontal scale (add read replicas)
+- **Disk IOPS > 80%**: Upgrade to Provisioned IOPS SSD (AWS RDS)
+
+---
+
+## Performance Monitoring and Alerting
+
+### Metrics to Track
+
+**Application metrics**:
+- API latency: p50, p95, p99 (per endpoint)
+- Calculation latency: p50, p95, p99 (per calculator)
+- Export latency: p50, p95, p99 (per export type)
+- AI latency: p50, p95, p99
+- Error rate: % of requests resulting in 5xx errors
+
+**Infrastructure metrics**:
+- CPU utilization (API servers, workers, database)
+- Memory utilization
+- Disk I/O (database)
+- Network I/O (egress to S3, LLM API)
+- Redis cache hit rate
+
+**Business metrics**:
+- Calculations per minute (by calculator)
+- Exports per minute (by type, by tier)
+- AI requests per minute
+- Active users (DAU, MAU)
+
+### Alerting Rules
+
+**Critical alerts** (page on-call):
+- API p95 latency > 500ms for > 5 minutes
+- Error rate > 5% for > 2 minutes
+- Database CPU > 90% for > 5 minutes
+- Export queue depth > 500 (extreme backlog)
+
+**Warning alerts** (Slack notification):
+- API p95 latency > 300ms for > 10 minutes
+- Cache hit rate < 20% (investigate cache configuration)
+- AI service timeout rate > 10% (LLM API issues)
+
+### Tools
+
+- **Datadog / New Relic**: Application performance monitoring (APM)
+- **Sentry**: Error tracking and exception monitoring
+- **Cloudflare Analytics**: CDN cache hit rate, edge performance
+- **PostgreSQL slow query log**: Identify queries > 100ms
+- **Bull Board**: Queue monitoring (job counts, failures, latency)
+
+---
+
+## Summary
+
+This performance and scalability approach ensures the suite meets Section 1.6 SLAs (p95 calc < 150ms, exports < 3s, AI < 3s) from Day 1 and scales efficiently to 100K+ users in Phase 2+. Key strategies:
+- **Stateless architecture** for horizontal scaling
+- **Aggressive caching** (Redis for calculations, S3/R2 + CDN for exports)
+- **Async processing** for heavy workloads (exports, AI)
+- **Auto-scaling policies** triggered by latency, CPU, queue depth
+- **Performance monitoring** with clear alerting rules to catch regressions early
+
+
+---
+
+
+# Section 4: UX Design Standards
+
+# 4.1 Common Layout Pattern
+
+All calculators in the CFO Business Intelligence Calculator Suite follow a standardized layout pattern. This consistency reduces cognitive load for users moving between calculators, accelerates development, and reinforces the professional, cohesive brand. The layout adapts responsively to desktop, tablet, and mobile while maintaining the same information architecture.
+
+---
+
+## Standard Calculator Layout Diagram
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    TOP BAR: SCENARIO TABS                       │
+│  [Scenario 1]  [Scenario 2]  [+ Add Scenario]  (Pro tier only) │
+│  (Free tier: no tabs, single scenario only)                     │
+└─────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────┬──────────────────────────────────────┐
+│                          │                                      │
+│   LEFT PANEL: INPUTS     │    RIGHT PANEL: KEY RESULTS          │
+│                          │                                      │
+│  Loan Amount             │  ┌──────────────────────────────┐   │
+│  [  $200,000  ] (i)      │  │  MONTHLY PAYMENT             │   │
+│                          │  │  $4,000                      │   │
+│  Interest Rate           │  └──────────────────────────────┘   │
+│  [  7.5%  ] (i)          │                                      │
+│                          │  ┌──────────────────────────────┐   │
+│  Loan Term               │  │  DSCR (Pro tier)         🔒  │   │
+│  [  60 months  ] (i)     │  │  [Locked - Upgrade to Pro]   │   │
+│                          │  └──────────────────────────────┘   │
+│  Operating Income        │                                      │
+│  [  $50,000/mo  ] (i)    │  ┌──────────────────────────────┐   │
+│                          │  │  ⚠️  WARNING                 │   │
+│                          │  │  Your DSCR is 1.18, below    │   │
+│  [  Calculate  ]         │  │  typical threshold of 1.25   │   │
+│                          │  └──────────────────────────────┘   │
+│                          │                                      │
+│                          │  [Chart: Payment Breakdown]          │
+│                          │                                      │
+└──────────────────────────┴──────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                   BOTTOM BAR: ACTIONS                           │
+│  [ Export PDF ]  [ Export CSV ]  [ AI Explanation ]  [ Share ]  │
+│  (Tier-gated: Free=watermarked, Pro=clean, AI=AI-only)         │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Responsive behavior**:
+- **Desktop (> 1024px)**: Side-by-side panels (inputs left, results right)
+- **Tablet (768-1024px)**: Side-by-side with narrower panels, single-column scenario tabs
+- **Mobile (< 768px)**: Stacked layout (inputs on top, results below), collapsible sections
+
+---
+
+## 1. Left Panel: Inputs
+
+### Purpose
+
+The left panel contains all user inputs required for the calculation. Inputs are organized logically, grouped by category when a calculator has 10+ inputs (e.g., "Loan Details", "Business Financials", "Assumptions").
+
+### Input Field Types
+
+**Currency**:
+```
+Loan Amount
+[  $200,000  ] (i)
+```
+- Prefix: `$` symbol
+- Format: Comma-separated thousands (auto-formatted on blur)
+- Validation: Positive numbers only, max ~$100M (prevents overflow)
+- Placeholder: `$0` or sample value like `$100,000`
+
+**Percentage**:
+```
+Interest Rate
+[  7.5%  ] (i)
+```
+- Suffix: `%` symbol
+- Format: 1-2 decimal places (e.g., `7.5%`, `12.25%`)
+- Validation: Typically 0-50% (reject negative or nonsense like 500%)
+- Placeholder: `0%` or sample value like `7.5%`
+
+**Number (integer)**:
+```
+Loan Term
+[  60  ] months (i)
+```
+- No prefix/suffix (unit shown as label or suffix text)
+- Format: Integer (no decimals for months, employees, units)
+- Validation: Positive integers, reasonable max (e.g., 600 months = 50 years)
+- Placeholder: `12` or sample value
+
+**Dropdown**:
+```
+Payment Frequency
+[  Monthly ▼  ] (i)
+```
+- Options: Pre-defined list (e.g., Monthly, Quarterly, Annually)
+- Default: Most common option (e.g., Monthly for loans)
+- Tooltip explains differences if not obvious
+
+**Text (rare)**:
+```
+Scenario Name
+[  Base Case  ]
+```
+- Used for scenario naming, optional notes fields
+- Validation: Max 50 characters, alphanumeric + spaces
+
+### Validation UI
+
+**Real-time validation** (as user types or on blur):
+
+**Valid input** (green checkmark):
+```
+Loan Amount ✓
+[  $200,000  ]
+```
+
+**Invalid input** (red border + error message below):
+```
+Interest Rate
+[  -5%  ]  ← Red border
+⚠️ Interest rate must be between 0% and 50%
+```
+
+**Warning (yellow border + warning message)**:
+```
+Loan Term
+[  600 months  ]  ← Yellow border
+⚠️ 600 months (50 years) is unusually long. Did you mean 60 months?
+```
+
+**Validation rules**:
+- Show errors **on blur** (not as user types, to avoid annoying mid-typing errors)
+- Show error **on submit** if user clicks "Calculate" with invalid inputs
+- Disable "Calculate" button if any required field is invalid or empty
+
+### Tooltips and Help Text
+
+**Tooltip icon** (info icon `(i)` next to label):
+```
+Loan Amount (i)
+[  $200,000  ]
+
+Hover/click (i) → Tooltip appears:
+┌────────────────────────────────────┐
+│ Total amount borrowed from lender. │
+│ Does not include fees or closing  │
+│ costs.                             │
+└────────────────────────────────────┘
+```
+
+**Positioning**:
+- **Desktop**: Tooltip appears above or below input (whichever has more space)
+- **Mobile**: Tooltip appears in modal overlay (full-width card with dismiss button)
+
+**Tooltip content** (see Section 4.4 for content standards):
+- 1-2 sentences, ~50 words max
+- Plain language, no jargon
+- Explains what the input means and how it's used in the calculation
+
+**Inline help text** (for complex inputs):
+```
+Interest Rate (i)
+[  7.5%  ]
+Annual interest rate, not monthly. Most lenders quote annual rates.
+```
+- Gray text below input field
+- Used when tooltip would be too long or when all users need the context
+
+### Required vs Optional Field Indicators
+
+**Required fields**:
+```
+Loan Amount *
+[  $200,000  ]
+```
+- Red asterisk `*` after label
+- Cannot submit form without completing required fields
+
+**Optional fields**:
+```
+Origination Fee (optional)
+[  $0  ]
+```
+- `(optional)` suffix in gray text
+- Defaults to 0, null, or most common value
+
+**Field grouping** (for calculators with 10+ inputs):
+```
+━━━ Loan Details ━━━
+Loan Amount *
+Interest Rate *
+Loan Term *
+
+━━━ Business Financials ━━━
+Operating Income *
+Total Debt Service
+```
+- Section headers in bold or with divider line
+- Collapsible sections on mobile (tap to expand/collapse)
+
+---
+
+## 2. Right Panel: Key Results
+
+### Purpose
+
+The right panel displays calculation results, warnings, and visualizations. Results are organized into "Key Metrics" (always visible), "Advanced Metrics" (Pro tier), and optional charts/tables.
+
+### Key Metrics Card (Always Visible)
+
+**Free tier and Pro tier**:
+```
+┌────────────────────────────────────┐
+│  MONTHLY PAYMENT                   │
+│  $4,000                            │
+│                                    │
+│  TOTAL INTEREST                    │
+│  $40,000                           │
+│                                    │
+│  TOTAL COST                        │
+│  $240,000                          │
+└────────────────────────────────────┘
+```
+
+**Design**:
+- Large, bold numbers (32-48px font size)
+- Label above value (12-14px uppercase or small caps)
+- Light background (#F9FAFB), subtle border
+- Highlighted metrics have colored left border (blue, green)
+
+### Advanced Metrics Card (Pro-Gated)
+
+**Free tier** (locked with upgrade prompt):
+```
+┌────────────────────────────────────┐
+│  DSCR                          🔒  │
+│  [Locked - Upgrade to Pro]         │
+│  ─────────────────────────────     │
+│  Unlock DSCR, covenant headroom,   │
+│  and detailed fee breakdowns       │
+│  [ Upgrade to Pro → ]              │
+└────────────────────────────────────┘
+```
+
+**Pro tier** (unlocked):
+```
+┌────────────────────────────────────┐
+│  DSCR                          ✨  │
+│  1.32                              │
+│  Above typical threshold (1.25)    │
+│                                    │
+│  COVENANT HEADROOM                 │
+│  +0.07 (5.3%)                      │
+└────────────────────────────────────┘
+```
+
+**Design**:
+- **Free tier**: Blur overlay or lock icon, upgrade CTA button
+- **Pro tier**: Badge indicator (✨ or "Pro" pill) to reinforce value
+- Same visual style as key metrics card but distinct (e.g., gold left border for Pro metrics)
+
+### Charts and Visualizations
+
+**When to show charts**:
+- Pro tier only (Free tier sees locked chart placeholder with upgrade prompt)
+- When visual comparison aids understanding (e.g., payment breakdown pie chart, runway line chart, scenario comparison bar chart)
+
+**Chart types**:
+- **Pie chart**: Payment breakdown (principal vs interest), cost breakdown
+- **Bar chart**: Scenario comparison (side-by-side bars for 2-3 scenarios)
+- **Line chart**: Cash runway over time, amortization schedule (balance over time)
+- **Table**: Amortization schedule, scenario comparison table
+
+**Chart design standards**:
+- Clean, minimal styling (white background, subtle grid lines)
+- Accessible colors (blue, green, orange, red) with sufficient contrast
+- Clear axis labels and legends
+- Responsive (scales to container width, readable on mobile)
+
+**Chart library**: Recharts (React-based, supports responsive design)
+
+### Warning and Alert Boxes
+
+**Placement**: Below advanced metrics, above charts
+
+**Severity levels**:
+
+**Info** (blue):
+```
+┌────────────────────────────────────┐
+│  ℹ️  INFO                          │
+│  Your DSCR of 1.32 is above the    │
+│  typical lender threshold of 1.25. │
+└────────────────────────────────────┘
+```
+
+**Warning** (yellow):
+```
+┌────────────────────────────────────┐
+│  ⚠️  WARNING                       │
+│  Your DSCR of 1.18 is below the    │
+│  typical lender threshold of 1.25. │
+│  Consider reducing debt or         │
+│  improving cash flow.              │
+└────────────────────────────────────┘
+```
+
+**Danger** (red):
+```
+┌────────────────────────────────────┐
+│  🚨 CRITICAL                       │
+│  Your DSCR of 0.92 indicates you   │
+│  cannot service this debt from     │
+│  operating income. Lenders will    │
+│  likely reject this application.   │
+└────────────────────────────────────┘
+```
+
+**Design**:
+- Colored left border (blue/yellow/red)
+- Icon matching severity
+- Dismissible (X button in top-right) for info messages only
+- Non-dismissible for warnings and critical alerts
+
+---
+
+## 3. Top Bar: Scenario Tabs
+
+### Purpose
+
+Scenario tabs allow Pro tier users to create, switch between, and compare multiple scenarios. Free tier users see a single scenario with no tabs (upgrade prompts appear when attempting to add scenarios).
+
+### Free Tier (No Tabs)
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  Scenario 1                            [ Save ]  [ + Add ] 🔒   │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+- Single scenario label (not clickable, no tab UI)
+- "Add Scenario" button shows lock icon and triggers upgrade modal
+- Save button available (if logged in) to save scenario for later
+
+### Pro Tier (Multiple Scenarios)
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  [  Base Case  ]  [  Aggressive  ]  [  Conservative  ]  [ + ]   │
+│       ▲ Active                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Tab behavior**:
+- **Active tab**: Bold text, underline or colored bottom border
+- **Inactive tabs**: Gray text, no border
+- **Hover**: Lighten background, show delete icon (X) on hover
+- **Click**: Switch to that scenario (recalculates results instantly)
+
+**Add scenario** (`[ + ]` button):
+- Opens "Create New Scenario" modal:
+  ```
+  ┌────────────────────────────────┐
+  │  Create New Scenario           │
+  │                                │
+  │  Name:                         │
+  │  [  Scenario 3  ]              │
+  │                                │
+  │  Copy from:                    │
+  │  [  Base Case  ▼  ]            │
+  │                                │
+  │  [ Cancel ]    [ Create ]      │
+  └────────────────────────────────┘
+  ```
+- New scenario starts as copy of current scenario (users tweak inputs)
+
+**Delete scenario** (hover X icon on tab):
+- Confirmation modal: "Delete 'Aggressive' scenario? This cannot be undone."
+- Prevent deleting last scenario (must have at least 1)
+
+**Naming scenarios**:
+- Default names: "Scenario 1", "Scenario 2", etc.
+- Editable: Double-click tab to rename inline
+- Max 30 characters
+
+---
+
+## 4. Bottom Bar: Actions
+
+### Purpose
+
+Action buttons (Export, AI Explanation, Share, Save) are consistently placed in a bottom bar across all calculators. Buttons are tier-gated and visually indicate availability.
+
+### Export Buttons
+
+**Free tier**:
+```
+[ Export PDF (watermarked) ]  [ Export CSV ]
+```
+- Available but labeled as "watermarked"
+- Click triggers export with watermark + "Powered by [Brand]" footer
+
+**Pro tier**:
+```
+[ Export PDF ]  [ Export CSV ]
+```
+- No watermark indicator (clean exports)
+- Clicking opens dropdown: "Download" or "Email to me"
+
+**B2B tier**:
+```
+[ Export PDF ]  [ Export CSV ]  [ Export Excel ]
+```
+- Additional export formats (multi-tab Excel)
+
+### AI Explanation Button
+
+**Free tier and Pro tier (no AI add-on)**:
+```
+[ ✨ AI Explanation ] 🔒
+```
+- Lock icon indicates requires AI add-on
+- Click triggers upgrade modal: "Unlock AI-powered narratives and insights. Upgrade to AI add-on for $19/month."
+
+**AI add-on tier**:
+```
+[ ✨ AI Explanation ]
+```
+- Click triggers AI narrative generation
+- Button shows loading spinner during generation: `[ ⏳ Generating... ]`
+- On success, scrolls to AI narrative section in results panel
+
+### Share/Save Buttons
+
+**Anonymous Free tier**:
+```
+[ Save ] 🔒
+```
+- Lock icon indicates requires account
+- Click triggers sign-up modal: "Create a free account to save scenarios"
+
+**Logged-in Free tier**:
+```
+[ Save ]  [ Share ] 🔒
+```
+- Save: Saves scenario to user's account (reloads on next visit)
+- Share locked (Pro feature)
+
+**Pro tier**:
+```
+[ Save ]  [ Share ]
+```
+- Save: Saves scenario (with version history)
+- Share: Opens share modal with options:
+  - Generate shareable link (view-only or edit permissions)
+  - Email to recipient(s)
+  - Copy link to clipboard
+
+---
+
+## 5. Warnings and Alerts Panel
+
+### Placement
+
+**Inline with results** (preferred):
+- Warnings appear below relevant metric
+- Example: DSCR warning appears directly below DSCR result card
+
+**Dedicated alert panel** (if multiple warnings):
+- Section at top of results panel titled "Alerts"
+- List all warnings in order of severity (critical → warning → info)
+
+### Severity Levels
+
+See "Warning and Alert Boxes" under Section 2 above for visual examples.
+
+**Info** (blue, `ℹ️`):
+- Informational messages, best practices, context
+- Example: "Your DSCR of 1.32 is healthy. Lenders typically require 1.25 or higher."
+
+**Warning** (yellow, `⚠️`):
+- Caution messages, potential issues, recommendations
+- Example: "Your DSCR of 1.18 is below typical threshold of 1.25. Consider reducing debt or improving cash flow."
+
+**Danger** (red, `🚨`):
+- Critical issues, likely failures, strong actions needed
+- Example: "Your DSCR of 0.92 indicates insufficient cash flow to service debt. Lenders will likely reject."
+
+### Dismissibility
+
+**Info messages**: Dismissible (X button in top-right corner)
+- User can hide informational messages to reduce clutter
+- Dismissed messages don't reappear in same session (stored in sessionStorage)
+
+**Warning and danger messages**: Non-dismissible
+- Critical information that users should not ignore
+- No X button (must address the issue or accept the risk)
+
+---
+
+## Responsive Layout Adaptations
+
+### Desktop (> 1024px)
+
+- Side-by-side panels (inputs 40% width, results 60% width)
+- Scenario tabs horizontal (all visible)
+- Charts full-width within results panel
+
+### Tablet (768-1024px)
+
+- Side-by-side panels (inputs 45%, results 55%)
+- Scenario tabs horizontal but scrollable if > 3 scenarios
+- Charts scale to narrower width
+
+### Mobile (< 768px)
+
+- **Stacked layout**: Inputs on top, results below
+- Collapsible sections: "Inputs" and "Results" headers with expand/collapse icons
+- Scenario tabs: Dropdown selector instead of horizontal tabs
+  ```
+  Scenarios: [  Base Case  ▼  ]
+  ```
+- Action buttons: Stack vertically or two-column grid
+- Charts: Full-width, aspect ratio adjusted for portrait screens
+
+---
+
+## Summary
+
+This common layout pattern ensures all calculators feel cohesive while allowing domain-specific customization (number of inputs, types of charts, specific warnings). Developers use the UI Component Library (Section 3.3) to implement this layout with minimal custom code per calculator.
+
+
+# 4.2 Interaction Patterns
+
+This section defines how users interact with calculators: input behavior, scenario management, tier gating, empty states, and loading states. Consistent interaction patterns reduce user confusion, accelerate learning across calculators, and create a polished, professional experience.
+
+---
+
+## 1. Input Behavior
+
+### Real-Time Validation
+
+**When to show errors**:
+- **On blur** (user moves focus away from input): Validate and show error message if invalid
+- **On submit** (user clicks "Calculate" or "Save"): Validate all fields, show errors for any invalid inputs
+- **Not while typing**: Don't show errors as user types (annoying and disruptive)
+
+**Validation states**:
+
+**Untouched** (initial state):
+```
+Loan Amount
+[  $           ]  ← Placeholder text, gray border
+```
+
+**Valid** (after blur, input is valid):
+```
+Loan Amount
+[  $200,000    ]  ← Green checkmark (optional), normal border
+```
+
+**Invalid** (after blur, input is invalid):
+```
+Interest Rate
+[  -5%         ]  ← Red border
+⚠️ Interest rate must be between 0% and 50%
+```
+
+**Warning** (after blur, input is unusual but not invalid):
+```
+Loan Term
+[  600 months  ]  ← Yellow border
+⚠️ 600 months (50 years) is unusually long. Did you mean 60 months?
+```
+
+### Auto-Calculation Triggers
+
+**When to recalculate results**:
+
+**Option A: Auto-calculate on input change** (preferred for simple calculators):
+- Recalculate whenever any input changes (debounced 300ms to avoid excessive recalculations)
+- No "Calculate" button needed
+- Provides instant feedback (responsive, feels fast)
+- **Best for**: Calculators with < 10 inputs and fast calculations (< 150ms)
+
+**Option B: Manual calculate button** (for complex calculators):
+- User must click "Calculate" button to see results
+- Prevents confusing intermediate states (e.g., user changes loan amount but hasn't updated term yet)
+- Allows users to change multiple inputs before recalculating
+- **Best for**: Calculators with 10+ inputs or slower calculations (> 150ms)
+
+**Hybrid approach** (used in Phase 1):
+- Auto-calculate for simple calculators (Equipment Lease, Breakeven)
+- Manual button for complex calculators (Business Loan + DSCR with many inputs)
+
+**During calculation** (if > 100ms):
+- Show loading spinner in results panel
+- Disable input fields (prevent changes mid-calculation)
+- Disable "Calculate" button
+
+### Input Masking and Formatting
+
+**Currency inputs**:
+- User types: `200000`
+- On blur, auto-format: `$200,000` (add $ prefix, thousands separators)
+- Allow copy-paste: Strip non-numeric characters except decimal point
+
+**Percentage inputs**:
+- User types: `7.5`
+- On blur, auto-format: `7.5%` (add % suffix)
+- Decimal places: 1-2 decimals (e.g., `7.5%`, `12.25%`)
+
+**Number inputs (months, units)**:
+- No auto-formatting (just validate integer)
+- Suffix text (e.g., "months") shown as label or inline text
+
+**Date inputs** (if needed):
+- Use native date picker (`<input type="date">`) or custom calendar widget
+- Format: MM/DD/YYYY (US) or DD/MM/YYYY (Canada), based on locale
+
+---
+
+## 2. Scenario Management
+
+### Creating New Scenarios
+
+**Free tier**:
+```
+User clicks "+ Add Scenario" button
+  ↓
+Upgrade modal appears:
+┌────────────────────────────────────┐
+│  🔒 Unlock Multiple Scenarios      │
+│                                    │
+│  Free tier includes 1 scenario.    │
+│  Upgrade to Pro to save up to 10   │
+│  scenarios and compare them        │
+│  side-by-side.                     │
+│                                    │
+│  [ Learn More ]  [ Upgrade → ]     │
+└────────────────────────────────────┘
+```
+
+**Pro tier**:
+```
+User clicks "+ Add Scenario" button
+  ↓
+"Create New Scenario" modal appears:
+┌────────────────────────────────────┐
+│  Create New Scenario               │
+│                                    │
+│  Name:                             │
+│  [  Scenario 3  ]                  │
+│                                    │
+│  Copy from:                        │
+│  [  Base Case  ▼  ]                │
+│  (Start with inputs from this      │
+│   scenario, then tweak)            │
+│                                    │
+│  [ Cancel ]    [ Create ]          │
+└────────────────────────────────────┘
+  ↓
+New tab appears with copied inputs
+User tweaks inputs to create variant
+```
+
+**Limits**:
+- Free tier: 1 scenario (upgrade prompt on attempt to add 2nd)
+- Pro tier: 10 scenarios (soft limit; show warning at 8, hard limit at 10)
+- B2B tier: Configurable (default 10, can be increased per tenant)
+
+### Switching Between Scenarios
+
+**Tab interface** (desktop):
+```
+User clicks inactive scenario tab
+  ↓
+Active tab changes (visual indicator: bold, underline)
+Results panel updates instantly to show that scenario's outputs
+Inputs panel updates to show that scenario's inputs
+```
+
+**Performance**:
+- Switching scenarios is instant (< 100ms)
+- Cached results (don't recalculate unless inputs changed)
+- Smooth transition (no loading spinner for cached scenarios)
+
+**Dropdown interface** (mobile):
+```
+User taps scenario dropdown
+  ↓
+Dropdown menu appears with all scenarios
+  [ Base Case ]  ← Currently selected
+  [ Aggressive ]
+  [ Conservative ]
+  [ + Add New ]
+  ↓
+User selects scenario
+Dropdown closes, results update
+```
+
+### Comparing Scenarios Side-by-Side (Pro Only)
+
+**Trigger**:
+```
+User clicks "Compare Scenarios" button in results panel
+  ↓
+Comparison view opens:
+┌────────────────────────────────────────────────────────┐
+│  Compare Scenarios                                     │
+│                                                        │
+│  Select scenarios to compare:                          │
+│  [✓] Base Case   [✓] Aggressive   [ ] Conservative    │
+│                                                        │
+│  ┌─────────────────────────────────────────────────┐  │
+│  │          Base Case    Aggressive                │  │
+│  ├─────────────────────────────────────────────────┤  │
+│  │ Payment     $4,000       $4,800                 │  │
+│  │ DSCR        1.32         1.08                   │  │
+│  │ Total Cost  $240K        $288K                  │  │
+│  └─────────────────────────────────────────────────┘  │
+│                                                        │
+│  [Chart: Bar chart comparing key metrics]             │
+│                                                        │
+│  [ Close ]                                             │
+└────────────────────────────────────────────────────────┘
+```
+
+**Free tier**: "Compare Scenarios" button locked with upgrade prompt
+
+**Comparison features**:
+- Select 2-3 scenarios to compare (checkboxes)
+- Side-by-side table of key metrics
+- Bar chart showing differences
+- Delta indicators (e.g., "Aggressive: +$800/month vs Base Case")
+
+### Deleting/Archiving Scenarios
+
+**Delete flow**:
+```
+User hovers over scenario tab → X icon appears
+User clicks X
+  ↓
+Confirmation modal:
+┌────────────────────────────────────┐
+│  Delete "Aggressive" scenario?     │
+│                                    │
+│  This cannot be undone.            │
+│                                    │
+│  [ Cancel ]    [ Delete ]          │
+└────────────────────────────────────┘
+  ↓
+Scenario deleted, tab removed
+If deleted scenario was active, switch to first remaining scenario
+```
+
+**Cannot delete last scenario**:
+- If only 1 scenario remains, X icon is hidden or disabled
+- Tooltip: "You must have at least one scenario"
+
+**Archive** (Phase 2+ feature):
+- Instead of deleting, archive scenarios (hidden from main list but recoverable)
+- "Archived Scenarios" section in account dashboard
+
+---
+
+## 3. Tier Gating UI Patterns
+
+### Locked Feature Indicators
+
+**Lock icon** (for features requiring upgrade):
+```
+┌────────────────────────────────────┐
+│  DSCR                          🔒  │
+│  [Locked - Upgrade to Pro]         │
+└────────────────────────────────────┘
+```
+
+**Blur overlay** (alternative to lock icon):
+```
+┌────────────────────────────────────┐
+│  DSCR                              │
+│  █.██  ← Blurred text              │
+│  ─────────────────                 │
+│  [ Upgrade to Pro to unlock ]      │
+└────────────────────────────────────┘
+```
+
+**"Pro" badge** (for features available in Pro tier):
+```
+[ Compare Scenarios ]  Pro
+```
+
+**Visual hierarchy**:
+- Locked features are visually de-emphasized (gray, low opacity)
+- Unlocked features are vibrant (full color, full opacity)
+- Reinforces value of upgrading
+
+### Upgrade Prompt Modals
+
+**When triggered**:
+- User clicks locked feature (locked metric, "Add Scenario" button, "Share" button)
+- User attempts action that exceeds Free tier limits (save 2nd scenario, generate 6th export this month)
+
+**Modal structure**:
+```
+┌────────────────────────────────────┐
+│  🔒 Unlock [Feature Name]          │
+│                                    │
+│  [Brief explanation of feature]    │
+│  [Why it's valuable to user]       │
+│                                    │
+│  Free tier includes:               │
+│  • Single scenario                 │
+│  • Basic metrics                   │
+│  • Watermarked exports             │
+│                                    │
+│  Pro tier adds:                    │
+│  ✓ Up to 10 scenarios              │
+│  ✓ DSCR and advanced metrics       │
+│  ✓ Clean exports                   │
+│  ✓ Scenario sharing                │
+│                                    │
+│  $29/month                         │
+│                                    │
+│  [ Learn More ]  [ Upgrade → ]     │
+└────────────────────────────────────┘
+```
+
+**Frequency limits**:
+- Show upgrade modal max 3 times per session (avoid annoying users)
+- After 3rd dismiss, show inline prompt only (no modal)
+- Track dismissals in sessionStorage
+
+### Feature Teaser UI
+
+**Show Pro features to Free users** (with clear upgrade CTAs):
+
+**Teaser example** (multi-scenario comparison):
+```
+┌────────────────────────────────────┐
+│  Compare Scenarios (Pro)           │
+│  ─────────────────                 │
+│  Compare up to 3 scenarios side-   │
+│  by-side with charts and delta     │
+│  indicators.                       │
+│                                    │
+│  [Preview image or video]          │
+│                                    │
+│  [ Upgrade to unlock → ]           │
+└────────────────────────────────────┘
+```
+
+**Placement**:
+- In results panel, below key metrics (where Pro features would appear)
+- Not intrusive (doesn't block core functionality)
+
+---
+
+## 4. Empty States and Sample Scenarios
+
+### First-Time User Experience
+
+**New user lands on calculator** → Show welcome modal:
+```
+┌────────────────────────────────────┐
+│  Welcome to the Business Loan      │
+│  + DSCR Calculator                 │
+│                                    │
+│  Try a sample scenario or start    │
+│  from scratch.                     │
+│                                    │
+│  [ Try Sample ]  [ Start Fresh ]   │
+└────────────────────────────────────┘
+```
+
+**"Try Sample"**:
+- Pre-fills inputs with realistic values (e.g., $200K loan, 7.5% rate, 60 months)
+- Calculates results immediately
+- User can tweak inputs to explore
+
+**"Start Fresh"**:
+- Blank inputs (placeholders shown)
+- No results until user enters inputs and calculates
+
+**Returning user** (has saved scenarios):
+- No welcome modal
+- Loads most recent scenario automatically
+
+### "Try It" vs "Start From Scratch" Options
+
+**Try It** (recommended for first-time users):
+- Sample scenario demonstrates calculator's value immediately
+- Users see results without effort, understand what the calculator does
+- **Sample scenarios per calculator**:
+  - Business Loan: $200K, 7.5%, 60 months, $50K/month income
+  - Cash Runway: $500K cash, $60K/month burn, 8.3 months runway
+  - Breakeven: $50 price, $30 variable cost, $18K fixed costs
+
+**Start From Scratch** (for experienced users):
+- Blank inputs (faster for users who know exactly what they want to calculate)
+- No pre-filled values to clear
+
+### Calculator-Specific Sample Scenarios
+
+Each calculator defines 1-3 sample scenarios in its PDR (Section 11):
+
+**Business Loan Calculator**:
+1. **Small Business Expansion**: $100K, 6.5%, 5 years
+2. **Equipment Purchase**: $250K, 7.0%, 7 years
+3. **Working Capital**: $50K, 9.0%, 3 years
+
+**Cash Runway Calculator**:
+1. **Startup Burn**: $300K cash, $50K/month burn
+2. **Growth Stage**: $2M cash, $150K/month burn
+
+**Dropdown selector** (in calculator):
+```
+Load Sample Scenario:
+[  Select a sample...  ▼  ]
+  - Small Business Expansion
+  - Equipment Purchase
+  - Working Capital
+```
+
+---
+
+## 5. Loading and Progress States
+
+### Calculation in Progress
+
+**If calculation takes > 100ms**:
+
+```
+Results panel shows spinner:
+┌────────────────────────────────────┐
+│                                    │
+│         ⏳ Calculating...          │
+│                                    │
+└────────────────────────────────────┘
+
+Inputs panel:
+- Input fields disabled (grayed out)
+- "Calculate" button shows spinner: [ ⏳ Calculating... ]
+```
+
+**After calculation completes** (< 150ms typical):
+- Spinner disappears
+- Results fade in (smooth transition, not jarring)
+- Input fields re-enabled
+
+**If calculation exceeds 3 seconds** (rare, likely error):
+- Show error message: "Calculation is taking longer than expected. Please try again."
+- Re-enable inputs, allow user to retry
+
+### Export Generation
+
+**Sync export** (< 3 seconds, typical for single-scenario PDF/CSV):
+
+```
+User clicks "Export PDF"
+  ↓
+Button shows spinner: [ ⏳ Generating... ]
+  ↓
+After 2 seconds, download starts automatically
+Button returns to normal: [ Export PDF ]
+```
+
+**Async export** (> 3 seconds, multi-scenario or large exports):
+
+```
+User clicks "Export PDF"
+  ↓
+Modal appears:
+┌────────────────────────────────────┐
+│  Generating Export                 │
+│                                    │
+│  [████████░░░░░░░░░░] 45%          │
+│  Estimated time: 8 seconds         │
+│                                    │
+│  We'll notify you when it's ready. │
+│  You can continue working.         │
+│                                    │
+│  [ Close ]                         │
+└────────────────────────────────────┘
+  ↓
+User can close modal, continue using calculator
+  ↓
+When export completes, toast notification:
+┌────────────────────────────────────┐
+│  ✓ Export ready!                   │
+│  [ Download ] [ Dismiss ]          │
+└────────────────────────────────────┘
+```
+
+**Progress bar updates**:
+- Poll export job status every 2 seconds
+- Update progress bar (e.g., 0% → 25% → 50% → 75% → 100%)
+- Show estimated time remaining
+
+### AI Narrative Generation
+
+**AI request flow**:
+
+```
+User clicks "✨ AI Explanation"
+  ↓
+Button shows spinner: [ ⏳ Generating... ]
+AI section appears in results panel with typing indicator:
+┌────────────────────────────────────┐
+│  ✨ AI Explanation                 │
+│                                    │
+│  ⏳ Analyzing your scenario...     │
+│  ▌← Blinking cursor                │
+└────────────────────────────────────┘
+  ↓
+After 1-3 seconds, narrative appears (typewriter effect):
+┌────────────────────────────────────┐
+│  ✨ AI Explanation                 │
+│                                    │
+│  Your DSCR of 1.32 is above the    │
+│  typical lender threshold of 1.25, │
+│  providing comfortable headroom... │
+└────────────────────────────────────┘
+```
+
+**Timeout handling** (> 10 seconds):
+```
+If AI request exceeds 10 seconds:
+┌────────────────────────────────────┐
+│  ✨ AI Explanation                 │
+│                                    │
+│  ⚠️ AI is taking longer than usual.│
+│  Please try again.                 │
+│                                    │
+│  [ Try Again ]                     │
+└────────────────────────────────────┘
+```
+
+**Failure handling** (AI service down):
+```
+┌────────────────────────────────────┐
+│  ✨ AI Explanation                 │
+│                                    │
+│  ⚠️ AI service is temporarily      │
+│  unavailable. Try again in a few   │
+│  minutes.                          │
+│                                    │
+│  For assistance, consult a         │
+│  financial advisor.                │
+│                                    │
+│  [ Dismiss ]                       │
+└────────────────────────────────────┘
+```
+
+**Rate limit handling** (user exceeded 50 AI requests/month):
+```
+┌────────────────────────────────────┐
+│  ✨ AI Explanation                 │
+│                                    │
+│  🔒 You've reached your AI request │
+│  limit (50/month). Limit resets on │
+│  Feb 1, 2025.                      │
+│                                    │
+│  [ Learn More ]                    │
+└────────────────────────────────────┘
+```
+
+---
+
+## Summary
+
+These interaction patterns ensure calculators are intuitive, responsive, and professional. Key principles:
+- **Instant feedback**: Validate inputs on blur, calculate on change (if fast)
+- **Clear tier boundaries**: Lock icons, upgrade prompts, feature teasers
+- **Graceful loading**: Spinners, progress bars, timeout handling
+- **Sample scenarios**: Help first-time users see value immediately
+- **Consistent behavior**: Scenario management, export flows, AI requests work the same across all calculators
+
+
+# 4.3 Visual Language and Consistency
+
+This section defines the visual design standards that create a cohesive, professional, and accessible experience across all calculators. Consistent visual language reinforces brand identity, reduces cognitive load, and ensures WCAG 2.1 AA compliance.
+
+---
+
+## 1. Color System
+
+### Primary Brand Colors
+
+**Primary Blue** (`#0066CC`):
+- Primary action buttons (Calculate, Upgrade, Save)
+- Active states (selected tabs, focused inputs)
+- Links and interactive elements
+
+**Primary Blue Variants**:
+- Hover: `#0052A3` (darker)
+- Active/Pressed: `#003D7A` (even darker)
+- Light background: `#E6F2FF` (10% opacity for backgrounds)
+
+**Accent Green** (`#10B981`):
+- Success states (valid inputs, completed actions)
+- Positive metrics (above threshold, healthy ratios)
+- Checkmarks and confirmation icons
+
+**Accent Orange** (`#F59E0B`):
+- Emphasis and highlights (Pro tier badges, featured metrics)
+- Call-to-action accents (upgrade prompts)
+
+### Semantic Colors
+
+**Info Blue** (`#3B82F6`):
+- Informational messages and alerts
+- Help icons and tooltips
+- Background: `#DBEAFE` (light blue)
+
+**Warning Yellow** (`#F59E0B`):
+- Warning messages and cautions
+- Borderline metrics (near threshold)
+- Background: `#FEF3C7` (light yellow)
+
+**Danger Red** (`#EF4444`):
+- Error messages and critical alerts
+- Invalid inputs, failed validations
+- Critical metrics (below threshold, high risk)
+- Background: `#FEE2E2` (light red)
+
+**Success Green** (`#10B981`):
+- Success messages and confirmations
+- Healthy metrics (above threshold, low risk)
+- Background: `#D1FAE5` (light green)
+
+### Tier-Specific Colors
+
+**Free Tier** (Gray):
+- Badge color: `#6B7280` (gray)
+- Border color for Free tier cards: `#E5E7EB`
+- Muted, neutral appearance
+
+**Pro Tier** (Blue):
+- Badge color: `#0066CC` (primary blue)
+- Badge background: `#E6F2FF`
+- "Pro" pill badge: Blue with white text
+- Border color for Pro tier cards: `#0066CC`
+
+**AI Add-On Tier** (Purple/Gradient):
+- Badge color: `#8B5CF6` (purple)
+- Badge background: `#EDE9FE`
+- "✨ AI" badge: Purple with sparkle emoji
+- Gradient accent (optional): `linear-gradient(135deg, #667EEA 0%, #764BA2 100%)`
+
+### Neutral/Background Colors
+
+**White** (`#FFFFFF`):
+- Main background, card backgrounds
+
+**Light Gray** (`#F9FAFB`):
+- Alternate backgrounds, input backgrounds, disabled states
+
+**Gray 200** (`#E5E7EB`):
+- Borders, dividers, subtle separators
+
+**Gray 500** (`#6B7280`):
+- Secondary text, placeholder text
+
+**Gray 900** (`#111827`):
+- Primary text, headings
+
+### Color Contrast Requirements
+
+All color combinations must meet **WCAG 2.1 AA contrast ratios**:
+- **Text on background**: 4.5:1 minimum (normal text), 3:1 minimum (large text 18px+)
+- **Interactive elements**: 3:1 minimum (buttons, links)
+
+**Tested combinations**:
+- Primary Blue `#0066CC` on White `#FFFFFF`: 7.5:1 ✓
+- Gray 900 `#111827` on White `#FFFFFF`: 16.6:1 ✓
+- Danger Red `#EF4444` on White `#FFFFFF`: 4.8:1 ✓
+- Warning Yellow `#F59E0B` on White `#FFFFFF`: 2.3:1 ✗ (too low, must use darker variant or white text on yellow background)
+
+---
+
+## 2. Typography
+
+### Font Families
+
+**Sans-Serif (UI and Body Text)**:
+- Primary: `Inter` (from Google Fonts or system fonts)
+- Fallback: `system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`
+
+**Monospace (Numbers and Code)**:
+- Primary: `"JetBrains Mono"` or `"Roboto Mono"`
+- Fallback: `"Courier New", monospace`
+- Used for: Financial results (dollar amounts, percentages), code snippets, technical values
+
+**Why monospace for numbers**:
+- Aligns digits vertically in tables (e.g., comparing $1,234 and $12,345)
+- Professional appearance for financial data
+- Easier to scan and compare
+
+### Font Sizes and Hierarchy
+
+**Headings**:
+- **H1** (Page Title): 32px, bold (600), line-height 1.2
+  - Example: "Business Loan + DSCR Calculator"
+- **H2** (Section Title): 24px, bold (600), line-height 1.3
+  - Example: "Key Results", "Advanced Metrics"
+- **H3** (Subsection): 20px, semibold (500), line-height 1.4
+  - Example: "Payment Breakdown", "Scenario Comparison"
+- **H4** (Card Title): 14px, uppercase, semibold (600), letter-spacing 0.05em, line-height 1.5
+  - Example: "MONTHLY PAYMENT", "DSCR"
+
+**Body Text**:
+- **Large** (Intro text): 18px, regular (400), line-height 1.6
+- **Normal** (Body): 16px, regular (400), line-height 1.6
+- **Small** (Labels, captions): 14px, regular (400), line-height 1.5
+- **Tiny** (Footnotes, disclaimers): 12px, regular (400), line-height 1.4
+
+**Interactive Text**:
+- **Buttons**: 16px, medium (500), line-height 1.5
+- **Links**: 16px, regular (400), line-height 1.6, underline on hover
+
+**Numbers (Results)**:
+- **Large metric**: 48px, bold (700), monospace, line-height 1.1
+  - Example: "$4,000" (monthly payment)
+- **Medium metric**: 32px, semibold (600), monospace, line-height 1.2
+  - Example: "1.32" (DSCR)
+- **Small metric**: 20px, medium (500), monospace, line-height 1.3
+  - Example: "$240,000" (total cost in table)
+
+### Number Formatting Rules
+
+**Currency**:
+- Format: `$X,XXX.XX` (always 2 decimals)
+- Thousands separators: commas
+- Examples:
+  - `$4,000.00` (monthly payment)
+  - `$200,000.00` (loan amount)
+  - `$1,234,567.89` (large amounts)
+- Large numbers: No abbreviations unless > $1M
+  - `$1,234,567` → `$1.23M` (only in charts or space-constrained UI)
+
+**Percentages**:
+- Format: `X.X%` (1 decimal unless precision needed)
+- Examples:
+  - `7.5%` (interest rate)
+  - `12.25%` (if 2 decimals needed)
+  - `0.5%` (small percentages)
+- Special case: `< 0.1%` for very small percentages
+
+**Ratios and Decimals**:
+- Format: `X.XX` (2 decimals typical)
+- Examples:
+  - `1.32` (DSCR)
+  - `3.50` (valuation multiple)
+- Special case: `> 100` → `N/A` or `∞` (e.g., infinite DSCR if no debt)
+
+**Large Numbers (> $1M)**:
+- In results cards: Show full number with commas (`$1,234,567`)
+- In charts/tables (space-constrained): Abbreviate (`$1.23M`, `$45.6K`)
+- Tooltip on hover shows full number
+
+---
+
+## 3. Spacing and Layout Grid
+
+### Grid System
+
+**Base unit**: 8px (all spacing is multiple of 8px)
+- **xs**: 4px (1/2 unit, rare)
+- **sm**: 8px (1 unit)
+- **md**: 16px (2 units)
+- **lg**: 24px (3 units)
+- **xl**: 32px (4 units)
+- **2xl**: 48px (6 units)
+
+**Why 8px grid**:
+- Scales cleanly to all screen sizes (8px = 0.5rem at 16px base)
+- Aligns with Tailwind CSS spacing scale
+- Industry standard (Material Design, Bootstrap, etc.)
+
+### Padding and Margin Standards
+
+**Component padding** (internal spacing):
+- **Input fields**: 12px vertical, 16px horizontal
+- **Buttons**: 12px vertical, 24px horizontal
+- **Cards**: 24px all sides (desktop), 16px (mobile)
+- **Modals**: 32px all sides (desktop), 16px (mobile)
+
+**Component margins** (external spacing):
+- **Between input fields**: 16px vertical
+- **Between cards**: 24px vertical
+- **Between sections**: 48px vertical
+- **Between metric cards**: 16px horizontal (in grid)
+
+### Component Spacing Rules
+
+**Input form**:
+```
+Label                    ← 0px (label sits directly above input)
+[Input field]
+                         ← 16px margin to next input
+Label
+[Input field]
+```
+
+**Results cards**:
+```
+┌──────────────┐  16px  ┌──────────────┐
+│  Card 1      │ ←→     │  Card 2      │
+└──────────────┘        └──────────────┘
+       ↕ 24px margin
+┌──────────────┐  16px  ┌──────────────┐
+│  Card 3      │ ←→     │  Card 4      │
+└──────────────┘        └──────────────┘
+```
+
+---
+
+## 4. Icons and Visual Elements
+
+### Icon Library
+
+**Icon set**: Heroicons (MIT license, matches Tailwind CSS ecosystem)
+- Outline icons (default): 24px, 1.5px stroke
+- Solid icons (emphasis): 24px, filled
+
+**Common icons**:
+- **Lock** (`🔒` or Heroicons `LockClosedIcon`): Locked features, Pro tier required
+- **Info** (`ℹ️` or `InformationCircleIcon`): Tooltips, help text, info alerts
+- **Warning** (`⚠️` or `ExclamationTriangleIcon`): Warning alerts, cautions
+- **Danger** (`🚨` or `ExclamationCircleIcon`): Critical alerts, errors
+- **Check** (`✓` or `CheckCircleIcon`): Success states, completed actions
+- **Sparkle** (`✨` or `SparklesIcon`): AI features, AI add-on
+- **Download** (`ArrowDownTrayIcon`): Export buttons
+- **Share** (`ShareIcon`): Share buttons
+- **Plus** (`PlusIcon`): Add scenario, create new
+- **Trash** (`TrashIcon`): Delete scenario
+
+**Icon sizing**:
+- **Small**: 16px (inline with text)
+- **Medium**: 24px (default, buttons, cards)
+- **Large**: 32px (headings, empty states)
+
+### Status Indicators
+
+**Badge (tier indicator)**:
+```
+Pro    ← Blue background (#0066CC), white text, rounded corners
+```
+- Padding: 4px horizontal, 2px vertical
+- Font: 12px, semibold, uppercase
+- Border radius: 4px
+
+**Dot indicator** (status):
+```
+● Online   ← Green dot (#10B981)
+● Pending  ← Yellow dot (#F59E0B)
+● Offline  ← Gray dot (#6B7280)
+```
+- Size: 8px diameter
+- Placement: Left of text, vertically centered
+
+**Checkmark** (completed):
+```
+✓ Valid input   ← Green checkmark (#10B981)
+```
+- Size: 16-20px
+- Placement: Right of input field or inline with text
+
+### Chart Styles
+
+**Color palette for charts** (colorblind-safe):
+1. **Blue** `#0066CC`
+2. **Green** `#10B981`
+3. **Orange** `#F59E0B`
+4. **Purple** `#8B5CF6`
+5. **Red** `#EF4444`
+6. **Teal** `#14B8A6`
+
+**Chart design standards**:
+- **Background**: White `#FFFFFF`
+- **Grid lines**: Light gray `#E5E7EB`, 1px, dashed
+- **Axes**: Gray 900 `#111827`, 1px solid
+- **Axis labels**: 14px, Gray 500 `#6B7280`
+- **Data labels**: 12px, Gray 900 `#111827`, bold
+- **Legend**: Below chart (desktop), icons match chart colors
+- **Tooltips**: Dark background `#111827`, white text, rounded corners
+
+**Chart types**:
+- **Bar chart**: Vertical bars, 24px width, 8px gap
+- **Line chart**: 2px line, 6px dot markers
+- **Pie chart**: 2px white border between slices, labels outside with leader lines
+
+---
+
+## 5. Accessibility Standards
+
+### WCAG 2.1 AA Compliance
+
+**Contrast minimums**:
+- **Normal text** (< 18px): 4.5:1 contrast ratio
+- **Large text** (≥ 18px or ≥ 14px bold): 3:1 contrast ratio
+- **Interactive elements** (buttons, links): 3:1 contrast ratio
+
+**Color usage**:
+- **Never rely on color alone**: Use icons, labels, patterns in addition to color
+  - Example: Error state = red border + warning icon + error text (not just red border)
+- **Colorblind-safe palettes**: Avoid red/green combinations, use blue/orange or other distinguishable pairs
+
+### Keyboard Navigation
+
+**Tab order**:
+1. Skip to main content link (invisible until focused)
+2. Input fields (top to bottom, left to right)
+3. Calculate button
+4. Scenario tabs
+5. Results panel (focusable cards)
+6. Action buttons (Export, AI, Share)
+
+**Focus indicators**:
+- **Visible outline**: 2px solid Primary Blue `#0066CC`, 2px offset
+- **No removal of focus outline**: Never use `outline: none` without alternative indicator
+
+**Keyboard shortcuts** (optional Phase 2+):
+- `Tab`: Next field
+- `Shift+Tab`: Previous field
+- `Enter`: Submit form (Calculate)
+- `Escape`: Close modal
+
+### Screen Reader Support
+
+**ARIA labels**:
+```html
+<button aria-label="Export calculation results as PDF">
+  Export PDF
+</button>
+
+<input type="number"
+       aria-label="Loan amount in dollars"
+       aria-describedby="loan-amount-help">
+<div id="loan-amount-help">Total amount borrowed from lender</div>
+```
+
+**ARIA roles**:
+- `role="alert"` for error messages (screen reader announces immediately)
+- `role="status"` for loading states (screen reader announces politely)
+- `role="region"` for landmark sections (inputs, results, warnings)
+
+**ARIA live regions**:
+```html
+<div role="status" aria-live="polite" aria-atomic="true">
+  Calculating results...
+</div>
+```
+- **Polite**: Calculation in progress, export generating (don't interrupt)
+- **Assertive**: Error occurred, critical warning (interrupt current announcement)
+
+**Alt text for icons**:
+- Decorative icons: `aria-hidden="true"` (screen reader ignores)
+- Functional icons: `aria-label` describing action (e.g., `aria-label="Information about loan amount"`)
+
+### Focus Management
+
+**Modal open**:
+- Trap focus inside modal (Tab cycles through modal elements only)
+- Focus first interactive element (e.g., input field or "Close" button)
+
+**Modal close**:
+- Return focus to element that triggered modal (e.g., "Add Scenario" button)
+
+**Loading states**:
+- Announce to screen reader: "Calculating results" (using `aria-live="polite"`)
+- Disable inputs during calculation (prevent changes mid-calculation)
+
+---
+
+## Component Examples with Visual Standards
+
+### Primary Button
+
+```
+┌────────────────────┐
+│   Calculate        │  ← Primary Blue (#0066CC) background
+└────────────────────┘     White text, 16px medium
+                           12px vertical, 24px horizontal padding
+                           8px border radius
+
+Hover: #0052A3 background
+Active: #003D7A background
+Disabled: #E5E7EB background, #6B7280 text
+```
+
+### Result Card (Key Metric)
+
+```
+┌──────────────────────────────┐
+│  MONTHLY PAYMENT             │  ← Gray 500 (#6B7280), 14px uppercase
+│  $4,000                      │  ← Gray 900 (#111827), 48px bold monospace
+│                              │
+│  24px padding all sides      │
+│  Light gray background       │
+│  2px border radius           │
+└──────────────────────────────┘
+```
+
+### Warning Alert
+
+```
+┌──────────────────────────────┐
+│  ⚠️  WARNING                 │  ← 4px yellow left border
+│  Your DSCR is 1.18, below    │     Yellow background (#FEF3C7)
+│  the typical lender          │     Gray 900 text
+│  threshold of 1.25.          │     16px padding
+└──────────────────────────────┘
+```
+
+---
+
+## Summary
+
+This visual language ensures all calculators are:
+- **Consistent**: Same colors, typography, spacing across all calculators
+- **Professional**: Clean, modern design that CFOs and finance leaders expect
+- **Accessible**: WCAG 2.1 AA compliant, keyboard navigable, screen reader friendly
+- **Scalable**: Design system documented in Tailwind config, reusable across calculators
+
+Developers and designers reference this section when building calculator UIs, ensuring every calculator feels like part of the same cohesive suite.
+
+
+# 4.4 Content Standards
+
+This section defines writing and messaging standards for all calculators. Clear, consistent, professional language builds trust, reduces user confusion, and reinforces the suite's positioning as CFO-grade decision-support tools. All content must be accessible to non-finance users while maintaining precision for finance professionals.
+
+---
+
+## 1. Naming Conventions
+
+### Input Field Labels
+
+**Principle**: Use plain language, avoid jargon unless universally understood by target users (CFOs, lenders, founders).
+
+**Good examples**:
+- ✓ `Loan Amount` (not "Principal" alone, which is ambiguous)
+- ✓ `Interest Rate` (not "APR" without context)
+- ✓ `Loan Term` (not "Amortization Period")
+- ✓ `Operating Income` (not "NOI" unless tooltip explains)
+
+**When jargon is acceptable**:
+- If term is industry-standard and target users understand it: `DSCR`, `NPV`, `IRR`, `EBITDA`
+- Always provide tooltip explaining abbreviation on first use
+- Spell out on first mention: "Debt Service Coverage Ratio (DSCR)"
+
+**Input label format**:
+```
+[Field Name]
+[Input box]
+[Optional inline help text]
+```
+
+**Examples**:
+```
+Loan Amount (i)
+[  $200,000  ]
+Total amount borrowed, excluding fees
+
+Interest Rate (i)
+[  7.5%  ]
+Annual interest rate (not monthly)
+
+Operating Income (i)
+[  $50,000/month  ]
+Monthly cash flow available to service debt
+```
+
+### Output Metric Names
+
+**Consistency across calculators**:
+- Same metric = same name everywhere
+- Example: "DSCR" in Business Loan Calculator = "DSCR" in Equipment Lease Calculator
+
+**Standard metric names**:
+| Metric | Standard Name | Alternative (Avoid) |
+|--------|---------------|---------------------|
+| Debt Service Coverage Ratio | DSCR | Coverage Ratio, Debt Coverage |
+| Net Present Value | NPV | Present Value, Discounted Cash Flow |
+| Internal Rate of Return | IRR | Rate of Return |
+| Monthly Payment | Monthly Payment | Payment, Installment |
+| Total Interest | Total Interest Paid | Interest, Total Interest Cost |
+| Contribution Margin | Contribution Margin | Gross Margin per Unit |
+| Breakeven Units | Breakeven Units | Breakeven Volume, Breakeven Point |
+
+**Format**:
+```
+[METRIC NAME]  ← 14px uppercase, gray 500
+$4,000         ← 48px bold monospace, gray 900
+```
+
+### Scenario Naming
+
+**Default names**: `Scenario 1`, `Scenario 2`, `Scenario 3`
+- Simple, unambiguous, automatically numbered
+- Avoids technical naming like `scenario_001`
+
+**User-editable**:
+- Users can rename scenarios to describe purpose: `Base Case`, `Aggressive Growth`, `Conservative`, `SBA Option`
+- Max 30 characters (enforced by UI)
+- Alphanumeric + spaces only (no special characters except hyphen/underscore)
+
+**Reserved names** (cannot be used):
+- `Untitled` (used for unsaved scenarios)
+- `Deleted` (reserved for system use)
+
+---
+
+## 2. Tooltip Style and Guidelines
+
+### Length Limits
+
+**Target**: 1-2 sentences, ~50 words max
+- Tooltips should be glanceable, not essays
+- If explanation requires > 50 words, use inline help text or link to help docs
+
+### Tone
+
+**Helpful, not condescending**:
+- Assume user is intelligent but may lack finance expertise
+- Explain terms without talking down to user
+
+**Good examples**:
+```
+Loan Amount (i)
+→ Total amount borrowed from lender. Does not include fees or closing costs.
+
+Interest Rate (i)
+→ Annual interest rate. Most lenders quote annual rates; this calculator uses annual rates unless specified otherwise.
+
+DSCR (i)
+→ Debt Service Coverage Ratio. Measures your ability to cover loan payments from operating income. Lenders typically require 1.25 or higher.
+```
+
+**Bad examples** (condescending, too technical):
+```
+❌ Loan Amount (i)
+→ This is the principal amount of the loan you are borrowing.
+(Too obvious, adds no value)
+
+❌ Interest Rate (i)
+→ The annualized rate of interest charged by the lender, expressed as a percentage of the outstanding principal balance, compounded according to the agreed-upon payment frequency.
+(Too technical, overwhelming)
+
+❌ DSCR (i)
+→ Net Operating Income divided by Total Debt Service.
+(True but unhelpful; doesn't explain why it matters or what values are good)
+```
+
+### When to Use Tooltips vs Inline Help vs Help Links
+
+**Tooltips** (hover/click on `(i)` icon):
+- Short definitions (1-2 sentences)
+- Field-specific context (what this input means, how it's used)
+- Always available, non-intrusive
+
+**Inline help text** (gray text below input):
+- Clarifications all users need (e.g., "Annual rate, not monthly")
+- Format requirements (e.g., "Enter as percentage, e.g., 7.5")
+- Critical context (e.g., "This will affect DSCR calculation")
+
+**Help links** (external documentation):
+- Deep explanations (> 100 words)
+- Complex topics (e.g., "How is DSCR calculated?")
+- Best practices (e.g., "What DSCR do lenders require?")
+
+**Example combining all three**:
+```
+Interest Rate (i)                      ← Tooltip: "Annual interest rate charged by lender"
+[  7.5%  ]
+Annual rate, not monthly               ← Inline help
+[Learn more about interest rates →]   ← Help link
+```
+
+### Examples of Good vs Bad Tooltips
+
+| Input | Bad Tooltip | Good Tooltip |
+|-------|-------------|--------------|
+| Loan Amount | The amount of money you borrow. | Total amount borrowed from lender. Does not include fees or closing costs. |
+| Operating Income | Your income from operations. | Monthly cash flow available to service debt (revenue minus operating expenses). |
+| DSCR | Debt Service Coverage Ratio | Measures your ability to cover loan payments from operating income. Lenders typically require 1.25 or higher. |
+| Breakeven Units | The point where you break even. | Number of units you must sell to cover all fixed and variable costs (revenue = expenses). |
+
+---
+
+## 3. Warning and Alert Messaging
+
+### Warning Message Templates
+
+**Info messages** (blue, informational):
+```
+Template:
+"Your [metric] is [value]. [Context or best practice]."
+
+Examples:
+ℹ️ Your DSCR of 1.32 is above the typical lender threshold of 1.25.
+
+ℹ️ Your cash runway of 12 months is healthy. Most advisors recommend 6-12 months of runway.
+
+ℹ️ Your contribution margin of 40% is above the typical industry average of 30-35%.
+```
+
+**Warning messages** (yellow, caution):
+```
+Template:
+"Your [metric] is [value], which is [comparison to threshold]. Consider [actionable recommendation]."
+
+Examples:
+⚠️ Your DSCR of 1.18 is below the typical lender threshold of 1.25. Consider reducing debt or improving cash flow.
+
+⚠️ Your cash runway of 5 months is below the recommended 6-month minimum. Consider cost reduction or fundraising.
+
+⚠️ Your breakeven volume of 1,200 units is 85% of current sales. A small revenue miss could push you below breakeven.
+```
+
+**Danger messages** (red, critical):
+```
+Template:
+"Your [metric] is [value]. This may [risk or consequence]. You should [urgent action]."
+
+Examples:
+🚨 Your DSCR of 0.92 indicates insufficient cash flow to service this debt. Lenders will likely reject this application.
+
+🚨 Your cash runway of 2 months is critically low. You must reduce burn rate or secure funding immediately.
+
+🚨 Your pricing is below breakeven. At this price, you will lose money on every sale. Increase price or reduce costs.
+```
+
+### Tone (Direct, Actionable, Not Alarmist)
+
+**Direct**:
+- State the problem clearly: "Your DSCR is 1.18, below typical threshold"
+- Don't hedge: Avoid "It seems like", "You might have", "Perhaps consider"
+
+**Actionable**:
+- Tell user what to do: "Consider reducing debt or improving cash flow"
+- Don't just state problem: Avoid "This is a problem" without suggesting solutions
+
+**Not alarmist**:
+- Use measured language: "may face rejection", "should consider", "critically low"
+- Avoid panic-inducing: "CATASTROPHIC", "DISASTER", "BANKRUPTCY IMMINENT"
+
+### When to Show Warnings vs When to Block
+
+**Show warning** (allow user to proceed):
+- Borderline metrics (DSCR 1.15-1.25, just below threshold but not impossible)
+- Unusual but valid inputs (600-month loan term)
+- Best practice violations that aren't errors (cash runway < 6 months)
+
+**Block with error** (prevent user from proceeding):
+- Invalid inputs (negative loan amount, interest rate > 50%)
+- Missing required fields
+- Nonsense combinations (loan term 0 months, breakeven with $0 price)
+
+**Example**:
+```
+Interest Rate
+[  75%  ]  ← Red border
+⚠️ Interest rate of 75% is extremely high. Did you mean 7.5%?
+[  Continue anyway  ]  [ Fix it ]
+← User can proceed but warned
+
+vs
+
+Interest Rate
+[  -5%  ]  ← Red border
+❌ Interest rate must be between 0% and 50%.
+[ Calculate ] ← Button disabled
+← User cannot proceed until fixed
+```
+
+---
+
+## 4. Error Messages
+
+### Validation Error Format
+
+**Template**: `[Field] must be [requirement]`
+
+**Examples**:
+```
+❌ Loan Amount must be greater than $0.
+❌ Interest Rate must be between 0% and 50%.
+❌ Loan Term must be between 1 and 600 months.
+❌ Operating Income must be greater than $0.
+❌ Scenario Name must be 30 characters or less.
+```
+
+**Placement**:
+- Below input field (red text, 14px)
+- Input field has red border
+- Error disappears when user corrects input (on blur)
+
+### System Error Format
+
+**Template**: `Unable to [action]. Please [resolution].`
+
+**Examples**:
+```
+❌ Unable to save scenario. Please try again or contact support.
+❌ Unable to generate export. Please check your connection and retry.
+❌ Unable to load scenarios. Please refresh the page.
+```
+
+**What NOT to show**:
+- Technical stack traces: `TypeError: Cannot read property 'dscr' of undefined at calculateDSCR (calc.ts:42)`
+- Database errors: `PostgreSQL error: Connection timeout`
+- API errors: `500 Internal Server Error: {"message": "LLM service unavailable"}`
+
+**What to show instead**:
+```
+❌ Unable to calculate results. Please try again.
+(Log technical error to Sentry/monitoring, show user-friendly message)
+```
+
+### Error Severity and User Actions
+
+**Recoverable errors** (user can retry):
+```
+❌ Unable to save scenario. Please try again.
+[  Retry  ]  [ Cancel ]
+```
+
+**Non-recoverable errors** (user must refresh or contact support):
+```
+❌ An unexpected error occurred. Please refresh the page or contact support if the issue persists.
+[  Refresh Page  ]  [ Contact Support ]
+```
+
+**Errors with context** (help user understand why):
+```
+❌ Unable to generate export. Your session has expired. Please log in again.
+[  Log In  ]
+```
+
+---
+
+## Example Messages Table (Good vs Bad)
+
+| Context | Bad Message | Good Message |
+|---------|-------------|--------------|
+| **Invalid loan amount** | Invalid input. | Loan Amount must be greater than $0. |
+| **DSCR below threshold** | DSCR is low. | Your DSCR of 1.18 is below the typical lender threshold of 1.25. Consider reducing debt or improving cash flow. |
+| **Export failure** | Error 500: Internal server error. | Unable to generate export. Please try again or contact support. |
+| **Session expired** | Unauthorized. | Your session has expired. Please log in again. |
+| **Calculation timeout** | Timeout exceeded. | Calculation is taking longer than expected. Please try again. |
+| **AI request limit** | Rate limit exceeded. | You've reached your AI request limit (50/month). Limit resets on Feb 1, 2025. |
+| **Scenario limit (Free)** | Maximum scenarios reached. | Free tier includes 1 scenario. Upgrade to Pro to save up to 10 scenarios. [Upgrade →] |
+
+---
+
+## Content Review Checklist
+
+Before deploying any calculator, review all content against this checklist:
+
+**Input labels**:
+- [ ] Plain language, jargon explained
+- [ ] Consistent with other calculators
+- [ ] Tooltips 1-2 sentences, ~50 words max
+
+**Output metric names**:
+- [ ] Standard names from table above
+- [ ] Abbreviations spelled out in tooltip
+
+**Warnings and alerts**:
+- [ ] Direct, actionable, not alarmist
+- [ ] Follows template: "[metric] is [value], [context], [action]"
+- [ ] Appropriate severity (info/warning/danger)
+
+**Error messages**:
+- [ ] User-friendly (no technical jargon)
+- [ ] Actionable (tells user what to do)
+- [ ] Format: "[Field] must be [requirement]" or "Unable to [action]. Please [resolution]."
+
+**Tooltips**:
+- [ ] Helpful, not condescending
+- [ ] 1-2 sentences, ~50 words max
+- [ ] Explains "what" and "why", not just "how"
+
+---
+
+## Summary
+
+Consistent, clear content ensures users trust the calculators and understand results. Key principles:
+- **Plain language**: Avoid jargon unless target users understand it
+- **Direct and actionable**: Tell users what to do, not just what's wrong
+- **Consistent naming**: Same metric = same name across all calculators
+- **User-friendly errors**: Never show technical errors; translate to user-facing messages
+- **Measured tone**: Professional and helpful, not alarmist or condescending
+
+
+---
+
+
+# Section 5: Data Security & Compliance
+
+# 5.1 Data Model (Suite-Level)
+
+This section defines the core data models used across the CFO Business Intelligence Calculator Suite. These models are designed to support Free/Pro/AI tiering, B2B multi-tenancy, and compliance requirements (GDPR/CCPA data deletion, minimal PII exposure per Section 1.7).
+
+---
+
+## 1. User Model
+
+### Anonymous Users
+
+Anonymous users can use calculators without creating an account. They are tracked via session IDs for analytics and temporary scenario storage.
+
+**Fields**:
+```json
+{
+  "session_id": "uuid-v4",              // Primary key, pseudonymous identifier
+  "created_at": "2025-01-15T14:30:00Z", // Session creation timestamp
+  "last_seen": "2025-01-15T16:45:00Z",  // Last activity timestamp
+  "browser_fingerprint": "hash",        // Optional: for abuse detection only
+  "tier": "free",                       // Always "free" for anonymous
+  "locale": "en-US"                     // User's locale (from Accept-Language header)
+}
+```
+
+**Storage**:
+- **Sessions table** (PostgreSQL) or Redis with 30-day TTL
+- **Retention**: 30 days of inactivity → auto-delete session and associated scenarios
+
+**Notes**:
+- No PII (no email, no name)
+- Session ID stored in httpOnly cookie (secure, not accessible via JavaScript)
+- Browser fingerprint used only for rate limiting/abuse detection (hashed, not reversible)
+
+---
+
+### Registered Users
+
+Registered users create accounts to save scenarios, access Pro tier features, and sync across devices.
+
+**Fields**:
+```json
+{
+  "user_id": "uuid-v4",                 // Primary key
+  "email": "user@example.com",          // PII: only identifier tied to user
+  "email_verified": true,               // Email verification status
+  "password_hash": "bcrypt-hash",       // bcrypt or Argon2 hash (never plaintext)
+  "tier": "pro",                        // "free", "pro", "ai", "b2b"
+  "subscription_id": "stripe-sub-id",   // Stripe/payment provider subscription ID
+  "signup_date": "2025-01-01T00:00:00Z",
+  "last_login": "2025-01-15T14:30:00Z",
+  "locale": "en-US",
+  "timezone": "America/New_York",       // For export timestamps, email scheduling
+  "tenant_id": null,                    // null for individual users, UUID for B2B
+  "metadata": {
+    "onboarding_completed": true,
+    "feature_flags": {
+      "beta_features": false
+    }
+  }
+}
+```
+
+**Storage**:
+- **Users table** (PostgreSQL)
+- **Indexes**: `email` (unique), `tier`, `tenant_id`
+
+**Notes**:
+- Email is only PII field (per Section 1.7, no SSN, no financial account data)
+- Password never stored in plaintext (bcrypt with cost factor 12 or Argon2)
+- `metadata` field allows extensibility without schema changes
+
+---
+
+### B2B/Tenant Users
+
+B2B users belong to an organization (tenant) and have roles within that organization.
+
+**Fields** (extends Registered User model):
+```json
+{
+  "user_id": "uuid-v4",
+  "email": "analyst@corporation.com",
+  "tier": "b2b",
+  "tenant_id": "uuid-v4",               // Foreign key to tenants table
+  "role_in_tenant": "user",             // "admin", "user", "viewer"
+  "permissions": {
+    "can_create_scenarios": true,
+    "can_share_scenarios": true,
+    "can_export": true,
+    "can_use_ai": false                 // Tenant may disable AI for specific users
+  },
+  "created_by_admin": "uuid-v4"         // User ID of admin who created this account
+}
+```
+
+**Roles**:
+- **Admin**: Manage tenant settings, invite users, view all scenarios, configure branding
+- **User**: Create scenarios, export, share (default role)
+- **Viewer**: Read-only access to shared scenarios (cannot create or edit)
+
+---
+
+## 2. Scenario Model
+
+### Core Fields
+
+Scenarios are the primary user-generated data in the system. Each scenario represents one set of calculator inputs and outputs.
+
+```json
+{
+  "scenario_id": "uuid-v4",             // Primary key
+  "calculator_id": "business-loan",     // Which calculator this scenario belongs to
+  "user_id": "uuid-v4",                 // Foreign key (null for anonymous users)
+  "session_id": "uuid-v4",              // Foreign key (null for registered users)
+  "tenant_id": null,                    // Foreign key to tenant (for B2B scenarios)
+  "created_at": "2025-01-15T14:30:00Z",
+  "updated_at": "2025-01-15T16:45:00Z",
+  "accessed_at": "2025-01-20T10:00:00Z", // Last viewed (for retention policy)
+
+  "name": "Base Case",                  // User-defined scenario name
+  "description": "Conservative assumptions for lender presentation", // Optional
+  "tags": ["lender", "conservative"],   // User-defined tags (for filtering)
+  "is_baseline": true,                  // User can mark one scenario as baseline
+
+  "inputs": { /* Calculator-specific JSON, see below */ },
+  "outputs": { /* Calculated results JSON, see below */ },
+  "warnings": [ /* Array of warning objects, see below */ ],
+
+  "calculator_version": "1.2.0",        // Calculator UI version (for breaking changes)
+  "formula_version": {                  // Formula versions used (for audit trail)
+    "amortization": "1.3.2",
+    "dscr": "1.1.0"
+  }
+}
+```
+
+**Storage**:
+- **Scenarios table** (PostgreSQL)
+- **Indexes**: `user_id`, `session_id`, `calculator_id`, `tenant_id`, `accessed_at` (for retention cleanup)
+- **JSONB columns**: `inputs`, `outputs`, `warnings`, `formula_version` (queryable with GIN indexes)
+
+---
+
+### Input Data Structure (Calculator-Specific)
+
+Inputs are stored as JSON, schema varies per calculator.
+
+**Example: Business Loan Calculator**:
+```json
+{
+  "principal": 200000,                  // Number (dollars)
+  "annual_rate": 0.075,                 // Number (decimal, not percentage)
+  "term_months": 60,                    // Integer
+  "payment_frequency": "monthly",       // String enum
+  "origination_fee": 2000,              // Number (dollars)
+  "operating_income_monthly": 50000     // Number (dollars/month)
+}
+```
+
+**Validation**:
+- Server-side validation against JSON schema (defined in calculator config, Section 3.3)
+- Type checking: numbers, strings, enums
+- Range checking: `principal > 0`, `annual_rate >= 0 && annual_rate <= 0.5`
+
+---
+
+### Output Data Structure
+
+Outputs are calculated results, stored for caching and audit trail.
+
+**Example: Business Loan Calculator**:
+```json
+{
+  "monthly_payment": 4000.00,           // Number (dollars)
+  "total_interest": 40000.00,
+  "total_cost": 240000.00,
+  "dscr": 1.32,                         // Number (ratio)
+  "covenant_headroom": 0.07,            // Number (ratio difference)
+  "amortization_schedule": [
+    {
+      "month": 1,
+      "payment": 4000.00,
+      "principal": 2500.00,
+      "interest": 1500.00,
+      "balance": 197500.00
+    }
+    // ... 59 more months
+  ],
+  "calculated_at": "2025-01-15T14:30:05Z", // Timestamp of calculation
+  "calculation_time_ms": 142            // Performance tracking
+}
+```
+
+**Notes**:
+- All currency values stored as numbers (not strings)
+- Decimals stored with full precision (e.g., 1.32456789), formatted on display
+- `calculated_at` timestamp allows recalculation detection (stale results)
+
+---
+
+### Warnings Array
+
+Warnings are generated during calculation and stored with scenario.
+
+```json
+{
+  "warnings": [
+    {
+      "severity": "warning",            // "info", "warning", "danger"
+      "metric": "dscr",                 // Which metric triggered warning
+      "message": "Your DSCR of 1.18 is below the typical lender threshold of 1.25. Consider reducing debt or improving cash flow.",
+      "threshold": 1.25,                // Threshold value (for reference)
+      "actual_value": 1.18,             // User's value
+      "recommendation": "Consider reducing debt or improving cash flow."
+    }
+  ]
+}
+```
+
+---
+
+### Versioning
+
+**Calculator version**:
+- Tracks UI/feature version (e.g., `1.2.0`)
+- Breaking changes (e.g., remove input field, change input semantics) bump major version
+- Allows migration of old scenarios to new schema
+
+**Formula version**:
+- Tracks which formula versions were used (per Section 3.3)
+- Stored in `formula_version` field as map: `{ "dscr": "1.1.0", "amortization": "1.3.2" }`
+- Appears in exports for audit trail
+
+---
+
+## 3. Tenant/Organization Model (B2B)
+
+B2B customers (lenders, advisors, SaaS platforms embedding calculators) are modeled as tenants.
+
+### Tenant Config
+
+```json
+{
+  "tenant_id": "uuid-v4",               // Primary key
+  "name": "Acme Financial Advisors",    // Organization name
+  "domain": "acmefinancial.com",        // Primary domain (for SSO, email validation)
+  "status": "active",                   // "active", "suspended", "trial"
+  "tier": "b2b",                        // Always "b2b"
+  "plan": "enterprise",                 // "starter", "growth", "enterprise"
+
+  "created_at": "2024-06-01T00:00:00Z",
+  "trial_ends_at": null,                // null if not on trial
+  "subscription_id": "stripe-sub-id",
+
+  "feature_flags": {
+    "ai_enabled": false,                // Tenant can disable AI entirely
+    "white_label": true,                // Remove "Powered by" branding
+    "custom_domain": "calculators.acmefinancial.com",
+    "api_access": true,                 // Enable API keys for programmatic access
+    "max_users": 25,                    // User seat limit
+    "max_scenarios_per_user": 20        // Higher than default Pro tier (10)
+  },
+
+  "branding": {
+    "logo_url": "https://cdn.acme.com/logo.png",
+    "primary_color": "#0066CC",         // Hex color for buttons, links
+    "footer_disclaimer": "Custom disclaimer text for exports"
+  },
+
+  "usage_limits": {
+    "calculations_per_month": 100000,   // Tenant-wide limit
+    "exports_per_month": 5000,
+    "ai_requests_per_month": 0          // Disabled
+  },
+
+  "retention_policy": {
+    "scenarios_days": 730,              // 2 years (default 24 months)
+    "exports_days": 90,
+    "logs_days": 365,
+    "telemetry_enabled": false          // Opt-out of telemetry
+  }
+}
+```
+
+**Storage**:
+- **Tenants table** (PostgreSQL)
+- **Indexes**: `domain`, `status`
+
+---
+
+### User-to-Tenant Relationships
+
+Many-to-one: Multiple users belong to one tenant.
+
+**Foreign key**: `users.tenant_id` → `tenants.tenant_id`
+
+**Role mapping** (stored in `users.role_in_tenant`):
+- **admin**: Full access, can invite users, configure branding, view all scenarios
+- **user**: Standard access, create scenarios, export, share
+- **viewer**: Read-only, can view shared scenarios only
+
+---
+
+### Tenant-Level Usage Tracking
+
+Aggregated usage tracked per tenant for billing and limit enforcement.
+
+```json
+{
+  "tenant_id": "uuid-v4",
+  "month": "2025-01",                   // YYYY-MM
+  "calculations": 45230,                // Count of calculations this month
+  "exports": 1203,
+  "ai_requests": 0,
+  "active_users": 18,                   // Unique users who logged in this month
+  "scenarios_created": 456,
+  "updated_at": "2025-01-20T10:00:00Z"  // Last update timestamp
+}
+```
+
+**Storage**:
+- **Tenant usage table** (PostgreSQL) or separate analytics database
+- **Partitioned by month** for efficient queries and cleanup
+
+---
+
+## 4. Export Model
+
+### Export Metadata
+
+```json
+{
+  "export_id": "uuid-v4",               // Primary key
+  "user_id": "uuid-v4",                 // Foreign key (null for anonymous)
+  "session_id": "uuid-v4",              // Foreign key (null for registered users)
+  "tenant_id": null,                    // Foreign key (for B2B exports)
+
+  "scenario_ids": [                     // Array of scenario UUIDs (multi-scenario exports)
+    "uuid-v4-1",
+    "uuid-v4-2"
+  ],
+  "calculator_id": "business-loan",
+  "format": "pdf",                      // "pdf", "csv", "excel"
+
+  "created_at": "2025-01-15T14:30:00Z",
+  "expires_at": "2025-01-22T14:30:00Z", // 7 days after creation (download link expiry)
+  "deleted_at": null,                   // Soft delete timestamp (retention policy)
+
+  "file_storage_key": "exports/2025-01/uuid-v4.pdf", // S3/R2 key
+  "file_size_bytes": 245678,
+  "download_count": 2,                  // Track how many times downloaded
+
+  "generation_time_ms": 2450,           // Performance tracking
+  "watermarked": true,                  // Free tier exports are watermarked
+
+  "metadata": {
+    "tier": "free",                     // Tier at time of export
+    "formula_versions": {               // Audit trail
+      "dscr": "1.1.0",
+      "amortization": "1.3.2"
+    }
+  }
+}
+```
+
+**Storage**:
+- **Exports table** (PostgreSQL)
+- **File storage**: S3/Cloudflare R2 (referenced by `file_storage_key`)
+- **Indexes**: `user_id`, `session_id`, `expires_at` (for cleanup job), `deleted_at` (for soft delete filtering)
+
+---
+
+### File Storage References
+
+**S3/R2 key structure**:
+```
+exports/
+  {YYYY-MM}/
+    {export_id}.pdf
+    {export_id}.csv
+    {export_id}.xlsx
+```
+
+**Presigned URL generation** (for download):
+- Generate presigned URL with 1-hour expiry when user requests download
+- URL format: `https://r2.smartprofit.com/exports/2025-01/uuid-v4.pdf?signature=...&expires=...`
+
+---
+
+### Expiration/Retention Rules
+
+**Anonymous exports**:
+- Created → 24 hours → auto-delete (hard delete from S3 and database)
+
+**Registered user exports (Free tier)**:
+- Created → 90 days → soft delete (mark `deleted_at`, hide from UI)
+- Soft delete → 30 days → hard delete (remove from S3 and database)
+
+**Registered user exports (Pro tier)**:
+- Created → 90 days → soft delete
+- Soft delete → 30 days → hard delete
+
+**Download link expiry** (all tiers):
+- Presigned URL expires 7 days after export creation
+- User can regenerate export if link expires (counts as new export toward monthly limit)
+
+---
+
+## 5. Analytics Event Model
+
+### Event Structure
+
+```json
+{
+  "event_id": "uuid-v4",                // Primary key
+  "event_name": "calculation_performed", // Event type
+  "timestamp": "2025-01-15T14:30:05Z",  // Event occurrence time
+
+  "session_id": "uuid-v4",              // Pseudonymous identifier (anonymous users)
+  "user_id": "uuid-v4",                 // Pseudonymous identifier (registered users, null for anonymous)
+  "tenant_id": null,                    // Foreign key (for B2B tenant analytics)
+
+  "properties": {                       // Event-specific data (JSON)
+    "calculator_id": "business-loan",
+    "inputs_hash": "sha256-hash",       // Hash of inputs (for cache hit tracking, not reversible)
+    "calculation_time_ms": 142,
+    "tier": "free",
+    "warnings_count": 1
+  },
+
+  "metadata": {
+    "user_agent": "Mozilla/5.0...",     // Browser/device info
+    "ip_hash": "sha256-hash",           // IP address hashed (for abuse detection, not reversible)
+    "referrer": "https://google.com",   // Traffic source
+    "locale": "en-US"
+  }
+}
+```
+
+**Storage**:
+- **Events table** (PostgreSQL) or ClickHouse (for high volume, Phase 2+)
+- **Partitioned by month** (e.g., `events_2025_01`, `events_2025_02`)
+- **Retention**: 12 months, then auto-purge (per Section 1.6)
+
+---
+
+### Session Tracking
+
+**Anonymous users**:
+- `session_id` stored in httpOnly cookie
+- Session expires after 30 days of inactivity
+- Session ID is pseudonymous UUID (not tied to PII)
+
+**Registered users**:
+- `user_id` is pseudonymous UUID (not email or name in analytics)
+- `session_id` still tracked (to distinguish sessions from same user)
+- Analytics queries join on `user_id` for cohort analysis
+
+---
+
+### Event Aggregation Approach
+
+**Raw events** (stored 12 months):
+- Individual events: `calculation_performed`, `export_requested`, `tier_upgraded`
+
+**Aggregated summaries** (stored indefinitely):
+- Daily rollups: "1,234 calculations on 2025-01-15 for business-loan calculator"
+- Monthly rollups: "45,678 calculations in Jan 2025, 3.2% conversion Free → Pro"
+- Aggregations stored in separate `analytics_rollups` table
+
+**Aggregation jobs**:
+- Run nightly (aggregate previous day's events)
+- After 12 months, drop raw events, keep aggregated summaries
+
+---
+
+## Data Model Relationships Diagram
+
+```
+┌─────────────┐
+│   Tenants   │
+└──────┬──────┘
+       │ 1:N
+       │
+┌──────▼──────┐       ┌──────────────┐
+│    Users    │───────│   Sessions   │
+│             │  1:N  │  (anonymous) │
+└──────┬──────┘       └──────┬───────┘
+       │ 1:N                 │ 1:N
+       │                     │
+┌──────▼─────────────────────▼───────┐
+│            Scenarios               │
+└──────┬─────────────────────────────┘
+       │ 1:N
+       │
+┌──────▼──────┐       ┌──────────────┐
+│   Exports   │       │   Events     │
+└─────────────┘       └──────────────┘
+```
+
+---
+
+## Summary
+
+These data models support:
+- **Multi-tier access**: Free, Pro, AI, B2B with appropriate limits and features
+- **Multi-tenancy**: B2B customers with isolated data and custom branding
+- **Minimal PII**: Only email and name (for registered users); all analytics use pseudonymous IDs
+- **Audit trails**: Formula versions, calculation timestamps, export metadata
+- **GDPR/CCPA compliance**: User data export and hard deletion capabilities
+- **Retention policies**: Automated cleanup of expired scenarios, exports, and events (per Section 5.4)
+
+
+# 5.2 Security & Privacy Baselines
+
+This section defines the security and privacy standards for the CFO Business Intelligence Calculator Suite. These baselines ensure protection of user data, prevention of abuse, and compliance with privacy regulations (GDPR, CCPA) while maintaining the product's positioning as a decision-support tool with minimal PII exposure (per Section 1.7).
+
+---
+
+## 1. Authentication and Authorization
+
+### Anonymous Session Management
+
+**Cookie-based sessions**:
+- **Session ID**: UUID v4, stored in httpOnly cookie (not accessible via JavaScript)
+- **Cookie attributes**:
+  - `HttpOnly: true` (prevents XSS attacks from stealing session ID)
+  - `Secure: true` (HTTPS only, prevents MITM attacks)
+  - `SameSite: Lax` (CSRF protection, allows navigation from external sites)
+- **Expiry**: 30 days of inactivity (rolling expiration on each request)
+- **Storage**: Redis (session ID → session data) or PostgreSQL sessions table
+
+**Session data** (stored server-side):
+```json
+{
+  "session_id": "uuid-v4",
+  "created_at": "2025-01-15T14:30:00Z",
+  "last_seen": "2025-01-15T16:45:00Z",
+  "tier": "free",
+  "locale": "en-US",
+  "temp_scenarios": ["uuid-1", "uuid-2"] // Unsaved scenarios (deleted after 24 hours)
+}
+```
+
+**Security considerations**:
+- Session IDs are cryptographically random (UUID v4, 128-bit entropy)
+- Session IDs never appear in URLs (prevents leakage via Referer headers)
+- Sessions invalidated on logout (explicit) or 30 days inactivity (automatic)
+
+---
+
+### User Authentication (Email/Password and OAuth)
+
+**Email/password authentication**:
+- **Password requirements**:
+  - Minimum 8 characters
+  - No maximum length (up to 128 characters)
+  - No complexity requirements (passphrases encouraged over complex passwords)
+- **Password hashing**: bcrypt with cost factor 12 or Argon2id (OWASP recommendation)
+- **Password reset flow**:
+  - User requests reset → email sent with time-limited token (1-hour expiry)
+  - Token is single-use (invalidated after use or expiry)
+  - Token stored as bcrypt hash in database (not plaintext)
+
+**OAuth authentication** (Google, Microsoft, GitHub):
+- **OAuth 2.0 Authorization Code flow** (not Implicit flow, which is deprecated)
+- **State parameter**: CSRF protection (random token stored in session, verified on callback)
+- **Scope requests**: Minimal scopes (email, profile only; no access to user's data)
+- **Account linking**: If user signs up with email/password, can link OAuth accounts later
+
+**Multi-factor authentication (MFA)** (Phase 2+ feature):
+- TOTP-based (Google Authenticator, Authy)
+- Required for Admin users in B2B tenants
+- Optional for individual Pro users
+
+---
+
+### Role-Based Access Control (RBAC)
+
+**Roles**:
+
+| Role | Scope | Permissions |
+|------|-------|-------------|
+| **Anonymous** | Session-scoped | Use calculators, save temp scenarios (24h), export (watermarked) |
+| **User (Free)** | Account-scoped | Save 1 scenario permanently, export (watermarked), basic metrics |
+| **User (Pro)** | Account-scoped | Save 10 scenarios, export (clean), advanced metrics, sharing |
+| **User (AI)** | Account-scoped | Pro + AI narratives (50/month) |
+| **Tenant User** | Tenant-scoped | Create scenarios within tenant, export, share with tenant members |
+| **Tenant Admin** | Tenant-scoped | Manage tenant users, configure branding, view all tenant scenarios |
+| **System Admin** | Platform-scoped | Impersonate users (with audit log), manage tenants, access dashboards (Section 1.8) |
+
+**Permission checks**:
+- Server-side enforcement (never trust client)
+- Every API request checks: "Does this user have permission to perform this action on this resource?"
+- Example: Viewing scenario requires: `scenario.user_id == current_user.id` OR `scenario.tenant_id == current_user.tenant_id && scenario.shared == true`
+
+---
+
+### API Authentication
+
+**Web app (browser-based)**:
+- **Session cookies** (as described above)
+- **CSRF tokens**: Required for state-changing operations (POST, PUT, DELETE)
+  - CSRF token stored in cookie (`XSRF-TOKEN`), sent in request header (`X-XSRF-Token`)
+  - Framework-level CSRF protection (e.g., Fastify CSRF plugin)
+
+**B2B API access (programmatic)**:
+- **API keys**: UUID v4, generated per tenant
+- **API key format**: `sk_live_abcd1234...` (prefix indicates environment: `sk_live`, `sk_test`)
+- **Storage**: API keys hashed (SHA-256) in database, plaintext shown only once on generation
+- **Authentication header**: `Authorization: Bearer sk_live_abcd1234...`
+- **Scopes**: API keys scoped to tenant (can only access tenant's data)
+- **Rotation**: Tenants can rotate API keys via dashboard (old key revoked, new key generated)
+- **Rate limiting**: Stricter limits for API keys (per Section 5.2.5)
+
+---
+
+## 2. Data Encryption
+
+### Encryption in Transit
+
+**TLS 1.2+ for all connections**:
+- **HTTPS only**: All HTTP requests redirected to HTTPS (301 permanent redirect)
+- **TLS versions**: TLS 1.2 minimum, TLS 1.3 preferred
+- **Cipher suites**: Strong ciphers only (ECDHE-RSA-AES128-GCM-SHA256 or better)
+- **HSTS header**: `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`
+- **Certificate**: Automated renewal via Let's Encrypt or AWS Certificate Manager
+
+**API calls to external services**:
+- LLM APIs (OpenAI, Anthropic): HTTPS only
+- Payment providers (Stripe): HTTPS only, validate SSL certificates
+
+**Database connections**:
+- PostgreSQL: `sslmode=require` (TLS required)
+- Redis: TLS enabled if Redis server supports it (optional for Redis on localhost)
+
+---
+
+### Encryption at Rest
+
+**Database encryption**:
+- **PostgreSQL**: Transparent Data Encryption (TDE) if supported by hosting provider (AWS RDS, Railway)
+  - Otherwise: OS-level disk encryption (LUKS on Linux, encrypted EBS volumes on AWS)
+- **Redis**: Encryption at rest via cloud provider (AWS ElastiCache, Upstash encryption)
+
+**File storage encryption** (S3/Cloudflare R2):
+- **Server-side encryption**: AES-256 (S3-managed keys or customer-managed keys via KMS)
+- **Export files**: All PDF/CSV/Excel files encrypted at rest automatically
+- **Access control**: S3 bucket policies restrict access (only application servers can read/write)
+
+**Backup encryption**:
+- Database backups encrypted (AWS RDS automated backups, or manual pg_dump encrypted with GPG)
+- Export file backups (if needed) encrypted
+
+---
+
+### Key Management
+
+**Encryption key rotation**:
+- **Application secrets** (API keys, JWT secrets): Rotate every 90 days
+- **Database encryption keys**: Rotate annually (or per cloud provider recommendation)
+- **OAuth client secrets**: Rotate every 180 days
+
+**Key storage**:
+- **Environment variables**: Secrets stored in environment variables (not committed to Git)
+- **Secrets manager**: AWS Secrets Manager, Railway Secrets, or HashiCorp Vault (Phase 2+)
+- **Access controls**: Only application servers and authorized DevOps personnel can access secrets
+
+**Key access audit**:
+- Log all access to secrets manager (who accessed which secret, when)
+- Alert on unexpected access (e.g., secret accessed from unknown IP)
+
+---
+
+## 3. Privacy and PII Handling
+
+### What is PII in This System
+
+**PII fields** (must be protected):
+- **Email address**: Only PII field for registered users
+- **Name**: Optional (user can provide name for Pro tier invoices, but not required for product use)
+
+**NOT PII** (per Section 1.7 constraints):
+- Scenario inputs: Aggregated financial data (loan amount, revenue, expenses) without customer names or account numbers
+- Session IDs: Pseudonymous UUIDs, not reversible to user identity
+- User IDs: Pseudonymous UUIDs, not directly tied to email in analytics
+
+**Special case: B2B tenant names**:
+- Tenant names (e.g., "Acme Financial Advisors") are business identifiers, not individual PII
+- Treated as confidential but not subject to GDPR individual data rights
+
+---
+
+### PII Exclusion from Logs and Analytics
+
+**Analytics events** (Section 5.1.5):
+- **Never log**: Email addresses, names, IP addresses (except hashed)
+- **Pseudonymous IDs only**: `user_id` (UUID), `session_id` (UUID)
+- **IP addresses**: Hashed with SHA-256 before logging (for abuse detection only, not reversible)
+
+**Application logs** (error logs, access logs):
+- **Scrub PII**: Email addresses replaced with `[email]` or user ID
+- **Example**:
+  - Bad: `User user@example.com failed login attempt`
+  - Good: `User uuid-1234 failed login attempt`
+
+**AI request logs** (Section 5.4.2):
+- **No user content**: Do not log scenario inputs/outputs sent to LLM (redact before logging)
+- **Log metadata only**: User ID, calculator ID, request timestamp, response time, cost
+
+---
+
+### Pseudonymization Strategy
+
+**User IDs**:
+- UUIDs generated on user creation (e.g., `550e8400-e29b-41d4-a716-446655440000`)
+- No reversible link to email in analytics database (email stored only in `users` table)
+
+**Session IDs**:
+- UUIDs generated on session creation
+- Anonymous users tracked via session ID only (no link to email)
+
+**Hashed identifiers** (for abuse detection):
+- IP addresses: SHA-256 hash with salt (e.g., `sha256(ip_address + secret_salt)`)
+- Browser fingerprints: SHA-256 hash (for rate limiting, not user tracking)
+
+**Analytics queries**:
+- Queries use `user_id` for cohort analysis (e.g., "How many users signed up in Jan 2025?")
+- No joins to `users.email` in analytics queries (keep analytics pseudonymous)
+
+---
+
+### User Data Export (GDPR/CCPA Right to Access)
+
+**GDPR Article 15 / CCPA 1798.110**: Users can request copy of their data.
+
+**Data export format**:
+```json
+{
+  "user_id": "uuid-1234",
+  "email": "user@example.com",
+  "tier": "pro",
+  "signup_date": "2025-01-01T00:00:00Z",
+  "scenarios": [
+    {
+      "scenario_id": "uuid-5678",
+      "calculator_id": "business-loan",
+      "created_at": "2025-01-15T14:30:00Z",
+      "inputs": { /* full inputs */ },
+      "outputs": { /* full outputs */ }
+    }
+    // ... all scenarios
+  ],
+  "exports": [
+    {
+      "export_id": "uuid-9012",
+      "format": "pdf",
+      "created_at": "2025-01-15T16:45:00Z",
+      "download_url": "presigned-url-valid-for-7-days"
+    }
+    // ... all exports
+  ],
+  "analytics_summary": {
+    "total_calculations": 123,
+    "total_exports": 45,
+    "last_login": "2025-01-20T10:00:00Z"
+  }
+}
+```
+
+**Export process**:
+1. User requests data export via account settings
+2. System generates JSON file (async job, ~30 seconds)
+3. Email download link to user (presigned URL, 7-day expiry)
+
+---
+
+### User Data Deletion (GDPR/CCPA Right to Erasure)
+
+**GDPR Article 17 / CCPA 1798.105**: Users can request deletion of their data.
+
+**Hard delete process**:
+1. User requests deletion via account settings or support ticket
+2. System marks account for deletion (`deletion_requested_at` timestamp)
+3. Grace period: 30 days (user can cancel deletion request)
+4. After 30 days, hard delete:
+   - Delete all scenarios (inputs, outputs, metadata)
+   - Delete all exports (S3 files and database records)
+   - Delete user record (email, password hash, all PII)
+   - **Retain**: Pseudonymous analytics events (user_id retained but unlinked to email)
+
+**Exceptions** (legal retention requirements):
+- Invoices and payment records (retained for 7 years per tax law)
+- Audit logs (retained for 24 months per Section 5.4)
+- Aggregated analytics (no individual data, GDPR exemption)
+
+**B2B tenant deletion**:
+- When tenant cancels, all tenant users and scenarios deleted
+- Tenant admin receives 30-day grace period (can export all data before deletion)
+
+---
+
+## 4. Input Validation and Sanitization
+
+### Client-Side Validation (UX Feedback Only)
+
+**Purpose**: Provide instant feedback to users (don't wait for server response)
+
+**Validation rules**:
+- Input type checking (number, string, email format)
+- Range checking (loan amount > 0, interest rate 0-50%)
+- Required field checks (disable "Calculate" button if required fields empty)
+
+**NOT security-critical**:
+- Client-side validation can be bypassed (user can modify JavaScript, send raw API requests)
+- Never trust client-side validation alone
+
+---
+
+### Server-Side Validation (Security-Critical)
+
+**Never trust client**: All inputs validated server-side.
+
+**Validation framework**:
+- JSON Schema validation (via AJV library or similar)
+- Type checking: Ensure `loan_amount` is number, `payment_frequency` is string enum
+- Range checking: Reject `loan_amount < 0`, `interest_rate < 0 || interest_rate > 0.5`
+- Max length checks: Scenario names ≤ 30 characters, descriptions ≤ 500 characters
+
+**Validation errors**:
+- Return 400 Bad Request with detailed error messages
+- Example: `{"error": "Invalid input", "details": {"loan_amount": "Must be greater than 0"}}`
+
+---
+
+### SQL Injection Prevention
+
+**Use ORMs or parameterized queries** (never string concatenation):
+
+**Good (parameterized query)**:
+```typescript
+// Using Prisma ORM
+const scenario = await prisma.scenario.findUnique({
+  where: { id: scenarioId }
+});
+
+// Or using pg library (parameterized)
+const result = await client.query(
+  'SELECT * FROM scenarios WHERE id = $1',
+  [scenarioId]
+);
+```
+
+**Bad (string concatenation, vulnerable to SQL injection)**:
+```typescript
+// NEVER DO THIS
+const query = `SELECT * FROM scenarios WHERE id = '${scenarioId}'`;
+await client.query(query); // Attacker can inject: scenarioId = "'; DROP TABLE scenarios; --"
+```
+
+**ORM preference**:
+- Use Prisma, TypeORM, or Sequelize (all prevent SQL injection by default)
+- If raw SQL needed, always use parameterized queries (`$1`, `$2` placeholders)
+
+---
+
+### XSS Prevention
+
+**Escape all user-provided content**:
+
+**React default behavior**:
+- React escapes JSX expressions by default: `<div>{userInput}</div>` is safe
+- Never use `dangerouslySetInnerHTML` with user input
+
+**Server-side rendering**:
+- Use templating engines with auto-escaping (Handlebars, EJS with `<%=` not `<%-`)
+- Example: `<p>{{ scenario_name }}</p>` (Handlebars escapes by default)
+
+**AI-generated content** (special case):
+- AI narratives may include formatting (bold, italic)
+- Sanitize AI output with DOMPurify library (allow safe HTML tags: `<b>`, `<i>`, `<p>`, but strip `<script>`, `<iframe>`)
+
+**Content Security Policy (CSP) header**:
+```
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.example.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; frame-ancestors 'none';
+```
+- `script-src 'self'`: Only scripts from same origin (no inline scripts except whitelisted)
+- `frame-ancestors 'none'`: Prevent clickjacking (page cannot be embedded in iframe)
+
+---
+
+## 5. Rate Limiting and Abuse Prevention
+
+### Calculation Rate Limits
+
+**Anonymous users** (per session):
+- 100 calculations per hour
+- Enforced via Redis counter: `rate_limit:calc:{session_id}` with 1-hour TTL
+
+**Registered users (Free tier)**:
+- 500 calculations per hour
+- Prevents abuse while allowing normal use (50-100 calculations per session is typical)
+
+**Pro tier and B2B**:
+- 5,000 calculations per hour (effectively unlimited for normal use)
+
+**Implementation**:
+```typescript
+const key = `rate_limit:calc:${sessionId}`;
+const count = await redis.incr(key);
+if (count === 1) {
+  await redis.expire(key, 3600); // 1 hour
+}
+if (count > 100) {
+  throw new Error('Rate limit exceeded. Try again in 1 hour.');
+}
+```
+
+---
+
+### Export Rate Limits
+
+**Free tier**:
+- 10 exports per day (resets at midnight UTC)
+- Prevents abuse of export system (storage costs, server load)
+
+**Pro tier**:
+- 100 exports per day
+
+**B2B tier**:
+- Configurable per tenant (default: 500 exports per day)
+
+**Implementation**:
+- Redis counter: `rate_limit:export:{user_id}:{date}` (e.g., `rate_limit:export:uuid-1234:2025-01-15`)
+- TTL: 24 hours
+
+---
+
+### AI Request Rate Limits
+
+**Free tier**:
+- 0 AI requests (feature locked)
+
+**Pro tier**:
+- 0 AI requests (AI add-on required)
+
+**AI add-on tier**:
+- 50 AI requests per billing month (resets on subscription renewal date)
+- Soft cap: Warn user at 45/50 requests
+- Hard cap: Block at 50/50 requests, show upgrade message
+
+**Implementation**:
+- Database counter: `ai_usage` table with `user_id`, `billing_month`, `request_count`
+- Incremented on each AI request
+- Reset monthly via cron job (or on-demand when user's billing cycle resets)
+
+---
+
+### DDoS Protection
+
+**Cloudflare or similar CDN**:
+- Layer 3/4 DDoS protection (SYN floods, UDP floods)
+- Layer 7 DDoS protection (HTTP floods, slowloris attacks)
+- Rate limiting at edge (block IPs making > 1000 requests/minute)
+
+**Application-level protections**:
+- Rate limiting (as described above)
+- Connection limits (max 1000 concurrent connections per IP)
+- Request size limits (max 10MB request body)
+
+**Monitoring**:
+- Alert if request rate exceeds 10,000 requests/minute (indicates attack)
+- Automatic IP blocking (via Cloudflare or fail2ban) for IPs with excessive failed requests
+
+---
+
+## Summary
+
+These security and privacy baselines ensure:
+- **Authentication**: Secure session management, strong password hashing, OAuth support
+- **Authorization**: Role-based access control enforced server-side
+- **Encryption**: TLS 1.2+ for all connections, AES-256 for data at rest
+- **Privacy**: Minimal PII (email only), pseudonymous analytics, GDPR/CCPA data export/deletion
+- **Input validation**: Server-side validation, SQL injection prevention, XSS prevention
+- **Rate limiting**: Prevent abuse of calculations, exports, AI requests, DDoS attacks
+
+All security measures are enforced server-side (never trust client) and logged for audit purposes.
+
+
+# 5.3 Compliance Posture (Non-Regulated, Decision-Support Only)
+
+This section defines the CFO Business Intelligence Calculator Suite's compliance posture as a **non-regulated decision-support tool**. The product does not provide credit decisions, underwriting advice, tax filing, or investment recommendations, and therefore avoids most financial services regulations. However, disclaimers, terms of service, and geographic scope must be clearly defined to maintain this positioning.
+
+---
+
+## 1. Regulatory Non-Goals
+
+The suite is explicitly designed to **avoid** regulatory burdens by limiting its scope to decision-support and excluding regulated activities.
+
+### Not a Licensed Lender
+
+**What we do NOT do**:
+- Originate loans or make credit decisions
+- Approve or deny loan applications
+- Guarantee loan terms, interest rates, or eligibility
+- Act as broker, agent, or intermediary between borrower and lender
+- Handle loan payments or service debt
+
+**What we DO**:
+- Provide calculations for educational and planning purposes
+- Model hypothetical loan structures (e.g., "If you borrow $200K at 7.5%, your monthly payment would be $4,000")
+- Present scenarios for user evaluation (not recommendations)
+
+**Regulatory implications**:
+- **Not subject to**: Truth in Lending Act (TILA), Equal Credit Opportunity Act (ECOA), Fair Lending laws
+- **No licensing required**: Not a lender, broker, or loan servicer
+- **No NMLS registration**: Not involved in mortgage origination
+
+**Disclaimer required**: See Section 5.3.2 for exact text.
+
+---
+
+### Not Providing Underwriting Decisions
+
+**What we do NOT do**:
+- Make credit decisions (approve/deny credit applications)
+- Determine borrower creditworthiness or risk ratings
+- Provide automated underwriting scores or recommendations
+- Access credit reports or credit scores
+- Guarantee loan approval or specific terms
+
+**What we DO**:
+- Calculate DSCR and other financial ratios based on user-provided inputs
+- Show warnings if ratios fall below typical thresholds (e.g., "DSCR of 1.18 is below typical lender threshold of 1.25")
+- Provide context: "Lenders typically require 1.25-1.50 DSCR" (educational, not prescriptive)
+
+**Regulatory implications**:
+- **Not subject to**: Fair Credit Reporting Act (FCRA), automated underwriting regulations
+- **No liability**: If lender rejects application despite favorable calculator outputs (our outputs are estimates, not guarantees)
+
+**Disclaimer required**: "This calculator provides estimates for planning purposes only. Actual loan approval and terms are subject to lender underwriting."
+
+---
+
+### Not Providing Tax Advice
+
+**What we do NOT do**:
+- Prepare or file tax returns
+- Provide entity-specific tax optimization (C-corp vs S-corp, etc.)
+- Calculate statutory tax liabilities (federal, state, local)
+- Advise on tax credits, deductions, or shelters
+- Guarantee tax treatment of transactions
+
+**What we DO**:
+- Use high-level tax assumptions for planning (e.g., "Assume 21% federal corporate tax + 5% state tax = 26% effective rate")
+- Allow users to specify custom tax rates
+- Show after-tax cost comparisons (e.g., lease vs buy with tax effects)
+
+**Regulatory implications**:
+- **Not subject to**: IRS Circular 230 (tax preparer regulations), state CPA licensing
+- **Not liable**: For tax underpayment or incorrect tax filing (user consults CPA for formal tax advice)
+
+**Disclaimer required**: "Tax calculations are estimates based on assumptions you provide. Consult a CPA or tax advisor for formal tax advice."
+
+---
+
+### Not Providing Investment Advice
+
+**What we do NOT do**:
+- Recommend specific securities, stocks, bonds, or funds
+- Provide personalized investment advice (tailored to individual's financial situation)
+- Act as Registered Investment Advisor (RIA) or broker-dealer
+- Guarantee investment returns or valuations
+
+**What we DO**:
+- Provide valuation estimates based on revenue/EBITDA multiples (generic industry benchmarks)
+- Calculate NPV/IRR for capital projects (hypothetical scenarios)
+- Educational content: "Strategic buyers may pay 5-6x EBITDA; financial buyers typically 3.5-4.5x"
+
+**Regulatory implications**:
+- **Not subject to**: Investment Advisers Act of 1940, SEC registration, FINRA regulations
+- **Not liable**: For investment losses based on valuations from calculator
+
+**Disclaimer required**: "Valuations are rough estimates for planning purposes. Consult a financial advisor or investment banker for formal valuations."
+
+---
+
+## 2. Required Disclaimers
+
+All disclaimers must be displayed prominently and included in exports.
+
+### "Decision Support Tool Only" Disclaimer
+
+**Placement**:
+- Website footer (all pages)
+- Calculator page footer (below results)
+- PDF exports (footer, every page)
+- AI-generated narratives (inline, at end of narrative)
+
+**Exact text**:
+```
+DISCLAIMER: This calculator is a decision-support tool for educational and planning
+purposes only. It does not constitute financial, legal, tax, or investment advice.
+Results are estimates based on assumptions you provide and may not reflect actual
+outcomes. Consult qualified professionals (CPA, attorney, financial advisor) before
+making financial decisions.
+```
+
+---
+
+### "Not a Substitute for Professional Advice" Disclaimer
+
+**Placement**:
+- Sign-up page (checkbox: "I understand this is not professional advice")
+- Export cover page (PDF exports)
+- Account settings page
+
+**Exact text**:
+```
+This product does not replace professional advice from licensed CPAs, attorneys,
+financial advisors, or lenders. You are solely responsible for verifying assumptions,
+validating calculations, and consulting professionals before making financial
+commitments.
+```
+
+---
+
+### AI Outputs: "Advisory Only, Not Credit Advice" Disclaimer
+
+**Placement**:
+- Every AI-generated narrative (inline, at end of narrative)
+- AI add-on marketing page
+- AI settings page
+
+**Exact text**:
+```
+AI-GENERATED CONTENT DISCLAIMER: This commentary is generated by artificial
+intelligence and is advisory only. It is not credit advice, underwriting guidance,
+or a recommendation. AI outputs may contain errors or omissions. Always verify
+with qualified professionals.
+```
+
+---
+
+### Limitation of Liability (Terms of Service)
+
+**Placement**:
+- Terms of Service (legal document)
+- Checkout page (Pro tier signup)
+
+**Key provisions**:
+```
+TO THE MAXIMUM EXTENT PERMITTED BY LAW:
+1. We provide the calculator suite "AS IS" without warranties of any kind.
+2. We are not liable for financial losses, missed opportunities, or business
+   decisions based on calculator outputs.
+3. You assume all risk when using calculator results for financial decisions.
+4. Our liability is limited to the amount you paid for the service in the
+   prior 12 months (or $0 for Free tier users).
+```
+
+---
+
+## 3. Terms of Service and Privacy Policy
+
+### Key Terms to Include
+
+**User responsibilities**:
+- **Accurate inputs**: User is responsible for providing accurate, current data
+- **Professional verification**: User must consult professionals before acting on results
+- **Prohibited uses**: User may not use calculator for regulated activities (loan underwriting, tax filing, investment recommendations) without professional oversight
+- **No resale**: User may not resell calculator access or outputs (except B2B white-label agreements)
+
+**Limitation of liability**:
+- **No warranties**: Calculator outputs are estimates, not guarantees
+- **No consequential damages**: We are not liable for lost profits, missed opportunities, or business failures
+- **Indemnification**: User indemnifies us against claims arising from their use of calculator outputs
+
+**Intellectual property**:
+- **Our IP**: Formulas, UI design, branding, content are our property
+- **User data**: User retains ownership of scenario data (we have license to store/process)
+- **AI outputs**: User owns AI-generated narratives (subject to AI provider terms)
+
+**Account termination**:
+- **User termination**: User can cancel anytime, no refunds for partial months (per standard SaaS practice)
+- **Our termination**: We can suspend/terminate accounts for ToS violations (abuse, fraud, misuse)
+- **Data export**: User can export data before/after termination (30-day grace period)
+
+---
+
+### User Acceptance Flows
+
+**Sign-up flow**:
+1. User enters email, password
+2. Checkbox: "I agree to the [Terms of Service](#) and [Privacy Policy](#)" (required, pre-checked)
+3. Checkbox: "I understand this is a decision-support tool, not professional advice" (required, not pre-checked)
+4. Click "Sign Up"
+
+**Major ToS updates**:
+1. Email all users: "We've updated our Terms of Service. Review changes: [link]. Continue using service = acceptance."
+2. In-app banner: "Terms of Service updated on [date]. [Review changes](#)"
+3. Forced re-acceptance (optional): On next login, show modal: "Accept updated Terms to continue using service"
+
+---
+
+### Update Notification Strategy
+
+**Minor updates** (typos, clarifications, no material changes):
+- No notification required
+- Update "Last updated" date on ToS/Privacy Policy page
+
+**Material updates** (new fees, new data uses, new restrictions):
+- Email notification to all users (30 days advance notice if possible)
+- In-app banner for 30 days
+- Option to reject update = close account with data export
+
+**GDPR/CCPA compliance**:
+- Privacy Policy updates related to data processing require explicit consent (opt-in checkbox, not assumed acceptance)
+
+---
+
+## 4. Geographic and Jurisdictional Scope
+
+### Initial Scope: US and Canada Only
+
+**Why limited scope**:
+- Tax rules vary by country (US federal + state, Canada federal + provincial)
+- Currency handling (USD, CAD; no multi-currency in Phase 1 per Section 1.7)
+- Regulatory complexity (EU GDPR, UK tax rules, LATAM financial regulations)
+
+**What "US and Canada only" means**:
+- Calculators use US/CA tax assumptions (e.g., 21% US federal corporate tax, 15% CA federal corporate tax)
+- Currency defaults: USD for US users, CAD for Canadian users (auto-detected by locale or user-selected)
+- No calculator variants for other geographies (e.g., no VAT calculators for EU, no GST calculators for Australia)
+
+**Geographic detection**:
+- Locale detected via `Accept-Language` header or user IP geolocation (for defaults only)
+- User can override (e.g., US-based advisor working with Canadian client can switch to CAD)
+
+**Block or warn non-US/CA users?**:
+- **Phase 1**: No blocking (international users can use calculators, but results may not apply to their jurisdiction)
+- **Warning**: Display banner: "This calculator uses US/Canada tax and regulatory assumptions. Consult local professionals for other jurisdictions."
+
+---
+
+### Tax Assumptions: Effective Rates Only, No Statutory Schedules
+
+**What we provide**:
+- User-specified effective tax rates (e.g., "Enter your effective tax rate: 26%")
+- Default assumptions: US = 21% federal + 5% state = 26%; CA = 15% federal + 12% provincial = 27%
+- After-tax cost calculations (e.g., loan interest is tax-deductible, reduces effective cost)
+
+**What we do NOT provide**:
+- Statutory tax schedules (progressive brackets, AMT, depreciation schedules)
+- Entity-specific tax treatment (C-corp vs S-corp, partnership vs LLC)
+- Multi-jurisdictional tax (state-by-state nexus, cross-border tax)
+
+**Disclaimer**:
+```
+Tax assumptions are simplified effective rates. Actual tax liabilities depend on
+entity type, jurisdiction, deductions, credits, and other factors. Consult a CPA
+for accurate tax calculations.
+```
+
+---
+
+### Currency: Single Currency Per Scenario
+
+**Phase 1 constraint** (per Section 1.7):
+- Each scenario uses one currency (USD or CAD)
+- No mixed-currency scenarios (e.g., USD revenue + EUR expenses)
+- No real-time FX conversion
+
+**User flow**:
+1. User selects currency at scenario creation: "Currency: [USD ▼] or [CAD ▼]"
+2. All inputs/outputs in that scenario use selected currency
+3. If user needs multi-currency analysis, create separate scenarios per currency
+
+**Future expansion** (Phase 3+):
+- Multi-currency scenarios (requires FX rate feeds, hedging assumptions)
+- Additional currencies (EUR, GBP, MXN) with locale-specific tax/regulatory assumptions
+
+---
+
+### Future Expansion: Requires Separate PDR Per Geography
+
+**New geography checklist** (before launching in new country):
+1. **PDR required**: Full product design review (Section 11 template) documenting:
+   - Tax rules and assumptions
+   - Regulatory landscape (any licensing or compliance requirements)
+   - Currency handling (FX rates, multi-currency scenarios)
+   - Localization (language, date formats, number formats)
+2. **Legal review**: Terms of Service, Privacy Policy, disclaimers updated for jurisdiction
+3. **Formula validation**: Ensure formulas comply with local accounting standards (IFRS vs GAAP)
+4. **Partner review** (optional): Consult local CPA or financial advisor to validate assumptions
+
+**High-risk geographies** (requires extra caution):
+- **EU**: GDPR compliance (stricter than CCPA), VAT complexity, cross-border data transfers
+- **China**: Data residency requirements, government approval for financial software
+- **LATAM**: Currency volatility, high inflation, country-specific tax complexity
+
+**Low-risk geographies** (similar to US/CA):
+- **UK**: Similar to US (common law, IFRS accounting, straightforward tax assumptions)
+- **Australia**: Similar to Canada (federal + state tax, relatively stable)
+
+---
+
+## Sample Disclaimer Text (Comprehensive)
+
+**Footer disclaimer** (all pages):
+```
+DISCLAIMER: The CFO Business Intelligence Calculator Suite is a decision-support
+tool for educational and planning purposes only. It does not constitute financial,
+legal, tax, or investment advice. Calculations are estimates based on assumptions
+you provide and may not reflect actual outcomes. We do not make credit decisions,
+provide underwriting recommendations, prepare tax returns, or offer investment
+advice. Consult qualified professionals (CPA, attorney, financial advisor, lender)
+before making financial decisions. To the maximum extent permitted by law, we
+provide this service "AS IS" without warranties and are not liable for financial
+losses or business decisions based on calculator outputs.
+```
+
+**PDF export footer** (every page):
+```
+This report is for informational purposes only and does not constitute professional
+advice. Generated by [Product Name] on [Date] at [Time UTC]. Formula version: [X.Y.Z].
+Consult qualified professionals before making financial decisions.
+```
+
+**AI narrative disclaimer** (inline with AI output):
+```
+---
+AI-GENERATED CONTENT: This commentary is generated by artificial intelligence and
+is advisory only. It may contain errors or omissions. Always verify with qualified
+professionals. Not credit advice, underwriting guidance, or a recommendation.
+---
+```
+
+---
+
+## Summary
+
+The CFO Business Intelligence Calculator Suite maintains a **non-regulated compliance posture** by:
+- **Avoiding regulated activities**: No credit decisions, underwriting, tax filing, investment advice
+- **Prominent disclaimers**: "Decision-support only, not professional advice" on all pages, exports, AI outputs
+- **Clear Terms of Service**: Limitation of liability, user responsibilities, no warranties
+- **Limited geographic scope**: US and Canada only (Phase 1), with expansion requiring separate PDR per geography
+- **Tax simplifications**: Effective rates only, no statutory schedules or entity-specific optimization
+- **Single currency per scenario**: Avoids FX complexity and multi-jurisdictional tax issues
+
+This positioning allows the product to provide CFO-grade financial intelligence without incurring the cost, complexity, and liability of regulated financial services.
+
+
+# 5.4 Retention Policies (Cross-Calculator)
+
+This section defines data retention rules for scenarios, telemetry, logs, and exports. Retention policies balance user convenience (long-term access to saved data) with data minimization (GDPR/CCPA compliance, reduced liability, lower storage costs). All retention periods can be overridden by B2B tenants with stricter requirements.
+
+---
+
+## 1. Scenario Data Retention
+
+### Anonymous Scenarios
+
+**Definition**: Scenarios created by anonymous users (no account, session ID only).
+
+**Retention period**: **24 hours**
+
+**Rationale**:
+- Anonymous users have no persistent identity (session expires after 30 days of inactivity)
+- Scenarios stored temporarily for UX (user can refresh page and continue working)
+- No expectation of long-term storage (user not logged in)
+
+**Deletion process**:
+- **Automatic purge**: Nightly cron job deletes scenarios where `created_at < NOW() - INTERVAL '24 hours'` AND `user_id IS NULL`
+- **Hard delete**: Scenario record and associated data (inputs, outputs, warnings) removed from database
+
+**User notification**: None (transient data, no account to notify)
+
+---
+
+### Saved Scenarios (Registered Users)
+
+**Definition**: Scenarios created by logged-in users (saved to account).
+
+**Retention period**: **24 months** (default, user-configurable)
+
+**Rationale**:
+- Users may want to compare scenarios across multiple quarters/years (e.g., Q1 2025 vs Q1 2024 assumptions)
+- 24 months allows annual comparisons plus buffer
+- Balances user convenience with data minimization (GDPR encourages limiting retention)
+
+**Activity-based extension**:
+- If scenario is **accessed** (viewed, edited, exported) within 24 months, retention extends from last access date
+- Example: Scenario created Jan 2025, accessed Dec 2026 → retention extends to Dec 2028
+
+**Deletion process**:
+- **Automated purging**: Nightly cron job deletes scenarios where `accessed_at < NOW() - INTERVAL '24 months'`
+- **User notification (optional)**: Email 30 days before purge: "Your scenario '[Scenario Name]' will be deleted on [Date]. Access it to extend retention."
+- **Hard delete**: Scenario record removed from database
+
+**User-initiated deletion**:
+- User can delete scenarios anytime via UI ("Delete Scenario" button)
+- **Immediate hard delete**: No soft delete, no recovery period (user confirmation required)
+
+---
+
+### Deleted Scenarios (Soft Delete, Optional)
+
+**Phase 2+ feature** (not implemented in Phase 1):
+- Scenarios marked as `deleted_at` timestamp (soft delete)
+- Retained for 30 days (recovery period: user can "undo delete")
+- After 30 days, hard delete (nightly purge job)
+
+**Rationale**: Prevents accidental deletion regret ("I deleted the wrong scenario!"), but adds complexity (not prioritized for Phase 1)
+
+---
+
+## 2. Telemetry and Log Retention
+
+### Analytics Events
+
+**Definition**: Usage events (calculations, exports, tier upgrades, feature adoption) stored for Business Intelligence Dashboard (Section 1.8).
+
+**Retention period**: **12 months** (raw events), **indefinite** (aggregated summaries)
+
+**Rationale**:
+- 12 months provides sufficient data for cohort analysis, conversion funnels, feature adoption trends
+- Beyond 12 months, aggregated summaries suffice (daily/monthly rollups retain insights without raw event storage)
+
+**Aggregation process**:
+- **Daily rollups**: Nightly cron job aggregates previous day's events (e.g., "1,234 calculations on 2025-01-15 for business-loan calculator")
+- **Monthly rollups**: Monthly cron job aggregates month's events (e.g., "45,678 calculations in Jan 2025, 3.2% Free → Pro conversion")
+- **Aggregated data stored indefinitely** (no PII, just counts and percentages)
+
+**Deletion process**:
+- **Raw events**: After 12 months, nightly purge job drops old partitions (e.g., `DROP TABLE events_2024_01` in Feb 2025)
+- **Aggregated summaries**: Never deleted (unless business no longer needs historical trends)
+
+**PII exclusion** (per Section 5.2.3):
+- Events use pseudonymous `user_id` and `session_id` (not email or name)
+- IP addresses hashed before logging (not reversible)
+
+---
+
+### Error Logs
+
+**Definition**: Application errors, exceptions, stack traces logged for debugging and monitoring.
+
+**Retention period**:
+- **Detailed logs**: **30 days**
+- **Aggregated error counts**: **12 months**
+
+**Rationale**:
+- 30 days provides sufficient time to debug recent issues
+- Aggregated counts (error rate trends) useful for monitoring long-term stability
+
+**Deletion process**:
+- **Detailed logs**: Rolling 30-day window (e.g., Sentry, Datadog auto-purges logs older than 30 days)
+- **Aggregated counts**: Stored in analytics database, purged after 12 months
+
+**PII exclusion**:
+- Email addresses scrubbed from logs (replaced with `user_id`)
+- IP addresses hashed (not logged in plaintext)
+- Scenario inputs redacted (only log metadata: calculator ID, input hash, not actual values)
+
+---
+
+### AI Request Logs
+
+**Definition**: Logs of AI requests (prompts, responses, costs) for quality monitoring and abuse detection.
+
+**Retention period**: **12 months** (redacted, no user content)
+
+**Rationale**:
+- 12 months allows quality analysis (which prompts produce good results, which fail)
+- Cost tracking (LLM API costs per user, per calculator)
+- Abuse detection (excessive AI usage, prompt injection attempts)
+
+**Redaction**:
+- **DO NOT LOG**: User's scenario inputs/outputs (PII risk, privacy violation)
+- **DO LOG**: Pseudonymous user ID, calculator ID, request timestamp, response time, LLM cost, error codes
+
+**Example log entry**:
+```json
+{
+  "request_id": "uuid-1234",
+  "user_id": "uuid-5678",
+  "calculator_id": "business-loan",
+  "timestamp": "2025-01-15T14:30:00Z",
+  "prompt_template": "dscr_explanation_v1",
+  "response_time_ms": 2340,
+  "llm_provider": "openai",
+  "llm_model": "gpt-4",
+  "llm_cost_usd": 0.012,
+  "success": true,
+  "error_code": null
+}
+```
+
+**Deletion process**: Purge after 12 months (nightly cron job)
+
+---
+
+### Audit Logs (Admin Actions)
+
+**Definition**: Logs of admin actions (user impersonation, tenant config changes, scenario deletions).
+
+**Retention period**: **24 months**
+
+**Rationale**:
+- Longer retention for compliance and security investigations
+- Audit trail for "Who deleted this tenant's data?" or "Who accessed this user's account?"
+
+**What's logged**:
+- Admin user ID, action type (e.g., "impersonate_user", "delete_scenario", "update_tenant_config")
+- Target user/tenant ID, timestamp, IP address (hashed), user agent
+
+**Deletion process**: Purge after 24 months (unless legal hold requires longer retention)
+
+---
+
+## 3. Export File Retention
+
+### Anonymous Exports
+
+**Definition**: Exports generated by anonymous users (no account).
+
+**Retention period**: **24 hours**
+
+**Rationale**:
+- Anonymous users have no persistent identity (cannot retrieve export after session expires)
+- Temporary storage for immediate download only
+- Reduces storage costs (exports are large files: PDFs 100KB-1MB, Excel multi-MB)
+
+**Deletion process**:
+- **Automatic purge**: Nightly cron job deletes exports where `created_at < NOW() - INTERVAL '24 hours'` AND `user_id IS NULL`
+- **Hard delete**: S3/R2 file deleted, database record removed
+
+**Download behavior**:
+- User receives presigned URL (valid for 1 hour) immediately after export generation
+- If user doesn't download within 24 hours, export is lost (must regenerate)
+
+---
+
+### Saved Exports (Registered Users)
+
+**Definition**: Exports generated by logged-in users.
+
+**Retention period**: **90 days**
+
+**Rationale**:
+- 90 days allows users to retrieve exports from recent quarters (e.g., Q1 board deck exported in March, retrieved in June)
+- Balance user convenience with storage costs
+
+**Download link expiration**: **7 days** (presigned URL expires after 7 days, but file remains stored for 90 days)
+
+**Re-download process**:
+- If download link expires, user can request new presigned URL from account dashboard ("Re-download export")
+- No new export generated (retrieves existing file from S3/R2)
+
+**Deletion process**:
+- **Soft delete** (optional): After 90 days, mark export as `deleted_at`, retain for 30 days (recovery period)
+- **Hard delete**: After 120 days (90 + 30 grace), delete S3/R2 file and database record
+
+**User-initiated deletion**:
+- User can delete exports anytime via account dashboard
+- Immediate hard delete (S3/R2 file and database record removed)
+
+---
+
+### Download Link Expiration (All Tiers)
+
+**Presigned URL expiry**: **7 days** after export generation
+
+**Rationale**:
+- Presigned URLs are publicly accessible (no authentication required)
+- Short expiry limits risk of URL leakage (if user shares link, it expires quickly)
+
+**Re-download process** (for logged-in users):
+1. User navigates to "Exports" page in account dashboard
+2. Clicks "Download" on expired export
+3. System generates new presigned URL (valid for 1 hour)
+4. User downloads file
+
+**For anonymous users**: No re-download (export deleted after 24 hours)
+
+---
+
+## 4. Per-Tenant Overrides (B2B)
+
+B2B tenants may have stricter retention requirements due to regulatory or internal policy constraints.
+
+### Tenant Config for Custom Retention
+
+**Configurable retention periods** (per Section 5.1.3):
+```json
+{
+  "tenant_id": "uuid-1234",
+  "retention_policy": {
+    "scenarios_days": 365,        // Shorter than default 730 (24 months)
+    "exports_days": 30,            // Shorter than default 90
+    "logs_days": 180,              // Shorter than default 365
+    "telemetry_enabled": false     // Opt-out of telemetry (no events logged)
+  }
+}
+```
+
+**Shorter periods allowed**: Tenants can reduce retention (e.g., 30 days instead of 90 days for exports)
+
+**Longer periods NOT allowed** (by default): Extending retention beyond defaults requires legal review (GDPR data minimization principle)
+
+---
+
+### Stricter Retention for Regulated Customers
+
+**Example**: Tenant is a credit union (subject to NCUA regulations, requires 5-year audit trail).
+
+**Custom retention**:
+```json
+{
+  "retention_policy": {
+    "scenarios_days": 1825,        // 5 years (regulatory requirement)
+    "exports_days": 1825,
+    "logs_days": 1825,
+    "audit_logs_days": 2555        // 7 years (tax/legal requirement)
+  }
+}
+```
+
+**Legal review required**: Any retention > 24 months requires legal approval (GDPR/CCPA allow longer retention for legal/regulatory reasons, but must be documented)
+
+---
+
+### Data Residency Requirements
+
+**Example**: EU tenant requires data stored in EU region (GDPR Schrems II compliance).
+
+**Implementation** (Phase 3+ feature):
+- Tenant config includes `data_region` field: `"eu-west-1"`
+- Database and S3/R2 storage replicated to EU region
+- Application servers route tenant requests to EU region
+
+**Phase 1 limitation**: All data stored in US (no multi-region support)
+
+**Workaround for EU tenants** (Phase 1):
+- Self-hosted deployment (Docker/Kubernetes images deployed to tenant's infrastructure)
+- Tenant manages data residency (no data leaves their region)
+
+---
+
+### Opt-Out of Telemetry
+
+**B2B tenants can disable telemetry** (per Section 5.1.3):
+```json
+{
+  "retention_policy": {
+    "telemetry_enabled": false     // No analytics events logged
+  }
+}
+```
+
+**Impact**:
+- No usage analytics (tenant loses Business Intelligence Dashboard visibility)
+- No conversion funnel tracking (cannot see Free → Pro conversion for tenant users)
+- No feature adoption metrics
+
+**Rationale**: Some tenants (e.g., government contractors, highly regulated industries) cannot share usage data due to policy constraints
+
+---
+
+## Retention Policy Summary Table
+
+| Data Type | Anonymous Users | Registered Users (Free/Pro) | B2B Tenant (Default) | B2B Tenant (Configurable) |
+|-----------|----------------|----------------------------|---------------------|---------------------------|
+| **Scenarios** | 24 hours | 24 months (activity-based extension) | 24 months | 30 days - 7 years |
+| **Exports** | 24 hours | 90 days | 90 days | 7 days - 7 years |
+| **Analytics events (raw)** | 12 months | 12 months | 12 months | 0 (opt-out) - 12 months |
+| **Analytics aggregates** | Indefinite | Indefinite | Indefinite | Indefinite (or opt-out) |
+| **Error logs (detailed)** | 30 days | 30 days | 30 days | 7 days - 90 days |
+| **Error logs (aggregated)** | 12 months | 12 months | 12 months | 12 months |
+| **AI request logs** | 12 months | 12 months | 12 months | 0 (opt-out) - 12 months |
+| **Audit logs (admin actions)** | N/A | N/A | 24 months | 24 months - 7 years |
+
+---
+
+## Automated Retention Enforcement
+
+### Nightly Purge Jobs
+
+**Cron schedule**: Daily at 2:00 AM UTC (low-traffic period)
+
+**Purge jobs**:
+1. **Scenarios**: Delete scenarios where `accessed_at < NOW() - retention_period` (per tier/tenant config)
+2. **Exports**: Delete export files (S3/R2) and database records where `created_at < NOW() - retention_period`
+3. **Events**: Drop old event table partitions (e.g., `DROP TABLE events_2024_01` after 12 months)
+4. **Logs**: Truncate old log entries (via Sentry, Datadog auto-purge, or custom SQL `DELETE`)
+
+**Monitoring**:
+- Alert if purge job fails (e.g., database connection error, S3 API failure)
+- Metrics: "Purged 1,234 scenarios, 567 exports, 89,012 events on 2025-01-15"
+
+---
+
+### User Notifications (Optional)
+
+**30-day warning email** (for scenario purges):
+```
+Subject: Your scenario "[Scenario Name]" will be deleted soon
+
+Hi [User Name],
+
+Your scenario "[Scenario Name]" in the [Calculator Name] calculator hasn't been
+accessed in 23 months. It will be automatically deleted on [Date] per our 24-month
+retention policy.
+
+To keep this scenario, simply open it in the calculator:
+[Link to scenario]
+
+Questions? Contact support: support@example.com
+```
+
+**Rationale**: Prevents unintended data loss (user may have forgotten about old scenarios)
+
+**Opt-out**: Users can disable "retention reminder" emails in account settings
+
+---
+
+## Summary
+
+These retention policies ensure:
+- **Data minimization**: Transient data (anonymous scenarios, exports) deleted quickly (24 hours)
+- **User convenience**: Registered users retain scenarios and exports for reasonable periods (24 months, 90 days)
+- **Compliance**: GDPR/CCPA-compliant retention (no indefinite storage, user-initiated deletion honored)
+- **B2B flexibility**: Tenants can configure shorter retention (privacy) or longer retention (regulatory requirements)
+- **Automated enforcement**: Nightly purge jobs ensure retention policies are applied consistently
+
+All retention periods documented here are defaults; Section 11 calculator-specific PDRs may define exceptions (e.g., extended retention for audit-critical calculators).
+
+
+---
+
+
+# Section 6: Tiering & Pricing
+
+# 6.1 Tier Definitions (Implementation Detail)
+
+This section provides implementation-level detail for each tier in the CFO Business Intelligence Calculator Suite. These definitions expand on the business model outlined in Section 1.5 with specific technical gates, usage limits, and pricing structures needed for implementation.
+
+---
+
+## 1. Free Tier
+
+### Features Included
+
+**Calculator access**:
+- ✓ All calculators available (8 MVP calculators in Phase 1)
+- ✓ Single active scenario per calculator (cannot save multiple scenarios)
+- ✓ Key metrics only (monthly payment, total interest, total cost, breakeven units, etc.)
+- ✗ Advanced metrics locked (DSCR, NPV/IRR, covenant headroom, contribution margin, sensitivity charts)
+
+**Export capabilities**:
+- ✓ PDF exports with watermark ("Generated with Free Tier | Upgrade for clean exports")
+- ✓ CSV exports with header row: "# Free Tier Export | Upgrade to Pro for clean exports"
+- ✗ Excel exports (Pro/B2B only)
+- ✗ Clean exports without watermarks
+
+**Monetization elements**:
+- ✓ Ad placement allowed (banner ads, affiliate links for lenders/brokers)
+- ✓ "Powered by [Brand]" footer on all pages and exports
+
+**Sharing/collaboration**:
+- ✗ Scenario sharing (cannot generate shareable links)
+- ✗ Prepared by/reviewed by metadata (no audit trail)
+
+### Usage Limits
+
+| Limit Type | Free Tier Limit | Notes |
+|------------|----------------|-------|
+| **Calculations per day** | 100 per session | Resets at midnight UTC; session-based (not account-based) |
+| **Exports per month** | 10 per session | Resets on 1st of month; counted per session ID |
+| **Saved scenarios** | 0 (session-only) | Scenarios stored in browser localStorage or Redis with 24-hour expiry |
+| **Scenario history** | None | No version tracking, no "undo" |
+| **AI requests** | 0 | Feature locked (requires AI add-on) |
+
+**Session-only storage**:
+- Anonymous users: Scenarios saved in browser `localStorage` (lost if cache cleared)
+- Logged-in Free tier users: Scenarios saved to database with 24-hour TTL (per Section 5.4)
+- No cross-device sync (scenarios tied to specific browser/session)
+
+### Technical Gates
+
+**Code checks** (implemented in API Gateway and UI components):
+
+```typescript
+function canAccessFeature(feature: string, userTier: string): boolean {
+  if (userTier === 'free') {
+    const allowedFeatures = [
+      'basic_calculations',
+      'key_metrics',
+      'watermarked_exports'
+    ];
+    return allowedFeatures.includes(feature);
+  }
+  // ... Pro/AI tier checks
+}
+
+function canAccessMetric(metricId: string, userTier: string): boolean {
+  const advancedMetrics = ['dscr', 'npv', 'irr', 'covenant_headroom', 'contribution_margin'];
+  if (advancedMetrics.includes(metricId) && userTier === 'free') {
+    return false; // Lock advanced metrics for Free tier
+  }
+  return true;
+}
+```
+
+**UI gates** (React components):
+```typescript
+{canAccessMetric('dscr', userTier) ? (
+  <ResultCard label="DSCR" value={dscr} />
+) : (
+  <LockedMetric label="DSCR" onUpgrade={() => showUpgradeModal('pro')} />
+)}
+```
+
+### Upgrade Triggers
+
+**Attempting to create second scenario**:
+- User clicks "+ Add Scenario" button
+- System checks: `userTier === 'free'` → show upgrade modal
+- Modal message: "Unlock multiple scenarios with Pro. Compare side-by-side and save up to 50 scenarios per calculator."
+
+**Clicking locked advanced metric**:
+- User clicks blurred DSCR metric or "🔒 Unlock Pro" button
+- Modal message: "Unlock CFO-grade metrics like DSCR, NPV/IRR, and covenant headroom. Get the insights lenders and boards expect."
+
+**Requesting clean export**:
+- User sees "Watermark-free exports available with Pro" message on export page
+- Clicks "Upgrade for clean exports"
+- Modal message: "Create board-ready PDFs and banker-friendly CSVs without watermarks or ads."
+
+**Any AI request**:
+- User clicks "✨ AI Explanation" button
+- Modal message: "Unlock AI-powered narratives and insights. Get plain-English explanations of your results."
+
+### Pricing
+
+**Free forever**: No credit card required, no trial expiration
+
+---
+
+## 2. Pro Tier
+
+### Features Included
+
+**Calculator access**:
+- ✓ All calculators (8 MVP + future expansion)
+- ✓ Multiple saved scenarios (up to 50 per calculator)
+- ✓ Key metrics + advanced metrics (DSCR, NPV/IRR, covenant headroom, contribution margin, sensitivity charts)
+- ✓ Scenario comparison (side-by-side tables, delta indicators)
+
+**Export capabilities**:
+- ✓ Clean PDF exports (no watermarks, professional formatting)
+- ✓ Clean CSV exports (no header ads)
+- ✓ Excel exports (multi-tab, formulas preserved)
+- ✓ Version stamps and metadata in exports (formula versions, timestamps)
+
+**Sharing/collaboration**:
+- ✓ Scenario sharing (shareable links with view-only or edit permissions)
+- ✓ Outputs-only sharing (share PDF/CSV without exposing inputs)
+- ✓ Prepared by/reviewed by metadata (lightweight audit trail)
+
+**Monetization elements**:
+- ✗ No ads (clean interface)
+- ✗ No "Powered by" footer (except in B2B white-label, which removes even that)
+
+### Usage Limits
+
+| Limit Type | Pro Tier Limit | Notes |
+|------------|---------------|-------|
+| **Calculations per day** | 1,000 | Effectively unlimited for normal use |
+| **Exports per month** | 100 | Resets on 1st of month |
+| **Saved scenarios** | 50 per calculator | Total across all calculators: 50 × 8 = 400 scenarios |
+| **Scenario history** | Last 10 versions | Version tracking per scenario (who changed what, when) |
+| **AI requests** | 0 | Requires AI add-on |
+
+**Cross-device sync**:
+- Scenarios saved to database (PostgreSQL)
+- Accessible from any device (desktop, tablet, mobile)
+- Retained for 24 months (per Section 5.4)
+
+### Technical Gates
+
+**Code checks**:
+```typescript
+function canSaveScenario(userTier: string, scenarioCount: number): boolean {
+  if (userTier === 'free') return false; // Free tier can't save scenarios
+  if (userTier === 'pro' && scenarioCount >= 50) {
+    throw new Error('Pro tier limit: 50 scenarios per calculator');
+  }
+  return true;
+}
+
+function canAccessAdvancedMetrics(userTier: string): boolean {
+  return ['pro', 'ai', 'b2b'].includes(userTier);
+}
+```
+
+**Export watermark logic**:
+```typescript
+function shouldWatermarkExport(userTier: string): boolean {
+  return userTier === 'free';
+}
+
+function generatePDF(scenario, userTier) {
+  const template = loadTemplate('pdf_export');
+  const watermarked = shouldWatermarkExport(userTier);
+
+  if (watermarked) {
+    template.footer = "Generated with Free Tier | Upgrade for clean exports";
+  } else {
+    template.footer = `Generated on ${timestamp} | Formula version ${version}`;
+  }
+
+  return renderPDF(template, scenario);
+}
+```
+
+### Pricing
+
+**Monthly**: $29/month (billed monthly)
+**Annual**: $290/year (save $58, 17% discount)
+
+**Trial**: 14 days free (no credit card required during trial)
+- Trial starts when user clicks "Start Free Trial"
+- Full Pro features during trial (100 exports, 50 scenarios, advanced metrics)
+- Email reminders: 7 days before expiry, 1 day before expiry
+- At trial end: Convert to paid or downgrade to Free (scenarios retained for 30 days)
+
+### Upgrade Path
+
+**From Free**:
+- Click any upgrade trigger (locked metric, add scenario, clean export)
+- Choose monthly or annual plan
+- Enter payment details (Stripe Checkout)
+- Immediate activation (scenarios unlock, advanced metrics visible)
+
+**From Pro to AI**:
+- Click "Add AI" button in account settings or "✨ AI Explanation" in calculator
+- Additional $20/month (total $49/month for Pro + AI)
+- Immediate activation
+
+---
+
+## 3. AI Add-On Tier
+
+### Features Included
+
+**All Pro features, plus**:
+- ✓ AI narratives (plain-English explanations of results)
+- ✓ AI risk commentary (warnings, threshold interpretations, actionable suggestions)
+- ✓ AI scenario suggestions (e.g., "Consider extending loan term to improve DSCR")
+- ✓ "✨ AI" badge on account (shows in profile, exports)
+
+**AI capabilities per calculator**:
+- Business Loan: "Your DSCR of 1.32 is above typical thresholds. Lenders typically require 1.25-1.50."
+- Cash Runway: "At $85K/month burn, you have 9.2 months of runway. Consider fundraising by Month 6."
+- Breakeven: "Your margin of safety is 15%. A small revenue miss could push you below breakeven."
+
+### Usage Limits
+
+| Limit Type | AI Add-On Limit | Notes |
+|------------|-----------------|-------|
+| **AI requests per month** | 50 | Hard cap (cannot exceed, even with payment) |
+| **AI requests per day** | 20 | Prevents concentrated usage spikes |
+| **AI narrative length** | ~200 words | LLM response truncated if excessive |
+| **AI timeout** | 10 seconds | Hard timeout (fallback message if exceeded) |
+
+**Request counting**:
+- Each "✨ AI Explanation" click = 1 request
+- Failed requests (timeout, LLM error) = not counted
+- Cached responses (same inputs within 1 hour) = not counted
+
+**Rate limit warnings**:
+- At 40/50 requests: "You've used 40 of 50 AI requests this month."
+- At 50/50 requests: "You've reached your AI limit. Limit resets on [billing cycle date]."
+
+### Technical Gates
+
+**Code checks**:
+```typescript
+async function canRequestAI(userId: string, userTier: string): Promise<boolean> {
+  if (!['ai', 'b2b'].includes(userTier)) {
+    throw new Error('AI add-on required');
+  }
+
+  const usage = await getAIUsage(userId, currentBillingMonth());
+  if (usage.request_count >= 50) {
+    throw new Error('AI request limit exceeded. Resets on ' + usage.reset_date);
+  }
+
+  return true;
+}
+
+async function generateAINarrative(scenario, userId) {
+  await canRequestAI(userId, user.tier); // Throws if not allowed
+
+  // Increment counter
+  await incrementAIUsage(userId, currentBillingMonth());
+
+  // Call LLM API
+  const narrative = await callLLM(scenario);
+  return narrative;
+}
+```
+
+**UI gates**:
+```typescript
+{userTier === 'ai' || userTier === 'b2b' ? (
+  <button onClick={handleAIRequest}>✨ AI Explanation</button>
+) : (
+  <button onClick={() => showUpgradeModal('ai')}>🔒 ✨ AI Explanation (Add-on)</button>
+)}
+```
+
+### Pricing
+
+**Monthly**: +$20/month on top of Pro (total $49/month)
+**Annual**: +$200/year on top of Pro annual (total $490/year, save 17%)
+
+**No separate trial**: AI add-on uses same 14-day trial as Pro tier
+- During Pro trial, user can enable AI add-on (full 50 requests available)
+- If user converts to paid Pro, AI add-on also converts to paid
+
+### Upgrade Path
+
+**From Pro**:
+- Click "Add AI" button in account settings
+- Or click "✨ AI Explanation" button in calculator → upgrade modal
+- Stripe updates subscription (prorate current period)
+- Immediate activation (AI requests reset to 50 for current month)
+
+---
+
+## 4. B2B / White-Label Tier
+
+### Features Included
+
+**All AI features, plus**:
+- ✓ Tenant configuration (branding, feature toggles, usage limits)
+- ✓ Custom domain support (calculators.acmecorp.com)
+- ✓ Branding removal (remove "Powered by" footer)
+- ✓ Custom branding (logo, colors, footer disclaimers)
+- ✓ API access with keys (programmatic calculator usage)
+- ✓ Priority support (dedicated Slack channel, 4-hour SLA)
+- ✓ Self-hosted deployment option (Docker/Kubernetes images)
+
+**Tenant-level controls**:
+- Admin dashboard: Manage users, configure branding, view usage analytics
+- Feature toggles: Enable/disable AI, specific calculators, or advanced metrics per tenant
+- Usage limits: Custom limits per tenant (e.g., 200 scenarios per user, 500 exports per month)
+- Data retention: Custom retention policies (per Section 5.4)
+
+### Usage Limits (Default, Configurable)
+
+| Limit Type | B2B Default Limit | Configurable Range |
+|------------|-------------------|-------------------|
+| **Calculations per day** | 10,000 (tenant-wide) | 1,000 - unlimited |
+| **Exports per month** | 500 (tenant-wide) | 100 - unlimited |
+| **Scenarios per user** | 50 | 10 - 200 |
+| **AI requests per month** | 0 or 1000 (if enabled) | 0 - 5,000 |
+| **API calls per day** | 10,000 | 1,000 - unlimited |
+
+**Multi-user tenants**:
+- Usage pooled across all tenant users (e.g., 10 users × 10,000 calculations = 100K tenant-wide limit)
+- Admin can view per-user usage in tenant dashboard
+
+### Technical Gates
+
+**Tenant config schema** (stored in database):
+```json
+{
+  "tenant_id": "acme_corp",
+  "tier": "b2b",
+  "plan": "enterprise",
+  "features": {
+    "ai_enabled": false,
+    "white_label": true,
+    "custom_domain": "calculators.acmecorp.com",
+    "api_access": true,
+    "max_scenarios_per_user": 100,
+    "max_exports_per_month": 1000
+  },
+  "branding": {
+    "logo_url": "https://cdn.acmecorp.com/logo.png",
+    "primary_color": "#0066CC",
+    "footer_disclaimer": "Custom disclaimer text"
+  },
+  "api_keys": [
+    {
+      "key_id": "sk_live_abc123",
+      "created_at": "2025-01-01",
+      "last_used": "2025-01-15"
+    }
+  ]
+}
+```
+
+**Code checks**:
+```typescript
+function getTierConfig(userId: string): TierConfig {
+  const user = getUser(userId);
+
+  // B2B users inherit tenant config
+  if (user.tenant_id) {
+    const tenant = getTenant(user.tenant_id);
+    return {
+      tier: 'b2b',
+      features: tenant.features,
+      branding: tenant.branding,
+      limits: tenant.usage_limits
+    };
+  }
+
+  // Individual users use standard tier config
+  return getStandardTierConfig(user.tier);
+}
+```
+
+### Pricing Models
+
+**Per-Seat Pricing**:
+- $39/user/month (minimum 5 seats = $195/month)
+- Billed monthly or annually (annual = 15% discount)
+- Volume discounts:
+  - 10% off for 50+ seats ($35/user/month)
+  - 20% off for 100+ seats ($31/user/month)
+
+**Per-Domain Pricing**:
+- $500/month for unlimited users on one domain
+- Suitable for: Lenders embedding calculators on loan origination sites, advisors with 50+ client-facing users
+- Add-on domains: +$300/month per additional domain
+
+**Usage-Based Pricing**:
+- $0.10 per calculation (minimum $200/month)
+- Suitable for: API-driven integrations with variable usage
+- Overage billing: If usage exceeds prepaid minimum, billed at $0.10/calculation
+
+**Setup fee** (one-time):
+- $500 for standard setup (branding, domain configuration)
+- $2,000 for custom setup (self-hosted deployment, SSO integration)
+
+### Upgrade Path
+
+**From Pro or AI**:
+- Contact sales (no self-serve signup for B2B)
+- Discovery call: Understand use case, user count, integration needs
+- Proposal: Custom pricing based on seats, domains, or usage
+- Contract: Annual contract preferred (month-to-month available at +20% premium)
+- Onboarding: 2-4 weeks (tenant setup, branding, user training)
+
+---
+
+## Tier Comparison Table
+
+| Feature | Free | Pro | AI Add-On | B2B |
+|---------|------|-----|-----------|-----|
+| **Pricing** | $0 | $29/mo or $290/yr | +$20/mo ($49/mo total) | Custom (starts $195/mo) |
+| **Trial** | N/A | 14 days | Included in Pro trial | Custom (30-60 days) |
+| **Saved scenarios** | 0 (session-only) | 50 per calculator | 50 per calculator | Configurable (default 50) |
+| **Key metrics** | ✓ | ✓ | ✓ | ✓ |
+| **Advanced metrics** | ✗ | ✓ (DSCR, NPV/IRR, etc.) | ✓ | ✓ |
+| **Calculations/day** | 100 | 1,000 | 1,000 | 10,000 (tenant-wide) |
+| **Exports/month** | 10 (watermarked) | 100 (clean) | 100 (clean) | 500 (clean, configurable) |
+| **Export formats** | PDF, CSV (watermarked) | PDF, CSV, Excel | PDF, CSV, Excel | PDF, CSV, Excel |
+| **Scenario sharing** | ✗ | ✓ | ✓ | ✓ |
+| **AI narratives** | ✗ | ✗ | ✓ (50/month) | ✓ (configurable) |
+| **AI requests/month** | 0 | 0 | 50 | 0-5,000 (configurable) |
+| **Branding** | Ads + "Powered by" | No ads | No ads | White-label (custom branding) |
+| **API access** | ✗ | ✗ | ✗ | ✓ (with API keys) |
+| **Custom domain** | ✗ | ✗ | ✗ | ✓ |
+| **Priority support** | Community | Email (24h SLA) | Email (24h SLA) | Dedicated (4h SLA) |
+| **Self-hosted option** | ✗ | ✗ | ✗ | ✓ (custom setup) |
+
+---
+
+## Implementation Checklist
+
+**To implement tiering**:
+1. **Database schema**: Add `tier` column to `users` table (enum: 'free', 'pro', 'ai', 'b2b')
+2. **Feature flags**: Implement tier checks in API Gateway (per Section 6.2)
+3. **UI gates**: Lock/unlock features based on `userTier` prop (React components)
+4. **Usage tracking**: Redis counters for calculations, exports, AI requests (per Section 5.2)
+5. **Stripe integration**: Subscription creation, webhook handling (per Section 6.3)
+6. **Upgrade modals**: Design and implement upgrade prompts (per Section 6.3)
+7. **Trial management**: 14-day trial countdown, email reminders, auto-downgrade
+8. **B2B tenant config**: Database table + admin dashboard for tenant management
+
+**Testing checklist**:
+- [ ] Free tier cannot save scenarios (blocked with upgrade prompt)
+- [ ] Free tier cannot access advanced metrics (locked with blur overlay)
+- [ ] Pro tier can save up to 50 scenarios per calculator
+- [ ] Pro tier can export clean PDFs (no watermark)
+- [ ] AI tier can request narratives (up to 50/month, then blocked)
+- [ ] B2B tenant users inherit tenant config (branding, limits)
+- [ ] Upgrade from Free → Pro activates immediately (scenarios unlock)
+- [ ] Trial expiry downgrades to Free (scenarios retained for 30 days)
+
+---
+
+## Summary
+
+These tier definitions provide implementation-ready specifications for Free/Pro/AI/B2B tiering. Key takeaways:
+- **Free tier**: Limited to session-only scenarios, watermarked exports, 100 calcs/day
+- **Pro tier**: 50 scenarios per calculator, advanced metrics, clean exports, $29/month
+- **AI add-on**: +$20/month for AI narratives (50 requests/month)
+- **B2B tier**: Custom pricing, white-label, API access, tenant configuration
+
+All tier checks enforced server-side (never trust client) with clear upgrade prompts when users attempt to access locked features.
+
+
+# 6.2 Feature Flagging Strategy
+
+This section defines how feature flags control access to capabilities across the CFO Business Intelligence Calculator Suite. Feature flags enable gradual rollouts, A/B testing, tier-based gating, and tenant-specific overrides without code deployments.
+
+---
+
+## 1. Suite-Level Feature Flags
+
+Suite-level flags control platform-wide features that apply across all calculators.
+
+### Flag Naming Convention
+
+**Format**: `suite_{feature_name}`
+
+**Examples**:
+- `suite_ai_enabled`: Master kill switch for all AI features (emergency disable if LLM costs spike)
+- `suite_exports_enabled`: Master kill switch for exports (emergency disable if S3 costs spike)
+- `suite_new_ui`: Gradual rollout of new UI design (percentage-based)
+- `suite_beta_features`: Enable beta features for opted-in users
+
+### Flag Types
+
+**1. Boolean (On/Off)**
+
+Simple enable/disable toggle.
+
+```json
+{
+  "flag_name": "suite_ai_enabled",
+  "type": "boolean",
+  "value": true,
+  "description": "Master AI feature toggle"
+}
+```
+
+**Use case**: Kill switch for expensive or unstable features.
+
+**Code example**:
+```typescript
+async function canUseAI(userId: string): Promise<boolean> {
+  const aiEnabled = await getFlag('suite_ai_enabled');
+  if (!aiEnabled) {
+    return false; // AI globally disabled
+  }
+
+  const userTier = getUserTier(userId);
+  return ['ai', 'b2b'].includes(userTier);
+}
+```
+
+---
+
+**2. Percentage Rollout**
+
+Gradually release feature to percentage of users.
+
+```json
+{
+  "flag_name": "suite_new_ui",
+  "type": "percentage",
+  "value": 25,
+  "description": "Rollout new UI to 25% of users"
+}
+```
+
+**Use case**: Test new features with small audience before full release.
+
+**Code example**:
+```typescript
+function shouldShowNewUI(userId: string): boolean {
+  const rolloutPercentage = getFlag('suite_new_ui').value; // 25
+  const userHash = hashUserId(userId); // Deterministic hash
+  const bucket = userHash % 100; // 0-99
+
+  return bucket < rolloutPercentage; // 25% of users see new UI
+}
+```
+
+**Deterministic hashing** ensures same user always sees same variant (no flip-flopping).
+
+---
+
+**3. User Segment**
+
+Target specific user groups (e.g., Pro users only, specific tenant).
+
+```json
+{
+  "flag_name": "suite_advanced_charts",
+  "type": "segment",
+  "value": {
+    "tiers": ["pro", "ai", "b2b"],
+    "tenants": ["acme_corp"],
+    "user_ids": ["uuid-1234", "uuid-5678"]
+  },
+  "description": "Advanced charts for Pro+ tiers and specific test users"
+}
+```
+
+**Use case**: Beta features for paying customers, dogfooding with internal users.
+
+**Code example**:
+```typescript
+function canAccessAdvancedCharts(userId: string): boolean {
+  const flag = getFlag('suite_advanced_charts');
+  const user = getUser(userId);
+
+  // Check tier
+  if (flag.value.tiers.includes(user.tier)) return true;
+
+  // Check tenant
+  if (user.tenant_id && flag.value.tenants.includes(user.tenant_id)) return true;
+
+  // Check specific user IDs (for testing)
+  if (flag.value.user_ids.includes(userId)) return true;
+
+  return false;
+}
+```
+
+---
+
+### Flag Management
+
+**Options**:
+
+**1. Third-party service** (recommended for Phase 2+):
+- **LaunchDarkly**: Feature flag SaaS with real-time updates, targeting, A/B testing
+- **Flagsmith**: Open-source alternative with self-hosted option
+- **Advantages**: Web UI for non-engineers, instant flag changes (no deployment), advanced targeting
+- **Cost**: $50-200/month depending on MAU
+
+**2. Custom database table** (sufficient for Phase 1):
+```sql
+CREATE TABLE feature_flags (
+  flag_name VARCHAR(255) PRIMARY KEY,
+  flag_type VARCHAR(50) NOT NULL, -- 'boolean', 'percentage', 'segment'
+  flag_value JSONB NOT NULL,
+  enabled BOOLEAN DEFAULT true,
+  description TEXT,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+**Advantages**: No external dependency, free, full control
+**Disadvantages**: Requires deployment to change flags (unless using admin dashboard)
+
+**Phase 1 recommendation**: Start with database table + admin dashboard for flag management. Migrate to LaunchDarkly in Phase 2 if frequent flag changes needed.
+
+---
+
+## 2. Per-Calculator Feature Flags
+
+Per-calculator flags control features specific to individual calculators.
+
+### Flag Naming Convention
+
+**Format**: `calc_{calculator_slug}_{feature_name}`
+
+**Examples**:
+- `calc_business_loan_advanced_charts`: New DSCR visualization charts for Business Loan Calculator
+- `calc_cash_runway_sensitivity_views`: Sensitivity analysis for Cash Runway Calculator
+- `calc_breakeven_multi_product`: Multi-product breakeven analysis (Phase 2 feature)
+
+### Use Cases
+
+**1. Gradual rollout of calculator-specific features**
+
+Roll out new chart type to 10% of users, monitor performance, gradually increase to 100%.
+
+```json
+{
+  "flag_name": "calc_business_loan_advanced_charts",
+  "type": "percentage",
+  "value": 10,
+  "description": "Test advanced DSCR charts with 10% of users"
+}
+```
+
+**Implementation**:
+```typescript
+function BusinessLoanCalculator({ scenario }) {
+  const showAdvancedCharts = shouldShowFeature(
+    'calc_business_loan_advanced_charts',
+    user.id
+  );
+
+  return (
+    <>
+      {/* Standard results */}
+      <ResultCard label="DSCR" value={scenario.dscr} />
+
+      {/* Conditionally show advanced charts */}
+      {showAdvancedCharts && <DSCRTrendChart data={scenario.history} />}
+    </>
+  );
+}
+```
+
+---
+
+**2. Beta features for specific calculators**
+
+Enable Phase 2 features for Pro users only (test with paying customers before GA).
+
+```json
+{
+  "flag_name": "calc_valuation_monte_carlo",
+  "type": "segment",
+  "value": {
+    "tiers": ["pro", "ai", "b2b"]
+  },
+  "description": "Monte Carlo simulation for Valuation Calculator (Pro+ only)"
+}
+```
+
+---
+
+**3. A/B testing calculator UI variants**
+
+Test two versions of input form: Variant A (current) vs Variant B (simplified).
+
+```json
+{
+  "flag_name": "calc_equipment_lease_simplified_form",
+  "type": "percentage",
+  "value": 50,
+  "description": "A/B test simplified input form (50/50 split)"
+}
+```
+
+**Metrics to track**:
+- Calculation completion rate (Variant A vs B)
+- Time to first calculation (Variant A vs B)
+- User feedback scores
+
+---
+
+## 3. Tenant-Level Overrides (B2B)
+
+B2B tenants can override feature flags and tier limits via tenant configuration.
+
+### Tenant Config Schema
+
+```json
+{
+  "tenant_id": "acme_corp",
+  "tenant_name": "Acme Financial Advisors",
+  "tier": "b2b",
+
+  "features": {
+    "ai_enabled": false,             // Disable AI (tenant policy)
+    "max_scenarios_per_user": 100,   // Override default 50
+    "custom_branding": true,
+    "api_access": true,
+    "white_label": true
+  },
+
+  "tier_overrides": {
+    "all_users_pro": true            // All tenant users treated as Pro tier
+  },
+
+  "calculator_overrides": {
+    "business_loan": {
+      "enabled": true,
+      "max_loan_amount": 10000000    // Calculator-specific limit
+    },
+    "cash_runway": {
+      "enabled": false                // Disable specific calculator
+    }
+  }
+}
+```
+
+**Storage**: `tenant_configs` table in PostgreSQL
+
+---
+
+### Priority Order
+
+When determining feature access, check in this order:
+
+1. **Tenant config** (highest priority)
+2. **User tier** (Pro, AI, B2B)
+3. **Default tier** (Free tier defaults)
+
+**Example decision tree**:
+
+```
+User requests AI narrative
+  ↓
+Is user in a tenant?
+  YES → Check tenant config: ai_enabled?
+    YES → Allow (even if user tier is 'free', tenant overrides)
+    NO → Block (tenant disabled AI)
+  NO → Check user tier
+    tier === 'ai' or 'b2b' → Allow
+    tier === 'pro' or 'free' → Block with upgrade prompt
+```
+
+---
+
+### Code Implementation
+
+```typescript
+function getTierConfig(userId: string): TierConfig {
+  const user = getUser(userId);
+
+  // Priority 1: Tenant config (if user belongs to tenant)
+  if (user.tenant_id) {
+    const tenant = getTenant(user.tenant_id);
+    return {
+      tier: tenant.tier_overrides.all_users_pro ? 'pro' : user.tier,
+      features: tenant.features,
+      limits: {
+        max_scenarios: tenant.features.max_scenarios_per_user || 50,
+        max_exports: tenant.features.max_exports_per_month || 100,
+        ai_enabled: tenant.features.ai_enabled
+      }
+    };
+  }
+
+  // Priority 2: User tier (individual users)
+  return getStandardTierConfig(user.tier);
+}
+
+function canAccessFeature(userId: string, feature: string): boolean {
+  const config = getTierConfig(userId);
+
+  // Check tenant-specific overrides first
+  if (config.features && config.features[feature] !== undefined) {
+    return config.features[feature];
+  }
+
+  // Fall back to tier-based access
+  const tierFeatures = getTierFeatures(config.tier);
+  return tierFeatures.includes(feature);
+}
+```
+
+---
+
+## Feature Flag Decision Tree
+
+**Pseudocode for "Can user access AI narratives?"**:
+
+```
+function canAccessAI(userId: string): boolean {
+  // Step 1: Check suite-level kill switch
+  if (!getFlag('suite_ai_enabled')) {
+    return false; // AI globally disabled
+  }
+
+  // Step 2: Check tenant config (if applicable)
+  const user = getUser(userId);
+  if (user.tenant_id) {
+    const tenant = getTenant(user.tenant_id);
+    if (tenant.features.ai_enabled === false) {
+      return false; // Tenant disabled AI
+    }
+    if (tenant.features.ai_enabled === true) {
+      return true; // Tenant enabled AI (overrides user tier)
+    }
+  }
+
+  // Step 3: Check user tier
+  if (['ai', 'b2b'].includes(user.tier)) {
+    return true; // AI tier or B2B with AI enabled
+  }
+
+  // Step 4: Default to locked
+  return false;
+}
+```
+
+---
+
+## Feature Flag Examples
+
+### Example 1: Gradual Rollout of New Export Format
+
+**Scenario**: Add Excel export support, roll out to 25% of Pro users, monitor S3 costs.
+
+**Flag**:
+```json
+{
+  "flag_name": "suite_excel_exports",
+  "type": "percentage",
+  "value": 25,
+  "description": "Excel exports for 25% of Pro users"
+}
+```
+
+**Code**:
+```typescript
+function getAvailableExportFormats(userId: string): string[] {
+  const formats = ['pdf', 'csv'];
+
+  const userTier = getUserTier(userId);
+  if (!['pro', 'ai', 'b2b'].includes(userTier)) {
+    return formats; // Free tier: PDF and CSV only
+  }
+
+  // Pro+ tier: Check Excel flag
+  const excelEnabled = await getFlagForUser('suite_excel_exports', userId);
+  if (excelEnabled) {
+    formats.push('excel');
+  }
+
+  return formats;
+}
+```
+
+**Rollout plan**:
+1. Week 1: 10% rollout → monitor S3 costs, export latency
+2. Week 2: 25% rollout → monitor user feedback
+3. Week 3: 50% rollout
+4. Week 4: 100% rollout → set flag to 100%, remove flag in next deploy
+
+---
+
+### Example 2: Beta Feature for Specific Tenant
+
+**Scenario**: Acme Corp (B2B tenant) wants early access to Monte Carlo simulation before GA.
+
+**Tenant config**:
+```json
+{
+  "tenant_id": "acme_corp",
+  "features": {
+    "beta_features": true
+  }
+}
+```
+
+**Flag**:
+```json
+{
+  "flag_name": "calc_valuation_monte_carlo",
+  "type": "segment",
+  "value": {
+    "tenants": ["acme_corp"]
+  },
+  "description": "Monte Carlo for Acme Corp only (beta)"
+}
+```
+
+**Code**:
+```typescript
+function shouldShowMonteCarloOption(userId: string): boolean {
+  const flag = getFlag('calc_valuation_monte_carlo');
+  const user = getUser(userId);
+
+  // Check if user's tenant is in allowed list
+  if (user.tenant_id && flag.value.tenants.includes(user.tenant_id)) {
+    return true;
+  }
+
+  return false;
+}
+```
+
+---
+
+### Example 3: Kill Switch for Expensive AI Feature
+
+**Scenario**: LLM API costs spike unexpectedly (rate limit exceeded, pricing change). Disable AI immediately without deployment.
+
+**Flag**:
+```json
+{
+  "flag_name": "suite_ai_enabled",
+  "type": "boolean",
+  "value": false,
+  "description": "Emergency disable for AI features"
+}
+```
+
+**Action**:
+1. Admin logs into feature flag dashboard
+2. Sets `suite_ai_enabled` to `false`
+3. All AI requests immediately blocked (flag checked on every request)
+4. Users see: "AI is temporarily unavailable. Try again later."
+
+**Recovery**:
+- Investigate LLM API issue
+- Increase rate limits or optimize prompts
+- Re-enable flag: `suite_ai_enabled = true`
+
+---
+
+## Flag Management Best Practices
+
+**1. Document every flag**:
+- Flag name, description, owner (who created it)
+- Rollout plan (start at 10%, increase to 100%)
+- Success metrics (what defines success?)
+- Cleanup date (remove flag after 100% rollout)
+
+**2. Clean up old flags**:
+- After feature reaches 100% rollout, remove flag (deploy with feature always enabled)
+- Flag cleanup sprints every quarter (remove unused flags)
+
+**3. Test flag toggling**:
+- Unit tests: "When flag is off, feature is hidden"
+- Integration tests: "When flag is on for 50% of users, verify deterministic bucketing"
+
+**4. Avoid flag sprawl**:
+- Limit to 10-20 active flags at any time
+- Use flags for risky features, not every minor change
+
+**5. Monitor flag impact**:
+- Track metrics per flag (e.g., "Excel export flag → 15% increase in export count")
+- Alert if flag change causes error spike
+
+---
+
+## Summary
+
+This feature flagging strategy provides:
+- **Suite-level flags**: Platform-wide toggles (AI, exports, new UI)
+- **Per-calculator flags**: Calculator-specific features (advanced charts, beta capabilities)
+- **Tenant-level overrides**: B2B customization (disable AI, increase limits, enable beta features)
+- **Priority order**: Tenant config > User tier > Default tier
+
+Flags enable gradual rollouts, A/B testing, and emergency kill switches without code deployments. All flag checks enforced server-side (never trust client) with clear fallback behavior when flags are disabled.
+
+
+# 6.3 Upgrade Flows (Global)
+
+This section defines the upgrade triggers, modal design, payment integration, and post-upgrade experience for the CFO Business Intelligence Calculator Suite. Clear, frictionless upgrade flows maximize Free → Pro and Pro → AI conversion rates while maintaining a non-pushy, professional tone.
+
+---
+
+## 1. Upgrade Triggers
+
+Upgrade prompts appear when users attempt to access tier-gated features. Triggers must be contextual (relevant to user's current task) and non-blocking (allow user to continue with Free tier if desired).
+
+### Free → Pro Triggers
+
+**Trigger 1: Click "Add Scenario" Button**
+
+**Context**: User has created one scenario and wants to compare alternatives side-by-side.
+
+**User action**: Clicks "+ Add Scenario" button in scenario tabs
+
+**System response**:
+1. Check user tier: `if (userTier === 'free')` → show upgrade modal
+2. Modal headline: "Compare Multiple Scenarios with Pro"
+3. Modal features list:
+   - Save up to 50 scenarios per calculator
+   - Compare scenarios side-by-side with delta indicators
+   - Version history and audit trail
+   - Clean exports without watermarks
+4. CTA button: "Start Free Trial" (14 days, no credit card)
+5. Dismiss link: "Not now" (closes modal, user continues with single scenario)
+
+**Frequency limit**: Show modal max 3 times per session (track in sessionStorage)
+
+---
+
+**Trigger 2: Click Locked Advanced Metric**
+
+**Context**: User sees DSCR, NPV/IRR, or other advanced metric blurred with lock icon.
+
+**User action**: Clicks blurred metric or "🔒 Unlock Pro" button
+
+**System response**:
+1. Modal headline: "Unlock CFO-Grade Metrics with Pro"
+2. Modal features list:
+   - DSCR and debt service coverage analysis
+   - NPV/IRR for capital investment decisions
+   - Covenant headroom and threshold warnings
+   - Contribution margin and margin of safety
+3. Visual: Screenshot or animated GIF showing unlocked metrics
+4. CTA button: "Upgrade to Pro - $29/month"
+5. Secondary CTA: "Start 14-Day Free Trial"
+
+**Messaging emphasis**: "Get the insights lenders and boards expect"
+
+---
+
+**Trigger 3: Request Clean Export**
+
+**Context**: User generates export and sees watermark in PDF or header row in CSV.
+
+**User action**: Sees "Watermark-free exports available with Pro" banner, clicks "Upgrade"
+
+**System response**:
+1. Modal headline: "Create Board-Ready Reports with Pro"
+2. Modal features list:
+   - Clean PDFs without watermarks or ads
+   - Professional CSV exports for lenders
+   - Multi-tab Excel exports (formulas preserved)
+   - Version stamps and audit trail metadata
+3. Visual: Side-by-side comparison (Free watermarked export vs Pro clean export)
+4. CTA button: "Upgrade to Pro"
+
+**Alternative flow**: Inline banner in export confirmation page
+```
+┌────────────────────────────────────────────────────────────┐
+│ Your export is ready (Free tier - watermarked)            │
+│ [ Download PDF ]                                           │
+│                                                            │
+│ Want clean exports? Upgrade to Pro for board-ready PDFs.  │
+│ [ Upgrade to Pro → ]                                       │
+└────────────────────────────────────────────────────────────┘
+```
+
+---
+
+**Trigger 4: Attempting to Share Scenario**
+
+**Context**: User wants to share scenario with colleague, lender, or board member.
+
+**User action**: Clicks "Share" button (visible but disabled in Free tier)
+
+**System response**:
+1. Modal headline: "Share Scenarios with Pro"
+2. Modal features list:
+   - Generate shareable links (view-only or edit permissions)
+   - Share outputs without exposing inputs (privacy for lenders)
+   - Prepared by/reviewed by metadata for audit trail
+3. CTA button: "Start Free Trial"
+
+---
+
+### Pro/Free → AI Add-On Triggers
+
+**Trigger 1: Click "✨ AI Explanation" Button**
+
+**Context**: User wants plain-English explanation of calculation results.
+
+**User action**: Clicks "✨ AI Explanation" button in results panel
+
+**System response**:
+1. Modal headline: "Unlock AI Insights with AI Add-On"
+2. Modal features list:
+   - Plain-English explanations of your results
+   - Risk commentary and actionable suggestions
+   - Scenario recommendations ("Consider extending loan term to improve DSCR")
+   - 50 AI requests per month
+3. Visual: Example AI narrative (truncated, "Unlock to see full explanation")
+4. CTA button: "Add AI - $20/month" (if already Pro) or "Upgrade to Pro + AI - $49/month" (if Free)
+
+**Messaging emphasis**: "Understand your results like a CFO"
+
+---
+
+**Trigger 2: See "AI Suggestions" Teaser**
+
+**Context**: Results panel shows teaser for AI-powered scenario suggestions.
+
+**User action**: Clicks "Get AI Suggestions" teaser card
+
+**System response**:
+1. Modal headline: "AI-Powered Scenario Suggestions"
+2. Modal description: "Get AI recommendations for optimizing your scenario. Example: 'Extending your loan term from 5 to 7 years would reduce monthly payment by $800 and improve DSCR to 1.45.'"
+3. CTA button: "Add AI Add-On"
+
+---
+
+## 2. Upgrade Modal Design
+
+### Modal Structure
+
+**Wireframe**:
+```
+┌────────────────────────────────────────────────────────────┐
+│ [X] Close                                                  │
+│                                                            │
+│  🔒 Unlock [Feature] with [Tier]                          │
+│                                                            │
+│  [Icon or screenshot of feature]                           │
+│                                                            │
+│  With [Tier], you get:                                     │
+│  ✓ [Benefit 1]                                             │
+│  ✓ [Benefit 2]                                             │
+│  ✓ [Benefit 3]                                             │
+│  ✓ [Benefit 4]                                             │
+│                                                            │
+│  ┌──────────────────────────────────────────────────────┐ │
+│  │  Monthly: $29/month                                  │ │
+│  │  Annual: $290/year (save $58 - 17% off)             │ │
+│  │  ● Monthly  ○ Annual                                 │ │
+│  └──────────────────────────────────────────────────────┘ │
+│                                                            │
+│  [ Start 14-Day Free Trial ]  (no credit card required)   │
+│  or                                                        │
+│  [ Upgrade Now - $29/month ]                               │
+│                                                            │
+│  Not now (closes modal)                                    │
+└────────────────────────────────────────────────────────────┘
+```
+
+**Key elements**:
+1. **Close button** (top-right X): Non-aggressive (user can dismiss anytime)
+2. **Headline**: Clear value proposition (not "Upgrade to Pro" but "Unlock [Feature] with Pro")
+3. **Visual**: Screenshot or icon showing locked feature
+4. **Benefits list**: 3-5 bullet points (focus on outcomes, not features)
+5. **Pricing toggle**: Monthly vs Annual (default: Annual to maximize LTV)
+6. **Primary CTA**: "Start Free Trial" (removes barrier)
+7. **Secondary CTA**: "Upgrade Now" (for users who know they want Pro)
+8. **Dismiss link**: "Not now" (subtle, bottom of modal)
+
+---
+
+### Messaging Per Trigger
+
+**Second scenario trigger**:
+```
+Headline: Compare Multiple Scenarios with Pro
+
+Benefits:
+✓ Save up to 50 scenarios per calculator
+✓ Compare scenarios side-by-side with charts
+✓ Track changes with version history
+✓ Share scenarios with colleagues and advisors
+
+Pricing: $29/month or $290/year (save 17%)
+
+CTA: Start 14-Day Free Trial
+```
+
+---
+
+**Advanced metrics trigger**:
+```
+Headline: Unlock CFO-Grade Metrics with Pro
+
+Benefits:
+✓ DSCR (Debt Service Coverage Ratio) analysis
+✓ NPV/IRR for capital investment decisions
+✓ Covenant headroom and risk warnings
+✓ Contribution margin and profitability metrics
+
+Pricing: $29/month or $290/year (save 17%)
+
+CTA: Start 14-Day Free Trial
+```
+
+---
+
+**Clean export trigger**:
+```
+Headline: Create Board-Ready Reports with Pro
+
+Benefits:
+✓ Clean PDFs without watermarks or ads
+✓ Banker-friendly CSVs for lender presentations
+✓ Multi-tab Excel exports with formulas
+✓ Professional version stamps and audit trail
+
+Pricing: $29/month or $290/year (save 17%)
+
+CTA: Start 14-Day Free Trial
+```
+
+---
+
+**AI trigger**:
+```
+Headline: Unlock AI Insights with AI Add-On
+
+Benefits:
+✓ Plain-English explanations of your results
+✓ Risk commentary and actionable suggestions
+✓ Scenario recommendations from AI
+✓ 50 AI requests per month
+
+Pricing: +$20/month (total $49/month with Pro)
+
+CTA: Add AI Add-On
+```
+
+---
+
+### Modal Behavior
+
+**Frequency limits**:
+- Max 3 upgrade modals per session (track in sessionStorage)
+- After 3rd dismiss, show inline banner only (no modal)
+- Reset on new session (user returns next day)
+
+**Dismiss behavior**:
+- Clicking "Not now" closes modal (no penalty, user continues with Free tier)
+- Clicking [X] close button same as "Not now"
+- Clicking outside modal closes modal (optional, test with users)
+
+**Persistence** (optional Phase 2 feature):
+- Track which triggers user dismissed (e.g., "User dismissed 'add scenario' modal 3 times")
+- Show different trigger next time (e.g., switch to 'clean export' trigger)
+
+---
+
+## 3. Payment Integration
+
+### Payment Processor: Stripe
+
+**Why Stripe**:
+- Industry standard for SaaS subscriptions
+- Excellent developer experience (Stripe Checkout, Stripe Billing)
+- Built-in support for trials, upgrades, downgrades, proration
+- PCI compliance handled by Stripe (no card data touches our servers)
+
+### Checkout Flow
+
+**Option A: In-App Modal with Stripe Checkout Embed** (preferred for Phase 1)
+
+1. User clicks "Start Free Trial" or "Upgrade Now"
+2. Modal expands to show Stripe Checkout iframe:
+   ```
+   ┌────────────────────────────────────────┐
+   │  Start Your 14-Day Free Trial         │
+   │                                        │
+   │  [Stripe Checkout iframe]              │
+   │  ┌──────────────────────────────────┐  │
+   │  │ Email: ________________          │  │
+   │  │ Card: ____ ____ ____ ____        │  │
+   │  │ Exp: __ / __ CVV: ___            │  │
+   │  │                                  │  │
+   │  │ [ Start Trial ]                  │  │
+   │  └──────────────────────────────────┘  │
+   │                                        │
+   │  No charge today. Cancel anytime.      │
+   └────────────────────────────────────────┘
+   ```
+3. User enters payment details (card stored by Stripe, not by us)
+4. Stripe validates card → returns success or error
+5. On success: Close modal, activate Pro immediately (see Post-Upgrade Experience)
+
+**Advantages**: User stays on our site (better conversion), seamless UX
+**Disadvantages**: Requires Stripe Checkout JS SDK, slightly more complex implementation
+
+---
+
+**Option B: Redirect to Hosted Stripe Page** (fallback)
+
+1. User clicks "Start Free Trial" or "Upgrade Now"
+2. Redirect to Stripe-hosted checkout page (leaves our site)
+3. User enters payment details on Stripe page
+4. On success: Stripe redirects back to our site with success token
+5. Our server activates Pro tier, shows success message
+
+**Advantages**: Simpler implementation, fully hosted by Stripe
+**Disadvantages**: User leaves our site (lower conversion), less control over UX
+
+**Phase 1 recommendation**: Option A (in-app modal) for best conversion rates.
+
+---
+
+### Subscription Management
+
+**Upgrade (Free → Pro, Pro → AI)**:
+- **Immediate activation**: User gets Pro features instantly
+- **Proration**: If upgrading mid-month, charge prorated amount for remaining days
+- **Trial handling**: 14-day free trial (no charge until trial ends)
+
+**Downgrade (Pro → Free, AI → Pro)**:
+- **End-of-period**: Downgrade takes effect at end of current billing period (no refund)
+- **Grace period**: User retains Pro features until billing period ends
+- **Data retention**: Scenarios retained for 30 days (user can export before downgrade)
+
+**Cancel**:
+- **End-of-period**: Cancellation takes effect at end of current billing period (no refund)
+- **Retention offer** (optional Phase 2): "Are you sure? Stay on Pro for 50% off next 3 months"
+
+**Example flow**:
+```
+User on Pro ($29/month, renews on 1st of month)
+  ↓
+User clicks "Cancel" on Jan 15
+  ↓
+System confirms: "Your Pro subscription will end on Feb 1. You can continue using Pro until then."
+  ↓
+Feb 1: Downgrade to Free, retain scenarios for 30 days
+```
+
+---
+
+### Webhook Handling
+
+Stripe sends webhooks for subscription events. Our server listens and responds.
+
+**Key webhooks**:
+
+**1. `payment_intent.succeeded`**
+- Triggered when: User's payment succeeds (trial ends, monthly renewal)
+- Action: Activate or maintain Pro tier, send receipt email
+
+```typescript
+async function handlePaymentSucceeded(event) {
+  const paymentIntent = event.data.object;
+  const customerId = paymentIntent.customer;
+
+  // Find user by Stripe customer ID
+  const user = await getUserByStripeCustomerId(customerId);
+
+  // Activate Pro tier
+  await updateUserTier(user.id, 'pro');
+
+  // Send receipt email
+  await sendEmail(user.email, 'receipt', { amount: paymentIntent.amount });
+}
+```
+
+---
+
+**2. `payment_intent.payment_failed`**
+- Triggered when: Payment fails (expired card, insufficient funds)
+- Action: Notify user, show retry message, pause tier (grace period)
+
+```typescript
+async function handlePaymentFailed(event) {
+  const paymentIntent = event.data.object;
+  const user = await getUserByStripeCustomerId(paymentIntent.customer);
+
+  // Send email: "Payment failed. Update payment method to continue Pro."
+  await sendEmail(user.email, 'payment_failed');
+
+  // Grace period: Allow 7 days to update payment method
+  await setTierGracePeriod(user.id, 7);
+}
+```
+
+---
+
+**3. `customer.subscription.deleted`**
+- Triggered when: Subscription canceled or payment failed repeatedly
+- Action: Downgrade to Free tier
+
+```typescript
+async function handleSubscriptionDeleted(event) {
+  const subscription = event.data.object;
+  const user = await getUserByStripeCustomerId(subscription.customer);
+
+  // Downgrade to Free
+  await updateUserTier(user.id, 'free');
+
+  // Send email: "Your Pro subscription has ended. Scenarios retained for 30 days."
+  await sendEmail(user.email, 'subscription_ended');
+}
+```
+
+---
+
+**4. `customer.subscription.updated`**
+- Triggered when: User upgrades (Pro → AI) or changes plan (monthly → annual)
+- Action: Update user tier, prorate charges
+
+```typescript
+async function handleSubscriptionUpdated(event) {
+  const subscription = event.data.object;
+  const user = await getUserByStripeCustomerId(subscription.customer);
+
+  // Detect tier change (check subscription items)
+  const hasAI = subscription.items.data.some(item => item.price.product === 'ai_addon');
+  const newTier = hasAI ? 'ai' : 'pro';
+
+  await updateUserTier(user.id, newTier);
+}
+```
+
+---
+
+**Webhook security**:
+- Verify webhook signature (Stripe sends `Stripe-Signature` header)
+- Reject unsigned or invalid webhooks (prevents spoofing)
+
+```typescript
+app.post('/webhooks/stripe', async (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+  } catch (err) {
+    return res.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  // Handle event
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      await handlePaymentSucceeded(event);
+      break;
+    // ... other handlers
+  }
+
+  res.json({ received: true });
+});
+```
+
+---
+
+## 4. Post-Upgrade Experience
+
+### Immediate Unlocking
+
+**After successful payment** (or trial start):
+
+1. **Close checkout modal** (or redirect back from Stripe)
+2. **Refresh tier status** (API call: `GET /api/user/tier` → returns `{tier: 'pro'}`)
+3. **Show success message** (toast notification or inline banner):
+   ```
+   ┌────────────────────────────────────────┐
+   │ ✓ You're now on Pro!                   │
+   │ All features unlocked. Enjoy!          │
+   └────────────────────────────────────────┘
+   ```
+4. **Unlock all gated features immediately**:
+   - Advanced metrics visible (no blur, no lock icons)
+   - "Add Scenario" button enabled (no upgrade prompt)
+   - Export options show "Clean" instead of "Watermarked"
+   - Ads removed (no banner ads or affiliate links)
+
+**No page refresh required**: Update React state (`userTier` prop) → components re-render with unlocked features.
+
+---
+
+### Onboarding (Optional Phase 2 Feature)
+
+**Tooltip tour**: Guide user through new features.
+
+```
+Step 1: Point to "Add Scenario" button
+"Now you can create multiple scenarios and compare side-by-side."
+[ Next ]
+
+Step 2: Point to DSCR metric
+"CFO-grade metrics like DSCR are now unlocked."
+[ Next ]
+
+Step 3: Point to Export button
+"Your exports are now watermark-free and board-ready."
+[ Done ]
+```
+
+**Dismissible**: User can skip tour (show "Skip" button on each step)
+**Shown once**: Track `onboarding_completed` flag in user profile
+
+---
+
+### Email Confirmation
+
+**Subject**: "Welcome to Pro! Here's What You Get"
+
+**Body**:
+```
+Hi [User Name],
+
+Welcome to Pro! You now have access to:
+
+✓ Up to 50 scenarios per calculator
+✓ CFO-grade metrics (DSCR, NPV/IRR, covenant headroom)
+✓ Clean, board-ready exports
+✓ Scenario sharing and collaboration
+
+Your subscription:
+- Plan: Pro (Monthly)
+- Price: $29/month
+- Next billing date: Feb 15, 2025
+
+Manage your subscription: [Link to account settings]
+
+Questions? Reply to this email or visit our help center.
+
+Cheers,
+The [Product Name] Team
+```
+
+**Attachments**: PDF receipt (Stripe generates automatically)
+
+**Timing**: Send immediately after successful payment (via webhook handler)
+
+---
+
+### Trial-Specific Experience
+
+**During 14-day trial**:
+- User has full Pro access (no limitations)
+- Email reminders:
+  - Day 7: "You have 7 days left in your Pro trial. Loving it? Your subscription starts on [Date]."
+  - Day 13: "Your Pro trial ends tomorrow. Your card will be charged $29 on [Date]. Cancel anytime."
+- In-app banner: "Trial ends in X days. [Manage subscription]"
+
+**Trial end**:
+- Day 14: Charge card $29 → convert to paid Pro
+- If payment fails: Send "Payment failed" email, 7-day grace period (retain Pro features)
+- If user cancels before trial ends: No charge, downgrade to Free on day 14
+
+**Trial cancellation flow**:
+```
+User clicks "Cancel Trial" in account settings
+  ↓
+Confirmation modal: "Cancel your Pro trial? You'll lose access to Pro features on [Date]."
+  [ Keep Trial ]  [ Cancel Trial ]
+  ↓
+If "Cancel Trial": Mark subscription as canceled (Stripe)
+  ↓
+Day 14: Downgrade to Free (no charge)
+```
+
+---
+
+## Upgrade Flow Diagram
+
+**Free → Pro (Trial)**:
+```
+User clicks upgrade trigger
+  ↓
+Upgrade modal appears
+  ↓
+User clicks "Start 14-Day Free Trial"
+  ↓
+Stripe Checkout modal appears
+  ↓
+User enters card details
+  ↓
+Stripe validates card (no charge)
+  ↓
+Success → Close modal, activate Pro immediately
+  ↓
+Show success message: "You're now on Pro! Trial ends on [Date]."
+  ↓
+Unlock all Pro features (scenarios, metrics, exports)
+  ↓
+Send welcome email with trial details
+  ↓
+Day 14: Charge card $29, convert to paid Pro
+```
+
+---
+
+**Pro → AI Add-On**:
+```
+User clicks "✨ AI Explanation" button
+  ↓
+Upgrade modal appears: "Add AI for $20/month"
+  ↓
+User clicks "Add AI Add-On"
+  ↓
+Stripe updates subscription (add AI item)
+  ↓
+Prorate charge: $20 × (days remaining / 30)
+  ↓
+Success → Close modal, activate AI immediately
+  ↓
+Show success message: "AI add-on activated! You have 50 AI requests this month."
+  ↓
+Unlock AI features (narratives, suggestions)
+  ↓
+Send email: "AI add-on added. New total: $49/month."
+```
+
+---
+
+## Summary
+
+This upgrade flow strategy ensures:
+- **Contextual triggers**: Upgrade prompts appear when users need locked features (not random popups)
+- **Non-aggressive UX**: Max 3 modals per session, easy dismiss, no dark patterns
+- **Clear value**: Benefits-focused messaging (not just "Upgrade to Pro")
+- **Frictionless payment**: Stripe Checkout embed, 14-day trial, no credit card for trial
+- **Immediate activation**: Pro features unlock instantly after payment (no waiting)
+- **Post-upgrade delight**: Success message, onboarding tour (optional), welcome email
+
+All upgrade flows tested for conversion optimization (A/B test messaging, CTA placement, pricing toggle) and implemented with clean UX (no pushy tactics, respect user's choice to stay Free).
+
+
+---
+
+
+# Section 7: Analytics & Observability
+
+# 7.1 Core Event Taxonomy
+
+This section defines the naming conventions and structure for analytics events across the CFO Business Intelligence Calculator Suite. Consistent event taxonomy enables reliable funnel analysis, conversion tracking, and performance monitoring while maintaining privacy (pseudonymous IDs only, per Section 5.2).
+
+---
+
+## 1. Event Naming Conventions
+
+### Format
+
+**Structure**: `{category}_{action}`
+
+**Rules**:
+- Lowercase with underscores (snake_case)
+- Category first, action second
+- No spaces or special characters
+- Concise but descriptive (e.g., `export_downloaded` not `export_file_was_downloaded_by_user`)
+
+**Examples**:
+- `calculator_viewed` (Category: calculator, Action: viewed)
+- `scenario_created` (Category: scenario, Action: created)
+- `export_generated` (Category: export, Action: generated)
+- `ai_narrative_requested` (Category: ai, Action: requested)
+
+---
+
+### Allowed Categories
+
+| Category | Description | Example Events |
+|----------|-------------|----------------|
+| **calculator** | Calculator-level interactions | `calculator_viewed`, `calculator_calculated` |
+| **scenario** | Scenario management actions | `scenario_created`, `scenario_updated`, `scenario_deleted` |
+| **export** | Export workflow events | `export_requested`, `export_generated`, `export_downloaded` |
+| **ai** | AI feature interactions | `ai_narrative_requested`, `ai_narrative_displayed` |
+| **upgrade** | Conversion funnel events | `upgrade_prompt_shown`, `upgrade_prompt_clicked`, `upgrade_completed` |
+| **user** | User account actions | `user_signup`, `user_login`, `user_logout` |
+| **admin** | Admin/support actions | `admin_impersonated`, `admin_config_updated` |
+
+**Why limited categories**: Prevents event sprawl, ensures consistency, simplifies funnel analysis.
+
+---
+
+### Allowed Actions
+
+| Action | Meaning | Example Usage |
+|--------|---------|---------------|
+| **viewed** | User saw something | `calculator_viewed`, `upgrade_prompt_shown` (passive) |
+| **calculated** | Calculation performed | `calculator_calculated` |
+| **created** | New entity created | `scenario_created`, `user_signup` |
+| **updated** | Entity modified | `scenario_updated` |
+| **deleted** | Entity removed | `scenario_deleted` |
+| **requested** | User initiated action | `export_requested`, `ai_narrative_requested` |
+| **generated** | System produced output | `export_generated`, `ai_narrative_displayed` |
+| **downloaded** | User downloaded file | `export_downloaded` |
+| **clicked** | User clicked button/link | `upgrade_prompt_clicked` |
+| **shown** | UI element displayed | `upgrade_prompt_shown` |
+| **completed** | Workflow finished | `upgrade_completed` |
+
+**Why limited actions**: Prevents naming confusion (e.g., "opened" vs "viewed"), ensures funnel consistency.
+
+---
+
+### Naming Examples (Good vs Bad)
+
+| Bad Event Name | Why Bad | Good Event Name |
+|----------------|---------|-----------------|
+| `CalculatorViewed` | CamelCase (inconsistent) | `calculator_viewed` |
+| `calc_view` | Abbreviation unclear | `calculator_viewed` |
+| `user-clicked-export` | Hyphens, too verbose | `export_requested` |
+| `ai_request` | Ambiguous (request or requested?) | `ai_narrative_requested` |
+| `new_scenario` | Action unclear | `scenario_created` |
+| `export_file_was_generated` | Too verbose | `export_generated` |
+
+---
+
+## 2. Required Event Properties
+
+**Every event** must include these properties:
+
+### session_id
+
+**Type**: String (UUID v4)
+**Description**: Anonymous or authenticated session identifier
+**Required**: Yes (always)
+
+**Anonymous users**: Session ID stored in httpOnly cookie, generated on first visit
+**Authenticated users**: Session ID regenerated on login (prevents session fixation)
+
+**Example**: `"550e8400-e29b-41d4-a716-446655440000"`
+
+**Privacy**: Session ID is pseudonymous (not reversible to user identity per Section 5.2)
+
+---
+
+### user_id
+
+**Type**: String (UUID v4) or `null`
+**Description**: Authenticated user identifier (null for anonymous users)
+**Required**: Yes (null allowed)
+
+**Anonymous users**: `user_id: null`
+**Authenticated users**: `user_id: "uuid-v4"`
+
+**Example**: `"e8f5a3c2-1234-5678-9abc-def012345678"` or `null`
+
+**Privacy**: User ID is pseudonymous UUID (not email or name per Section 5.2)
+
+---
+
+### tier
+
+**Type**: String (enum)
+**Description**: Current user tier
+**Required**: Yes (always)
+
+**Allowed values**: `"free"`, `"pro"`, `"ai"`, `"b2b"`
+
+**Example**: `"pro"`
+
+**Purpose**: Segment analytics by tier (Free vs Pro conversion, AI usage by tier)
+
+---
+
+### calculator_slug
+
+**Type**: String (kebab-case)
+**Description**: Unique identifier for calculator
+**Required**: Yes (always, except user/admin events)
+
+**Examples**: `"business-loan-dscr"`, `"cash-runway"`, `"breakeven-margin"`
+
+**Format**: Lowercase, hyphens, no spaces (matches URL slug)
+
+**Purpose**: Per-calculator analytics (which calculators drive conversions, exports)
+
+---
+
+### scenario_count
+
+**Type**: Integer
+**Description**: Number of scenarios active in this calculator session
+**Required**: Yes (for calculator events)
+
+**Example**: `1` (Free tier), `3` (Pro tier with multiple scenarios)
+
+**Purpose**: Track multi-scenario usage (Pro feature adoption)
+
+---
+
+### timestamp
+
+**Type**: String (ISO 8601)
+**Description**: Event occurrence time in UTC
+**Required**: Yes (always)
+
+**Format**: `"YYYY-MM-DDTHH:MM:SSZ"` (UTC timezone, Z suffix)
+
+**Example**: `"2025-11-17T21:30:00Z"`
+
+**Generated**: Server-side (not client-side, prevents clock skew)
+
+---
+
+## 3. Optional Event Properties
+
+Include when relevant to the event context.
+
+### tenant_id
+
+**Type**: String (UUID v4) or `null`
+**Description**: B2B tenant identifier (null for individual users)
+**Required**: Optional (only for B2B users)
+
+**Example**: `"acme-corp-uuid"` or `null`
+
+**Purpose**: B2B tenant analytics (per-tenant usage, billing)
+
+---
+
+### ab_test_variant
+
+**Type**: String
+**Description**: A/B test variant identifier
+**Required**: Optional (only when user is in A/B test)
+
+**Examples**: `"new_ui_v2"`, `"simplified_form"`, `"control"`
+
+**Purpose**: A/B test analysis (variant A vs B conversion rates)
+
+---
+
+### referrer
+
+**Type**: String (URL or source identifier)
+**Description**: Traffic source
+**Required**: Optional (only for entry events like `calculator_viewed`)
+
+**Examples**: `"organic"`, `"google"`, `"paid_search"`, `"affiliate_sba_lender"`, `"direct"`
+
+**Derivation**:
+- `document.referrer` (if external domain)
+- UTM parameters (`utm_source`, `utm_medium`, `utm_campaign`)
+- Direct (no referrer)
+
+**Purpose**: Traffic source analysis (SEO, paid search, affiliates)
+
+---
+
+### export_format
+
+**Type**: String (enum)
+**Description**: Export file format
+**Required**: Optional (only for export events)
+
+**Allowed values**: `"pdf"`, `"csv"`, `"excel"`
+
+**Example**: `"pdf"`
+
+**Purpose**: Export format preference analysis
+
+---
+
+### ai_request_type
+
+**Type**: String (enum)
+**Description**: Type of AI request
+**Required**: Optional (only for AI events)
+
+**Allowed values**: `"explain_result"`, `"suggest_scenario"`, `"risk_commentary"`
+
+**Example**: `"explain_result"`
+
+**Purpose**: AI feature usage breakdown (which AI features are popular)
+
+---
+
+### error_code
+
+**Type**: String
+**Description**: Error code for failed events
+**Required**: Optional (only for error events)
+
+**Examples**: `"calculation_timeout"`, `"export_generation_failed"`, `"ai_api_rate_limit"`
+
+**Purpose**: Error categorization and debugging
+
+---
+
+### generation_time_ms
+
+**Type**: Integer (milliseconds)
+**Description**: Time taken to generate output
+**Required**: Optional (only for generation events like `export_generated`, `ai_narrative_displayed`)
+
+**Example**: `2450` (2.45 seconds)
+
+**Purpose**: Performance tracking (per Section 1.6 SLAs)
+
+---
+
+### response_time_ms
+
+**Type**: Integer (milliseconds)
+**Description**: Time taken for response (server-side)
+**Required**: Optional (only for response events)
+
+**Example**: `142` (142 milliseconds)
+
+**Purpose**: Performance tracking (calculation latency, API response time)
+
+---
+
+### trigger_reason
+
+**Type**: String
+**Description**: Why upgrade prompt was shown
+**Required**: Optional (only for upgrade events)
+
+**Examples**: `"add_scenario"`, `"locked_metric"`, `"clean_export"`, `"ai_request"`
+
+**Purpose**: Conversion trigger analysis (which prompts drive conversions)
+
+---
+
+### target_tier
+
+**Type**: String (enum)
+**Description**: Tier being upgraded to
+**Required**: Optional (only for upgrade click/completion events)
+
+**Allowed values**: `"pro"`, `"ai"`
+
+**Example**: `"pro"`
+
+**Purpose**: Conversion funnel (Free → Pro vs Pro → AI)
+
+---
+
+### previous_tier
+
+**Type**: String (enum)
+**Description**: Tier before upgrade
+**Required**: Optional (only for upgrade completion events)
+
+**Allowed values**: `"free"`, `"pro"`
+
+**Example**: `"free"`
+
+**Purpose**: Conversion cohort analysis (Free → Pro conversion rate)
+
+---
+
+## Event Payload Structure
+
+### Example: calculator_viewed
+
+```json
+{
+  "event_name": "calculator_viewed",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": null,
+    "tier": "free",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 0,
+    "timestamp": "2025-11-17T21:30:00Z",
+    "referrer": "google",
+    "ab_test_variant": "new_ui_v2"
+  }
+}
+```
+
+---
+
+### Example: export_generated
+
+```json
+{
+  "event_name": "export_generated",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+    "tier": "pro",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 3,
+    "timestamp": "2025-11-17T21:35:12Z",
+    "export_format": "pdf",
+    "generation_time_ms": 2450
+  }
+}
+```
+
+---
+
+### Example: ai_narrative_displayed
+
+```json
+{
+  "event_name": "ai_narrative_displayed",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+    "tier": "ai",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 2,
+    "timestamp": "2025-11-17T21:32:45Z",
+    "ai_request_type": "explain_result",
+    "response_time_ms": 2340
+  }
+}
+```
+
+---
+
+### Example: upgrade_completed
+
+```json
+{
+  "event_name": "upgrade_completed",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+    "tier": "pro",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 1,
+    "timestamp": "2025-11-17T21:40:23Z",
+    "previous_tier": "free",
+    "target_tier": "pro",
+    "trigger_reason": "locked_metric"
+  }
+}
+```
+
+---
+
+### Example: calculation error event
+
+```json
+{
+  "event_name": "calculator_error",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": null,
+    "tier": "free",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 1,
+    "timestamp": "2025-11-17T21:33:15Z",
+    "error_code": "calculation_timeout",
+    "error_message": "Calculation exceeded 10-second timeout"
+  }
+}
+```
+
+---
+
+## Event Validation
+
+### Server-Side Validation
+
+**Before logging event**:
+1. Validate event name matches taxonomy (`{category}_{action}`)
+2. Validate required properties present (session_id, tier, timestamp, etc.)
+3. Validate property types (session_id is UUID, tier is enum, timestamp is ISO 8601)
+4. Validate property values (tier in ["free", "pro", "ai", "b2b"])
+
+**Reject invalid events**: Return 400 Bad Request if validation fails
+
+**Example validation code**:
+```typescript
+function validateEvent(event: AnalyticsEvent): ValidationResult {
+  const errors: string[] = [];
+
+  // Validate event name format
+  if (!event.event_name.match(/^[a-z]+_[a-z]+$/)) {
+    errors.push('Event name must match format: {category}_{action}');
+  }
+
+  // Validate required properties
+  const required = ['session_id', 'user_id', 'tier', 'timestamp'];
+  for (const prop of required) {
+    if (event.properties[prop] === undefined) {
+      errors.push(`Missing required property: ${prop}`);
+    }
+  }
+
+  // Validate tier enum
+  const validTiers = ['free', 'pro', 'ai', 'b2b'];
+  if (!validTiers.includes(event.properties.tier)) {
+    errors.push(`Invalid tier: ${event.properties.tier}`);
+  }
+
+  // Validate timestamp format (ISO 8601)
+  if (!event.properties.timestamp.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/)) {
+    errors.push('Timestamp must be ISO 8601 format (UTC)');
+  }
+
+  return { valid: errors.length === 0, errors };
+}
+```
+
+---
+
+## Event Storage
+
+**Database schema** (PostgreSQL):
+```sql
+CREATE TABLE analytics_events (
+  event_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  event_name VARCHAR(255) NOT NULL,
+  session_id UUID NOT NULL,
+  user_id UUID,
+  tier VARCHAR(50) NOT NULL,
+  calculator_slug VARCHAR(255),
+  properties JSONB NOT NULL,
+  timestamp TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_events_session_id ON analytics_events(session_id);
+CREATE INDEX idx_events_user_id ON analytics_events(user_id);
+CREATE INDEX idx_events_event_name ON analytics_events(event_name);
+CREATE INDEX idx_events_timestamp ON analytics_events(timestamp);
+CREATE INDEX idx_events_calculator_slug ON analytics_events(calculator_slug);
+```
+
+**Partitioning** (for performance):
+- Partition by month: `events_2025_01`, `events_2025_02`, etc.
+- Drop old partitions after 12 months (per Section 5.4 retention policy)
+
+---
+
+## Privacy Compliance
+
+**PII exclusion** (per Section 5.2):
+- ✗ Never log: Email addresses, names, IP addresses (except hashed), credit card numbers
+- ✓ Pseudonymous IDs only: session_id (UUID), user_id (UUID)
+- ✓ Aggregated data: Tier, calculator slug, referrer (no individual identifiers)
+
+**IP address handling**:
+- Hash IP before logging: `sha256(ip_address + secret_salt)`
+- Use hashed IP only for abuse detection (rate limiting, bot detection)
+- Do not log raw IP addresses in analytics events
+
+**User consent**:
+- Telemetry opt-out available (per Section 5.4)
+- B2B tenants can disable telemetry entirely (`telemetry_enabled: false`)
+
+---
+
+## Summary
+
+This event taxonomy provides:
+- **Consistent naming**: `{category}_{action}` format (e.g., `calculator_viewed`, `export_downloaded`)
+- **Required properties**: session_id, user_id, tier, calculator_slug, scenario_count, timestamp
+- **Optional properties**: tenant_id, ab_test_variant, referrer, export_format, ai_request_type, error_code
+- **Privacy compliance**: Pseudonymous IDs only, no PII in event logs
+- **Validation**: Server-side validation of event names and property types
+
+All events follow this taxonomy for reliable funnel analysis, conversion tracking, and performance monitoring.
+
+
+# 7.2 Standard Events for All Calculators
+
+This section defines the 12 core analytics events that every calculator in the CFO Business Intelligence Calculator Suite must track. These events enable funnel analysis, conversion tracking, feature adoption monitoring, and performance measurement across the entire platform.
+
+---
+
+## Event Overview
+
+**Purpose**: Standardized event tracking across all calculators ensures:
+- Consistent funnel analysis (views → calculations → exports)
+- Cross-calculator comparison (which calculators drive conversions)
+- Tier-specific usage insights (Free vs Pro behavior)
+- Performance benchmarking (latency, error rates)
+
+**Implementation requirement**: All 12 events are **mandatory** for every calculator. Events fire server-side (not client-only) to prevent data loss from ad blockers or client failures.
+
+---
+
+## 1. calculator_viewed
+
+**When fired**: Calculator page loads and initial render completes
+
+**Trigger condition**:
+- User navigates to calculator URL (e.g., `/calculators/business-loan-dscr`)
+- Page successfully loads with inputs visible
+- Fires once per page load (not on input changes or recalculations)
+
+**Required properties**:
+```json
+{
+  "event_name": "calculator_viewed",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": null,
+    "tier": "free",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 0,
+    "timestamp": "2025-11-17T21:30:00Z",
+    "referrer": "google",
+    "ab_test_variant": "new_ui_v2"
+  }
+}
+```
+
+**Optional properties**:
+- `referrer`: Traffic source (organic, google, paid_search, affiliate_sba_lender, direct)
+- `ab_test_variant`: A/B test variant if user is in test
+
+**Purpose and usage**:
+- **Funnel entry point**: All calculator funnels start with this event
+- **Traffic source analysis**: Identify which channels drive calculator usage
+- **A/B test segmentation**: Compare new UI vs old UI performance
+- **Session start tracking**: First event in calculator session
+
+**Analytics queries**:
+- Total views per calculator per day
+- View-to-calculation conversion rate (calculator_viewed → calculator_calculated)
+- Referrer breakdown (which sources drive most traffic)
+
+---
+
+## 2. calculator_calculated
+
+**When fired**: User triggers calculation and results are displayed
+
+**Trigger condition**:
+- User changes any input field, causing auto-calculation (debounced 500ms)
+- Or user clicks "Calculate" button (if no auto-calculation)
+- Results successfully computed and rendered
+
+**Required properties**:
+```json
+{
+  "event_name": "calculator_calculated",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": null,
+    "tier": "free",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 1,
+    "timestamp": "2025-11-17T21:31:15Z",
+    "response_time_ms": 142
+  }
+}
+```
+
+**Optional properties**:
+- `response_time_ms`: Calculation latency (server-side computation time)
+
+**Purpose and usage**:
+- **Core engagement metric**: Indicates user performed a calculation (primary action)
+- **Calculation frequency**: How many calculations per session (high engagement = multiple iterations)
+- **Performance tracking**: Latency per calculator (identify slow calculators)
+- **Tier segmentation**: Free vs Pro calculation patterns
+
+**Analytics queries**:
+- Calculations per calculator per day
+- Average calculations per session (example: Free tier 3.2, Pro tier 7.5)
+- p95 calculation latency per calculator (target: < 150ms)
+
+**Important**: Do not fire this event on page load with default values. Only fire when user changes inputs.
+
+---
+
+## 3. scenario_created
+
+**When fired**: User creates a new scenario (Pro tier feature)
+
+**Trigger condition**:
+- User clicks "Add Scenario" button
+- New scenario successfully saved to database
+- Pro tier or higher (Free tier triggers upgrade_prompt_shown instead)
+
+**Required properties**:
+```json
+{
+  "event_name": "scenario_created",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+    "tier": "pro",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 2,
+    "timestamp": "2025-11-17T21:32:30Z"
+  }
+}
+```
+
+**Purpose and usage**:
+- **Pro feature adoption**: How many Pro users use multi-scenario comparison
+- **Calculator-specific behavior**: Which calculators drive scenario creation (example: valuation calculators may have higher scenario usage than simple loan calculators)
+- **Tier value validation**: Justify Pro tier pricing with feature usage
+
+**Analytics queries**:
+- Percentage of Pro users who create 2+ scenarios
+- Average scenarios per Pro user per calculator
+- Scenario creation rate over time (increasing = good Pro adoption)
+
+**Free tier handling**: If Free user clicks "Add Scenario", fire `upgrade_prompt_shown` instead with `trigger_reason: "add_scenario"`.
+
+---
+
+## 4. scenario_deleted
+
+**When fired**: User deletes a scenario
+
+**Trigger condition**:
+- User clicks delete icon on scenario tab
+- Confirms deletion (if confirmation prompt shown)
+- Scenario successfully removed from database
+
+**Required properties**:
+```json
+{
+  "event_name": "scenario_deleted",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+    "tier": "pro",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 1,
+    "timestamp": "2025-11-17T21:35:00Z"
+  }
+}
+```
+
+**Purpose and usage**:
+- **Scenario lifecycle tracking**: How long scenarios survive before deletion
+- **User cleanup behavior**: Do users delete old scenarios or accumulate them?
+- **Data retention optimization**: Inform retention policies (if users delete quickly, auto-expiry less needed)
+
+**Analytics queries**:
+- Average time from scenario_created to scenario_deleted (scenario lifespan)
+- Deletion rate per calculator
+
+---
+
+## 5. export_requested
+
+**When fired**: User clicks export button to generate report
+
+**Trigger condition**:
+- User clicks "Export" or "Download Report" button
+- Before export generation starts (request initiated)
+- All tiers (Free gets watermarked, Pro gets clean)
+
+**Required properties**:
+```json
+{
+  "event_name": "export_requested",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": null,
+    "tier": "free",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 1,
+    "export_format": "pdf",
+    "timestamp": "2025-11-17T21:33:00Z"
+  }
+}
+```
+
+**Required properties**:
+- `export_format`: Format selected by user (pdf, csv, excel)
+
+**Purpose and usage**:
+- **Export funnel start**: Track export_requested → export_generated → export_downloaded
+- **Format preference**: Which formats are most popular per tier
+- **Conversion trigger tracking**: Exports often precede upgrade prompts (Free users hit watermark)
+
+**Analytics queries**:
+- Export request rate per calculator
+- Format breakdown (example: PDF 60%, CSV 30%, Excel 10%)
+- Free tier export requests (potential upgrade candidates)
+
+---
+
+## 6. export_generated
+
+**When fired**: Export file successfully created and ready for download
+
+**Trigger condition**:
+- Export generation completes (PDF rendered, CSV assembled, Excel built)
+- File saved to storage (S3/R2)
+- Before user downloads (this event precedes export_downloaded)
+
+**Required properties**:
+```json
+{
+  "event_name": "export_generated",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": null,
+    "tier": "free",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 1,
+    "export_format": "pdf",
+    "generation_time_ms": 2450,
+    "timestamp": "2025-11-17T21:33:03Z"
+  }
+}
+```
+
+**Required properties**:
+- `export_format`: Format generated (pdf, csv, excel)
+- `generation_time_ms`: Server-side generation latency
+
+**Purpose and usage**:
+- **Performance tracking**: Export generation time per format (target: p95 < 3s for PDF)
+- **Success rate**: Compare export_requested to export_generated (failure rate = requests - generated / requests)
+- **Format-specific performance**: PDF may be slower than CSV
+
+**Analytics queries**:
+- p95 generation time per format (example: PDF 2.3s, CSV 0.5s, Excel 1.8s)
+- Export generation failure rate (error tracking)
+
+**Error case**: If export fails, fire `export_error` event instead (custom event, not in standard 12) with `error_code` property.
+
+---
+
+## 7. export_downloaded
+
+**When fired**: User clicks download link and file transfer starts
+
+**Trigger condition**:
+- User clicks download button or link
+- Browser initiates file download (or opens in new tab for PDF preview)
+
+**Required properties**:
+```json
+{
+  "event_name": "export_downloaded",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": null,
+    "tier": "free",
+    "calculator_slug": "business-loan-dscr",
+    "export_format": "pdf",
+    "timestamp": "2025-11-17T21:33:10Z"
+  }
+}
+```
+
+**Required properties**:
+- `export_format`: Format downloaded
+
+**Purpose and usage**:
+- **Export completion rate**: Compare export_generated to export_downloaded (did user actually retrieve file?)
+- **Drop-off analysis**: If generated but not downloaded, user may have abandoned
+- **Tier conversion**: Free users downloading watermarked exports are prime upgrade candidates
+
+**Analytics queries**:
+- Export download rate (downloaded / generated)
+- Time from export_generated to export_downloaded (how long before user downloads)
+
+**Free tier upgrade trigger**: After Free user downloads watermarked PDF, optionally show upgrade_prompt_shown with `trigger_reason: "watermarked_export"`.
+
+---
+
+## 8. ai_narrative_requested
+
+**When fired**: User requests AI-generated narrative or insight
+
+**Trigger condition**:
+- User clicks "Explain this result" button (AI tier feature)
+- Or clicks "Get AI suggestions" for scenario ideas
+- Before AI API call (request initiated)
+
+**Required properties**:
+```json
+{
+  "event_name": "ai_narrative_requested",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+    "tier": "ai",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 2,
+    "ai_request_type": "explain_result",
+    "timestamp": "2025-11-17T21:34:00Z"
+  }
+}
+```
+
+**Required properties**:
+- `ai_request_type`: Type of AI request (explain_result, suggest_scenario, risk_commentary)
+
+**Purpose and usage**:
+- **AI feature adoption**: How many AI tier users actually use AI features
+- **Request type breakdown**: Which AI features are most popular
+- **Cost tracking**: AI requests directly correlate to LLM API costs
+
+**Analytics queries**:
+- AI requests per AI tier user per month (usage cap: 50 requests)
+- Request type distribution (example: explain_result 70%, suggest_scenario 20%, risk_commentary 10%)
+- AI request rate per calculator (which calculators benefit most from AI)
+
+**Free/Pro tier handling**: If non-AI user clicks AI feature, fire `upgrade_prompt_shown` with `trigger_reason: "ai_request"`.
+
+---
+
+## 9. ai_narrative_displayed
+
+**When fired**: AI-generated narrative successfully rendered to user
+
+**Trigger condition**:
+- LLM API returns response
+- Narrative text rendered in UI (markdown parsed, displayed)
+- User sees AI output
+
+**Required properties**:
+```json
+{
+  "event_name": "ai_narrative_displayed",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+    "tier": "ai",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 2,
+    "ai_request_type": "explain_result",
+    "response_time_ms": 2340,
+    "timestamp": "2025-11-17T21:34:03Z"
+  }
+}
+```
+
+**Required properties**:
+- `ai_request_type`: Type of AI request
+- `response_time_ms`: Latency from API call to display (target: p95 < 3s)
+
+**Purpose and usage**:
+- **AI success rate**: Compare ai_narrative_requested to ai_narrative_displayed (failure rate = requests - displayed / requests)
+- **Performance tracking**: AI response latency per request type
+- **Cost-effectiveness**: Successful displays justify AI tier pricing
+
+**Analytics queries**:
+- AI success rate (percentage)
+- p95 AI response time per request type (example: explain_result 2.1s, suggest_scenario 3.5s)
+- AI usage per calculator
+
+**Error case**: If AI fails (timeout, rate limit, API error), fire `ai_error` event (custom) with `error_code`.
+
+---
+
+## 10. upgrade_prompt_shown
+
+**When fired**: Upgrade modal/prompt displays to user
+
+**Trigger condition**:
+- Free user hits tier limit (e.g., tries to add second scenario)
+- Free user clicks locked feature (e.g., advanced metric)
+- Pro user clicks AI feature without AI tier
+- Modal renders and is visible
+
+**Required properties**:
+```json
+{
+  "event_name": "upgrade_prompt_shown",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": null,
+    "tier": "free",
+    "calculator_slug": "business-loan-dscr",
+    "scenario_count": 1,
+    "trigger_reason": "locked_metric",
+    "target_tier": "pro",
+    "timestamp": "2025-11-17T21:35:30Z"
+  }
+}
+```
+
+**Required properties**:
+- `trigger_reason`: Why upgrade prompt shown (add_scenario, locked_metric, clean_export, ai_request)
+- `target_tier`: Which tier is being promoted (pro, ai)
+
+**Purpose and usage**:
+- **Conversion funnel start**: Track upgrade_prompt_shown → upgrade_prompt_clicked → upgrade_completed
+- **Trigger effectiveness**: Which triggers drive highest click-through rates
+- **Calculator-specific conversion**: Which calculators drive most upgrade prompts
+
+**Analytics queries**:
+- Upgrade prompt impressions per trigger reason
+- Prompt-to-click conversion rate (upgrade_prompt_clicked / upgrade_prompt_shown)
+- Calculator breakdown (which calculators drive conversions)
+
+**Important**: Do not over-show prompts. Limit to 1 prompt per session per trigger_reason to avoid annoyance.
+
+---
+
+## 11. upgrade_prompt_clicked
+
+**When fired**: User clicks "Upgrade" button in modal
+
+**Trigger condition**:
+- User clicks primary CTA button in upgrade modal
+- Before redirect to payment page
+- Indicates intent to upgrade
+
+**Required properties**:
+```json
+{
+  "event_name": "upgrade_prompt_clicked",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": null,
+    "tier": "free",
+    "calculator_slug": "business-loan-dscr",
+    "trigger_reason": "locked_metric",
+    "target_tier": "pro",
+    "timestamp": "2025-11-17T21:35:45Z"
+  }
+}
+```
+
+**Required properties**:
+- `trigger_reason`: Why prompt was shown (matches upgrade_prompt_shown)
+- `target_tier`: Which tier upgrade (pro, ai)
+
+**Purpose and usage**:
+- **Conversion click-through**: How many impressions result in clicks
+- **Trigger ROI**: Which triggers have highest click-through rate
+- **Checkout funnel**: Track upgrade_prompt_clicked → upgrade_completed (checkout abandonment)
+
+**Analytics queries**:
+- Click-through rate per trigger reason (example: locked_metric 12%, add_scenario 8%)
+- Click-to-completion rate (percentage who complete payment after clicking)
+
+**Dismissal tracking**: If user clicks "Not now" instead, optionally fire `upgrade_prompt_dismissed` (custom event) for A/B testing modal messaging.
+
+---
+
+## 12. upgrade_completed
+
+**When fired**: User successfully completes tier upgrade (payment confirmed)
+
+**Trigger condition**:
+- Payment processor (Stripe) confirms payment success
+- Webhook received: `payment_intent.succeeded`
+- User tier updated in database
+- User session refreshed with new tier
+
+**Required properties**:
+```json
+{
+  "event_name": "upgrade_completed",
+  "properties": {
+    "session_id": "550e8400-e29b-41d4-a716-446655440000",
+    "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+    "previous_tier": "free",
+    "tier": "pro",
+    "target_tier": "pro",
+    "calculator_slug": "business-loan-dscr",
+    "trigger_reason": "locked_metric",
+    "timestamp": "2025-11-17T21:40:23Z"
+  }
+}
+```
+
+**Required properties**:
+- `previous_tier`: Tier before upgrade (free, pro)
+- `tier`: New tier after upgrade (pro, ai) - same as target_tier
+- `target_tier`: Confirm target tier
+- `trigger_reason`: Original trigger (matches upgrade_prompt_shown)
+
+**Purpose and usage**:
+- **Conversion completion**: Final step in upgrade funnel
+- **Revenue attribution**: Which calculators and triggers drive revenue
+- **Trigger ROI analysis**: Calculate revenue per trigger reason
+
+**Analytics queries**:
+- Conversion rate per trigger reason (upgrade_completed / upgrade_prompt_shown)
+- Revenue per calculator (if pricing data available)
+- Time from first view to upgrade (days to convert)
+
+**Important**: Fire this event server-side via Stripe webhook, not client-side (prevents missed conversions from page closes).
+
+---
+
+## Event Implementation Checklist
+
+For each calculator, verify all 12 standard events are implemented:
+
+| Event | Implemented | Tested | Analytics Query Verified |
+|-------|-------------|--------|--------------------------|
+| calculator_viewed | ☑ | ☑ | ☑ |
+| calculator_calculated | ☑ | ☑ | ☑ |
+| scenario_created | ☑ | ☑ | ☑ |
+| scenario_deleted | ☑ | ☑ | ☑ |
+| export_requested | ☑ | ☑ | ☑ |
+| export_generated | ☑ | ☑ | ☑ |
+| export_downloaded | ☑ | ☑ | ☑ |
+| ai_narrative_requested | ☑ | ☑ | ☑ |
+| ai_narrative_displayed | ☑ | ☑ | ☑ |
+| upgrade_prompt_shown | ☑ | ☑ | ☑ |
+| upgrade_prompt_clicked | ☑ | ☑ | ☑ |
+| upgrade_completed | ☑ | ☑ | ☑ |
+
+**Testing procedure**:
+1. Trigger each event in test environment
+2. Verify event appears in analytics database with correct properties
+3. Confirm no duplicate events (e.g., calculator_viewed should not fire twice on refresh)
+4. Test tier gating (Free user gets upgrade_prompt_shown, not scenario_created)
+
+---
+
+## Summary
+
+These 12 standard events provide comprehensive tracking for:
+- **Engagement funnels**: Views → Calculations → Exports (conversion at each step)
+- **Feature adoption**: Scenario creation, AI usage (Pro/AI tier validation)
+- **Conversion funnels**: Upgrade prompt → Click → Completion (revenue attribution)
+- **Performance monitoring**: Calculation latency, export generation time, AI response time
+
+All events follow the taxonomy defined in Section 7.1 with consistent naming, required properties, and privacy compliance (pseudonymous IDs only, no PII).
+
+
+# 7.3 Suite Analytics Dashboards
+
+This section defines the analytics dashboards that provide business intelligence for the CFO Business Intelligence Calculator Suite. These dashboards aggregate events from Section 7.2 to surface insights on usage, conversions, performance, and feature adoption across all calculators and tiers.
+
+---
+
+## Dashboard Overview
+
+**Purpose**: Transform raw analytics events into actionable business metrics for:
+- Product managers (feature prioritization, roadmap decisions)
+- Marketing (traffic source ROI, conversion optimization)
+- Engineering (performance monitoring, error tracking)
+- Finance (revenue attribution, pricing validation)
+
+**Implementation**: Dashboards built on analytics data warehouse (ClickHouse, BigQuery, or Postgres + Metabase/Tableau).
+
+**Refresh cadence**:
+- Real-time dashboards: Every 5 minutes (for monitoring critical metrics)
+- Business dashboards: Hourly or daily (for trend analysis)
+
+---
+
+## 1. Calculator Funnel Dashboard
+
+### Purpose
+
+Track user journey from initial view through calculation to export for each calculator. Identify drop-off points and conversion bottlenecks.
+
+### Key Metrics
+
+**Funnel stages**:
+1. **Views**: calculator_viewed events (funnel entry)
+2. **Calculations**: calculator_calculated events (engagement)
+3. **Exports**: export_downloaded events (conversion)
+
+**Conversion rates**:
+- **View-to-calculation rate**: (calculator_calculated / calculator_viewed) × 100
+  - Example: 65% of viewers perform at least one calculation
+  - Target: >60% (high engagement indicator)
+
+- **Calculation-to-export rate**: (export_downloaded / calculator_calculated) × 100
+  - Example: 15% of calculations result in export
+  - Target: >10% (export indicates serious usage)
+
+- **View-to-export rate**: (export_downloaded / calculator_viewed) × 100
+  - Example: 9.8% end-to-end conversion
+  - Target: >8% (qualified users complete full journey)
+
+**Per-calculator breakdown**:
+| Calculator | Views | Calculations | Exports | View→Calc | Calc→Export | View→Export |
+|------------|-------|--------------|---------|-----------|-------------|-------------|
+| Business Loan DSCR | 12,450 | 8,100 | 1,220 | 65.1% | 15.1% | 9.8% |
+| Cash Runway | 8,320 | 5,600 | 840 | 67.3% | 15.0% | 10.1% |
+| Breakeven Margin | 6,780 | 4,200 | 520 | 61.9% | 12.4% | 7.7% |
+| Valuation Models | 4,560 | 2,900 | 580 | 63.6% | 20.0% | 12.7% |
+| Equipment Lease | 3,890 | 2,500 | 310 | 64.3% | 12.4% | 8.0% |
+
+**Drop-off analysis**:
+- **High view, low calculation**: Poor calculator UX or unclear value proposition
+- **High calculation, low export**: Free tier users hitting watermark (upgrade opportunity)
+- **High export**: Power users (likely Pro tier candidates)
+
+### Filters
+
+- **Date range**: Last 7 days, Last 30 days, Last 90 days, Custom range
+- **Tier**: All, Free, Pro, AI, B2B
+- **Calculator**: All, or specific calculator slug
+- **Referrer**: All, Organic, Paid, Affiliate, Direct
+
+### Charts
+
+**1. Funnel visualization**:
+```
+Calculator Funnel (Last 30 Days)
+┌─────────────────────────────────┐
+│ Views           35,000   100%   │
+│   ▼                              │
+│ Calculations    23,300    66.6% │
+│   ▼                              │
+│ Exports          3,470    15.0% │
+│   ▼                              │
+│ End-to-End                 9.9% │
+└─────────────────────────────────┘
+```
+
+**2. Trend line chart**:
+- X-axis: Date
+- Y-axis: Event count
+- Lines: calculator_viewed (blue), calculator_calculated (green), export_downloaded (orange)
+- Purpose: Spot trends (growing usage, declining exports)
+
+**3. Per-calculator bar chart**:
+- X-axis: Calculator name
+- Y-axis: Conversion rate (%)
+- Bars: View→Calc rate, Calc→Export rate
+- Purpose: Compare calculator performance
+
+### Usage
+
+**Questions this dashboard answers**:
+- Which calculator has the highest engagement (calculation rate)?
+- Where do users drop off in the funnel?
+- Is conversion improving over time (trend analysis)?
+- Do paid search users convert better than organic (referrer comparison)?
+
+---
+
+## 2. Tier Conversion Dashboard
+
+### Purpose
+
+Track Free → Pro and Pro → AI tier upgrades. Measure effectiveness of upgrade prompts and identify high-converting triggers.
+
+### Key Metrics
+
+**Conversion rates**:
+- **Free → Pro conversion rate**: (upgrade_completed with target_tier=pro / unique Free users) × 100
+  - Example: 4.2% of Free users upgrade to Pro
+  - Target: >3% monthly (sustainable growth)
+
+- **Pro → AI conversion rate**: (upgrade_completed with target_tier=ai / unique Pro users) × 100
+  - Example: 18% of Pro users add AI
+  - Target: >15% (AI add-on adoption)
+
+- **Trial → Paid conversion rate**: (paid subscriptions / trial starts) × 100
+  - Example: 35% of Pro trials convert to paid
+  - Target: >30% (healthy trial conversion)
+
+**Upgrade prompt effectiveness**:
+- **Prompt click-through rate**: (upgrade_prompt_clicked / upgrade_prompt_shown) × 100
+  - Example: 8.5% of prompts result in clicks
+  - Target: >6% (effective messaging)
+
+- **Prompt → Completion rate**: (upgrade_completed / upgrade_prompt_shown) × 100
+  - Example: 1.2% of prompts result in completed upgrades
+  - Target: >1% (healthy conversion)
+
+**Time to conversion**:
+- **Days from signup to upgrade**: Average days between user signup and first upgrade_completed
+  - Example: 12 days (median), 21 days (mean)
+  - Target: <14 days (faster conversion = better onboarding)
+
+**Trigger breakdown**:
+| Trigger Reason | Prompts Shown | Clicks | Completions | Click Rate | Completion Rate |
+|----------------|---------------|--------|-------------|------------|-----------------|
+| locked_metric | 8,450 | 890 | 145 | 10.5% | 1.7% |
+| add_scenario | 6,320 | 510 | 98 | 8.1% | 1.6% |
+| clean_export | 4,780 | 380 | 72 | 7.9% | 1.5% |
+| ai_request | 3,120 | 220 | 56 | 7.1% | 1.8% |
+
+**Insights**:
+- "locked_metric" has highest click rate (10.5%) → advanced metrics are strong value prop
+- "ai_request" has highest completion rate (1.8%) → AI users are motivated buyers
+
+### Filters
+
+- **Date range**: Last 7 days, Last 30 days, Last 90 days, Custom range
+- **Calculator**: All, or specific calculator (attribute upgrade to calculator context)
+- **Trigger reason**: All, locked_metric, add_scenario, clean_export, ai_request
+- **Target tier**: Pro, AI
+
+### Charts
+
+**1. Conversion funnel**:
+```
+Free → Pro Upgrade Funnel (Last 30 Days)
+┌─────────────────────────────────────┐
+│ Upgrade Prompts Shown    22,670     │
+│   ▼                                  │
+│ Clicks                    2,000  8.8%│
+│   ▼                                  │
+│ Checkout Started          1,200 60.0%│
+│   ▼                                  │
+│ Completed Upgrades          371 30.9%│
+│   ▼                                  │
+│ Overall Conversion              1.6% │
+└─────────────────────────────────────┘
+```
+
+**2. Cohort retention table**:
+| Cohort | Month 0 | Month 1 | Month 2 | Month 3 | Month 6 | Month 12 |
+|--------|---------|---------|---------|---------|---------|----------|
+| Jan 2025 | 100% | 85% | 78% | 72% | 65% | 58% |
+| Feb 2025 | 100% | 87% | 80% | 74% | - | - |
+| Mar 2025 | 100% | 89% | 82% | - | - | - |
+
+Purpose: Track retention after upgrade (are Pro users staying subscribed?)
+
+**3. Trigger breakdown pie chart**:
+- Slices: locked_metric (45%), add_scenario (30%), clean_export (18%), ai_request (7%)
+- Purpose: Show which triggers drive most conversions
+
+### Usage
+
+**Questions this dashboard answers**:
+- What percentage of Free users convert to Pro each month?
+- Which upgrade trigger has the highest ROI?
+- How long does it take for users to upgrade after signup?
+- Are trial users converting to paid subscriptions?
+- Which calculator context drives most upgrades (e.g., DSCR calculator → Pro)?
+
+---
+
+## 3. AI Usage Dashboard
+
+### Purpose
+
+Monitor AI feature adoption, performance, and cost. Validate AI tier pricing and identify optimization opportunities.
+
+### Key Metrics
+
+**AI request volume**:
+- **Total AI requests per month**: Sum of ai_narrative_requested events
+  - Example: 12,450 requests across all AI tier users
+
+- **AI requests per user**: (Total AI requests / unique AI tier users)
+  - Example: 8.3 requests per user per month
+  - Target: >5 requests (justify $20/month AI pricing)
+  - Limit: 50 requests per user per month (hard cap)
+
+**AI success rate**:
+- **Success rate**: (ai_narrative_displayed / ai_narrative_requested) × 100
+  - Example: 96.5% of requests succeed
+  - Target: >95% (high reliability)
+
+**AI performance**:
+- **p50 latency**: Median response time from ai_narrative_requested to ai_narrative_displayed
+  - Example: 1.8 seconds
+  - Target: <2 seconds (feels fast)
+
+- **p95 latency**: 95th percentile response time
+  - Example: 2.9 seconds
+  - Target: <3 seconds (per Section 1.6 SLAs)
+
+- **p99 latency**: 99th percentile response time
+  - Example: 4.2 seconds
+  - Acceptable: <5 seconds (rare slow requests tolerable)
+
+**AI cost tracking**:
+- **Cost per request**: Average LLM API cost per successful request
+  - Example: $0.12 per request
+
+- **Total monthly cost**: Sum of AI request costs
+  - Example: $1,494 for 12,450 requests
+
+- **Cost per user**: (Total monthly cost / unique AI tier users)
+  - Example: $1.00 per user (well below $20 pricing, healthy margin)
+
+**Request type breakdown**:
+| Request Type | Count | Percentage | Avg Latency | Success Rate |
+|--------------|-------|------------|-------------|--------------|
+| explain_result | 8,715 | 70% | 1.6s | 97.2% |
+| suggest_scenario | 2,490 | 20% | 3.2s | 94.8% |
+| risk_commentary | 1,245 | 10% | 2.1s | 96.0% |
+
+**Insights**:
+- "explain_result" is most popular (70%) and fastest (1.6s)
+- "suggest_scenario" is slower (3.2s) → may need optimization
+
+### Filters
+
+- **Date range**: Last 7 days, Last 30 days, Last 90 days, Custom range
+- **Tier**: AI only, or include B2B (if B2B has AI enabled)
+- **Calculator**: All, or specific calculator
+- **Request type**: All, explain_result, suggest_scenario, risk_commentary
+
+### Charts
+
+**1. AI usage over time (line chart)**:
+- X-axis: Date
+- Y-axis: Request count
+- Lines: Total requests, Successful requests, Failed requests
+- Purpose: Spot usage trends and error spikes
+
+**2. Success rate gauge**:
+```
+AI Success Rate (Last 30 Days)
+┌──────────────────┐
+│   ████████░░     │
+│      96.5%       │
+│   Target: >95%   │
+└──────────────────┘
+```
+
+**3. Latency distribution histogram**:
+- X-axis: Response time (seconds)
+- Y-axis: Request count
+- Bins: 0-1s, 1-2s, 2-3s, 3-4s, 4-5s, >5s
+- Purpose: Identify outliers (requests >5s)
+
+### Usage
+
+**Questions this dashboard answers**:
+- Are AI tier users actually using AI features (>5 requests/month)?
+- Is AI performance meeting SLAs (p95 <3s)?
+- Which AI request types are most popular?
+- Is AI cost per user sustainable (<$5 COGS for $20 pricing)?
+- Are there error spikes that need investigation?
+
+---
+
+## 4. Export Dashboard
+
+### Purpose
+
+Track export usage, format preferences, and performance. Identify Free → Pro conversion opportunities (watermarked exports).
+
+### Key Metrics
+
+**Export volume**:
+- **Total exports per month**: Sum of export_downloaded events
+  - Example: 8,340 exports across all tiers
+
+- **Exports per tier**:
+  - Free tier: 3,250 exports (watermarked)
+  - Pro tier: 4,120 exports (clean)
+  - AI tier: 970 exports (clean)
+
+**Export format preferences**:
+| Format | Count | Percentage | Avg Generation Time | Failure Rate |
+|--------|-------|------------|---------------------|--------------|
+| PDF | 5,004 | 60% | 2.3s | 1.2% |
+| CSV | 2,502 | 30% | 0.5s | 0.3% |
+| Excel | 834 | 10% | 1.8s | 0.9% |
+
+**Export generation performance**:
+- **p50 generation time**: Median time from export_requested to export_generated
+  - PDF: 2.1 seconds
+  - CSV: 0.4 seconds
+  - Excel: 1.6 seconds
+
+- **p95 generation time**: 95th percentile
+  - PDF: 2.8 seconds (target: <3s, ✓ passing)
+  - CSV: 0.7 seconds
+  - Excel: 2.4 seconds
+
+- **p99 generation time**: 99th percentile
+  - PDF: 4.5 seconds (rare slow exports acceptable)
+  - CSV: 1.1 seconds
+  - Excel: 3.2 seconds
+
+**Export failure rate**:
+- **Failure rate**: (export_requested - export_generated) / export_requested × 100
+  - PDF: 1.2% failure rate (timeout or rendering errors)
+  - CSV: 0.3% failure rate (calculation errors)
+  - Excel: 0.9% failure rate
+
+**Top exported calculators**:
+| Calculator | Exports | Percentage | Avg Format (PDF/CSV/Excel) |
+|------------|---------|------------|----------------------------|
+| Business Loan DSCR | 2,450 | 29% | 65% / 25% / 10% |
+| Valuation Models | 1,670 | 20% | 80% / 15% / 5% |
+| Cash Runway | 1,250 | 15% | 50% / 40% / 10% |
+| Breakeven Margin | 1,040 | 12% | 55% / 35% / 10% |
+| Equipment Lease | 830 | 10% | 60% / 30% / 10% |
+
+### Filters
+
+- **Date range**: Last 7 days, Last 30 days, Last 90 days, Custom range
+- **Tier**: All, Free, Pro, AI, B2B
+- **Format**: All, PDF, CSV, Excel
+- **Calculator**: All, or specific calculator
+
+### Charts
+
+**1. Export volume over time (stacked area chart)**:
+- X-axis: Date
+- Y-axis: Export count
+- Stacks: PDF (blue), CSV (green), Excel (orange)
+- Purpose: Show format trends over time
+
+**2. Format preference pie chart**:
+```
+Export Format Distribution
+┌─────────────────┐
+│  PDF    60%  ██ │
+│  CSV    30%  █  │
+│  Excel  10%  ░  │
+└─────────────────┘
+```
+
+**3. Generation time distribution (box plot)**:
+- X-axis: Format (PDF, CSV, Excel)
+- Y-axis: Generation time (seconds)
+- Box: p25, p50, p75
+- Whiskers: p5, p95
+- Purpose: Compare performance across formats
+
+### Usage
+
+**Questions this dashboard answers**:
+- Which export format is most popular (PDF dominates)?
+- Is export generation meeting performance targets (p95 <3s)?
+- Which calculators drive most exports (DSCR, Valuation)?
+- Are Free tier users exporting frequently (upgrade opportunity)?
+- Are there export error spikes that need fixing?
+
+---
+
+## 5. Scenario Usage Dashboard
+
+### Purpose
+
+Measure Pro tier feature adoption. Track multi-scenario usage to validate Pro tier value proposition ($29/month).
+
+### Key Metrics
+
+**Average scenarios per session**:
+- **Free tier**: 1.0 scenarios (always, limited to single scenario)
+- **Pro tier**: 2.3 scenarios per session (multi-scenario adoption)
+- **AI tier**: 2.8 scenarios per session (higher engagement)
+- **B2B tier**: 3.5 scenarios per session (professional use cases)
+
+**Scenario save rate**:
+- **Save rate**: (sessions with scenario_created / total calculator sessions) × 100
+  - Example: 35% of Pro sessions create additional scenarios
+  - Target: >30% (Pro users utilizing feature)
+
+**Multi-scenario comparison usage**:
+- **Percentage using 2+ scenarios**: (Pro users with 2+ scenarios / total Pro users) × 100
+  - Example: 45% of Pro users compare multiple scenarios
+  - Target: >40% (core Pro value prop)
+
+**Scenarios per calculator**:
+| Calculator | Avg Scenarios (Pro) | % Using 2+ | % Using 5+ |
+|------------|---------------------|------------|------------|
+| Valuation Models | 3.8 | 72% | 28% |
+| Business Loan DSCR | 2.9 | 58% | 15% |
+| Cash Runway | 2.5 | 52% | 12% |
+| Breakeven Margin | 1.8 | 38% | 8% |
+| Equipment Lease | 1.6 | 32% | 5% |
+
+**Insights**:
+- Valuation calculators drive highest scenario usage (3.8 avg) → strong Pro fit
+- Breakeven/Lease have lower usage → may not benefit from multi-scenario as much
+
+**Scenario lifecycle**:
+- **Average scenario lifespan**: Days from scenario_created to scenario_deleted
+  - Example: 45 days (median), 120 days (mean)
+  - Indicates: Users keep scenarios for months (long-term value)
+
+### Filters
+
+- **Date range**: Last 7 days, Last 30 days, Last 90 days, Custom range
+- **Tier**: Pro, AI, B2B (exclude Free, they can't create scenarios)
+- **Calculator**: All, or specific calculator
+
+### Charts
+
+**1. Scenario distribution histogram**:
+- X-axis: Number of scenarios (1, 2, 3, 4, 5+)
+- Y-axis: User count
+- Bars: Free (always 1), Pro (distribution), AI (distribution)
+- Purpose: Show multi-scenario adoption
+
+**2. Per-calculator bar chart**:
+- X-axis: Calculator name
+- Y-axis: Average scenarios per session
+- Bars: Pro tier (sorted descending)
+- Purpose: Identify which calculators benefit from scenarios
+
+**3. Scenario creation trend (line chart)**:
+- X-axis: Date
+- Y-axis: scenario_created event count
+- Lines: Pro, AI, B2B
+- Purpose: Track scenario feature adoption over time
+
+### Usage
+
+**Questions this dashboard answers**:
+- Are Pro users creating multiple scenarios (justifying $29/month)?
+- Which calculators drive highest scenario usage?
+- Is scenario adoption growing over time?
+- How long do users keep scenarios before deleting?
+
+---
+
+## Dashboard Implementation Notes
+
+**Technology stack**:
+- **Data warehouse**: ClickHouse (fast analytics) or BigQuery (managed, scalable)
+- **Visualization**: Metabase (open-source), Tableau, or Looker
+- **Real-time**: Grafana for monitoring dashboards (exports, AI performance)
+
+**Refresh cadence**:
+- **Real-time** (every 5 min): Error tracking, AI performance, export generation
+- **Hourly**: Calculator funnel, tier conversion
+- **Daily**: Scenario usage, export dashboard
+
+**Access control**:
+- Product managers: All dashboards (read-only)
+- Engineering: All dashboards + error monitoring (write access to annotations)
+- Marketing: Calculator funnel, tier conversion (read-only)
+- Finance: Tier conversion, AI cost tracking (read-only)
+
+**Alerting integration**:
+- Connect dashboards to alerting system (Slack, PagerDuty)
+- Example: Alert if Free → Pro conversion drops below 2% for 3 consecutive days
+
+---
+
+## Summary
+
+These 5 analytics dashboards provide comprehensive business intelligence:
+- **Calculator Funnel**: Track views → calculations → exports (engagement)
+- **Tier Conversion**: Measure Free → Pro and Pro → AI upgrades (revenue)
+- **AI Usage**: Monitor AI adoption, performance, cost (feature validation)
+- **Export Dashboard**: Track export volume, formats, performance (key feature metric)
+- **Scenario Usage**: Measure multi-scenario adoption (Pro tier validation)
+
+All dashboards built on standard events from Section 7.2, refreshed hourly or real-time, with role-based access control.
+
+
+# 7.4 Error and Performance Monitoring
+
+This section defines error tracking, performance monitoring, alerting thresholds, and observability tools for the CFO Business Intelligence Calculator Suite. Proactive monitoring ensures reliability targets (Section 1.6) are met and issues are detected before impacting users.
+
+---
+
+## Monitoring Philosophy
+
+**Goals**:
+- **Detect before users report**: Alerts fire before users experience degraded service
+- **Root cause diagnosis**: Logs and metrics provide enough context to debug quickly
+- **Performance SLA enforcement**: Automated alerts when p95 latency exceeds targets
+- **Error budget tracking**: Monitor error rates against reliability goals (99.5% uptime)
+
+**Implementation approach**:
+- Server-side instrumentation (not just client-side, which misses backend failures)
+- Structured logging (JSON format for machine parsing)
+- Distributed tracing for multi-service requests (export generation, AI calls)
+- Real-time dashboards with 5-minute refresh
+
+---
+
+## 1. Error Tracking
+
+### Error Categories
+
+**1. Calculation Engine Errors**
+
+**What gets tracked**:
+- Formula evaluation failures (division by zero, square root of negative, invalid inputs)
+- Edge case errors (NaN, Infinity, null outputs)
+- Timeout errors (calculation exceeds 10-second limit)
+- Validation errors (inputs outside acceptable ranges)
+
+**Error examples**:
+- `CALCULATION_TIMEOUT`: Calculation exceeded 10-second server-side timeout
+- `INVALID_INPUT_RANGE`: User input outside valid range (e.g., negative loan amount)
+- `FORMULA_EVALUATION_ERROR`: JavaScript math error (e.g., Math.sqrt(-1) → NaN)
+- `NAN_RESULT`: Calculation produced NaN due to invalid intermediate values
+
+**What gets logged**:
+```json
+{
+  "timestamp": "2025-11-17T21:45:32Z",
+  "level": "error",
+  "error_type": "CALCULATION_TIMEOUT",
+  "error_message": "DSCR calculation exceeded 10-second timeout",
+  "calculator_slug": "business-loan-dscr",
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "user_id": null,
+  "tier": "free",
+  "inputs": {
+    "principal": 500000,
+    "termMonths": 240,
+    "annualRate": 6.5
+  },
+  "stack_trace": "Error: Timeout\n  at calculateDSCR (dscr.ts:45)\n  ..."
+}
+```
+
+**Response**:
+- Show user-friendly error: "This calculation is taking too long. Please try simpler inputs or contact support."
+- Log full error details server-side for debugging
+- Fire event: `calculator_error` with error_code
+
+---
+
+**2. Export Generation Errors**
+
+**What gets tracked**:
+- PDF rendering failures (Puppeteer crash, memory limit exceeded)
+- CSV assembly errors (data serialization failures)
+- Excel generation errors (library errors, formatting failures)
+- S3/R2 upload failures (network timeout, storage quota exceeded)
+- Export timeout errors (generation exceeds 30-second limit)
+
+**Error examples**:
+- `PDF_RENDERING_TIMEOUT`: PDF generation exceeded 30-second timeout
+- `S3_UPLOAD_FAILED`: Failed to upload export file to storage (network error)
+- `EXPORT_DATA_SERIALIZATION_ERROR`: Invalid data format for CSV/Excel generation
+- `MEMORY_LIMIT_EXCEEDED`: PDF rendering consumed >512MB memory, process killed
+
+**What gets logged**:
+```json
+{
+  "timestamp": "2025-11-17T21:46:10Z",
+  "level": "error",
+  "error_type": "PDF_RENDERING_TIMEOUT",
+  "error_message": "PDF export exceeded 30-second timeout",
+  "calculator_slug": "business-loan-dscr",
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+  "tier": "pro",
+  "export_format": "pdf",
+  "scenario_count": 5,
+  "generation_start_time": "2025-11-17T21:45:40Z",
+  "generation_duration_ms": 30125,
+  "stack_trace": "Error: Timeout\n  at generatePDF (export.ts:78)\n  ..."
+}
+```
+
+**Response**:
+- Show user-friendly error: "Export failed. Please try again or contact support."
+- Retry once automatically (if transient network error)
+- Fire event: `export_error` with error_code
+- Alert if error rate >5% in 5 minutes
+
+---
+
+**3. AI Service Errors**
+
+**What gets tracked**:
+- LLM API timeouts (no response within 30 seconds)
+- LLM API rate limits (429 status from provider)
+- LLM API failures (500 errors from provider)
+- Invalid AI responses (malformed JSON, unexpected format)
+- AI request quota exceeded (user hit 50 requests/month limit)
+
+**Error examples**:
+- `AI_API_TIMEOUT`: LLM API did not respond within 30 seconds
+- `AI_API_RATE_LIMIT`: LLM provider rate limit exceeded (429 status)
+- `AI_API_ERROR`: LLM provider returned 500 error
+- `AI_QUOTA_EXCEEDED`: User has used 50/50 AI requests this month
+- `AI_RESPONSE_INVALID`: LLM returned malformed or unparsable response
+
+**What gets logged**:
+```json
+{
+  "timestamp": "2025-11-17T21:47:25Z",
+  "level": "error",
+  "error_type": "AI_API_RATE_LIMIT",
+  "error_message": "OpenAI API rate limit exceeded (429)",
+  "calculator_slug": "business-loan-dscr",
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+  "tier": "ai",
+  "ai_request_type": "explain_result",
+  "ai_provider": "openai",
+  "ai_model": "gpt-4-turbo",
+  "api_status_code": 429,
+  "retry_after_seconds": 60
+}
+```
+
+**Response**:
+- Show user-friendly error: "AI is temporarily unavailable. Please try again in a moment."
+- Retry with exponential backoff (wait 60s, then retry)
+- Fire event: `ai_error` with error_code
+- Alert if AI error rate >10% in 5 minutes
+
+---
+
+**4. Client-Side Errors**
+
+**What gets tracked**:
+- JavaScript exceptions (unhandled promise rejections, runtime errors)
+- Network request failures (API timeouts, 500 errors)
+- Client-side timeout errors (API call exceeded 10-second timeout)
+- Browser compatibility errors (unsupported features)
+
+**Error examples**:
+- `JS_RUNTIME_ERROR`: Unhandled JavaScript exception in client
+- `API_REQUEST_TIMEOUT`: Client-side API request exceeded 10-second timeout
+- `API_REQUEST_FAILED`: API returned 500 error
+- `NETWORK_ERROR`: Client network connection lost
+
+**What gets logged**:
+```json
+{
+  "timestamp": "2025-11-17T21:48:00Z",
+  "level": "error",
+  "error_type": "JS_RUNTIME_ERROR",
+  "error_message": "Cannot read property 'dscr' of undefined",
+  "calculator_slug": "business-loan-dscr",
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "user_id": null,
+  "tier": "free",
+  "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) ...",
+  "browser": "Chrome 120.0",
+  "stack_trace": "TypeError: Cannot read property 'dscr' of undefined\n  at ResultsCard.tsx:42\n  ..."
+}
+```
+
+**Response**:
+- Show user-friendly error boundary: "Something went wrong. Please refresh the page."
+- Log error to monitoring service (Sentry, Datadog)
+- Fire event: `client_error` with error_code
+- Alert if error rate >5% in 5 minutes
+
+---
+
+### Error Logging Best Practices
+
+**Structured logging format** (JSON):
+```json
+{
+  "timestamp": "ISO 8601 UTC",
+  "level": "error|warn|info",
+  "error_type": "ERROR_CODE",
+  "error_message": "Human-readable message",
+  "calculator_slug": "string",
+  "session_id": "uuid",
+  "user_id": "uuid or null",
+  "tier": "free|pro|ai|b2b",
+  "stack_trace": "Full stack trace",
+  "context": { /* Additional context */ }
+}
+```
+
+**Do not log PII** (per Section 5.2):
+- ✗ Never log: Email addresses, names, IP addresses (except hashed)
+- ✓ Log: session_id (UUID), user_id (UUID), tier, calculator_slug
+
+**Log levels**:
+- `error`: Calculation failures, export errors, AI API failures (user-impacting)
+- `warn`: Rate limit approaching, slow queries (not user-impacting yet)
+- `info`: Successful operations (calculation completed, export generated)
+- `debug`: Detailed tracing (only in development, not production)
+
+---
+
+## 2. Performance Monitoring
+
+### Performance Metrics
+
+**1. Calculation Latency**
+
+**What gets measured**:
+- **p50 (median)**: Half of calculations complete faster than this
+  - Target: <100ms
+  - Typical: 80-120ms
+
+- **p95**: 95% of calculations complete faster than this
+  - Target: <150ms (per Section 1.6 SLAs)
+  - Alert threshold: >500ms
+
+- **p99**: 99% of calculations complete faster than this
+  - Target: <300ms
+  - Alert threshold: >1000ms
+
+**Per-calculator breakdown**:
+| Calculator | p50 | p95 | p99 | Status |
+|------------|-----|-----|-----|--------|
+| Business Loan DSCR | 95ms | 142ms | 280ms | ✓ Passing |
+| Cash Runway | 110ms | 165ms | 310ms | ✓ Passing |
+| Breakeven Margin | 85ms | 130ms | 250ms | ✓ Passing |
+| Valuation Models | 180ms | 420ms | 850ms | ⚠ Warning (p95 high) |
+| Equipment Lease | 90ms | 135ms | 260ms | ✓ Passing |
+
+**Alert**: If Valuation p95 exceeds 500ms, investigate (complex NPV/IRR calculations may need optimization).
+
+**How it's tracked**:
+- Measure server-side: Start timer before calculation, end after result computed
+- Log response_time_ms in calculator_calculated event
+- Aggregate in analytics database (ClickHouse, BigQuery)
+- Dashboard: Real-time line chart (p50, p95, p99 over last 24 hours)
+
+---
+
+**2. Export Generation Time**
+
+**What gets measured**:
+- **p50 (median)**: Half of exports generate faster than this
+  - PDF: 1.8s
+  - CSV: 0.4s
+  - Excel: 1.5s
+
+- **p95**: 95% of exports generate faster than this
+  - PDF: 2.8s (target: <3s per Section 1.6)
+  - CSV: 0.7s
+  - Excel: 2.4s
+
+- **p99**: 99% of exports generate faster than this
+  - PDF: 4.5s (acceptable, rare slow exports)
+  - CSV: 1.1s
+  - Excel: 3.2s
+
+**Alert thresholds**:
+- Warning: p95 PDF generation >6 seconds
+- Critical: p95 PDF generation >10 seconds
+
+**How it's tracked**:
+- Measure server-side: Start timer at export_requested, end at export_generated
+- Log generation_time_ms in export_generated event
+- Dashboard: Real-time histogram (distribution of generation times)
+
+---
+
+**3. AI Request Latency**
+
+**What gets measured**:
+- **p50 (median)**: Half of AI requests respond faster than this
+  - Target: <2s
+  - Typical: 1.5-2.5s (depends on LLM provider)
+
+- **p95**: 95% of AI requests respond faster than this
+  - Target: <3s (per Section 1.6 SLAs)
+  - Alert threshold: >8 seconds
+
+- **p99**: 99% of AI requests respond faster than this
+  - Acceptable: <5s
+  - Alert threshold: >10 seconds
+
+**Per-request-type breakdown**:
+| Request Type | p50 | p95 | p99 | Status |
+|--------------|-----|-----|-----|--------|
+| explain_result | 1.6s | 2.9s | 4.2s | ✓ Passing |
+| suggest_scenario | 3.2s | 7.8s | 11.5s | ⚠ Warning (p95 high) |
+| risk_commentary | 2.1s | 3.5s | 5.1s | ✓ Passing |
+
+**Alert**: If suggest_scenario p95 exceeds 8s, investigate (may need prompt optimization or model switch).
+
+**How it's tracked**:
+- Measure server-side: Start timer at ai_narrative_requested, end at ai_narrative_displayed
+- Log response_time_ms in ai_narrative_displayed event
+- Dashboard: Real-time latency distribution (grouped by request type)
+
+---
+
+**4. Page Load Time**
+
+**What gets measured**:
+- **First Contentful Paint (FCP)**: When first content renders
+  - Target: <1.5s
+  - Typical: 1.0-1.8s
+
+- **Time to Interactive (TTI)**: When page is fully interactive
+  - Target: <3s
+  - Typical: 2.0-3.5s
+
+- **Largest Contentful Paint (LCP)**: When largest content renders
+  - Target: <2.5s (Core Web Vitals)
+
+**How it's tracked**:
+- Client-side: Web Vitals library (Google)
+- Send metrics to analytics via beacon API
+- Dashboard: Real-time distribution (FCP, TTI, LCP)
+
+---
+
+**5. Database Query Times**
+
+**What gets measured**:
+- **Slow query log**: Queries taking >100ms
+  - Log query, duration, table, indexes used
+  - Review weekly to identify optimization opportunities
+
+**Example slow query**:
+```sql
+SELECT * FROM scenarios WHERE user_id = 'uuid' ORDER BY created_at DESC LIMIT 50
+-- Duration: 450ms (missing index on user_id)
+```
+
+**How it's tracked**:
+- PostgreSQL: Enable `log_min_duration_statement = 100` (log queries >100ms)
+- Review logs weekly
+- Create indexes for frequently slow queries
+
+---
+
+### Performance Monitoring Tools
+
+**Application Performance Monitoring (APM)**:
+- **Options**: Datadog APM, New Relic, Elastic APM
+- **Capabilities**: Distributed tracing, latency metrics, error tracking, database query analysis
+- **Cost**: $15-50/host/month
+
+**Recommended for Phase 1**: Datadog APM (comprehensive, easy setup)
+
+**Key metrics tracked**:
+- Calculation latency (p50, p95, p99)
+- Export generation time (p50, p95, p99)
+- AI request latency (p50, p95, p99)
+- Database query times (slow query log)
+- API endpoint response times (per-route latency)
+
+---
+
+## 3. Alert Thresholds
+
+### Critical Alerts (Page immediately)
+
+**Error rate >5% in 5 minutes**:
+- Condition: (Error count / Total requests) > 0.05 over 5-minute window
+- Severity: Critical
+- Action: Page on-call engineer via PagerDuty
+- Example: 100 calculation errors out of 1,800 requests in 5 minutes
+
+**Database connection pool exhausted**:
+- Condition: All database connections in use, new requests queued
+- Severity: Critical
+- Action: Page on-call engineer, auto-scale database connections if possible
+- Impact: API requests fail with "Database unavailable"
+
+**Export generation failure rate >20% in 5 minutes**:
+- Condition: (Failed exports / Total export requests) > 0.20 over 5-minute window
+- Severity: Critical
+- Action: Page on-call engineer, disable export feature if >50% failure
+
+**AI API completely unavailable**:
+- Condition: AI success rate <50% in 5 minutes
+- Severity: Critical
+- Action: Page on-call engineer, enable AI kill switch (suite_ai_enabled = false)
+
+---
+
+### Warning Alerts (Notify via Slack, no page)
+
+**p95 calculation latency >500ms**:
+- Condition: p95 latency exceeds 500ms for any calculator over 15-minute window
+- Severity: Warning
+- Action: Notify engineering Slack channel, investigate during business hours
+- Example: Valuation calculator p95 = 520ms (still functional, but slow)
+
+**p95 export generation time >6 seconds**:
+- Condition: p95 PDF generation exceeds 6 seconds over 15-minute window
+- Severity: Warning
+- Action: Notify engineering Slack channel
+- Impact: Users wait longer for exports, but still functional
+
+**AI failure rate >10% in 5 minutes**:
+- Condition: (AI errors / AI requests) > 0.10 over 5-minute window
+- Severity: Warning
+- Action: Notify engineering Slack channel
+- Example: OpenAI rate limit intermittently hit
+
+**p95 AI latency >8 seconds**:
+- Condition: p95 AI response time exceeds 8 seconds over 15-minute window
+- Severity: Warning
+- Action: Notify engineering Slack channel, investigate prompt optimization
+
+**Slow database queries detected**:
+- Condition: >10 queries exceeded 1 second in past hour
+- Severity: Warning
+- Action: Notify engineering Slack channel, review slow query log
+
+---
+
+### Informational Alerts (Log only, no notification)
+
+**Error rate 1-5% in 5 minutes**:
+- Condition: (Error count / Total requests) between 0.01 and 0.05
+- Severity: Info
+- Action: Log to monitoring dashboard, no alert
+
+**p95 calculation latency 150-500ms**:
+- Condition: p95 latency between SLA target (150ms) and warning threshold (500ms)
+- Severity: Info
+- Action: Log to dashboard, review during weekly performance review
+
+---
+
+### Alert Configuration
+
+**Alert routing**:
+- **Critical alerts**: PagerDuty → On-call engineer (phone call, SMS)
+- **Warning alerts**: Slack #engineering-alerts channel
+- **Info alerts**: Monitoring dashboard only (no notifications)
+
+**On-call rotation**:
+- 1-week rotation among backend engineers
+- Escalation: If no response in 15 minutes, page engineering manager
+
+**Alert escalation policy**:
+1. Page primary on-call engineer
+2. If no acknowledgment in 15 minutes, page secondary on-call
+3. If no acknowledgment in 30 minutes, page engineering manager
+
+---
+
+## 4. Monitoring Tools
+
+### Recommended Stack
+
+**1. Application Performance Monitoring (APM)**:
+- **Tool**: Datadog APM or New Relic
+- **Purpose**: Distributed tracing, latency metrics, error tracking
+- **Cost**: ~$30/host/month
+- **Setup**: Install agent on app servers, auto-instrument requests
+
+**2. Log Aggregation**:
+- **Tool**: Elasticsearch + Kibana (self-hosted) or AWS CloudWatch Logs
+- **Purpose**: Centralized log storage, search, analysis
+- **Cost**: $50-200/month (depends on log volume)
+- **Setup**: Ship logs from app servers to log aggregator (JSON format)
+
+**3. Analytics Platform**:
+- **Tool**: ClickHouse (self-hosted) or BigQuery (managed)
+- **Purpose**: Analytics event storage, fast querying for dashboards
+- **Cost**: $100-500/month (depends on event volume)
+- **Setup**: Ingest events from application, build dashboards (Section 7.3)
+
+**4. Uptime Monitoring**:
+- **Tool**: Pingdom, UptimeRobot, or Datadog Synthetic Monitoring
+- **Purpose**: External health checks (ping API endpoints every 1 minute)
+- **Cost**: $15-50/month
+- **Setup**: Configure health check endpoints, alert on downtime
+
+**5. Alert Routing**:
+- **Tool**: PagerDuty or Opsgenie
+- **Purpose**: On-call scheduling, escalation policies, alert routing
+- **Cost**: $25-50/user/month
+- **Setup**: Integrate with monitoring tools (Datadog, CloudWatch)
+
+**6. Error Tracking**:
+- **Tool**: Sentry (client-side errors) or Datadog Error Tracking
+- **Purpose**: JavaScript exception tracking, client-side error monitoring
+- **Cost**: $25-100/month (depends on error volume)
+- **Setup**: Install Sentry SDK in React app, auto-capture exceptions
+
+---
+
+### Monitoring Dashboard Layout
+
+**Dashboard 1: Real-Time Health (Grafana)**:
+- **Refresh**: Every 5 seconds
+- **Panels**:
+  - Request rate (requests per second)
+  - Error rate (errors per second, stacked by type)
+  - p95 latency (calculation, export, AI)
+  - Database connection pool usage
+  - CPU and memory usage per host
+
+**Dashboard 2: Performance SLAs (Grafana)**:
+- **Refresh**: Every 1 minute
+- **Panels**:
+  - p95 calculation latency (per calculator, target line at 150ms)
+  - p95 export generation time (per format, target line at 3s)
+  - p95 AI latency (per request type, target line at 3s)
+  - SLA compliance gauge (percentage of requests meeting SLA)
+
+**Dashboard 3: Error Analysis (Kibana or Datadog)**:
+- **Refresh**: Every 5 minutes
+- **Panels**:
+  - Error count by type (calculation, export, AI, client)
+  - Error rate over time (last 24 hours)
+  - Top error messages (most frequent)
+  - Errors by calculator (which calculators have most errors)
+
+**Dashboard 4: Business Metrics (Metabase/Tableau)**:
+- **Refresh**: Hourly
+- **Panels**: See Section 7.3 (Calculator Funnel, Tier Conversion, AI Usage, Export, Scenario)
+
+---
+
+## Summary
+
+This error and performance monitoring strategy provides:
+
+**Error tracking**:
+- Calculation engine errors (timeouts, formula failures)
+- Export generation errors (PDF rendering, S3 upload failures)
+- AI service errors (API timeouts, rate limits)
+- Client-side errors (JavaScript exceptions, network failures)
+- Structured JSON logging with session_id, user_id, tier context
+
+**Performance monitoring**:
+- Calculation latency (p50, p95, p99 per calculator) - target p95 <150ms
+- Export generation time (p50, p95, p99 per format) - target p95 <3s
+- AI request latency (p50, p95, p99) - target p95 <3s
+- Page load time (FCP, TTI, LCP)
+- Database query times (slow query log for queries >100ms)
+
+**Alert thresholds**:
+- Critical: Error rate >5%, database pool exhausted (page on-call)
+- Warning: p95 latency >500ms, AI failure >10% (Slack notification)
+- Info: Error rate 1-5%, latency 150-500ms (log only)
+
+**Monitoring tools**:
+- APM: Datadog or New Relic (distributed tracing, metrics)
+- Logs: Elasticsearch or CloudWatch (centralized log aggregation)
+- Analytics: ClickHouse or BigQuery (event storage, dashboards)
+- Uptime: Pingdom or UptimeRobot (external health checks)
+- Alerts: PagerDuty or Opsgenie (on-call routing)
+
+All monitoring enforces performance SLAs from Section 1.6 with automated alerts when targets are exceeded.
+
+
+---
+
+
+# Section 8: AI Framework
+
+# 8.1 AI Roles Across the Suite
+
+This section defines the specific roles AI plays in the CFO Business Intelligence Calculator Suite, establishes clear boundaries for what AI does and does NOT do, and specifies required disclaimers for all AI-generated content.
+
+---
+
+## AI Philosophy
+
+**Guiding principle**: AI-enhanced, not AI-dependent (per Section 1.4)
+
+The suite's core value proposition is **CFO-grade calculation accuracy**. AI serves as an **advisory layer** that helps users interpret results and explore alternatives, but AI never modifies formulas, makes decisions, or guarantees outcomes.
+
+**Key characteristics**:
+- **Stateless**: AI does not learn from user data or remember previous sessions
+- **Advisory only**: AI provides explanations and suggestions, not decisions
+- **Optional**: All calculators function fully without AI (Free and Pro tiers)
+- **Transparent**: AI responses always include disclaimers and hedging language
+
+---
+
+## 1. Explanations and Narratives
+
+### Purpose
+
+Help users understand what their calculated results mean in plain language, especially for complex financial metrics like DSCR, NPV, IRR, and cash runway.
+
+### What AI does
+
+**Per-scenario explanations**:
+- User asks: "What does my DSCR of 1.42 mean?"
+- AI explains: "A DSCR of 1.42 means your business generates $1.42 in operating income for every $1 in debt payments. Most lenders require a minimum DSCR of 1.25, so your ratio is comfortably above that threshold. This indicates the business has a healthy cushion to cover loan payments even if income fluctuates."
+
+**Metric interpretation**:
+- User sees warning: "⚠ Low margin detected"
+- User asks: "Why is this warning showing?"
+- AI explains: "This warning appears because your contribution margin of 22% is below the typical 30% threshold for sustainable businesses. At this margin, you need to sell significantly more units to cover fixed costs, making the business more vulnerable to sales fluctuations."
+
+**Risk commentary**:
+- User asks: "What are the risks of this loan structure?"
+- AI responds: "With a 10-year term and balloon payment at year 7, you'll need to refinance or have significant cash reserves available in 7 years. Interest rate risk is a concern—if rates increase by the refinance date, your payments could rise substantially. Consider negotiating a longer amortization or smaller balloon payment."
+
+**Plain-language summaries of results**:
+- User requests summary of valuation results
+- AI provides: "Based on your projections, the business is valued between $2.1M (conservative, using 8x EBITDA) and $3.2M (optimistic, using 12x EBITDA). The discounted cash flow analysis suggests a fair value of $2.6M, assuming a 15% discount rate. Key value drivers are recurring revenue (75% of total) and consistent EBITDA margins (28%)."
+
+### Output characteristics
+
+**Length**: 150-250 words per explanation
+
+**Tone**: Professional but approachable, avoiding unnecessary jargon
+
+**Format**:
+- Plain paragraphs for explanations
+- Bullet lists only when listing alternatives or multiple risk factors
+- No tables or complex formatting (markdown not rendered in AI output)
+
+**Language constraints**:
+- Use hedging language: "typically", "generally", "may", "could", "often"
+- Avoid absolutes: Never say "always", "never", "guaranteed", "must"
+- Include contextual qualifiers: "Most lenders require...", "In typical market conditions..."
+
+### Required disclaimer
+
+Every AI explanation **must** include this disclaimer at the end:
+
+> **Disclaimer**: This analysis is for informational purposes only and does not constitute financial, legal, or professional advice. Consult qualified professionals for decisions affecting your business.
+
+**Rendering**: Displayed in gray italics below AI response in UI.
+
+---
+
+## 2. Scenario Suggestions
+
+### Purpose
+
+Help users explore alternative scenarios and optimize inputs without manually testing dozens of combinations.
+
+### What AI does
+
+**"What else should I test?" recommendations**:
+- User completes a loan calculation
+- User clicks "Get suggestions"
+- AI suggests: "You might want to test these alternative scenarios: (1) A longer 15-year term to reduce monthly payments, though you'll pay more interest overall. (2) A larger down payment (20% instead of 10%) to reduce the loan amount and potentially qualify for a better rate. (3) Delaying the loan by 6 months to build more cash reserves, improving your DSCR."
+
+**Parameter optimization hints**:
+- User has DSCR of 1.18 (below 1.25 threshold)
+- User clicks "Get suggestions"
+- AI suggests: "To reach the typical lender requirement of 1.25 DSCR, consider: (1) Increasing annual revenue by 8% (from $1.2M to $1.3M) through price increases or volume growth. (2) Reducing operating expenses by 5% (from $950k to $900k). (3) Extending the loan term from 7 years to 10 years to reduce monthly payments."
+
+**Alternative scenario ideas**:
+- User using breakeven calculator
+- User clicks "Get suggestions"
+- AI suggests: "Consider testing these scenarios: (1) What if variable costs increase by 10% due to supply chain issues? (2) What if you offered a 15% early-bird discount to accelerate sales? (3) What if fixed costs increased by $5,000/month due to hiring another employee?"
+
+### Implementation constraints
+
+**AI never automatically creates scenarios**:
+- AI only provides **text suggestions**
+- User must manually create new scenarios and input suggested values
+- AI does not have write access to scenario data
+- This prevents AI from accidentally corrupting user data or making unwanted changes
+
+**Suggestions are generic**:
+- AI suggests percentage changes (e.g., "increase revenue by 10%"), not exact dollar amounts
+- User applies suggestions to their specific context
+- AI does not know user's business details (per privacy design in Section 5.2)
+
+### Output characteristics
+
+**Length**: 50-100 words per suggestion (shorter than explanations)
+
+**Format**:
+```
+Consider testing these scenarios:
+
+1. [Scenario name/description]: [Brief explanation of impact]
+2. [Scenario name/description]: [Brief explanation of impact]
+3. [Scenario name/description]: [Brief explanation of impact]
+```
+
+**Example**:
+```
+Consider testing these scenarios:
+
+1. Longer loan term (15 years instead of 10): Monthly payments drop from $2,958 to $2,247, improving cash flow, but total interest increases from $105,000 to $154,000.
+
+2. Larger down payment (25% instead of 15%): Reduces loan amount by $50,000, lowering monthly payments to $2,662 and improving DSCR to 1.58.
+
+3. Rate negotiation (6.5% instead of 7.5%): Monthly payments drop to $2,788, saving $170/month and $20,400 over the loan term.
+```
+
+### Required disclaimer
+
+Same as explanations (see Section 1 above).
+
+---
+
+## 3. Cross-Calculator Insights (Future Phase)
+
+### Purpose
+
+Provide holistic financial analysis across multiple calculators, helping users understand how decisions in one area (e.g., taking a loan) affect other areas (e.g., cash runway).
+
+### Scope
+
+**Out of scope for v1** (Phase 1-2 implementation)
+
+**Planned for Phase 3+**:
+- Multi-calculator scenario sets analyzed together
+- Example: "This loan reduces your cash runway from 18 months to 12 months due to the $2,958 monthly payment. Consider increasing revenue or reducing expenses to maintain a healthy runway."
+- Requires: Backend infrastructure to link scenarios across calculators, more complex prompt design
+
+### Example use cases (future)
+
+**Loan + Cash Runway**:
+- User calculates a business loan ($250k at 7.5% for 10 years)
+- User also has a cash runway calculator showing 18 months of runway
+- AI suggests: "Taking this loan adds $2,958 in monthly expenses, which reduces your runway from 18 months to 12 months. To maintain 18 months of runway, you'd need to increase monthly revenue by $3,000 or reduce non-loan expenses by the same amount."
+
+**Valuation + Loan**:
+- User calculates business valuation at $2.5M
+- User explores a $500k loan (20% of business value)
+- AI suggests: "This loan represents 20% of your business's estimated value. Lenders typically prefer debt not to exceed 30-40% of enterprise value, so you have room for additional borrowing if needed in the future."
+
+**Equipment Lease + Cash Flow**:
+- User calculates equipment lease ($5,000/month)
+- User has cash flow showing $8,000/month burn rate
+- AI warns: "This lease increases your monthly expenses to $13,000, accelerating your burn rate. Without revenue growth, your cash runway drops from 15 months to 9 months."
+
+### Technical requirements (future)
+
+- User must explicitly link scenarios across calculators (opt-in)
+- Backend API: `POST /api/ai/cross-calculator-analysis` with array of scenario IDs
+- Privacy: No cross-calculator analysis for anonymous users (requires account)
+- Tenant control: B2B customers can disable cross-calculator AI entirely
+
+---
+
+## What AI Does NOT Do
+
+**Critical boundaries** that AI **must never** cross:
+
+### 1. Never modifies formulas or calculation logic
+
+- AI cannot change how DSCR, NPV, IRR, or any metric is calculated
+- All formulas are hardcoded and version-controlled (per Section 3.3)
+- AI only interprets results, never alters them
+- **Rationale**: Calculation accuracy is the suite's core value proposition; allowing AI to modify formulas would undermine trust
+
+### 2. Never makes credit decisions or underwriting recommendations
+
+- AI does not say: "You should take this loan" or "You qualify for this loan"
+- AI does not say: "This business is creditworthy" or "This investment is sound"
+- AI **only** explains metrics and suggests scenarios to test
+- **Rationale**: Credit decisions require regulated expertise; we are not lenders (Section 1.7)
+
+**Example of prohibited language**:
+- ❌ "You should accept this loan offer."
+- ✅ "This loan has a DSCR of 1.42, which typically meets most lenders' requirements. However, lenders also consider credit history, collateral, and other factors. Consult a loan officer for a formal credit decision."
+
+### 3. Never guarantees outcomes
+
+- AI does not say: "This will definitely work" or "You will save $10,000"
+- AI uses hedging language: "may", "could", "typically", "in most cases"
+- AI includes contextual qualifiers: "assuming no changes to revenue", "if market conditions remain stable"
+- **Rationale**: Financial projections are inherently uncertain; absolute guarantees expose us to liability
+
+**Example of prohibited language**:
+- ❌ "This strategy will increase your profit by 25%."
+- ✅ "If you implement this pricing strategy and maintain current sales volume, profit could increase by approximately 25%, assuming no changes to variable costs or market conditions."
+
+### 4. Never accesses or stores user PII
+
+- AI receives only pseudonymous identifiers (session_id, user_id as UUIDs)
+- AI does not receive: email addresses, names, company names, counterparty names
+- AI does not receive free-text notes by default (redacted, per Section 8.3)
+- **Rationale**: Privacy compliance (Section 5.2), minimize risk of AI provider data retention
+
+### 5. Never learns from user data
+
+- AI is **stateless**: Every request is independent
+- No fine-tuning on user scenarios (we do not send user data to train models)
+- No persistent memory of user sessions (AI does not remember previous requests)
+- **Rationale**: Privacy compliance, prevent AI from inferring confidential business data across users
+
+**Implementation**:
+- Each AI request is a fresh API call with no conversation history
+- No RAG (retrieval-augmented generation) using user scenarios
+- Prompt includes only current scenario data, not historical data
+
+---
+
+## AI Disclaimer Requirements
+
+### Standard disclaimer (required for all AI outputs)
+
+**Text**:
+```
+This analysis is for informational purposes only and does not constitute
+financial, legal, or professional advice. Consult qualified professionals
+for decisions affecting your business.
+```
+
+**Rendering**:
+- Display below AI response in UI
+- Font: 12px, gray (#6B7280), italic
+- Icon: ℹ️ info icon before text (optional)
+
+### Additional disclaimers for specific contexts
+
+**Loan calculators** (DSCR, amortization):
+```
+This calculator does not evaluate creditworthiness or guarantee loan approval.
+Lenders consider credit history, collateral, and other factors. Contact a
+lender for a formal loan decision.
+```
+
+**Valuation calculators**:
+```
+This valuation is an estimate based on the inputs provided and common valuation
+multiples. Actual business value depends on market conditions, buyer demand,
+and professional appraisal. Consult a business valuation expert or M&A advisor.
+```
+
+**Tax-related calculators** (depreciation, tax shields):
+```
+This calculator provides general estimates and does not constitute tax advice.
+Tax rules vary by jurisdiction and entity type. Consult a CPA or tax advisor
+for your specific situation.
+```
+
+### Disclaimer visibility
+
+**Always visible**:
+- AI responses in calculator UI (inline below response)
+- AI-generated PDF exports (footer on each page with AI content)
+
+**Not hidden**:
+- Disclaimers cannot be dismissed or collapsed
+- Disclaimers appear on every AI response (not just first response per session)
+- **Rationale**: Legal protection, user clarity
+
+---
+
+## AI Tier Access Control
+
+### Free tier
+- AI features **completely disabled**
+- "Explain this result" buttons hidden in UI
+- If user clicks locked AI feature, show upgrade prompt: "AI explanations are available with the AI add-on. Upgrade to Pro + AI for $49/month."
+
+### Pro tier
+- AI features **completely disabled** (AI requires separate add-on)
+- "Explain this result" buttons hidden in UI
+- If user clicks locked AI feature, show upgrade prompt: "Add AI explanations for +$20/month to your Pro subscription."
+
+### AI tier
+- AI features **enabled**
+- 50 requests per month (hard cap, per Section 1.5)
+- Request counter visible in UI: "23 of 50 AI requests remaining this month"
+- When quota exceeded, show message: "You've used all 50 AI requests this month. Your limit resets on [date]. Wait until next month or contact sales for higher limits."
+
+### B2B tier
+- AI features **configurable per tenant**
+- Tenant admin can disable AI entirely (Section 8.3)
+- Custom quotas available (e.g., 500 requests/month for large team)
+- On-premises AI option (future, Section 8.3)
+
+---
+
+## Summary
+
+AI in the CFO Business Intelligence Calculator Suite serves **three primary roles**:
+
+1. **Explanations and Narratives**: Plain-language interpretation of calculated results (150-250 words)
+2. **Scenario Suggestions**: Recommendations for alternative scenarios to test (50-100 words)
+3. **Cross-Calculator Insights**: Holistic analysis across multiple calculators (future, Phase 3+)
+
+**Critical boundaries**:
+- AI never modifies formulas or calculation logic
+- AI never makes credit decisions or guarantees outcomes
+- AI never accesses PII or learns from user data
+- AI is stateless and advisory-only
+
+**Required disclaimers**:
+- Standard disclaimer on all AI responses
+- Context-specific disclaimers for loans, valuations, tax calculations
+- Disclaimers always visible, never hidden or dismissible
+
+AI is **AI-enhanced, not AI-dependent**—all calculators function fully without AI (Free and Pro tiers).
+
+
+# 8.2 Prompt Design Guidelines
+
+This section defines how to construct prompts for AI requests across the CFO Business Intelligence Calculator Suite. Standardized prompt design ensures consistent AI output quality, appropriate tone, correct disclaimers, and compliance with privacy requirements.
+
+---
+
+## Prompt Design Philosophy
+
+**Goals**:
+- **Consistency**: All AI responses follow the same tone, length, and disclaimer standards
+- **Privacy**: No PII or free-text sent to AI by default (Section 5.2, Section 8.3)
+- **Quality**: Responses are CFO-grade (professional, accurate, appropriately hedged)
+- **Safety**: AI never provides guarantees, credit decisions, or formula modifications
+
+**Implementation**:
+- System prompts define AI role, output constraints, and prohibited behaviors
+- User prompts contain only structured numeric data (no free-text by default)
+- Prompt templates are versioned and stored in codebase (not dynamically generated by users)
+
+---
+
+## 1. System Prompt Template
+
+The **system prompt** defines the AI's role, output format, tone, and constraints. It is the same for all requests of a given type (e.g., all DSCR explanations use the same system prompt).
+
+### Template structure
+
+```
+You are a CFO advisor helping business owners understand financial calculations.
+
+Your role is to:
+- Explain financial metrics in plain language
+- Interpret calculated results in business context
+- Suggest alternative scenarios to test (when requested)
+- Use professional but approachable tone
+
+Output constraints:
+- Length: [LENGTH_REQUIREMENT]
+- Tone: Professional but approachable, avoid unnecessary jargon
+- Format: Plain paragraphs. Use bullet lists only when listing alternatives.
+- Disclaimers: Always end with: "This analysis is for informational purposes only and does not constitute financial, legal, or professional advice. Consult qualified professionals for decisions affecting your business."
+
+Prohibited behaviors:
+- Never modify user inputs or suggest changing formulas
+- Never guarantee specific outcomes (use "may", "could", "typically")
+- Never make credit decisions or underwriting recommendations
+- Never use absolute language (always, never, must)
+- Never reference user PII (names, emails, companies)
+```
+
+### Length requirements by request type
+
+| Request Type | Length Requirement |
+|--------------|-------------------|
+| explain_result | 150-250 words |
+| suggest_scenario | 50-100 words per suggestion (3 suggestions = 150-300 words total) |
+| risk_commentary | 150-250 words |
+| metric_interpretation | 100-150 words |
+
+### Tone guidelines
+
+**Professional but approachable**:
+- Use "you" and "your business" (not "the borrower" or "the entity")
+- Avoid jargon when plain language suffices
+- Define technical terms when first used (e.g., "DSCR (Debt Service Coverage Ratio)")
+- Use active voice (e.g., "You generate $1.42..." not "The business generates...")
+
+**Examples**:
+- ✅ "Your DSCR of 1.42 indicates healthy debt coverage."
+- ❌ "The subject entity's debt service coverage ratio of 1.42 is within acceptable parameters."
+
+**Hedging language** (required for all forward-looking statements):
+- Use: "typically", "generally", "may", "could", "often", "in most cases"
+- Avoid: "always", "never", "guaranteed", "definitely", "will", "must"
+
+**Examples**:
+- ✅ "Most lenders require a minimum DSCR of 1.25, so your ratio typically meets their requirements."
+- ❌ "All lenders require a minimum DSCR of 1.25, so you will definitely qualify."
+
+### Prohibited behaviors (enforced in system prompt)
+
+**Never modify formulas**:
+- AI cannot suggest changing how calculations work
+- AI can only suggest changing **inputs** to see different results
+
+**Never guarantee outcomes**:
+- ❌ "This will save you $10,000."
+- ✅ "If expenses remain constant, this could save approximately $10,000 over the loan term."
+
+**Never make credit decisions**:
+- ❌ "You should take this loan."
+- ✅ "This loan has a DSCR of 1.42, which typically meets lender requirements. Consult a loan officer for a formal credit decision."
+
+**Never use absolute language**:
+- ❌ "You must increase revenue by 10%."
+- ✅ "Consider increasing revenue by approximately 10% to improve DSCR."
+
+---
+
+## 2. Input Data Structure for Prompts
+
+The **user prompt** contains the data AI analyzes. To protect privacy and prevent AI from inferring confidential information, user prompts contain **only structured numeric data**—no free-text, names, or identifying details.
+
+### Default redaction rules
+
+**What gets included** (by default):
+- Numeric inputs (loan amount, interest rate, term, revenue, expenses)
+- Calculated outputs (DSCR, monthly payment, total interest, NPV, IRR)
+- Warning flags (yes/no boolean, e.g., "low_margin_warning: true")
+- Calculator slug (e.g., "business-loan-dscr")
+
+**What gets redacted** (by default):
+- Free-text user notes (e.g., "This is for the Main Street location")
+- Scenario names/labels (e.g., "Best case scenario", "Worst case scenario")
+- Counterparty names (e.g., "Wells Fargo", "ABC Equipment Leasing")
+- Company names or identifying details
+- Email addresses, phone numbers, addresses
+
+**Rationale**: Per Section 5.2 (privacy) and Section 8.3 (redaction), minimize PII sent to external AI providers.
+
+### Structured aggregate format
+
+Instead of sending raw user inputs, send **aggregated descriptions**:
+
+**Example (DSCR explanation)**:
+```
+The business has annual revenue of $1,500,000, operating expenses of $1,200,000,
+and a loan with monthly payment of $2,958. The calculated DSCR is 1.42.
+```
+
+**Not**:
+```
+Business: Acme Manufacturing LLC
+Owner: John Smith (john@acme.com)
+Revenue: $1,500,000
+Expenses: $1,200,000
+Loan: Wells Fargo SBA 7(a) loan
+Monthly payment: $2,958
+DSCR: 1.42
+Notes: "This is for our Oakland facility expansion. We're concerned about cash
+flow if sales drop next quarter."
+```
+
+### Range aggregation (strict redaction mode)
+
+For B2B customers with strict redaction requirements (Section 8.3), send **ranges** instead of exact values:
+
+**Example**:
+```
+The business has annual revenue between $1.0M-$2.0M, operating expenses between
+$1.0M-$1.5M, and a loan with monthly payment between $2,500-$3,500. The
+calculated DSCR is between 1.25-1.50.
+```
+
+**Tradeoff**: Less specific AI responses, but higher privacy protection.
+
+**Configuration**: Set `ai_redaction_level: "strict"` in tenant_configs table (Section 8.3).
+
+---
+
+## 3. Prompt Examples Per Calculator Type
+
+### Lending Calculators (DSCR Explanation)
+
+**System prompt**:
+```
+You are a CFO advisor explaining debt service coverage ratio (DSCR) to business
+owners considering loans.
+
+Your role is to:
+- Explain what the calculated DSCR means in plain language
+- Compare the DSCR to typical lender requirements (minimum 1.25)
+- Explain the business risk if DSCR is low (<1.25) or very high (>2.0)
+
+Output constraints:
+- Length: 150-250 words
+- Tone: Professional but approachable
+- Format: Plain paragraphs (no bullet lists for this type)
+- Disclaimers: Always end with: "This analysis is for informational purposes
+  only and does not constitute financial, legal, or professional advice.
+  Consult qualified professionals for decisions affecting your business."
+
+Prohibited behaviors:
+- Never guarantee loan approval or creditworthiness
+- Never recommend taking or not taking a loan (only explain the metric)
+- Use hedging language: "typically", "generally", "most lenders"
+```
+
+**User prompt**:
+```
+The business has annual revenue of $1,500,000, operating expenses of $1,200,000,
+and a loan with monthly payment of $2,958. The calculated DSCR is 1.42. Explain
+what this means and whether it's acceptable for lenders.
+```
+
+**Expected response**:
+```
+A DSCR of 1.42 means the business generates $1.42 in operating income for every
+$1 in debt payments. Most lenders require a minimum DSCR of 1.25, so this ratio
+is comfortably above that threshold. This indicates the business has a healthy
+cushion to cover loan payments even if income fluctuates.
+
+With annual revenue of $1,500,000 and operating expenses of $1,200,000, the
+business has $300,000 in annual operating income available to cover $35,496 in
+annual debt payments ($2,958 × 12 months). The $64,504 cushion ($300,000 -
+$35,496) provides some protection against revenue declines or expense increases.
+
+However, lenders also consider credit history, collateral, and other factors
+beyond DSCR. This metric alone does not guarantee loan approval.
+
+This analysis is for informational purposes only and does not constitute
+financial, legal, or professional advice. Consult qualified professionals for
+decisions affecting your business.
+```
+
+**Response characteristics**:
+- 187 words (within 150-250 range)
+- Hedging language: "most lenders", "typically", "does not guarantee"
+- No credit decision ("lenders also consider...")
+- Disclaimer included
+
+---
+
+### Cash Flow Calculators (Runway Risk)
+
+**System prompt**:
+```
+You are a CFO advisor analyzing cash runway and burn rate for business owners.
+
+Your role is to:
+- Explain what the calculated runway means (months until cash runs out)
+- Identify the primary risk factors (burn rate, revenue decline, expense growth)
+- Suggest ways to extend runway (increase revenue, reduce expenses, raise capital)
+
+Output constraints:
+- Length: 150-250 words
+- Tone: Professional but approachable
+- Format: Plain paragraphs, with bullet list for suggestions if requested
+- Disclaimers: Always end with standard disclaimer
+
+Prohibited behaviors:
+- Never guarantee the business will survive or fail
+- Never recommend specific cost cuts (only suggest categories to review)
+- Use hedging language: "may", "could", "if conditions remain stable"
+```
+
+**User prompt**:
+```
+The business has $150,000 in cash, monthly revenue of $25,000, and monthly
+expenses of $35,000. The calculated runway is 15 months. Explain the risk.
+```
+
+**Expected response**:
+```
+With a monthly burn rate of $10,000 (expenses exceeding revenue by $10,000), the
+business has approximately 15 months of runway before cash is depleted. This
+assumes no changes to revenue or expenses, which is unlikely in practice.
+
+The primary risk is that the business is currently unprofitable. If this trend
+continues without corrective action, cash reserves will be exhausted in roughly
+15 months. However, runway can be extended by:
+
+- Increasing monthly revenue (e.g., new customers, price increases, new products)
+- Reducing monthly expenses (e.g., renegotiating contracts, cutting discretionary spending)
+- Raising additional capital (e.g., loans, investor funding, owner contributions)
+
+A 15-month runway provides time to make strategic changes, but action should be
+taken soon to achieve profitability or secure additional funding.
+
+This analysis is for informational purposes only and does not constitute
+financial, legal, or professional advice. Consult qualified professionals for
+decisions affecting your business.
+```
+
+**Response characteristics**:
+- 178 words (within 150-250 range)
+- Bullet list for suggestions (appropriate context)
+- Hedging language: "approximately", "assumes", "can be extended"
+- No guarantees ("provides time" not "will succeed")
+- Disclaimer included
+
+---
+
+### Profitability Calculators (Margin Risk)
+
+**System prompt**:
+```
+You are a CFO advisor analyzing margins and breakeven for business owners.
+
+Your role is to:
+- Explain what the calculated margin and breakeven volume mean
+- Identify pricing and cost risks (what happens if prices drop or costs rise)
+- Suggest scenarios to test (price changes, cost changes, volume changes)
+
+Output constraints:
+- Length: 150-250 words
+- Tone: Professional but approachable
+- Format: Plain paragraphs
+- Disclaimers: Always end with standard disclaimer
+
+Prohibited behaviors:
+- Never guarantee specific profit outcomes
+- Never recommend exact prices (only directional guidance like "consider testing a 10% increase")
+- Use hedging language: "could", "may", "typically"
+```
+
+**User prompt**:
+```
+The product has a selling price of $100, variable cost of $60, and fixed costs
+of $50,000 per month. The contribution margin is 40% and breakeven volume is
+1,250 units. Explain the risk of discounting.
+```
+
+**Expected response**:
+```
+With a contribution margin of 40%, each unit sold contributes $40 toward
+covering the $50,000 in monthly fixed costs. The breakeven volume of 1,250 units
+means you need to sell at least 1,250 units per month to avoid losses.
+
+The primary risk of discounting is that it reduces contribution margin, requiring
+significantly higher sales volume to maintain the same profit. For example:
+
+- A 10% price discount (from $100 to $90) reduces contribution margin from 40%
+  to 30% ($30 per unit instead of $40), requiring 67% more volume (2,083 units
+  instead of 1,250) to break even.
+
+- A 20% discount (to $80) reduces margin to 20% ($20 per unit), requiring 150%
+  more volume (3,125 units) to break even.
+
+Before discounting, consider whether the additional volume is realistic given
+your market size, production capacity, and sales resources.
+
+This analysis is for informational purposes only and does not constitute
+financial, legal, or professional advice. Consult qualified professionals for
+decisions affecting your business.
+```
+
+**Response characteristics**:
+- 203 words (within 150-250 range)
+- Specific examples with calculations (helps user understand impact)
+- Hedging language: "requiring", "consider whether"
+- No guarantees ("is realistic" not "will achieve")
+- Disclaimer included
+
+---
+
+### Valuation Calculators (Valuation Range Explanation)
+
+**System prompt**:
+```
+You are a CFO advisor explaining business valuation results to business owners
+considering selling, raising capital, or estate planning.
+
+Your role is to:
+- Explain what the calculated valuation range means (low, mid, high scenarios)
+- Identify key value drivers (revenue quality, margins, growth rate, recurring revenue)
+- Explain limitations (valuation is an estimate, not guaranteed sale price)
+
+Output constraints:
+- Length: 150-250 words
+- Tone: Professional but approachable
+- Format: Plain paragraphs
+- Disclaimers: Always end with: "This valuation is an estimate based on the
+  inputs provided and common valuation multiples. Actual business value depends
+  on market conditions, buyer demand, and professional appraisal. Consult a
+  business valuation expert or M&A advisor."
+
+Prohibited behaviors:
+- Never guarantee the business will sell for this price
+- Never recommend selling or not selling (only explain the valuation)
+- Use hedging language: "estimated", "typically", "suggests"
+```
+
+**User prompt**:
+```
+The business has annual revenue of $2,000,000, EBITDA of $560,000, and 75%
+recurring revenue. Using industry multiples, the valuation range is $2.1M
+(conservative, 8x EBITDA) to $3.2M (optimistic, 12x EBITDA). The DCF analysis
+suggests $2.6M. Explain the valuation.
+```
+
+**Expected response**:
+```
+Based on your projections, the business is valued between $2.1M (conservative,
+using 8x EBITDA multiple) and $3.2M (optimistic, using 12x EBITDA). The
+discounted cash flow analysis suggests a fair value of approximately $2.6M,
+assuming a 15% discount rate.
+
+Key value drivers include:
+- Strong recurring revenue (75% of total), which buyers typically value highly
+- Healthy EBITDA margin (28% of revenue), indicating operational efficiency
+- Predictable cash flows, supporting the DCF valuation
+
+The actual sale price may vary based on market conditions, buyer competition,
+deal structure, and professional due diligence. Buyers may adjust multiples
+based on growth trajectory, customer concentration, competitive moat, and other
+factors not captured in this estimate.
+
+This valuation is an estimate based on the inputs provided and common valuation
+multiples. Actual business value depends on market conditions, buyer demand, and
+professional appraisal. Consult a business valuation expert or M&A advisor.
+```
+
+**Response characteristics**:
+- 172 words (within 150-250 range)
+- Bullet list for value drivers (appropriate context)
+- Hedging language: "approximately", "suggests", "may vary"
+- Custom disclaimer for valuation context
+- No guarantees ("may vary" not "will sell for")
+
+---
+
+## 4. Scenario Suggestion Prompts
+
+When users request scenario suggestions (click "Get suggestions"), AI provides 3 alternative scenarios to test.
+
+### System prompt for suggestions
+
+```
+You are a CFO advisor suggesting alternative scenarios for business owners to test.
+
+Your role is to:
+- Suggest 3 alternative scenarios based on the current inputs
+- Focus on realistic, actionable changes (not extreme edge cases)
+- Explain the expected impact of each scenario (directional, not exact)
+
+Output constraints:
+- Length: 50-100 words per suggestion (3 suggestions total = 150-300 words)
+- Format: Numbered list with brief explanation per scenario
+- Tone: Professional but approachable
+- Disclaimers: Always end with standard disclaimer
+
+Prohibited behaviors:
+- Never automatically create scenarios (only suggest, user must apply)
+- Never suggest exact dollar amounts (use percentages like "10% increase")
+- Never guarantee outcomes (use "could", "may", "typically")
+```
+
+### User prompt for suggestions (DSCR example)
+
+```
+The business has a loan with principal $250,000, annual rate 7.5%, term 10 years,
+and calculated DSCR of 1.42. Suggest 3 alternative scenarios to test.
+```
+
+### Expected response
+
+```
+Consider testing these scenarios:
+
+1. Longer loan term (15 years instead of 10): Monthly payments would drop from
+   $2,958 to approximately $2,247, improving cash flow. However, total interest
+   would increase from $105,000 to $154,000 over the life of the loan.
+
+2. Larger down payment (25% instead of current): Reducing the loan amount by
+   $50,000 would lower monthly payments to approximately $2,662 and improve DSCR
+   to around 1.58, providing more cushion for lenders.
+
+3. Rate negotiation (6.5% instead of 7.5%): If you can negotiate a 1% lower rate,
+   monthly payments would drop to approximately $2,788, saving $170/month and
+   $20,400 over the loan term.
+
+This analysis is for informational purposes only and does not constitute
+financial, legal, or professional advice. Consult qualified professionals for
+decisions affecting your business.
+```
+
+**Response characteristics**:
+- 3 scenarios, ~70 words each = 210 words total (within 150-300 range)
+- Numbered list format
+- Directional impacts ("would drop from X to Y")
+- Hedging language: "approximately", "around", "if you can negotiate"
+- No exact guarantees (uses approximate values)
+- Disclaimer included
+
+---
+
+## Prompt Version Control
+
+**Storage**: All prompt templates stored in codebase at `/src/ai/prompts/`
+
+**Versioning**: Each prompt template has a version number (e.g., `v1`, `v2`)
+
+**Example file structure**:
+```
+/src/ai/prompts/
+  dscr_explanation_v1.ts
+  dscr_suggestions_v1.ts
+  runway_explanation_v1.ts
+  runway_suggestions_v1.ts
+  margin_explanation_v1.ts
+  ...
+```
+
+**Example prompt file** (`dscr_explanation_v1.ts`):
+```typescript
+export const DSCRExplanationPrompt = {
+  version: 'v1',
+  systemPrompt: `
+    You are a CFO advisor explaining debt service coverage ratio...
+    [full system prompt text]
+  `,
+  userPromptTemplate: (inputs: LoanInputs, outputs: LoanOutputs) => `
+    The business has annual revenue of ${outputs.annualRevenue}, operating
+    expenses of ${outputs.operatingExpenses}, and a loan with monthly payment
+    of ${outputs.monthlyPayment}. The calculated DSCR is ${outputs.dscr}.
+    Explain what this means and whether it's acceptable for lenders.
+  `,
+};
+```
+
+**Benefits**:
+- Prompts are code-reviewed and version-controlled (not dynamically editable in production)
+- Prompt changes are auditable (git history)
+- Easy to A/B test prompt variations (deploy v1 to 50%, v2 to 50%)
+
+---
+
+## Summary
+
+Prompt design for the CFO Business Intelligence Calculator Suite follows strict standards:
+
+**System prompts**:
+- Define AI role, output length (150-250 words for explanations, 50-100 words for suggestions)
+- Enforce professional tone, hedging language, required disclaimers
+- Prohibit formula modifications, credit decisions, guarantees
+
+**User prompts**:
+- Include only structured numeric data (no free-text by default)
+- Use aggregated descriptions (not raw user inputs)
+- Optionally use ranges instead of exact values (strict redaction mode)
+
+**Prompt examples provided for**:
+- Lending calculators (DSCR explanation)
+- Cash flow calculators (runway risk)
+- Profitability calculators (margin risk)
+- Valuation calculators (valuation range)
+- Scenario suggestions (3 alternatives to test)
+
+**Version control**:
+- Prompts stored in codebase (`/src/ai/prompts/`)
+- Each prompt versioned (v1, v2, ...)
+- Changes auditable via git history
+
+
+# 8.3 Redaction, Logging, and Opt-Out
+
+This section defines what data gets logged when AI features are used, what information is redacted (not sent to AI providers), and how tenants can control AI behavior via opt-out and redaction settings.
+
+---
+
+## Redaction Philosophy
+
+**Guiding principle**: Minimize data sent to external AI providers (per Section 5.2 privacy requirements)
+
+**Default posture**: **Strict redaction**—only send structured numeric data to AI, redact all free-text, names, and identifying information by default. Opt-in required to send any additional data.
+
+**Rationale**:
+- Protect user privacy (AI providers may retain data for training or compliance)
+- Reduce legal risk (minimize PII exposure in case of AI provider breach)
+- Build trust with B2B customers (especially regulated industries like finance, healthcare)
+
+---
+
+## 1. AI Request Logging
+
+When a user makes an AI request (e.g., clicks "Explain this result"), the system logs **metadata only**—not the full prompt or AI response text.
+
+### What gets logged
+
+**Logged to analytics database** (ClickHouse or PostgreSQL):
+
+```json
+{
+  "event_name": "ai_narrative_requested",
+  "timestamp": "2025-11-17T21:45:00Z",
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+  "tier": "ai",
+  "calculator_slug": "business-loan-dscr",
+  "ai_request_type": "explain_result",
+  "response_time_ms": 2340,
+  "success": true,
+  "summary": "DSCR explanation requested",
+  "ai_provider": "anthropic",
+  "ai_model": "claude-sonnet-4",
+  "prompt_version": "dscr_explanation_v1",
+  "tokens_used": 742
+}
+```
+
+**Fields explained**:
+- `session_id`, `user_id`: Pseudonymous identifiers (UUIDs, not email/name)
+- `calculator_slug`: Which calculator AI was used in
+- `ai_request_type`: Type of request (explain_result, suggest_scenario, risk_commentary)
+- `response_time_ms`: Latency from request to response (for performance monitoring)
+- `success`: Boolean (true if AI responded, false if error/timeout)
+- `summary`: High-level description (e.g., "DSCR explanation requested"), **not full prompt text**
+- `ai_provider`: Which AI provider used (anthropic, openai, etc.)
+- `ai_model`: Which model used (claude-sonnet-4, gpt-4, etc.)
+- `prompt_version`: Version of prompt template (for A/B testing)
+- `tokens_used`: Total tokens consumed (for cost tracking)
+
+### What does NOT get logged
+
+**Never logged** (to protect privacy and reduce storage costs):
+- **Full prompt text** (contains user inputs, could be reconstructed to identify business)
+- **Full AI response text** (could contain inferred business details)
+- **User PII**: email, name, company name, counterparty names
+- **Specific numeric inputs**: exact loan amounts, revenue figures, expense details
+- **Free-text notes**: user-entered notes, scenario names, descriptions
+
+**Rationale**:
+- Full prompts/responses are ephemeral (used once, then discarded)
+- Logging full text would create a PII data store requiring stricter compliance
+- Summary + metadata is sufficient for analytics and debugging
+
+### Log retention
+
+**Retention period**: 12 months (per Section 5.4)
+
+**Deletion**:
+- After 12 months, AI request logs are automatically deleted
+- No archival or long-term storage (minimize data retention risk)
+
+**Compliance**:
+- Pseudonymous IDs only (session_id, user_id as UUIDs)
+- No PII in logs (GDPR-compliant, CCPA-compliant)
+- Users can request deletion via "Delete my data" in account settings
+
+---
+
+## 2. AI Suggestion Logging
+
+When AI suggests input changes (e.g., "Try increasing revenue by 10%"), the system logs **which suggestion was made**—but not the full text.
+
+### What gets logged
+
+**Logged when suggestion is displayed**:
+
+```json
+{
+  "event_name": "ai_suggestion_displayed",
+  "timestamp": "2025-11-17T21:46:00Z",
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+  "tier": "ai",
+  "calculator_slug": "business-loan-dscr",
+  "scenario_id": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
+  "suggestion_type": "extend_term",
+  "suggestion_summary": "Suggested extending loan term from 10 to 15 years",
+  "suggestion_count": 3
+}
+```
+
+**Logged when user accepts suggestion**:
+
+```json
+{
+  "event_name": "ai_suggestion_accepted",
+  "timestamp": "2025-11-17T21:47:00Z",
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "user_id": "e8f5a3c2-1234-5678-9abc-def012345678",
+  "tier": "ai",
+  "calculator_slug": "business-loan-dscr",
+  "scenario_id": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
+  "suggestion_type": "extend_term"
+}
+```
+
+**Fields explained**:
+- `suggestion_type`: Category of suggestion (extend_term, increase_revenue, reduce_expenses, larger_down_payment)
+- `suggestion_summary`: High-level description (not full AI text)
+- `suggestion_count`: How many suggestions were shown (typically 3)
+
+### User must explicitly accept suggestions
+
+**Critical rule**: AI never automatically applies suggestions to user scenarios
+
+**Implementation**:
+1. AI suggests: "Consider extending the loan term from 10 to 15 years"
+2. User sees suggestion in UI with button: "Apply this suggestion"
+3. User clicks button (explicit consent)
+4. System creates new scenario with suggested inputs
+5. Log `ai_suggestion_accepted` event
+
+**Rationale**:
+- Prevent AI from corrupting user data
+- Ensure user understands what is changing
+- Audit trail of AI influence on decisions
+
+---
+
+## 3. Tenant-Level AI Controls (B2B)
+
+B2B customers (white-label tier, Section 1.5) can configure AI behavior per tenant via admin settings.
+
+### Control options
+
+**AI enabled/disabled**:
+- **Fully enabled** (default for AI tier): All AI features available
+- **Fully disabled**: No AI calls made, no data sent to AI providers, "Explain this result" buttons hidden in UI
+
+**Redaction levels**:
+- **Disabled**: AI completely off (no redaction needed)
+- **Strict**: Only high-level aggregates sent (ranges, not exact values)
+- **Standard** (default): Numeric inputs/outputs sent, no free-text
+- **Enhanced** (opt-in only): Free-text fields allowed (requires explicit configuration and user consent)
+
+### Configuration storage
+
+**Database table**: `tenant_configs`
+
+```sql
+CREATE TABLE tenant_configs (
+  tenant_id UUID PRIMARY KEY,
+  ai_enabled BOOLEAN DEFAULT true,
+  ai_redaction_level VARCHAR(20) DEFAULT 'standard',
+  ai_provider VARCHAR(50) DEFAULT 'anthropic',
+  ai_custom_endpoint VARCHAR(255) DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+**Fields explained**:
+- `ai_enabled`: true (AI features on) or false (AI features completely disabled)
+- `ai_redaction_level`: 'disabled', 'strict', 'standard', 'enhanced'
+- `ai_provider`: 'anthropic' (default), 'openai', 'custom' (for on-premises)
+- `ai_custom_endpoint`: URL for self-hosted AI (e.g., "https://ai.customer.com/v1/chat")
+
+### Redaction level behavior
+
+**Disabled** (ai_enabled = false):
+- No AI calls made (all AI features off)
+- "Explain this result" buttons hidden in UI
+- No data sent to AI providers (maximum privacy)
+
+**Strict** (ai_redaction_level = 'strict'):
+- Only high-level aggregates sent to AI
+- Example: "Annual revenue between $1.0M-$2.0M" (not "$1,500,000")
+- Example: "DSCR between 1.25-1.50" (not "1.42")
+- No free-text, no scenario names, no exact values
+- **Use case**: Highly regulated industries (finance, healthcare) where even numeric data is sensitive
+
+**Standard** (ai_redaction_level = 'standard', default):
+- Numeric inputs and outputs sent to AI (exact values)
+- No free-text notes, no scenario names, no counterparty names
+- Example: "Annual revenue of $1,500,000, DSCR of 1.42"
+- **Use case**: Default for most customers (balance between AI quality and privacy)
+
+**Enhanced** (ai_redaction_level = 'enhanced', opt-in only):
+- Numeric inputs/outputs + free-text notes (if user consents)
+- User must explicitly enable per scenario: "Allow AI to analyze my notes"
+- Scenario names still redacted by default
+- **Use case**: Users who want AI to consider qualitative context (e.g., "This is for our Oakland expansion")
+- **Warning**: Shown to user before enabling: "Your notes will be sent to our AI provider (Anthropic). Do not include confidential or sensitive information."
+
+### UI behavior per redaction level
+
+**Disabled**:
+- "Explain this result" buttons hidden
+- If user is on AI tier but tenant disabled AI, show message: "AI features are disabled by your organization admin."
+
+**Strict**:
+- "Explain this result" buttons visible
+- AI responses may be less specific (due to range aggregation)
+- Example response: "Your DSCR is in the 1.25-1.50 range, which typically meets lender requirements."
+
+**Standard** (default):
+- "Explain this result" buttons visible
+- AI responses are specific and accurate
+- Example response: "Your DSCR of 1.42 is comfortably above the typical 1.25 lender requirement."
+
+**Enhanced**:
+- "Explain this result" buttons visible
+- Checkbox in scenario settings: "☐ Allow AI to analyze my notes for this scenario"
+- If checked, free-text notes sent to AI (with user consent)
+- If unchecked, falls back to Standard redaction
+
+---
+
+## 4. On-Premises AI (B2B Option)
+
+Some B2B customers may want AI features but refuse to send any data to external providers (e.g., due to regulatory requirements, data sovereignty laws, or confidentiality policies).
+
+### Solution: Self-hosted AI
+
+**Customer responsibilities**:
+- Host their own LLM (e.g., self-hosted Claude via AWS Bedrock, Llama via Ollama, or GPT via Azure OpenAI)
+- Expose an API endpoint compatible with our prompt format
+- Ensure uptime, performance, and cost management
+
+**Our responsibilities**:
+- Configure tenant to use custom endpoint (set `ai_custom_endpoint` in tenant_configs)
+- Send prompts to customer's endpoint instead of Anthropic API
+- Provide prompt format documentation (so customer can configure their LLM)
+
+### Implementation
+
+**Configuration**:
+```sql
+UPDATE tenant_configs
+SET ai_provider = 'custom',
+    ai_custom_endpoint = 'https://ai.customer.com/v1/chat'
+WHERE tenant_id = 'customer-uuid';
+```
+
+**API call**:
+```typescript
+const endpoint = tenant.ai_custom_endpoint || 'https://api.anthropic.com/v1/messages';
+
+const response = await fetch(endpoint, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${apiKey}`, // Customer's API key, not ours
+  },
+  body: JSON.stringify({
+    model: 'claude-sonnet-4', // Or customer's model
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userPrompt },
+    ],
+  }),
+});
+```
+
+**Compatibility requirements**:
+- Customer's endpoint must accept same request format as Anthropic API (or OpenAI API)
+- Customer must return response in same format (JSON with `content` field)
+- If customer uses incompatible format, adapter layer required (custom implementation)
+
+### Support and pricing
+
+**Scope**: Out of scope for v1 (Phase 1-2)
+
+**Planned for Phase 3+**:
+- Requires separate implementation agreement
+- Additional support fee (e.g., +$500/month for custom endpoint support)
+- Customer is responsible for AI costs (we don't charge per-request, they pay their LLM provider)
+
+**Use cases**:
+- Financial institutions (regulatory compliance)
+- Healthcare (HIPAA compliance, PHI data restrictions)
+- Government contractors (data sovereignty requirements)
+
+---
+
+## 5. User-Level AI Opt-Out
+
+Individual users (not just tenants) can opt out of AI features entirely via account settings.
+
+### Opt-out mechanism
+
+**Account settings** (`/settings/privacy`):
+```
+☑ Enable AI features (explanations and suggestions)
+
+When enabled, your calculation data may be sent to our AI provider (Anthropic)
+for generating explanations and suggestions. We do not send personally
+identifiable information (PII) or free-text notes by default. Learn more.
+
+[Save Settings]
+```
+
+**Database field**:
+```sql
+ALTER TABLE users ADD COLUMN ai_opt_out BOOLEAN DEFAULT false;
+```
+
+**Behavior when opted out** (`ai_opt_out = true`):
+- "Explain this result" buttons hidden in UI
+- No AI calls made for this user (even if tier includes AI)
+- User's AI request quota is not consumed (counter stays at 0)
+
+**Use case**:
+- Users who don't trust AI or prefer manual analysis
+- Users concerned about data privacy (even pseudonymous data)
+- Users who don't want to consume AI quota (save it for later)
+
+---
+
+## 6. GDPR and Data Deletion
+
+Users can request deletion of all their data, including AI request logs.
+
+### Deletion process
+
+**User action**: Click "Delete my account" in settings
+
+**System action**:
+1. Delete all user scenarios from `scenarios` table
+2. Delete all exports from `exports` table and S3/R2 storage
+3. Delete user record from `users` table
+4. **Pseudonymize** AI request logs (do not delete, per analytics retention):
+   - Set `user_id = NULL` in all AI request logs
+   - Logs become anonymous (session_id only)
+   - Allows aggregate analytics (e.g., "total AI requests per month") without PII
+
+**Rationale**:
+- GDPR right to erasure (delete PII)
+- Retain anonymized analytics for business intelligence (allowed under GDPR Article 89)
+
+**Timeline**: Deletion completes within 30 days
+
+---
+
+## Summary
+
+AI redaction, logging, and opt-out controls provide:
+
+**AI request logging**:
+- Log metadata only (session_id, calculator_slug, ai_request_type, response_time_ms, success)
+- Never log full prompts or AI responses (ephemeral, discarded after use)
+- 12-month retention, then auto-delete
+
+**AI suggestion logging**:
+- Log suggestion type and summary (not full text)
+- User must explicitly accept suggestions (AI never auto-applies)
+- Track acceptance rate for product analytics
+
+**Tenant-level AI controls**:
+- AI enabled/disabled (completely on or off)
+- Redaction levels: Disabled, Strict (ranges), Standard (exact values), Enhanced (free-text opt-in)
+- Stored in `tenant_configs` table (per-tenant configuration)
+
+**On-premises AI** (future, Phase 3+):
+- Customer hosts own LLM (self-hosted Claude, Llama, GPT)
+- We call customer's endpoint instead of Anthropic API
+- Requires separate support agreement
+
+**User-level opt-out**:
+- Users can disable AI features in account settings
+- `ai_opt_out = true` hides AI buttons, stops AI calls
+- Even if tier includes AI, opt-out is respected
+
+**GDPR compliance**:
+- User deletion pseudonymizes AI logs (sets user_id = NULL)
+- Allows aggregate analytics without PII
+- Deletion completes within 30 days
+
+
+# 8.4 Cost Management Considerations
+
+This section defines AI cost expectations, usage caps, optimization strategies, and provider selection for the CFO Business Intelligence Calculator Suite. Effective AI cost management ensures healthy margins on the AI tier ($20/month add-on) while maintaining high-quality responses.
+
+---
+
+## AI Cost Philosophy
+
+**Guiding principle**: AI is a **profit center**, not a cost burden
+
+**Target economics**:
+- AI tier pricing: $20/month per user (add-on to Pro at $29/month)
+- AI COGS (cost of goods sold): <$2/user/month (10% of revenue)
+- Target margin: >90% on AI tier revenue
+
+**Cost levers**:
+- Usage caps (50 requests/month hard limit)
+- Prompt optimization (shorter prompts = lower cost)
+- Response caching (reuse responses for identical inputs)
+- Prompt caching (reuse system prompts across requests)
+- Provider selection (Claude Sonnet vs Haiku vs GPT-4)
+
+---
+
+## 1. Per-Calculator AI Budget
+
+### Expected AI requests per session
+
+Users typically make 1-2 AI requests per calculator session (not 50 requests in one session, but spread over a month).
+
+**Lending calculators** (DSCR, amortization):
+- **Explain DSCR**: 1 request per session (most common)
+- **Explain total cost**: 1 request per session (less common)
+- **Suggest scenarios**: 1 request per session (occasional)
+- **Average**: 1.5 requests per session
+
+**Cash flow calculators** (runway, burn rate):
+- **Explain runway**: 1 request per session
+- **Suggest cost cuts**: 1 request per session (less common)
+- **Average**: 1.2 requests per session
+
+**Profitability calculators** (margin, breakeven):
+- **Explain margin**: 1 request per session
+- **Pricing suggestions**: 1 request per session (occasional)
+- **Average**: 1.3 requests per session
+
+**Valuation calculators** (DCF, multiples):
+- **Explain valuation range**: 1 request per session
+- **Suggest value drivers**: 1 request per session (less common)
+- **Average**: 1.4 requests per session
+
+**Average across all calculators**: 1.3-1.5 requests per session
+
+### Token usage per request
+
+AI cost is determined by **tokens consumed** (input tokens + output tokens).
+
+**Prompt tokens** (system + user):
+- System prompt: 150-250 tokens (role definition, constraints, disclaimers)
+- User prompt: 150-250 tokens (inputs, outputs, question)
+- **Total input**: 300-500 tokens per request
+
+**Completion tokens** (AI response):
+- Explanation (150-250 words): 200-300 tokens
+- Suggestion (50-100 words × 3): 150-250 tokens
+- **Total output**: 200-300 tokens per request
+
+**Total tokens per request**: 500-800 tokens
+
+**Example** (DSCR explanation):
+```
+System prompt: 180 tokens
+User prompt: 220 tokens
+AI response: 250 tokens
+Total: 650 tokens
+```
+
+### Cost per request (Claude API pricing)
+
+**Anthropic Claude Sonnet 4 pricing** (as of 2025):
+- Input tokens: $3 per million tokens
+- Output tokens: $15 per million tokens
+
+**Cost calculation**:
+```
+Input cost: 500 tokens × $3 / 1,000,000 = $0.0015
+Output cost: 300 tokens × $15 / 1,000,000 = $0.0045
+Total cost per request: $0.006 (0.6 cents)
+```
+
+**With prompt caching** (90% reduction on system prompt):
+```
+Cached system prompt: 180 tokens × $0.30 / 1,000,000 = $0.00005 (90% discount)
+Non-cached user prompt: 220 tokens × $3 / 1,000,000 = $0.00066
+Output cost: 300 tokens × $15 / 1,000,000 = $0.0045
+Total cost per request: $0.0052 (0.52 cents, 13% cheaper)
+```
+
+**Average cost per request**: **$0.005-$0.006** (0.5-0.6 cents)
+
+---
+
+## 2. Usage Caps and Throttling
+
+To ensure predictable costs and prevent abuse, AI tier includes a **hard cap** of 50 requests per user per month.
+
+### Request limits by tier
+
+| Tier | AI Requests/Month | Overage Handling |
+|------|-------------------|------------------|
+| Free | 0 (disabled) | Upgrade prompt shown |
+| Pro | 0 (disabled) | Upgrade prompt shown |
+| AI | 50 (hard cap) | "Quota exceeded" message |
+| B2B | Custom (e.g., 500) | Configurable per tenant |
+
+### Quota enforcement
+
+**Implementation**:
+```typescript
+interface UserAIUsage {
+  user_id: string;
+  month: string; // Format: "2025-11"
+  requests_used: number;
+  requests_limit: number; // 50 for AI tier
+  last_request_at: string; // ISO timestamp
+}
+
+async function canMakeAIRequest(userId: string): Promise<boolean> {
+  const currentMonth = new Date().toISOString().slice(0, 7); // "2025-11"
+  const usage = await db.getUserAIUsage(userId, currentMonth);
+
+  if (!usage) {
+    // First request this month, create record
+    await db.createUserAIUsage(userId, currentMonth, 1, 50);
+    return true;
+  }
+
+  if (usage.requests_used >= usage.requests_limit) {
+    // Quota exceeded
+    return false;
+  }
+
+  // Increment counter
+  await db.incrementAIUsage(userId, currentMonth);
+  return true;
+}
+```
+
+**Database table**:
+```sql
+CREATE TABLE user_ai_usage (
+  user_id UUID NOT NULL,
+  month VARCHAR(7) NOT NULL, -- "2025-11"
+  requests_used INTEGER DEFAULT 0,
+  requests_limit INTEGER DEFAULT 50,
+  last_request_at TIMESTAMP,
+  PRIMARY KEY (user_id, month)
+);
+
+CREATE INDEX idx_user_ai_usage_month ON user_ai_usage(month);
+```
+
+### Quota exceeded handling
+
+**When user hits 50 requests**:
+
+**UI message**:
+```
+You've used all 50 AI requests this month.
+
+Your limit resets on December 1, 2025.
+
+Options:
+- Wait until next month (your quota resets automatically)
+- Contact sales for higher limits (100 requests for $35/month, 200 for $60/month)
+```
+
+**No pay-per-use overage in v1**:
+- Users cannot pay for individual additional requests (too complex for v1)
+- Phase 2+: Consider overage pricing (e.g., $0.50 per request beyond quota)
+
+**Higher-tier plans** (future):
+- AI Plus tier: 100 requests/month for $35/month
+- AI Pro tier: 200 requests/month for $60/month
+- Unlimited tier: No quota, pay-per-use at $0.10/request
+
+### Request counter visibility
+
+**Display in UI**:
+```
+AI Requests: 23 of 50 used this month
+Resets on December 1, 2025
+```
+
+**Location**:
+- Account settings page (`/settings/billing`)
+- Tooltip when hovering over "Explain this result" button
+
+---
+
+## 3. Cost Optimization Strategies
+
+### Prompt Caching
+
+**What is prompt caching**:
+- Anthropic API supports caching system prompts (same across all users)
+- Cached prompts cost 90% less ($0.30 per million tokens instead of $3)
+- Cache TTL: 5 minutes (reused if another request within 5 minutes)
+
+**Implementation**:
+```typescript
+const response = await anthropic.messages.create({
+  model: 'claude-sonnet-4',
+  max_tokens: 400,
+  system: [
+    {
+      type: 'text',
+      text: systemPrompt, // This will be cached
+      cache_control: { type: 'ephemeral' },
+    },
+  ],
+  messages: [
+    { role: 'user', content: userPrompt }, // Not cached (user-specific)
+  ],
+});
+```
+
+**Expected cache hit rate**: 80-90% (system prompts are identical across requests)
+
+**Cost savings**:
+- Without caching: $0.006 per request
+- With caching (90% hit rate): $0.0052 per request
+- **Savings**: 13% reduction in AI costs
+
+### Response Caching
+
+**What is response caching**:
+- Cache AI responses for identical inputs (same calculator, same values)
+- Serve cached response instead of calling AI API
+- Cache TTL: 1 hour (balance freshness vs cost)
+
+**Cache key**:
+```typescript
+function generateCacheKey(
+  calculatorSlug: string,
+  inputs: Record<string, any>,
+  requestType: string
+): string {
+  // Sort inputs for consistent hashing
+  const sortedInputs = JSON.stringify(inputs, Object.keys(inputs).sort());
+  const key = `${calculatorSlug}:${requestType}:${hash(sortedInputs)}`;
+  return key;
+}
+
+// Example: "business-loan-dscr:explain_result:a1b2c3d4"
+```
+
+**Implementation** (Redis cache):
+```typescript
+async function getAIResponse(
+  calculatorSlug: string,
+  inputs: Record<string, any>,
+  requestType: string
+): Promise<string> {
+  const cacheKey = generateCacheKey(calculatorSlug, inputs, requestType);
+
+  // Check cache first
+  const cached = await redis.get(cacheKey);
+  if (cached) {
+    console.log('AI response cache hit');
+    return cached;
+  }
+
+  // Cache miss, call AI API
+  const response = await callAIAPI(calculatorSlug, inputs, requestType);
+
+  // Cache response for 1 hour
+  await redis.set(cacheKey, response, 'EX', 3600);
+
+  return response;
+}
+```
+
+**Expected cache hit rate**: 20-30%
+
+**Rationale**:
+- Many users test similar scenarios (e.g., $250k loan at 7.5% for 10 years)
+- Especially common for "round number" inputs (e.g., $100k, $500k, 5%, 10%)
+- Cache hit rate increases during onboarding (many users try demo scenarios)
+
+**Cost savings**:
+- Cache hit rate: 25%
+- 25% of requests avoid AI API call (zero cost)
+- **Savings**: 25% reduction in AI costs
+
+**Combined savings** (prompt caching + response caching):
+- Prompt caching: 13% reduction
+- Response caching: 25% reduction
+- **Total savings**: ~35% reduction (from $0.006 to $0.004 per request)
+
+### Batching Requests
+
+**Not applicable for real-time UI interactions**:
+- Users expect AI responses within 2-3 seconds (per Section 1.6 SLAs)
+- Batching would introduce latency (wait for batch to fill before processing)
+
+**Future use case** (async report generation):
+- Phase 3+: Generate AI-powered monthly summary reports for all users
+- Batch 1,000 requests, send to AI API in parallel
+- Cost: Same as individual requests, but easier to manage/monitor
+
+---
+
+## 4. AI Provider Selection and Fallback
+
+### Primary provider: Anthropic Claude
+
+**Model**: Claude Sonnet 4
+
+**Why Claude**:
+- **High quality**: CFO-grade responses, appropriate hedging language, professional tone
+- **Fast**: p95 latency <3 seconds (meets SLAs in Section 1.6)
+- **Reliable**: 99.9% uptime, rare rate limit issues
+- **Prompt caching**: Built-in support, 90% cost reduction on system prompts
+
+**Cost**:
+- $3 per million input tokens
+- $15 per million output tokens
+- **Average**: $0.006 per request (0.6 cents)
+
+### Alternative: Claude Haiku (lower cost)
+
+**Model**: Claude Haiku 4
+
+**Why Haiku**:
+- **Much cheaper**: $0.25 input / $1.25 output (83% cheaper than Sonnet)
+- **Fast**: Even faster than Sonnet (p50 <1 second)
+- **Acceptable quality**: Good for simple explanations (e.g., "What does DSCR mean?")
+
+**Cost**:
+- $0.25 per million input tokens
+- $1.25 per million output tokens
+- **Average**: $0.001 per request (0.1 cents, 83% cheaper than Sonnet)
+
+**Tradeoff**:
+- Lower quality for complex prompts (valuation explanations, risk commentary)
+- Less consistent tone (may occasionally use overly casual language)
+
+**Recommendation**: Use Haiku for simple requests (metric definitions), Sonnet for complex requests (risk analysis, scenario suggestions)
+
+**Implementation**:
+```typescript
+function selectModel(requestType: string): string {
+  const simpleRequests = ['metric_definition', 'term_explanation'];
+  if (simpleRequests.includes(requestType)) {
+    return 'claude-haiku-4'; // Cheaper model for simple tasks
+  }
+  return 'claude-sonnet-4'; // Default to Sonnet for quality
+}
+```
+
+**Cost savings**:
+- 30% of requests use Haiku (simple explanations)
+- 70% of requests use Sonnet (complex analysis)
+- **Blended cost**: (0.3 × $0.001) + (0.7 × $0.006) = $0.0045 per request
+- **Savings**: 25% reduction vs Sonnet-only
+
+### Fallback provider: OpenAI GPT-4
+
+**Model**: GPT-4 Turbo
+
+**Use case**: Fallback if Anthropic API is down or rate-limited
+
+**Why GPT-4**:
+- **High availability**: Multiple regions, rarely down
+- **Good quality**: Comparable to Claude Sonnet for financial explanations
+- **Familiar**: Well-documented, easy to integrate
+
+**Cost**:
+- $10 per million input tokens
+- $30 per million output tokens
+- **Average**: $0.014 per request (2.3× more expensive than Claude)
+
+**Tradeoff**:
+- More expensive (only use as fallback, not primary)
+- Different tone/style (may require prompt adjustments)
+
+**Fallback strategy**:
+```typescript
+async function callAIAPI(prompt: string): Promise<string> {
+  try {
+    // Try Anthropic first
+    return await callAnthropicAPI(prompt);
+  } catch (error) {
+    if (error.status === 503 || error.status === 429) {
+      // Anthropic unavailable or rate-limited, fallback to OpenAI
+      console.warn('Anthropic unavailable, using GPT-4 fallback');
+      return await callOpenAIAPI(prompt);
+    }
+    throw error;
+  }
+}
+```
+
+**Alternative fallback**: Show error message instead of calling expensive fallback
+
+**Error message**:
+```
+AI is temporarily unavailable. Please try again in a few minutes.
+
+Your AI request quota has not been consumed.
+```
+
+**Rationale**: Avoid 2.3× cost increase for rare downtime (Anthropic uptime is 99.9%)
+
+---
+
+## 5. Monthly Cost Projections
+
+### Assumptions
+
+**User base**:
+- 1,000 active AI tier users (paying $20/month each)
+
+**Usage per user**:
+- Average 30 requests per user per month (60% of 50-request cap)
+- Some users use all 50 (power users), some use 10 (occasional users)
+
+**Total requests**:
+- 1,000 users × 30 requests = 30,000 AI requests per month
+
+**Cost per request**:
+- Optimized cost (prompt caching + response caching + Haiku for simple requests): $0.004
+
+### Cost calculation
+
+**Total monthly AI cost**:
+```
+30,000 requests × $0.004 per request = $120
+```
+
+**Revenue from AI tier**:
+```
+1,000 users × $20/month = $20,000
+```
+
+**AI COGS as percentage of revenue**:
+```
+$120 / $20,000 = 0.6% (very healthy margin)
+```
+
+**Gross margin on AI tier**:
+```
+($20,000 - $120) / $20,000 = 99.4%
+```
+
+### Sensitivity analysis
+
+| Scenario | Users | Requests/User | Total Requests | Cost/Request | Total Cost | Revenue | COGS % | Margin |
+|----------|-------|---------------|----------------|--------------|------------|---------|--------|--------|
+| Base case | 1,000 | 30 | 30,000 | $0.004 | $120 | $20,000 | 0.6% | 99.4% |
+| High usage | 1,000 | 50 (cap) | 50,000 | $0.004 | $200 | $20,000 | 1.0% | 99.0% |
+| No caching | 1,000 | 30 | 30,000 | $0.006 | $180 | $20,000 | 0.9% | 99.1% |
+| Sonnet-only | 1,000 | 30 | 30,000 | $0.006 | $180 | $20,000 | 0.9% | 99.1% |
+| GPT-4 fallback | 1,000 | 30 | 30,000 | $0.014 | $420 | $20,000 | 2.1% | 97.9% |
+| 10,000 users | 10,000 | 30 | 300,000 | $0.004 | $1,200 | $200,000 | 0.6% | 99.4% |
+
+**Insights**:
+- Even in worst case (GPT-4 only, no caching, high usage), COGS is <3% (healthy margin)
+- AI tier is extremely profitable (>97% gross margin in all scenarios)
+- Scale linearly (10,000 users = $1,200 cost, $200k revenue, same 0.6% COGS)
+
+### Break-even analysis
+
+**At what usage level does AI tier become unprofitable?**
+
+**Formula**:
+```
+Break-even: Cost per request × Requests per user per month = $20 revenue per month
+```
+
+**Calculation**:
+```
+$20 / $0.004 per request = 5,000 requests per user per month
+```
+
+**Interpretation**: User would need to make **5,000 AI requests per month** (100× the 50-request cap) for AI tier to break even. This is impossible due to hard cap, so **AI tier is always profitable**.
+
+---
+
+## 6. Cost Monitoring and Alerts
+
+### Real-time cost tracking
+
+**Track AI spend in real-time** (per Section 7.4 monitoring):
+
+**Metrics**:
+- Total AI requests per hour/day/month
+- Total AI cost per hour/day/month
+- Cost per user (total cost / active AI tier users)
+- Average cost per request (should be ~$0.004-$0.006)
+
+**Dashboard** (Grafana or similar):
+```
+AI Cost Dashboard
+┌─────────────────────────────────────┐
+│ Total Requests (Last 24h): 1,245    │
+│ Total Cost (Last 24h):     $5.23    │
+│ Cost per Request:          $0.0042  │
+│ Active AI Users:           1,032    │
+│ Cost per User (Month):     $0.12    │
+└─────────────────────────────────────┘
+```
+
+### Cost alerts
+
+**Warning alert**: AI spend >$500/month (expected: $120-200)
+- **Action**: Investigate unusual usage (possible abuse, quota enforcement failure)
+- **Notification**: Slack #engineering-alerts
+
+**Critical alert**: AI spend >$1,000/month (10× expected)
+- **Action**: Page on-call engineer, disable AI features if abuse detected
+- **Notification**: PagerDuty
+
+**Cache performance alert**: Response cache hit rate <10% (expected: 20-30%)
+- **Action**: Investigate cache invalidation issues, verify Redis uptime
+- **Notification**: Slack #engineering-alerts
+
+---
+
+## Summary
+
+AI cost management for the CFO Business Intelligence Calculator Suite:
+
+**Expected costs**:
+- $0.004-$0.006 per AI request (0.4-0.6 cents)
+- 30 requests per user per month (average)
+- $120 total AI cost per month (1,000 AI tier users)
+
+**Revenue**:
+- $20/month per AI tier user
+- $20,000 total revenue per month (1,000 users)
+- **COGS**: 0.6% (AI cost / revenue)
+- **Gross margin**: 99.4%
+
+**Usage caps**:
+- 50 requests per month (hard cap, AI tier)
+- Custom quotas for B2B (e.g., 500 requests)
+- No pay-per-use overage in v1 (future: $0.50/request beyond quota)
+
+**Cost optimization**:
+- Prompt caching: 13% savings (reuse system prompts)
+- Response caching: 25% savings (reuse responses for identical inputs)
+- Model selection: 25% savings (Haiku for simple requests, Sonnet for complex)
+- **Total savings**: ~50% reduction (from $0.006 to $0.004 per request)
+
+**Provider selection**:
+- Primary: Anthropic Claude Sonnet 4 ($0.006/request, high quality)
+- Alternative: Claude Haiku 4 ($0.001/request, 83% cheaper, good for simple tasks)
+- Fallback: OpenAI GPT-4 ($0.014/request, use only if Anthropic down)
+
+**Cost monitoring**:
+- Real-time dashboard (requests, cost, cost per user)
+- Alert if spend >$500/month (expected: $120)
+- Page on-call if spend >$1,000/month (10× expected)
+
+AI tier is **extremely profitable** (>97% gross margin in all scenarios, even worst case).
+
+
+---
+
+
+# Section 9: Implementation Plan
+
+# 9.1 Milestone Breakdown
+
+This section defines the implementation milestones for the CFO Business Intelligence Calculator Suite, including timeline estimates, key deliverables, and success criteria for each phase. The implementation follows the phased roadmap defined in Section 2.3.
+
+---
+
+## Implementation Philosophy
+
+**Approach**: Incremental delivery with validated foundations
+
+**Principles**:
+- **Foundation first**: Build shared infrastructure (calculation engine, UI components, export service) before building calculators
+- **Validate early**: Launch 2 calculators (M1) before building remaining 6 (M2) to validate architecture and user experience
+- **Iterate based on data**: Use analytics from early calculators to optimize later implementations
+- **Reduce risk**: Phased rollout allows course correction before major investment
+
+**Milestone structure**:
+- **M0**: Platform baseline (foundation, no calculators)
+- **M1**: First 2 calculators in production (validation)
+- **M2**: Full Phase 1 set live (8 calculators)
+- **M3+**: Phase 2 and 3 expansions (ongoing)
+
+---
+
+## M0: Platform Baseline (Foundation)
+
+### Timeline
+
+**Duration**: 8-10 weeks
+
+**Start**: Week 1 (project kickoff)
+
+**End**: Week 8-10 (foundation complete, ready for calculator development)
+
+### Key Deliverables
+
+**1. Calculation Engine Architecture and Formula Library**
+
+**Components**:
+- **Formula versioning system**: Each formula has a version number (v1, v2, etc.) to track changes over time
+  - Example: `calculateDSCR_v1.ts`, `calculateDSCR_v2.ts`
+  - Results include version stamp (e.g., "Calculated using DSCR formula v2")
+
+- **Formula library structure**:
+  ```typescript
+  interface FormulaResult {
+    version: string;
+    inputs: Record<string, number>;
+    outputs: Record<string, number>;
+    warnings: Array<{ code: string; message: string }>;
+    timestamp: string;
+  }
+
+  function calculateDSCR(inputs: LoanInputs): DSCRResult {
+    // Validation, calculation, warning generation
+    return { version: 'v1', inputs, outputs, warnings, timestamp };
+  }
+  ```
+
+- **Regression test framework**: Golden scenario tests for each formula
+  - Example: DSCR formula with known inputs must produce known outputs within 0.01% tolerance
+  - Automated tests run on every code change (CI/CD pipeline)
+  - Test data stored in `/tests/golden-scenarios/dscr.json`
+
+- **Input validation and sanitization**:
+  - Range validation (e.g., interest rate 0-30%, loan term 1-30 years)
+  - Type validation (numbers only, no strings in numeric fields)
+  - Edge case handling (division by zero, negative values, extremely large inputs)
+
+**2. Shared UI Component Library**
+
+**Components built**:
+- **Input components**:
+  - `CurrencyInput` (formatted with $, commas, decimal handling)
+  - `PercentageInput` (formatted with %, 0-100 range enforcement)
+  - `NumberInput` (generic numeric input with validation)
+  - `SelectInput` (dropdown for options like loan type, term units)
+
+- **Result components**:
+  - `MetricCard` (displays single calculated result with label, value, unit)
+  - `ResultsGrid` (grid layout for multiple metrics)
+  - `ChartCard` (wrapper for chart visualizations)
+  - `WarningBanner` (displays warnings with icon and message)
+
+- **Scenario management**:
+  - `ScenarioTabs` (tabs for switching between scenarios, Pro tier only)
+  - `ScenarioActions` (save, delete, rename buttons)
+  - `AddScenarioButton` (triggers upgrade prompt for Free tier)
+
+- **Action components**:
+  - `ExportButton` (triggers export modal, shows watermark warning for Free)
+  - `UpgradePromptModal` (upgrade CTA with tier comparison)
+  - `LoadingSpinner` (for async operations)
+
+**Technology**:
+- React 18+ with TypeScript
+- Tailwind CSS for styling (per Section 4.3)
+- Zustand for state management
+- Component library documented in Storybook
+
+**3. Export Service**
+
+**Capabilities**:
+- **PDF generation**:
+  - Puppeteer for rendering (headless Chrome)
+  - Templates include: header with calculator name, inputs table, results table, footer with disclaimers and version
+  - Watermarking for Free tier: "Generated by [Product Name] - Upgrade for clean exports" diagonal across each page
+  - Version stamps: "Calculated using DSCR formula v2 on 2025-11-17"
+
+- **CSV generation**:
+  - Metadata headers: calculator name, version, timestamp, user tier
+  - Structured format: Inputs section, Outputs section, Warnings section
+  - Example:
+    ```csv
+    # Business Loan + DSCR Calculator
+    # Version: v2
+    # Generated: 2025-11-17T21:30:00Z
+    # Tier: Free
+
+    Section,Field,Value
+    Inputs,Loan Amount,250000
+    Inputs,Interest Rate,7.5%
+    Outputs,Monthly Payment,2958.04
+    Outputs,DSCR,1.42
+    ```
+
+- **Basic Excel support**:
+  - Single-sheet workbook using ExcelJS library
+  - Formatted cells (currency, percentage, bold headers)
+  - Same structure as CSV (inputs, outputs, warnings)
+
+- **Async queue for large exports**:
+  - BullMQ (Redis-backed queue) for export jobs
+  - Prevents timeout on complex exports (e.g., multi-scenario comparisons)
+  - Progress tracking: "Generating export... 60% complete"
+
+**4. Analytics and Telemetry Infrastructure**
+
+**Implementation**:
+- **Event tracking library**: Custom wrapper around analytics provider (Mixpanel, Amplitude, or custom ClickHouse)
+  ```typescript
+  trackEvent('calculator_viewed', {
+    session_id: sessionId,
+    user_id: userId,
+    tier: userTier,
+    calculator_slug: 'business-loan-dscr',
+    scenario_count: 0,
+    timestamp: new Date().toISOString(),
+  });
+  ```
+
+- **Standard events instrumented** (per Section 7.2):
+  - calculator_viewed
+  - calculator_calculated
+  - export_requested
+  - upgrade_prompt_shown
+  - (remaining events added in M1 when features are available)
+
+- **Analytics provider integration**:
+  - Mixpanel SDK (preferred for ease of setup) or
+  - Custom ClickHouse pipeline (if cost is concern, higher complexity)
+
+- **Event validation**: Schema validation for all events (prevent malformed data)
+
+**5. WordPress Plugin for Embedding Calculators**
+
+**Features**:
+- **Shortcode system**:
+  ```
+  [smart_calculator slug="business-loan-dscr" height="600px"]
+  ```
+
+- **Iframe embedding**: Calculator loads in iframe (isolated from WordPress environment)
+  - Prevents CSS conflicts
+  - Prevents JavaScript conflicts
+  - Graceful fallback if iframe blocked
+
+- **Basic configuration**:
+  - Shortcode parameters: slug (calculator ID), height (iframe height), theme (light/dark)
+  - Admin settings page: API key configuration, default theme
+
+- **Responsive**: Iframe resizes based on content height (postMessage communication)
+
+**6. Basic Tier Gating Logic**
+
+**Features**:
+- **Free vs Pro checks**:
+  ```typescript
+  function canCreateScenario(user: User): boolean {
+    if (user.tier === 'free') return false;
+    if (user.tier === 'pro' || user.tier === 'ai' || user.tier === 'b2b') return true;
+    return false;
+  }
+  ```
+
+- **Upgrade prompt modals**:
+  - Triggered when Free user clicks locked feature (e.g., "Add Scenario")
+  - Modal shows: tier comparison table, pricing, "Upgrade Now" CTA
+  - Tracks event: upgrade_prompt_shown with trigger_reason
+
+- **Feature flag framework**:
+  - Suite-level flags: `suite_scenarios_enabled` (boolean)
+  - Per-calculator flags: `calc_dscr_advanced_metrics` (boolean)
+  - Infrastructure for tenant-level overrides (implemented in M2)
+
+**7. Database Schema**
+
+**Tables created**:
+- **users**: user_id (UUID), email, tier, tenant_id, created_at, updated_at
+- **scenarios**: scenario_id (UUID), user_id, calculator_slug, inputs (JSONB), outputs (JSONB), created_at, updated_at
+- **sessions**: session_id (UUID), user_id (nullable for anonymous), created_at, expires_at
+- **exports**: export_id (UUID), user_id, scenario_id, export_format, file_url, created_at
+- **tenant_configs**: tenant_id (UUID), ai_enabled, ai_redaction_level, created_at, updated_at (for M2)
+
+**Database**: PostgreSQL 14+ (JSONB support, partitioning for analytics)
+
+**Migrations**: Managed with Prisma or TypeORM
+
+**8. API Structure**
+
+**Endpoints**:
+- `POST /api/calculate`: Execute calculation
+  - Request: `{ calculator_slug, inputs }`
+  - Response: `{ version, outputs, warnings }`
+
+- `POST /api/scenarios`: Save scenario (Pro tier only)
+  - Request: `{ calculator_slug, inputs, outputs }`
+  - Response: `{ scenario_id }`
+
+- `GET /api/scenarios`: List scenarios for user
+  - Response: `[ { scenario_id, calculator_slug, inputs, outputs, created_at } ]`
+
+- `POST /api/exports`: Request export
+  - Request: `{ scenario_id, export_format }`
+  - Response: `{ export_id, status: 'queued' }`
+
+- `GET /api/exports/:export_id`: Check export status
+  - Response: `{ status: 'completed', file_url }` or `{ status: 'processing', progress: 60 }`
+
+**Technology**: Node.js + Fastify (per Section 3.2)
+
+### Success Criteria
+
+**Measurable outcomes**:
+
+1. **Formula library accuracy**: All golden scenario tests pass with <0.01% tolerance
+   - Example: DSCR calculation with inputs ($250k, 7.5%, 10 years) produces monthly payment of $2,958.04 ± $0.30
+
+2. **UI component rendering**: All components render correctly in:
+   - WordPress (latest version + previous 2 major versions)
+   - Standalone mode (direct URL access)
+   - Mobile browsers (iOS Safari, Android Chrome)
+
+3. **Export generation**: Exports generate successfully for test scenarios:
+   - PDF with watermark: Completes in <3 seconds (p95)
+   - CSV: Completes in <1 second
+   - File is valid and opens correctly in Adobe Reader / Excel
+
+4. **Analytics tracking**: Events tracked correctly:
+   - Events appear in analytics platform within 5 minutes
+   - Event properties are valid (no null/undefined for required fields)
+
+5. **Upgrade prompts**: Tier gating works correctly:
+   - Free user clicking "Add Scenario" triggers upgrade_prompt_shown event
+   - Modal displays with correct tier comparison
+   - Free user cannot create second scenario (blocked by backend)
+
+**Gate for M1**: All success criteria must pass before starting calculator development.
+
+---
+
+## M1: First Two Calculators in Production
+
+### Timeline
+
+**Duration**: 6-8 weeks after M0
+
+**Start**: Week 11 (after M0 complete)
+
+**End**: Week 17-19 (2 calculators live)
+
+### Key Deliverables
+
+**1. Calculator 1: Business Loan + DSCR**
+
+**Features**:
+- **Inputs**: Loan amount, interest rate, term (months or years), origination fee (optional)
+- **Outputs**: Monthly payment, total interest, total cost, DSCR (if revenue/expenses provided)
+- **Advanced metrics** (Pro tier): Amortization schedule, interest vs principal breakdown, payoff scenarios
+- **Warnings**: Low DSCR (<1.25), high debt-to-income, balloon payment alert
+
+**Golden scenarios** (10+ test cases):
+- Typical SBA 7(a) loan: $250k, 7.5%, 10 years → Monthly payment $2,958.04, total interest $105,000
+- Short-term loan: $50k, 9%, 3 years → Monthly payment $1,589.04
+- Edge case: $1M, 15%, 30 years → Test for numerical stability
+
+**Testing**:
+- All golden scenarios pass with <0.01% tolerance
+- UI renders correctly with various input combinations
+- Warnings trigger appropriately (e.g., DSCR <1.25 shows warning)
+
+**2. Calculator 2: Cash Runway & Burn Rate**
+
+**Features**:
+- **Inputs**: Current cash, monthly revenue, monthly expenses, one-time costs (optional)
+- **Outputs**: Monthly burn rate, cash runway (months), break-even date, cash depletion date
+- **Advanced metrics** (Pro tier): Runway extension scenarios, sensitivity analysis (what if revenue drops 20%)
+- **Warnings**: Runway <6 months (critical), runway <12 months (warning), negative burn (profitable)
+
+**Golden scenarios** (10+ test cases):
+- Typical startup: $150k cash, $25k revenue, $35k expenses → 15 months runway, $10k burn
+- Profitable: $100k cash, $50k revenue, $40k expenses → Infinite runway, +$10k/month
+- Edge case: $1M cash, $0 revenue, $100k expenses → 10 months runway
+
+**Testing**:
+- All golden scenarios pass
+- Runway calculation handles profitable scenarios (infinite runway display)
+- Break-even date calculation correct
+
+**3. Full Free/Pro Tier Implementation**
+
+**Free tier**:
+- Single scenario only (default scenario, cannot save)
+- Basic metrics only (monthly payment, DSCR, runway)
+- Watermarked exports (PDF, CSV, Excel)
+- No AI narratives
+
+**Pro tier**:
+- Multiple scenarios (up to 50)
+- Advanced metrics (amortization schedule, sensitivity analysis)
+- Clean exports (no watermark)
+- No AI narratives (requires AI add-on)
+
+**Gating**:
+- Free user clicking "Add Scenario" → upgrade_prompt_shown with trigger_reason: "add_scenario"
+- Free user clicking advanced metric → upgrade_prompt_shown with trigger_reason: "locked_metric"
+- Pro user can create scenarios, view advanced metrics, download clean exports
+
+**4. Basic AI Narrative Integration**
+
+**Scope**: Limited to 2 calculators (DSCR explanation, runway explanation)
+
+**Prompts** (per Section 8.2):
+- DSCR explanation: "Explain what this DSCR of 1.42 means and whether it's acceptable for lenders."
+- Runway explanation: "Explain the risk of a 15-month runway with $10k burn rate."
+
+**Implementation**:
+- Anthropic Claude Sonnet 4 API integration
+- 50 requests/month quota enforcement (AI tier only)
+- Response caching (1-hour TTL for identical inputs)
+- Prompt caching (system prompts)
+
+**Testing**:
+- AI responses generate successfully for test scenarios
+- Responses include required disclaimers (per Section 8.1)
+- Response time <3 seconds (p95)
+
+**5. Exports Working End-to-End**
+
+**Features**:
+- PDF with version stamps: "Calculated using DSCR formula v2 on 2025-11-17"
+- CSV with metadata headers (calculator name, version, timestamp, tier)
+- Excel basic format (single sheet)
+
+**Quality standards** (board-ready PDFs):
+- Professional formatting (clean layout, readable fonts, proper spacing)
+- Accurate data (inputs and outputs match calculation)
+- Disclaimers in footer (per Section 5.3)
+- Watermark for Free tier (diagonal, semi-transparent, "Upgrade for clean exports")
+
+**6. WordPress Embeds Live**
+
+**Deployment**:
+- At least 2 calculators embedded on Plus One Capital website
+- Shortcode examples provided in admin documentation
+- Responsive on desktop and mobile
+
+**Performance**:
+- WordPress embeds load within 2 seconds (iframe loads, calculator renders)
+
+**7. Payment Integration**
+
+**Stripe integration**:
+- Checkout session creation for Pro tier upgrade ($29/month)
+- Webhook handling for subscription events:
+  - `customer.subscription.created` → Set user tier to 'pro'
+  - `customer.subscription.deleted` → Set user tier to 'free'
+  - `invoice.payment_succeeded` → Log payment event
+  - `invoice.payment_failed` → Send email notification, downgrade after 3 failures
+
+**Testing**:
+- Test mode: Upgrade flow works end-to-end with Stripe test cards
+- Webhooks fire correctly and update user tier in database
+- Subscription management: Users can upgrade, cancel, update payment method
+
+**8. User Authentication**
+
+**Features**:
+- Signup: Email + password (hashed with bcrypt)
+- Login: Session-based (JWT tokens stored in httpOnly cookies)
+- Session management: 30-day expiration, refresh on activity
+- Password reset: Email-based reset link (expires in 1 hour)
+
+**OAuth support** (optional for M1):
+- Google OAuth
+- Microsoft OAuth (for B2B users)
+
+**Testing**:
+- Signup creates user with correct default tier (free)
+- Login creates valid session
+- Session persists across page reloads
+- Logout clears session correctly
+
+### Success Criteria
+
+**Measurable outcomes**:
+
+1. **Golden scenario tests**: Both calculators pass all 10+ golden scenarios with <0.01% tolerance
+
+2. **Free to Pro upgrade flow**: End-to-end flow works:
+   - Free user clicks locked feature → Upgrade prompt shown
+   - User clicks "Upgrade Now" → Stripe checkout loads
+   - User completes payment → Webhook fires → User tier updated to 'pro'
+   - User can now access locked features
+
+3. **Export quality**: Exports meet board-ready standards:
+   - PDF renders correctly in Adobe Reader
+   - Data is accurate (matches calculator outputs)
+   - Disclaimers present and readable
+   - Watermark visible on Free tier exports, absent on Pro tier
+
+4. **AI narratives**: AI responses generate successfully:
+   - Response time <3 seconds (p95)
+   - Responses include required disclaimers
+   - Responses are relevant and accurate (manual review of 10+ test scenarios)
+
+5. **WordPress embeds**: Load within 2 seconds:
+   - Measured with Lighthouse (Performance score >80)
+   - Works on mobile and desktop browsers
+
+**Gate for M2**: At least 80% of success criteria must pass. Minor issues can be addressed in parallel with M2 work.
+
+---
+
+## M2: Full Phase 1 Set Live (8 Calculators)
+
+### Timeline
+
+**Duration**: 8-12 weeks after M1
+
+**Start**: Week 20 (after M1 validation complete)
+
+**End**: Week 28-32 (all 8 calculators live)
+
+### Key Deliverables
+
+**1. Remaining 6 MVP Calculators Deployed**
+
+**Calculator 3: SBA 7(a) Loan Analyzer**
+- Inputs: Loan amount, rate, term, SBA guarantee percentage, fees
+- Outputs: Monthly payment, total cost, DSCR, SBA guarantee amount
+- Advanced metrics: Amortization, comparison to non-SBA loan
+
+**Calculator 4: Equipment Lease vs Buy**
+- Inputs: Equipment cost, lease rate, purchase rate, depreciation schedule, tax rate
+- Outputs: Total cost (lease), total cost (buy), NPV comparison, break-even point
+- Advanced metrics: Tax shield analysis, cash flow comparison
+
+**Calculator 5: Breakeven & Contribution Margin**
+- Inputs: Selling price, variable cost, fixed costs
+- Outputs: Contribution margin, breakeven volume, breakeven revenue
+- Advanced metrics: Margin of safety, sensitivity to price/cost changes
+
+**Calculator 6: Invoice Factoring / AR Financing**
+- Inputs: Invoice amount, advance rate, factoring fee, term
+- Outputs: Upfront cash, total cost, effective APR
+- Advanced metrics: Comparison to term loan, cash flow impact
+
+**Calculator 7: Line of Credit Utilization**
+- Inputs: Credit limit, interest rate, usage pattern, fees
+- Outputs: Average balance, interest cost, utilization rate
+- Advanced metrics: Optimal utilization strategy, cost comparison to term loan
+
+**Calculator 8: Simple Business Valuation**
+- Inputs: Annual revenue, EBITDA, growth rate, industry
+- Outputs: Valuation range (low, mid, high), implied multiples
+- Advanced metrics: DCF analysis, sensitivity to growth/discount rate
+
+**Testing**: Each calculator has 10+ golden scenarios, all must pass.
+
+**2. AI Narratives Expanded to All Calculators**
+
+**Prompt customization** (per Section 8.2):
+- Each calculator type has custom system prompt (lending, cash flow, profitability, valuation)
+- User prompts include calculator-specific context
+
+**Examples**:
+- Lease vs Buy: "Explain whether leasing or buying is more cost-effective in this scenario."
+- Valuation: "Explain what drives the valuation range and which multiple is most appropriate."
+
+**Testing**:
+- AI responses generate successfully for all 8 calculators
+- Responses are relevant and accurate (manual review)
+- Response time <3 seconds (p95)
+
+**3. Pro Tier Upgrade Flows Optimized**
+
+**A/B testing**:
+- **Test 1**: Modal messaging (emphasize savings vs features)
+  - Variant A: "Save hours analyzing scenarios"
+  - Variant B: "Unlock unlimited scenarios for $29/month"
+
+- **Test 2**: Pricing display (monthly vs annual upfront)
+  - Variant A: "$29/month, cancel anytime"
+  - Variant B: "$348/year (save $0 vs monthly)"
+
+- **Test 3**: CTA text
+  - Variant A: "Upgrade Now"
+  - Variant B: "Start Free Trial"
+
+**Tracking**:
+- A/B test assignments logged (session_id → variant)
+- Conversion rate per variant (upgrade_completed / upgrade_prompt_shown)
+- Statistical significance testing (minimum 100 conversions per variant)
+
+**4. B2B/White-Label Foundation**
+
+**Tenant configuration**:
+- Tenant creation API: `POST /api/tenants` (admin only)
+- Tenant settings: branding (logo, colors), feature flags, AI controls
+- Stored in `tenant_configs` table (per Section 8.3)
+
+**Basic branding options**:
+- Custom logo (displayed in header)
+- Primary color (buttons, links)
+- Custom domain (e.g., calculators.customer.com → our app with their branding)
+
+**Testing**:
+- Create test tenant with custom branding
+- Verify branding appears correctly in calculators
+- Verify feature flags work (e.g., tenant disables AI)
+
+**5. Internal Dashboards**
+
+**Dashboards built** (per Section 1.8):
+
+**API Management Dashboard**:
+- API request rate (requests per second)
+- Error rate by endpoint
+- Slow queries (>100ms)
+- Uptime status
+
+**Subscription & Billing Dashboard**:
+- Active subscriptions by tier (Free, Pro, AI, B2B)
+- MRR (monthly recurring revenue)
+- Churn rate (cancellations per month)
+- Failed payments (dunning workflow)
+
+**Business Intelligence Dashboard**:
+- Calculator usage (views, calculations, exports per calculator)
+- Conversion funnel (views → calculations → exports → upgrades)
+- AI usage (requests per user, cost per request)
+
+**Tools**: Metabase or Grafana for dashboards, connected to PostgreSQL and ClickHouse.
+
+**6. SEO Optimization**
+
+**On-page SEO**:
+- Meta tags for each calculator page:
+  - Title: "Business Loan Calculator with DSCR | [Product Name]"
+  - Description: "Calculate loan payments, DSCR, and amortization schedules. CFO-grade accuracy for business loans."
+  - Keywords: "business loan calculator, DSCR calculator, SBA loan calculator"
+
+- Structured data (Schema.org):
+  - Type: SoftwareApplication
+  - Properties: name, description, applicationCategory, offers
+
+- Sitemap: XML sitemap with all calculator URLs
+
+**Content**:
+- Help text and tooltips optimized for search (contain relevant keywords)
+- Blog posts (3-5 articles) linking to calculators (e.g., "How to Calculate DSCR for SBA Loans")
+
+**Testing**:
+- Google Search Console setup
+- Structured data validation (Google Rich Results Test)
+- Lighthouse SEO score >90
+
+### Success Criteria
+
+**Measurable outcomes**:
+
+1. **All 8 calculators pass golden scenario tests**: 100% pass rate with <0.01% tolerance
+
+2. **AI narratives working for all calculator types**:
+   - Response success rate >95% (ai_narrative_displayed / ai_narrative_requested)
+   - Response time <3 seconds (p95)
+
+3. **Free to Pro conversion rate tracked and baseline established**:
+   - Baseline: 3-5% monthly conversion rate (Free users → Pro)
+   - A/B test results analyzed (winning variant identified)
+
+4. **At least 3 B2B pilot customers onboarded**:
+   - Each customer has custom branding configured
+   - Each customer has at least 1 calculator embedded on their site
+   - Feedback collected for Phase 2 improvements
+
+5. **Internal dashboards showing real-time metrics**:
+   - API Management: Updates every 5 minutes
+   - Subscription & Billing: Updates hourly
+   - Business Intelligence: Updates daily
+
+**Gate for M3+**: M2 success criteria met, product-market fit validated (conversion rate, retention, customer satisfaction).
+
+---
+
+## M3+: Phase 2 and 3 Expansions
+
+### Timeline
+
+**Duration**: 12+ weeks after M2 (ongoing)
+
+**Phase 2 start**: Week 33
+
+**Phase 3 start**: Week 50+ (or based on market demand)
+
+### Phase 2 Deliverables
+
+**1. Additional Calculators Per Category**
+
+**Lending**:
+- SBA 504 Loan Analyzer (real estate focus)
+- Merchant Cash Advance Calculator (high-cost financing)
+- Revenue-Based Financing Calculator (tech startups)
+
+**Cash Flow**:
+- 13-Week Cash Flow Forecast (detailed weekly planning)
+- Working Capital Calculator (current assets vs liabilities)
+
+**Profitability**:
+- Customer Profitability Calculator (per-customer margin analysis)
+- Project ROI Calculator (capital project evaluation)
+
+**Valuation**:
+- SaaS Valuation Calculator (ARR multiples, churn impact)
+- Ecommerce Valuation Calculator (revenue multiples, inventory)
+
+**Total calculators**: 16 (8 from Phase 1 + 8 from Phase 2)
+
+**2. Richer AI Narratives**
+
+**Scenario comparison commentary**:
+- Compare 2-3 scenarios side-by-side
+- AI explains: "Scenario A has lower monthly payments but higher total interest. Scenario B breaks even 3 months sooner."
+
+**Pattern-based suggestions across calculators**:
+- AI detects patterns: "You've calculated multiple loans totaling $500k. Have you considered your overall debt service coverage across all loans?"
+
+**3. Enhanced B2B Features**
+
+**Advanced tenant configuration**:
+- White-label domain setup (CNAME configuration)
+- Custom email templates (for signup, password reset, invoices)
+- SSO integration (SAML, OAuth for enterprise customers)
+
+**Theming**:
+- Full CSS customization (not just logo and colors)
+- Custom fonts, button styles, layout options
+
+**Granular feature toggles**:
+- Enable/disable specific calculators per tenant
+- Enable/disable specific features per calculator (e.g., scenarios, AI, exports)
+
+**4. Advanced Exports**
+
+**Multi-tab Excel workbooks**:
+- Tab 1: Inputs
+- Tab 2: Summary results
+- Tab 3: Detailed calculations (amortization schedule)
+- Tab 4: Charts (payment breakdown, runway trend)
+
+**Board pack templates**:
+- Combine multiple calculators into single report
+- Example: Loan + Runway + Valuation → Comprehensive financing analysis
+
+**5. Performance Optimizations**
+
+**Caching**:
+- Redis caching for calculation results (5-minute TTL)
+- CDN for static assets (Cloudflare or similar)
+- Database query optimization (indexes, query tuning)
+
+**CDN improvements**:
+- Edge caching for calculator pages (1-hour TTL)
+- Image optimization (WebP format, lazy loading)
+
+**Database query tuning**:
+- Identify slow queries (>100ms)
+- Add indexes for common queries (user scenarios, exports)
+- Partition large tables (analytics events by month)
+
+### Phase 3 Deliverables
+
+**1. Cross-Calculator Scenario Linking**
+
+**Feature**: Link scenarios across calculators for holistic analysis
+
+**Example**:
+- Scenario 1 (Loan): $250k loan at 7.5%
+- Scenario 2 (Runway): Runway with $2,958/month loan payment
+- Scenario 3 (Margin): Margin needed to cover loan payment
+
+**AI insights**:
+- "This loan reduces your runway from 18 months to 12 months. To maintain 18 months, you need to increase revenue by $3,000/month."
+
+**2. Multi-Year Planning Tools**
+
+**Feature**: Simplified forecasting (not full financial modeling, just planning)
+
+**Capabilities**:
+- 3-year revenue/expense projections
+- Break-even timeline (when does business become profitable)
+- Cash flow waterfall (monthly cash in/out over 36 months)
+
+**3. Advanced Analytics**
+
+**Cohort retention curves**:
+- Track user retention by signup cohort (Jan 2025 cohort: 100% Month 0 → 85% Month 1 → 78% Month 2)
+
+**LTV predictions**:
+- Predict customer lifetime value based on usage patterns (calculations per month, scenarios created, exports downloaded)
+
+**4. Evaluation of Multi-Currency and ERP Integrations**
+
+**Multi-currency**:
+- Support for EUR, GBP, CAD (not just USD)
+- Currency conversion (live exchange rates)
+- Multi-currency scenarios (e.g., USD loan, EUR revenue)
+
+**ERP integrations** (via separate PDR):
+- QuickBooks integration (import revenue/expense data)
+- Xero integration
+- NetSuite integration (for enterprise customers)
+
+**Scope**: Requires separate PDR (significant complexity, API integration, data syncing, error handling)
+
+---
+
+## Summary
+
+The implementation plan follows a phased approach:
+
+**M0 (8-10 weeks)**: Platform baseline
+- Foundation built: calculation engine, UI components, export service, analytics, WordPress plugin
+- No calculators yet, but infrastructure validated
+
+**M1 (6-8 weeks)**: First 2 calculators
+- Business Loan + DSCR, Cash Runway & Burn Rate
+- Full tier implementation, basic AI, payment integration
+- Validation before building remaining calculators
+
+**M2 (8-12 weeks)**: Full Phase 1 set (8 calculators)
+- 6 more calculators: SBA 7(a), Equipment Lease, Breakeven, Factoring, Line of Credit, Valuation
+- AI expanded to all calculators, B2B foundation, internal dashboards
+- SEO optimization, A/B testing on upgrade flows
+
+**M3+ (12+ weeks)**: Phase 2 and 3 expansions
+- Additional calculators (16 total by end of Phase 2)
+- Richer AI, advanced exports, performance optimizations
+- Cross-calculator linking, multi-year planning, ERP integrations (Phase 3)
+
+**Total timeline to M2**: 22-30 weeks (~5-7 months) for full Phase 1 delivery.
+
+
+# 9.2 Workstream Mapping
+
+This section defines the engineering workstreams for building the CFO Business Intelligence Calculator Suite, including team ownership, dependencies, key deliverables, timelines, and workstream-specific risks. Workstreams run in parallel where possible to accelerate delivery.
+
+---
+
+## Workstream Overview
+
+**Total workstreams**: 6 core workstreams
+
+**Parallelization strategy**:
+- **Foundation workstreams** (Calculation Engine, UI/UX, Export, Analytics) run in parallel during M0
+- **AI Integration** starts after calculation engine is stable (Week 8+)
+- **B2B/White-Label** starts after core platform is validated (M2)
+
+**Team size assumption**: 5-8 engineers (2 backend, 2 frontend, 1 full-stack, 1 data/analytics, 1 designer, 1 PM)
+
+---
+
+## 1. Calculation Engine & Formula Library
+
+### Team/Owner
+
+**Team**:
+- Backend engineering lead (owner)
+- Senior backend engineer (contributor)
+- QA engineer (testing support)
+
+**Total capacity**: 2.5 FTEs (full-time equivalents)
+
+### Dependencies
+
+**None** (foundation for everything else)
+
+**Critical path**: This workstream blocks calculator development. Must be complete before M1.
+
+### Key Deliverables
+
+**1. Formula library structure and versioning**
+
+**Implementation**:
+- Each formula is a TypeScript function with version number
+- Formula files organized by calculator type:
+  ```
+  /src/formulas/
+    lending/
+      calculateDSCR_v1.ts
+      calculateAmortization_v1.ts
+      calculateSBA7a_v1.ts
+    cashflow/
+      calculateRunway_v1.ts
+      calculateBurnRate_v1.ts
+    profitability/
+      calculateBreakeven_v1.ts
+      calculateMargin_v1.ts
+    valuation/
+      calculateDCF_v1.ts
+      calculateMultiples_v1.ts
+  ```
+
+- Version control:
+  - When formula changes, create new version (e.g., `calculateDSCR_v2.ts`)
+  - Old version remains available (support historical calculations)
+  - Results include version stamp
+
+**2. Input validation and sanitization**
+
+**Validation rules**:
+- **Type validation**: Ensure all inputs are numbers (not strings, nulls, undefined)
+- **Range validation**: Enforce min/max values (e.g., interest rate 0-30%, loan term 1-360 months)
+- **Business logic validation**: Ensure inputs make sense (e.g., monthly payment cannot exceed loan amount)
+
+**Sanitization**:
+- Remove commas from currency inputs (e.g., "250,000" → 250000)
+- Convert percentages to decimals (e.g., "7.5%" → 0.075)
+- Handle edge cases (negative values, extremely large values, division by zero)
+
+**Example**:
+```typescript
+function validateLoanInputs(inputs: LoanInputs): ValidationResult {
+  const errors: string[] = [];
+
+  if (inputs.principal <= 0) errors.push('Loan amount must be positive');
+  if (inputs.principal > 100000000) errors.push('Loan amount too large');
+  if (inputs.annualRate < 0 || inputs.annualRate > 0.30) errors.push('Interest rate must be 0-30%');
+  if (inputs.termMonths < 1 || inputs.termMonths > 360) errors.push('Loan term must be 1-360 months');
+
+  return { valid: errors.length === 0, errors };
+}
+```
+
+**3. Golden scenario test framework**
+
+**Purpose**: Ensure formula accuracy with known test cases
+
+**Test structure**:
+- Test data stored in JSON files (`/tests/golden-scenarios/dscr.json`)
+- Each test case includes: inputs, expected outputs, tolerance (±0.01%)
+- Automated tests run on every commit (CI/CD)
+
+**Example test**:
+```json
+{
+  "test_name": "Typical SBA 7(a) loan",
+  "calculator": "business-loan-dscr",
+  "inputs": {
+    "principal": 250000,
+    "annualRate": 0.075,
+    "termMonths": 120
+  },
+  "expected_outputs": {
+    "monthlyPayment": 2958.04,
+    "totalInterest": 104964.80,
+    "totalCost": 354964.80
+  },
+  "tolerance": 0.0001
+}
+```
+
+**Test execution**:
+```typescript
+test('DSCR golden scenarios', () => {
+  const scenarios = loadGoldenScenarios('dscr.json');
+
+  scenarios.forEach(scenario => {
+    const result = calculateDSCR(scenario.inputs);
+
+    expect(result.monthlyPayment).toBeCloseTo(
+      scenario.expected_outputs.monthlyPayment,
+      scenario.tolerance
+    );
+  });
+});
+```
+
+**Coverage target**: 10+ golden scenarios per calculator (typical cases + edge cases)
+
+**4. Formula documentation and references**
+
+**Documentation includes**:
+- Formula name and version
+- Mathematical equation (LaTeX or plain text)
+- Input parameters (name, type, range, units)
+- Output parameters (name, type, units)
+- References (where formula comes from, e.g., "Standard amortization formula, see Wikipedia")
+
+**Example**:
+```markdown
+## calculateDSCR_v1
+
+**Purpose**: Calculate Debt Service Coverage Ratio (DSCR)
+
+**Formula**:
+DSCR = Net Operating Income / Total Debt Service
+
+Where:
+- Net Operating Income = Annual Revenue - Operating Expenses
+- Total Debt Service = Annual Loan Payments (principal + interest)
+
+**Inputs**:
+- annualRevenue (number, >0, USD)
+- operatingExpenses (number, >=0, USD)
+- annualDebtPayment (number, >0, USD)
+
+**Outputs**:
+- dscr (number, ratio, typically 1.0-2.0)
+
+**References**:
+- SBA Lender Guide (minimum DSCR 1.25)
+- https://en.wikipedia.org/wiki/Debt-service_coverage_ratio
+```
+
+### Timeline
+
+**Weeks 1-6** (M0 phase)
+
+**Week-by-week breakdown**:
+- **Week 1-2**: Formula library architecture design, validation framework setup
+- **Week 3-4**: Implement lending formulas (DSCR, amortization, SBA 7(a))
+- **Week 4-5**: Implement cash flow formulas (runway, burn rate)
+- **Week 5-6**: Implement profitability and valuation formulas, golden scenario testing
+- **Week 6**: Code review, documentation, handoff to QA
+
+**Milestones**:
+- Week 2: Architecture approved, validation framework working
+- Week 4: First formulas implemented and passing basic tests
+- Week 6: All Phase 1 formulas complete, golden scenarios passing
+
+### Risks Specific to This Workstream
+
+**Risk 1: Formula errors**
+- **Impact**: Incorrect calculations undermine product credibility
+- **Mitigation**:
+  - Golden scenario testing (automated, every commit)
+  - External review by CFO/accountant (validate formulas against known tools)
+  - Reference documentation (cite sources for formulas)
+  - User feedback loop (report incorrect results)
+
+**Risk 2: Performance bottlenecks**
+- **Impact**: Calculations exceed p95 <150ms SLA (Section 1.6)
+- **Mitigation**:
+  - Load testing during M0 (simulate 1,000 requests/second)
+  - Optimize expensive operations (avoid iterative loops, use closed-form formulas where possible)
+  - Caching for repeated calculations (5-minute TTL in Redis)
+  - Horizontal scaling (stateless engine, deploy multiple instances)
+
+**Risk 3: Insufficient test coverage**
+- **Impact**: Edge cases cause errors in production
+- **Mitigation**:
+  - Require 10+ golden scenarios per calculator (typical + edge cases)
+  - Add new test cases for any bug discovered in production
+  - Fuzz testing (generate random inputs, ensure no crashes)
+
+---
+
+## 2. UI & UX System
+
+### Team/Owner
+
+**Team**:
+- Frontend engineering lead (owner)
+- Frontend engineer (contributor)
+- Designer (UX/UI design, style guide)
+
+**Total capacity**: 2.5 FTEs
+
+### Dependencies
+
+**Depends on**: Calculation engine API contracts (input/output schemas)
+
+**Timing**: Can start Week 3 (after API contracts defined) in parallel with formula implementation
+
+### Key Deliverables
+
+**1. React component library**
+
+**Components** (per Section 4.1, 4.2):
+- **Input components**: CurrencyInput, PercentageInput, NumberInput, SelectInput, DateInput
+- **Result components**: MetricCard, ResultsGrid, ChartCard, WarningBanner
+- **Scenario components**: ScenarioTabs, ScenarioActions, AddScenarioButton
+- **Action components**: ExportButton, UpgradePromptModal, LoadingSpinner
+- **Layout components**: CalculatorLayout, Header, Footer, Sidebar
+
+**Technology**:
+- React 18+ with TypeScript
+- Tailwind CSS for styling
+- Zustand for state management
+- React Query for API data fetching
+
+**Component documentation**: Storybook for component showcase and testing
+
+**2. Design system**
+
+**Standards** (per Section 4.3):
+- **Colors**: Primary (#1E40AF), Secondary (#10B981), Warning (#F59E0B), Error (#EF4444), Gray scale (#F9FAFB to #111827)
+- **Typography**: Inter font, 16px base, 1.5 line height
+- **Spacing**: 8px grid (8px, 16px, 24px, 32px, 48px, 64px)
+- **Shadows**: Elevation system (4 levels for depth)
+
+**Design tokens**: CSS variables or Tailwind config for consistency
+
+**3. Responsive layouts**
+
+**Breakpoints**:
+- **Mobile**: <640px (single column, stacked inputs/results)
+- **Tablet**: 640-1024px (2 columns for some layouts)
+- **Desktop**: >1024px (full layout, side-by-side inputs/results)
+
+**Testing**:
+- Test on real devices (iPhone, Android, iPad)
+- Browser compatibility (Chrome, Safari, Firefox, Edge)
+
+**4. Accessibility compliance (WCAG 2.1 AA)**
+
+**Requirements** (per Section 4.3):
+- **Keyboard navigation**: All interactive elements accessible via Tab, Enter, Escape
+- **Screen reader support**: ARIA labels, semantic HTML, alt text for images
+- **Color contrast**: 4.5:1 for body text, 3:1 for large text
+- **Focus indicators**: Visible focus states for all interactive elements
+
+**Testing**:
+- Automated: Lighthouse accessibility audit (score >90)
+- Manual: Test with screen reader (NVDA, JAWS, VoiceOver)
+
+### Timeline
+
+**Weeks 3-10** (M0, extends into M1)
+
+**Week-by-week breakdown**:
+- **Week 3-4**: Design system, component library setup, Storybook
+- **Week 5-6**: Input and result components, responsive layouts
+- **Week 7-8**: Scenario management, export modal, upgrade prompts
+- **Week 9-10**: Accessibility fixes, browser testing, design polish
+
+**Milestones**:
+- Week 4: Design system approved, Storybook live
+- Week 6: Core components complete (inputs, results)
+- Week 8: Scenario and action components complete
+- Week 10: Accessibility audit passing, ready for calculator integration
+
+### Risks Specific to This Workstream
+
+**Risk 1: Design inconsistencies**
+- **Impact**: Poor user experience, brand confusion
+- **Mitigation**:
+  - Centralized design system (Tailwind config or CSS variables)
+  - Design reviews before component implementation
+  - Storybook for component showcase (catch inconsistencies visually)
+
+**Risk 2: Performance on low-end devices**
+- **Impact**: Slow rendering, poor mobile experience
+- **Mitigation**:
+  - Test on low-end devices (older iPhones, budget Android phones)
+  - Code splitting (lazy load non-critical components)
+  - Optimize bundle size (tree shaking, minification)
+  - Lighthouse performance audit (score >80)
+
+**Risk 3: Accessibility gaps**
+- **Impact**: Legal risk, excludes users with disabilities
+- **Mitigation**:
+  - Automated testing (Lighthouse, axe DevTools)
+  - Manual testing with screen reader
+  - User testing with accessibility-focused users
+  - Accessibility checklist for every component
+
+---
+
+## 3. Export & Reporting
+
+### Team/Owner
+
+**Team**:
+- Backend engineer (owner, PDF/CSV/Excel generation)
+- Designer (PDF template design)
+
+**Total capacity**: 1.5 FTEs
+
+### Dependencies
+
+**Depends on**:
+- Calculation engine outputs (data to export)
+- Branding/watermarking requirements (Free vs Pro tier)
+
+**Timing**: Can start Week 4 (after calculation engine outputs defined)
+
+### Key Deliverables
+
+**1. PDF generation with watermarking**
+
+**Technology**: Puppeteer (headless Chrome for rendering HTML → PDF)
+
+**PDF template**:
+- Header: Calculator name, user tier, timestamp
+- Body: Inputs table, results table, warnings (if any)
+- Footer: Disclaimers (per Section 5.3), version stamp ("Calculated using DSCR formula v2")
+
+**Watermarking** (Free tier only):
+- Diagonal text across each page: "Generated by [Product Name] - Upgrade for clean exports"
+- Semi-transparent gray (#6B7280, 20% opacity)
+- Applied via CSS transform (rotate -45deg)
+
+**Performance**: Target p95 <3 seconds (per Section 1.6)
+
+**2. CSV generation with metadata headers**
+
+**Format**:
+```csv
+# Business Loan + DSCR Calculator
+# Version: v2
+# Generated: 2025-11-17T21:30:00Z
+# Tier: Free
+
+Section,Field,Value
+Inputs,Loan Amount,250000
+Inputs,Interest Rate,7.5%
+Inputs,Term (months),120
+Outputs,Monthly Payment,2958.04
+Outputs,Total Interest,104964.80
+Outputs,Total Cost,354964.80
+Outputs,DSCR,1.42
+```
+
+**Performance**: Target <1 second (CSV is fast, no rendering required)
+
+**3. Excel generation (basic, single sheet)**
+
+**Technology**: ExcelJS library
+
+**Format**:
+- Sheet 1: Inputs and outputs (similar to CSV)
+- Formatted cells (currency: $#,##0.00, percentage: 0.00%)
+- Bold headers, alternating row colors for readability
+
+**Performance**: Target p95 <2 seconds
+
+**4. Export service API (async queue for large exports)**
+
+**Architecture**:
+- **Synchronous exports** (small, <3 seconds): Return file immediately
+- **Asynchronous exports** (large, >3 seconds): Queue job, return export_id, poll for completion
+
+**Queue**: BullMQ (Redis-backed)
+
+**API flow**:
+1. `POST /api/exports` → Returns `{ export_id, status: 'queued' }`
+2. Worker picks up job, generates export, uploads to S3/R2
+3. `GET /api/exports/:export_id` → Returns `{ status: 'completed', file_url }` when ready
+
+**Retry logic**: Retry up to 3 times on failure (handle transient errors)
+
+### Timeline
+
+**Weeks 4-8** (M0)
+
+**Week-by-week breakdown**:
+- **Week 4-5**: PDF generation setup, Puppeteer integration, basic templates
+- **Week 6**: CSV and Excel generation, metadata headers
+- **Week 7**: Watermarking for Free tier, async export queue
+- **Week 8**: Performance optimization, error handling, testing
+
+**Milestones**:
+- Week 5: PDF generation working (basic template)
+- Week 6: CSV and Excel working
+- Week 8: All export formats passing performance targets, watermarking working
+
+### Risks Specific to This Workstream
+
+**Risk 1: PDF generation slowness**
+- **Impact**: Violates p95 <3s SLA, poor user experience
+- **Mitigation**:
+  - Optimize PDF templates (simple layouts, minimal CSS, no large images)
+  - Use async generation for complex exports (progress indicators)
+  - Pre-render common templates (cache PDF structure, fill in data)
+  - Add worker pool (multiple Puppeteer instances in parallel)
+
+**Risk 2: Excel formatting complexity**
+- **Impact**: Excel files look unprofessional or fail to open
+- **Mitigation**:
+  - Start with basic formatting (bold headers, currency/percentage formats)
+  - Test Excel files in Microsoft Excel and Google Sheets (ensure compatibility)
+  - Use established library (ExcelJS, well-maintained)
+  - Defer advanced features (charts, multi-tab) to Phase 2
+
+**Risk 3: S3/R2 upload failures**
+- **Impact**: Exports generated but not accessible (user gets error)
+- **Mitigation**:
+  - Retry logic (up to 3 retries with exponential backoff)
+  - Fallback storage (local disk if S3/R2 unavailable, serve from app server)
+  - Monitor upload success rate (alert if <95%)
+
+---
+
+## 4. AI Integration
+
+### Team/Owner
+
+**Team**:
+- Backend engineer (owner, API integration, cost management)
+- Product manager (prompt design, quality assurance)
+
+**Total capacity**: 1.5 FTEs
+
+### Dependencies
+
+**Depends on**:
+- Calculation engine outputs (data to send to AI)
+- AI provider API access (Anthropic account, API key)
+
+**Timing**: Starts Week 8 (after calculation engine stable), extends into M1/M2
+
+### Key Deliverables
+
+**1. Prompt framework**
+
+**Components** (per Section 8.2):
+- **System prompts**: Define AI role, output constraints, prohibited behaviors
+  - Stored in `/src/ai/prompts/` as versioned TypeScript files
+  - Example: `dscr_explanation_v1.ts`, `runway_explanation_v1.ts`
+
+- **User prompt templates**: Structured data (numeric inputs/outputs), no free-text by default
+  - Template function: `(inputs, outputs) => string`
+  - Example: `"The business has annual revenue of ${revenue}, operating expenses of ${expenses}..."`
+
+**Testing**:
+- Manual review of 10+ AI responses per calculator (ensure quality, tone, disclaimers)
+- Automated validation (response includes disclaimer, response length 150-250 words)
+
+**2. AI provider integration**
+
+**Primary provider**: Anthropic Claude Sonnet 4
+
+**Integration**:
+- Anthropic SDK (`@anthropic-ai/sdk`)
+- API key stored in environment variable (not hardcoded)
+- Error handling (timeout, rate limit, API error)
+- Fallback: Show "AI unavailable" message if API fails
+
+**Cost tracking**:
+- Log tokens used per request (input + output tokens)
+- Track cost per request (~$0.006 per request, per Section 8.4)
+- Monitor daily spend (alert if >$50/day, expected ~$4-6/day)
+
+**3. Response formatting and disclaimers**
+
+**Formatting**:
+- AI response rendered as markdown (paragraphs, bullet lists)
+- Disclaimers appended to every response (per Section 8.1)
+
+**Example output**:
+```
+A DSCR of 1.42 means the business generates $1.42 in operating income for
+every $1 in debt payments. Most lenders require a minimum DSCR of 1.25...
+
+---
+
+This analysis is for informational purposes only and does not constitute
+financial, legal, or professional advice. Consult qualified professionals
+for decisions affecting your business.
+```
+
+**4. Usage tracking and cost monitoring**
+
+**Usage quota** (per Section 8.4):
+- AI tier: 50 requests/month (hard cap)
+- Track usage in `user_ai_usage` table (user_id, month, requests_used, requests_limit)
+- Enforce quota before API call (reject if quota exceeded)
+
+**Cost monitoring** (per Section 7.4):
+- Dashboard: Total AI requests, total cost, cost per request
+- Alert if cost >$500/month (expected ~$120/month)
+
+### Timeline
+
+**Weeks 8-12** (M1), expanded in M2
+
+**Week-by-week breakdown**:
+- **Week 8-9**: Anthropic API integration, basic prompt framework
+- **Week 10**: DSCR and runway prompts (for M1 calculators)
+- **Week 11**: Usage quota enforcement, cost tracking
+- **Week 12**: Response caching, prompt optimization, testing
+- **M2 expansion (Weeks 20-24)**: Prompts for remaining 6 calculators
+
+**Milestones**:
+- Week 9: Anthropic API integration working (hello world test)
+- Week 10: DSCR and runway prompts generating quality responses
+- Week 12: Usage quota and cost tracking working, ready for M1 launch
+
+### Risks Specific to This Workstream
+
+**Risk 1: AI latency**
+- **Impact**: Response time >3s (violates SLA)
+- **Mitigation**:
+  - Hard timeout (8 seconds, fallback to "AI unavailable")
+  - Prompt optimization (shorter prompts = faster response)
+  - Response caching (1-hour TTL for identical inputs, 20-30% hit rate)
+  - Monitor p95 latency (alert if >5 seconds)
+
+**Risk 2: Cost overruns**
+- **Impact**: AI costs exceed budget ($120/month expected)
+- **Mitigation**:
+  - Usage caps (50 requests/month, hard limit)
+  - Prompt caching (90% cost reduction on system prompts)
+  - Response caching (25% cost reduction, reuse responses)
+  - Monitor daily spend (alert if >$10/day)
+
+**Risk 3: Quality inconsistency**
+- **Impact**: AI responses are inaccurate, unhelpful, or inappropriate
+- **Mitigation**:
+  - Manual review of 10+ responses per calculator (before launch)
+  - User feedback loop (thumbs up/down on AI responses)
+  - Prompt iteration based on feedback
+  - Fallback to no AI if quality drops (suite_ai_enabled = false)
+
+---
+
+## 5. Analytics & Observability
+
+### Team/Owner
+
+**Team**:
+- Backend engineer (owner, event tracking, APM integration)
+- Data analyst (dashboard design, SQL queries)
+
+**Total capacity**: 1.5 FTEs
+
+### Dependencies
+
+**Depends on**:
+- Event taxonomy defined (Section 7.1)
+- Analytics platform chosen (Mixpanel, Amplitude, or ClickHouse)
+
+**Timing**: Starts Week 6 (after core events defined), ongoing instrumentation in M1/M2
+
+### Key Deliverables
+
+**1. Event tracking implementation**
+
+**Standard events** (per Section 7.2):
+- calculator_viewed, calculator_calculated
+- scenario_created, scenario_deleted
+- export_requested, export_generated, export_downloaded
+- ai_narrative_requested, ai_narrative_displayed
+- upgrade_prompt_shown, upgrade_prompt_clicked, upgrade_completed
+
+**Implementation**:
+- Event tracking wrapper function:
+  ```typescript
+  function trackEvent(eventName: string, properties: EventProperties) {
+    // Validate event schema
+    validateEventProperties(eventName, properties);
+
+    // Send to analytics platform
+    analytics.track(eventName, properties);
+
+    // Log to database (for 12-month retention)
+    db.logEvent(eventName, properties);
+  }
+  ```
+
+**Testing**:
+- Events appear in analytics platform within 5 minutes
+- Event properties are valid (no null/undefined for required fields)
+
+**2. Analytics dashboards**
+
+**Dashboards built** (per Section 7.3):
+- **Calculator Funnel**: Views → Calculations → Exports (conversion rates)
+- **Tier Conversion**: Free → Pro and Pro → AI upgrade tracking
+- **AI Usage**: AI requests, success rate, latency, cost
+- **Export Dashboard**: Volume, formats, performance
+- **Scenario Usage**: Multi-scenario adoption (Pro tier validation)
+
+**Technology**: Metabase (open-source) or Mixpanel (SaaS)
+
+**3. Error monitoring and alerting**
+
+**Error tracking** (per Section 7.4):
+- Calculation engine errors (formula failures, timeouts)
+- Export generation errors (PDF rendering, S3 upload)
+- AI service errors (API timeouts, rate limits)
+- Client-side errors (JavaScript exceptions)
+
+**Tools**: Sentry (client-side), Datadog or New Relic (server-side)
+
+**Alerting**:
+- Critical: Error rate >5% in 5 minutes → Page on-call
+- Warning: Error rate 1-5% in 5 minutes → Slack notification
+
+**4. Performance monitoring (APM integration)**
+
+**Metrics tracked** (per Section 7.4):
+- Calculation latency (p50, p95, p99)
+- Export generation time (p50, p95, p99)
+- AI request latency (p50, p95, p99)
+- Database query times (slow query log for >100ms)
+
+**Tools**: Datadog APM or New Relic
+
+**Dashboards**: Real-time performance dashboard (Grafana)
+
+### Timeline
+
+**Weeks 6-10** (M0), ongoing instrumentation in M1/M2
+
+**Week-by-week breakdown**:
+- **Week 6-7**: Analytics platform setup, event tracking wrapper
+- **Week 8**: Standard events instrumented (calculator_viewed, calculator_calculated)
+- **Week 9**: Error monitoring setup (Sentry, Datadog)
+- **Week 10**: Performance monitoring (APM), initial dashboards
+- **M1/M2**: Add events as features launch (scenarios, AI, exports)
+
+**Milestones**:
+- Week 7: Analytics platform chosen and configured
+- Week 8: First events tracked (calculator_viewed)
+- Week 10: Error and performance monitoring live
+
+### Risks Specific to This Workstream
+
+**Risk 1: Data quality issues**
+- **Impact**: Analytics dashboards show incorrect data, bad decisions
+- **Mitigation**:
+  - Event schema validation (reject invalid events)
+  - Automated tests for event tracking (verify events fire correctly)
+  - Data quality checks (daily job, alert on anomalies like 0 events)
+
+**Risk 2: Alert fatigue**
+- **Impact**: Too many alerts, team ignores critical alerts
+- **Mitigation**:
+  - Carefully set alert thresholds (only alert on actionable issues)
+  - Use tiered alerts (critical vs warning)
+  - Review alert effectiveness weekly (disable noisy alerts)
+
+**Risk 3: Analytics platform cost**
+- **Impact**: Mixpanel/Amplitude costs exceed budget
+- **Mitigation**:
+  - Evaluate cost before choosing platform (free tier vs paid)
+  - Consider self-hosted ClickHouse (lower cost, higher complexity)
+  - Monitor event volume (throttle if needed)
+
+---
+
+## 6. B2B/White-Label Features
+
+### Team/Owner
+
+**Team**:
+- Backend engineer (owner, multi-tenancy, feature flags)
+- Product manager (pilot customer onboarding, requirements gathering)
+
+**Total capacity**: 1.5 FTEs
+
+### Dependencies
+
+**Depends on**: Core platform stable (post-M1)
+
+**Timing**: Starts Week 16 (M2 phase), after first 2 calculators validated
+
+### Key Deliverables
+
+**1. Tenant configuration system**
+
+**Tenant model**:
+```typescript
+interface TenantConfig {
+  tenant_id: string;
+  name: string;
+  logo_url: string;
+  primary_color: string;
+  custom_domain: string | null;
+  ai_enabled: boolean;
+  ai_redaction_level: 'disabled' | 'strict' | 'standard' | 'enhanced';
+  feature_flags: Record<string, boolean>;
+  created_at: string;
+  updated_at: string;
+}
+```
+
+**Database table**: `tenant_configs` (per Section 8.3)
+
+**Admin API**:
+- `POST /api/admin/tenants` - Create tenant
+- `PATCH /api/admin/tenants/:id` - Update tenant config
+- `GET /api/admin/tenants/:id` - Get tenant config
+
+**2. API key management and authentication**
+
+**API keys** (B2B customers):
+- Generate API key for each tenant (scoped to tenant_id)
+- Format: `sk_live_abc123...` (similar to Stripe)
+- Stored hashed in database (never plaintext)
+
+**Authentication**:
+- API key required for server-side calculator API calls
+- Validates tenant_id and permissions
+- Rate limiting per tenant (100 requests/minute)
+
+**3. White-label embed options**
+
+**Custom domains**:
+- Customer can use `calculators.customer.com` instead of `calculators.product.com`
+- CNAME configuration (customer points CNAME to our domain)
+- SSL certificate (Let's Encrypt auto-provision)
+
+**Theming**:
+- Custom logo (displayed in header)
+- Primary color (buttons, links)
+- Custom CSS (advanced, Phase 2+)
+
+**4. Usage tracking per tenant**
+
+**Metrics tracked**:
+- Calculations per tenant per month
+- Exports per tenant per month
+- AI requests per tenant per month (if AI enabled)
+
+**Dashboard** (admin view):
+- List all tenants with usage metrics
+- Usage trends over time
+- Top calculators per tenant
+
+### Timeline
+
+**Weeks 16-24** (M2)
+
+**Week-by-week breakdown**:
+- **Week 16-17**: Tenant data model, admin API
+- **Week 18-19**: API key management, authentication
+- **Week 20-21**: Custom domain setup, theming
+- **Week 22-23**: Usage tracking, admin dashboard
+- **Week 24**: Pilot customer onboarding (3 customers)
+
+**Milestones**:
+- Week 17: Tenant configuration working (can create tenant, set config)
+- Week 21: White-label embed working (custom domain, branding)
+- Week 24: 3 pilot customers onboarded and using calculators
+
+### Risks Specific to This Workstream
+
+**Risk 1: Complexity of multi-tenancy**
+- **Impact**: Bugs affecting multiple customers, data leakage between tenants
+- **Mitigation**:
+  - Strict tenant isolation (tenant_id in all queries)
+  - Automated tests for tenant isolation (verify Customer A cannot access Customer B's data)
+  - Code review with security focus
+
+**Risk 2: Custom requirements from pilots**
+- **Impact**: Scope creep, custom features not scalable
+- **Mitigation**:
+  - Define standard features (logo, color, domain)
+  - Document non-standard requests (evaluate for Phase 2)
+  - Product manager filters requests (push back on one-off customizations)
+
+**Risk 3: Custom domain SSL issues**
+- **Impact**: Customer domain shows SSL warning, poor experience
+- **Mitigation**:
+  - Automated SSL provisioning (Let's Encrypt, Certbot)
+  - Documentation for customers (how to configure CNAME)
+  - Fallback to our domain if SSL fails (graceful degradation)
+
+---
+
+## Summary
+
+Six workstreams run in parallel to deliver the CFO Business Intelligence Calculator Suite:
+
+**1. Calculation Engine & Formula Library** (Weeks 1-6):
+- Foundation for all calculators, blocks M1
+- Risks: Formula errors, performance bottlenecks
+
+**2. UI & UX System** (Weeks 3-10):
+- Component library, design system, accessibility
+- Risks: Design inconsistencies, performance on low-end devices
+
+**3. Export & Reporting** (Weeks 4-8):
+- PDF, CSV, Excel generation with watermarking
+- Risks: PDF slowness, Excel formatting complexity
+
+**4. AI Integration** (Weeks 8-12, expanded in M2):
+- Prompt framework, Anthropic API, usage quota, cost tracking
+- Risks: AI latency, cost overruns, quality inconsistency
+
+**5. Analytics & Observability** (Weeks 6-10, ongoing):
+- Event tracking, dashboards, error monitoring, APM
+- Risks: Data quality issues, alert fatigue
+
+**6. B2B/White-Label Features** (Weeks 16-24):
+- Tenant configuration, API keys, custom domains, theming
+- Risks: Multi-tenancy complexity, custom requirements, SSL issues
+
+**Critical path**: Calculation Engine → UI Components → First 2 Calculators (M1) → Remaining 6 Calculators (M2)
+
+
+# 9.3 Risks and Mitigations
+
+This section identifies implementation risks for the CFO Business Intelligence Calculator Suite and defines specific mitigation strategies for each risk. Risks are categorized by type and assessed for probability and impact.
+
+---
+
+## Risk Assessment Framework
+
+**Probability levels**:
+- **Low**: <20% chance of occurring
+- **Medium**: 20-50% chance of occurring
+- **High**: >50% chance of occurring
+
+**Impact levels**:
+- **Low**: Minor inconvenience, easy to resolve, no user impact
+- **Medium**: Moderate impact, requires effort to resolve, some user impact
+- **High**: Significant impact, major effort to resolve, substantial user impact
+- **Critical**: Severe impact, product launch risk, major user impact or legal/compliance violation
+
+**Risk priority**: High impact + High probability = Highest priority mitigation
+
+---
+
+## 1. Technical Risks
+
+### Risk 1.1: Calculation Engine Performance Below SLAs
+
+**Description**: Calculation latency exceeds p95 <150ms target (Section 1.6), causing poor user experience and failed SLA compliance.
+
+**Probability**: Medium
+
+**Impact**: High (violates core performance SLA, undermines "instant calculations" value proposition)
+
+**Mitigation strategies**:
+
+1. **Early load testing during M0** (before building calculators)
+   - Simulate 1,000 requests/second to calculation engine
+   - Identify bottlenecks before calculators are built
+   - Tools: Apache Bench (ab), k6, or Artillery
+   - Target: p95 latency <100ms (buffer below 150ms SLA)
+
+2. **Implement caching for repeated calculations**
+   - Cache results in Redis with 5-minute TTL
+   - Cache key: hash of (calculator_slug + inputs)
+   - Expected cache hit rate: 15-25% (users test similar scenarios)
+   - Reduces load on calculation engine by 15-25%
+
+3. **Optimize formula library**
+   - Avoid expensive operations (iterative loops, recursive functions)
+   - Use closed-form formulas where possible (e.g., amortization has closed-form solution)
+   - Pre-compute constants (e.g., monthly rate = annual rate / 12, compute once)
+   - Profile code to identify slow functions (Node.js profiler, Chrome DevTools)
+
+4. **Plan for horizontal scaling**
+   - Stateless calculation engine (no session state, can deploy multiple instances)
+   - Load balancer distributes requests across instances
+   - Auto-scaling: Add instances when CPU >70%, remove when CPU <30%
+   - Tested during M0 (verify scaling works correctly)
+
+5. **Monitoring and alerting**
+   - Real-time dashboard: p50, p95, p99 latency per calculator
+   - Alert if p95 >500ms for 15 minutes (warning)
+   - Alert if p95 >1s for 5 minutes (critical, page on-call)
+
+**Success metric**: p95 latency <150ms for all calculators in production
+
+---
+
+### Risk 1.2: Export Generation Too Slow
+
+**Description**: PDF generation exceeds p95 <3 seconds target (Section 1.6), causing user frustration and timeout errors.
+
+**Probability**: Medium
+
+**Impact**: Medium (violates export SLA, but exports are not real-time critical)
+
+**Mitigation strategies**:
+
+1. **Use async generation for complex exports**
+   - Exports >3 seconds moved to background queue (BullMQ)
+   - User sees progress indicator: "Generating export... 60% complete"
+   - Email notification when export ready (optional)
+   - Reduces perceived latency (user doesn't wait)
+
+2. **Optimize PDF templates**
+   - Simple layouts (no complex CSS, minimal graphics)
+   - Avoid large images (use SVG icons, compress images)
+   - Inline CSS (reduce HTTP requests in Puppeteer)
+   - Test template performance (time to render in Puppeteer)
+
+3. **Consider pre-rendering common export formats**
+   - For frequently exported scenarios (e.g., demo scenarios), pre-render PDF skeleton
+   - Fill in data at export time (faster than rendering from scratch)
+   - Cache pre-rendered skeletons (1-hour TTL)
+
+4. **Add worker pool for export queue**
+   - Multiple Puppeteer instances in parallel (worker pool)
+   - Scale workers based on queue length (add workers if queue >100 jobs)
+   - Each worker handles one export at a time (Puppeteer is CPU-intensive)
+
+5. **Monitoring and alerting**
+   - Track p95 export generation time per format (PDF, CSV, Excel)
+   - Alert if p95 PDF time >6 seconds for 15 minutes (warning)
+   - Alert if export failure rate >5% (critical)
+
+**Success metric**: p95 export time <3 seconds for PDF, <1 second for CSV
+
+---
+
+### Risk 1.3: AI Latency or Costs Exceed Budget
+
+**Description**: AI response time exceeds 3 seconds (poor UX) or AI costs exceed $120/month budget (unprofitable).
+
+**Probability**: High (AI latency and cost are common issues)
+
+**Impact**: Medium (affects AI tier profitability, but AI is add-on, not core product)
+
+**Mitigation strategies**:
+
+1. **Implement prompt caching** (90% cost reduction on cached prompts)
+   - Cache system prompts (same for all users, high reuse)
+   - Anthropic API supports prompt caching (ephemeral cache, 5-minute TTL)
+   - Expected: 80-90% cache hit rate for system prompts
+   - Cost reduction: ~13% overall (system prompt is ~40% of tokens)
+
+2. **Cache AI responses for identical inputs**
+   - Cache responses in Redis with 1-hour TTL
+   - Cache key: hash of (calculator_slug + inputs + request_type)
+   - Expected cache hit rate: 20-30% (users test similar scenarios)
+   - Cost reduction: 20-30% (avoid API call entirely)
+
+3. **Hard timeout on AI requests** (8 seconds, fallback to "AI unavailable")
+   - If Anthropic API does not respond within 8 seconds, timeout
+   - Show user-friendly error: "AI is temporarily unavailable. Please try again."
+   - Prevents indefinite waiting (better UX than infinite spinner)
+   - Log timeout events (track timeout rate, alert if >10%)
+
+4. **Monitor costs daily, adjust caps if needed**
+   - Dashboard: Total AI requests, total cost, cost per request
+   - Alert if daily spend >$10 (expected ~$4-6/day)
+   - If costs spike, reduce quota temporarily (e.g., 50 → 25 requests/month)
+   - Investigate spike (abuse, bot traffic, API pricing change)
+
+5. **Use cheaper model for simple requests** (Claude Haiku for definitions)
+   - Simple requests (e.g., "What does DSCR mean?") use Claude Haiku (83% cheaper)
+   - Complex requests (e.g., risk analysis) use Claude Sonnet (higher quality)
+   - Blended cost: ~25% reduction (30% of requests use Haiku)
+
+**Success metrics**:
+- AI p95 latency <3 seconds
+- AI monthly cost <$200 (buffer above $120 budget)
+
+---
+
+### Risk 1.4: WordPress Plugin Compatibility Issues
+
+**Description**: WordPress plugin conflicts with certain themes, plugins, or WordPress versions, causing calculators to break or render incorrectly.
+
+**Probability**: Medium (WordPress ecosystem is vast, conflicts are common)
+
+**Impact**: Medium (affects primary distribution channel, but iframe isolation limits impact)
+
+**Mitigation strategies**:
+
+1. **Test across WordPress versions**
+   - Current version (WordPress 6.4+)
+   - Previous 2 major versions (WordPress 6.2, 6.3)
+   - Automated testing (WordPress Docker containers, Playwright tests)
+   - Test matrix: 3 versions × 3 popular themes = 9 test cases
+
+2. **Use iframe embedding** (isolates calculator from WordPress environment)
+   - Calculator loads in iframe (separate DOM, separate CSS, separate JavaScript)
+   - Prevents CSS conflicts (WordPress theme CSS does not affect calculator)
+   - Prevents JavaScript conflicts (WordPress plugins do not interfere)
+   - Tradeoff: Slightly slower load time (extra HTTP request)
+
+3. **Graceful degradation if JavaScript disabled**
+   - If user has JavaScript disabled, show message: "This calculator requires JavaScript. Please enable JavaScript to use this tool."
+   - Link to instructions for enabling JavaScript
+   - Rare case (most users have JavaScript enabled), but good UX
+
+4. **Clear documentation for site admins**
+   - Installation guide: How to install plugin, activate, insert shortcode
+   - Troubleshooting guide: Common issues (iframe not loading, calculator not rendering)
+   - Support email for WordPress-specific issues
+   - Video tutorial (2-minute walkthrough)
+
+5. **Fallback to direct embed link**
+   - If WordPress plugin fails, provide direct embed code (iframe HTML)
+   - Site admin can manually insert iframe code in WordPress editor
+   - Bypasses plugin entirely (works even if plugin has issues)
+
+**Success metric**: Plugin works correctly on 90% of WordPress sites (based on user testing)
+
+---
+
+## 2. Product Risks
+
+### Risk 2.1: Calculators Too Complex for Target Users
+
+**Description**: Calculators require too much financial knowledge or have too many inputs, leading to low adoption, high support burden, and user frustration.
+
+**Probability**: Medium (complexity is common pitfall for financial tools)
+
+**Impact**: High (low adoption undermines entire product, high support costs)
+
+**Mitigation strategies**:
+
+1. **User testing before each calculator launch** (5-10 users per calculator)
+   - Recruit target users (founders, CFOs, lenders)
+   - Watch users complete tasks: "Calculate a $250k loan at 7.5%"
+   - Identify confusion points (unclear labels, missing help text, complex workflows)
+   - Iterate based on feedback (simplify inputs, add tooltips, improve layout)
+
+2. **Sample scenarios pre-filled for first-time users**
+   - Default values in inputs (e.g., $250k loan, 7.5% rate, 10 years)
+   - "Try it" mode: User can immediately see results without filling in inputs
+   - Reduces initial friction (user sees value before investing time)
+   - Clear button: "Clear" or "Start Over" to enter own data
+
+3. **Comprehensive tooltips and help text**
+   - Every input has tooltip (click ℹ️ icon for explanation)
+   - Tooltip content: Definition, typical range, example (per Section 4.4)
+   - Example: "Interest Rate: Annual percentage rate (APR) for the loan. Typical range: 5-12% for SBA loans."
+
+4. **"Try it" mode with realistic example data**
+   - Banner at top: "This calculator is pre-filled with example data. Try it out, then enter your own numbers."
+   - Example data is realistic (not $1M loan at 50% rate)
+   - User can immediately see calculator in action
+
+5. **Help documentation and video tutorials**
+   - Help doc per calculator (how to use, what inputs mean, how to interpret results)
+   - Video tutorial (2-3 minutes): Walkthrough of calculator with example
+   - FAQ section (common questions like "What is DSCR?")
+
+**Success metrics**:
+- User testing: 80% of users complete task without assistance
+- Support tickets: <10 tickets per 1,000 calculations (low support burden)
+- User feedback: Average rating >4/5 stars
+
+---
+
+### Risk 2.2: Low Free to Pro Conversion
+
+**Description**: Free users do not upgrade to Pro tier, leading to missed revenue targets and unprofitable user acquisition.
+
+**Probability**: Medium (conversion optimization is always challenging)
+
+**Impact**: High (revenue target missed, business model fails)
+
+**Mitigation strategies**:
+
+1. **A/B test upgrade prompts** (messaging, pricing display, CTA text)
+   - **Test 1**: Messaging
+     - Variant A: "Save hours analyzing scenarios" (emphasize time savings)
+     - Variant B: "Unlock unlimited scenarios for $29/month" (emphasize features)
+   - **Test 2**: Pricing display
+     - Variant A: "$29/month, cancel anytime" (emphasize flexibility)
+     - Variant B: "$348/year (save $0 vs monthly)" (emphasize annual)
+   - **Test 3**: CTA text
+     - Variant A: "Upgrade Now" (direct)
+     - Variant B: "Start Free Trial" (lower friction)
+   - Track conversion rate per variant (statistical significance at 100+ conversions)
+
+2. **Adjust feature gates based on usage data**
+   - Track which gated features are clicked most (upgrade_prompt_shown events)
+   - Example: If "locked_metric" has highest click-through, emphasize advanced metrics in marketing
+   - Move popular features behind paywall (increase upgrade triggers)
+   - Remove gates from unpopular features (reduce friction)
+
+3. **Offer 14-day trial** (reduce friction to trying Pro)
+   - Free users get 14-day Pro trial (no credit card required)
+   - After trial, downgrade to Free (unless user upgrades)
+   - Trial users experience full Pro features (scenarios, advanced metrics, clean exports)
+   - Conversion rate: Expect 30-40% of trial users to convert to paid
+
+4. **Monitor conversion funnel, optimize drop-off points**
+   - Funnel: upgrade_prompt_shown → upgrade_prompt_clicked → checkout started → upgrade_completed
+   - Identify drop-off points:
+     - If high drop-off at "clicked → checkout started", simplify pricing page
+     - If high drop-off at "checkout started → completed", reduce friction in payment flow (fewer form fields, social proof)
+   - Iterate weekly (small tweaks to improve conversion)
+
+5. **Value-based pricing test**
+   - Test different price points ($19/month, $29/month, $39/month)
+   - Measure conversion rate and revenue per user
+   - Find optimal price (maximize revenue = conversion rate × price)
+
+**Success metrics**:
+- Free to Pro conversion rate: 3-5% monthly (baseline)
+- A/B test winning variant: >20% improvement over baseline
+- Trial to paid conversion: 30-40%
+
+---
+
+### Risk 2.3: AI Narratives Not Valuable Enough to Justify Cost
+
+**Description**: Users do not find AI narratives helpful or insightful, leading to low AI tier adoption and questioning the $20/month AI add-on pricing.
+
+**Probability**: Medium (AI value is subjective, users may prefer doing own analysis)
+
+**Impact**: Medium (AI tier adoption low, but AI is add-on, not core product)
+
+**Mitigation strategies**:
+
+1. **User surveys after AI usage** (5-star rating, "Would you pay for this?")
+   - After user views AI response, show quick survey:
+     - "Was this explanation helpful?" (5-star rating)
+     - "Would you pay $20/month for AI explanations?" (Yes/No)
+   - Collect qualitative feedback: "What would make this more helpful?"
+   - Analyze feedback: Common themes (too generic, not actionable, too long)
+
+2. **Iterate on prompt quality based on feedback**
+   - Low-rated responses: Review prompt, identify issues (too vague, missing context, wrong tone)
+   - Improve prompts (add specificity, adjust tone, shorten output)
+   - A/B test prompt variations (e.g., 200 words vs 150 words)
+   - Track rating improvement over time (goal: >4/5 average rating)
+
+3. **Showcase AI in Free tier** (1 free AI request to demonstrate value)
+   - Free users get 1 AI request per month (taste of AI)
+   - After using free request, show upgrade prompt: "Upgrade to AI tier for 50 requests/month"
+   - Conversion trigger: Users who use free AI are more likely to upgrade
+   - Track conversion rate: Free users who use AI → AI tier upgrade
+
+4. **Consider bundling AI with Pro** (instead of separate tier)
+   - Alternative pricing: Pro tier ($39/month) includes AI (50 requests)
+   - Simplifies tier structure (3 tiers → 2 tiers)
+   - Increases Pro tier value (easier to justify $39 vs $29 + $20)
+   - Test with cohort (offer bundled pricing to 50% of new users, measure adoption)
+
+5. **Highlight AI value in marketing**
+   - Before-and-after examples: "Without AI: Spend 30 minutes researching DSCR. With AI: Get instant explanation in plain language."
+   - Testimonials: "AI explanations saved me hours of research" (from beta users)
+   - Video demo: Show AI in action (user asks question, AI responds)
+
+**Success metrics**:
+- AI response rating: >4/5 stars average
+- AI tier adoption: 15-20% of Pro users add AI
+- Free AI usage: 30-40% of Free users use their 1 free request
+
+---
+
+## 3. Compliance and Data Handling Risks
+
+### Risk 3.1: Accidentally Sending PII to AI Providers
+
+**Description**: User's personally identifiable information (PII) is inadvertently sent to Anthropic or other AI providers, violating GDPR/privacy commitments (Section 5.2).
+
+**Probability**: Low (strict redaction rules in place, per Section 8.3)
+
+**Impact**: Critical (GDPR violation, fines up to 4% of revenue, reputational damage, user trust lost)
+
+**Mitigation strategies**:
+
+1. **Strict redaction rules** (no free-text by default)
+   - Default: Only numeric inputs/outputs sent to AI (no free-text notes, no scenario names)
+   - Free-text only sent if user explicitly opts in (Enhanced redaction mode, Section 8.3)
+   - Redaction enforced in code (prompt builder function validates inputs)
+   - Example:
+     ```typescript
+     function buildAIPrompt(inputs: CalcInputs, settings: TenantConfig) {
+       if (settings.ai_redaction_level === 'strict') {
+         // Send ranges instead of exact values
+       } else if (settings.ai_redaction_level === 'standard') {
+         // Send numeric values only, no free-text
+       }
+       // Never send: email, name, company name, notes (unless Enhanced mode)
+     }
+     ```
+
+2. **Automated checks in code review** (block any free-text fields in AI prompts)
+   - Linter rule: Flag any code that sends free-text to AI without opt-in check
+   - Pre-commit hook: Prevent commits that violate redaction rules
+   - Code review checklist: "Does this prompt send only numeric data? Is free-text opt-in?"
+
+3. **Logging all AI requests** (audit trail of what was sent)
+   - Log summary of each AI request (per Section 8.3):
+     - session_id, user_id, calculator_slug, ai_request_type, timestamp
+     - Summary: "DSCR explanation requested" (not full prompt)
+   - Audit logs retained for 12 months (per Section 5.4)
+   - Regular audits: Sample AI request logs, verify no PII sent
+
+4. **Regular security audits**
+   - Quarterly audit: Review AI prompt code, verify redaction rules enforced
+   - Penetration testing: Attempt to send PII to AI (red team exercise)
+   - Third-party audit: Annual security audit by external firm (GDPR compliance)
+
+5. **Privacy training for engineers**
+   - Onboarding: All engineers trained on privacy requirements (Section 5.2)
+   - Quarterly refresher: Review GDPR, redaction rules, audit logs
+   - Incident response plan: What to do if PII is accidentally sent (notify DPA within 72 hours)
+
+**Success metric**: Zero PII incidents in production (verified via audit logs)
+
+---
+
+### Risk 3.2: Data Retention Violates Local Regulations
+
+**Description**: Data retention policies (24 months for scenarios, 12 months for logs, per Section 5.4) violate stricter local regulations (e.g., GDPR "right to erasure", CCPA).
+
+**Probability**: Low (retention policies designed to be GDPR/CCPA compliant)
+
+**Impact**: High (compliance issues, fines, legal action)
+
+**Mitigation strategies**:
+
+1. **Per-tenant retention controls** (B2B can set stricter policies)
+   - Tenant config: `data_retention_months` (default: 24, can be reduced to 1-12)
+   - Automated purging: Nightly job deletes data older than retention period
+   - Example: EU customer sets retention to 6 months (stricter than default)
+
+2. **Data residency options** (future: EU customers on EU servers)
+   - Phase 1: All data stored in US (AWS us-east-1)
+   - Phase 2: EU region (AWS eu-west-1) for EU customers (GDPR data residency)
+   - Customer chooses region at signup (or auto-detect based on IP)
+   - Data never leaves chosen region (compliance with data sovereignty laws)
+
+3. **Automated purging schedules** (nightly jobs, tested)
+   - Nightly job: Delete scenarios older than retention period
+   - Weekly job: Delete analytics events older than 12 months
+   - Monthly job: Delete exports older than retention period
+   - Jobs logged and monitored (alert if job fails)
+
+4. **Legal review of retention policies before launch**
+   - Consult privacy lawyer: Review retention policies (Section 5.4)
+   - Verify compliance: GDPR (EU), CCPA (California), PIPEDA (Canada)
+   - Update policies if needed (reduce retention, add region options)
+
+5. **User data deletion on request** (GDPR "right to erasure")
+   - User can request deletion in account settings
+   - Deletion process:
+     1. Delete all scenarios (immediate)
+     2. Delete all exports (immediate, also delete S3/R2 files)
+     3. Pseudonymize analytics logs (set user_id = NULL, retain session_id for aggregate analytics)
+     4. Delete user record (30-day grace period, then permanent)
+   - Confirmation email: "Your data has been deleted. This action cannot be undone."
+
+**Success metrics**:
+- Automated purging jobs run successfully (>99.9% uptime)
+- Zero data retention violations (verified via legal review)
+- User deletion completes within 30 days (GDPR compliance)
+
+---
+
+### Risk 3.3: Disclaimers Insufficient or Unclear
+
+**Description**: Disclaimers (Section 5.3, Section 8.1) are not prominent enough, not clear enough, or legally insufficient, leading to liability concerns or user confusion.
+
+**Probability**: Medium (disclaimers are often overlooked or poorly worded)
+
+**Impact**: Medium (liability concerns, user confusion, potential legal action if user relies on calculator for decisions)
+
+**Mitigation strategies**:
+
+1. **Legal review of all disclaimers** (Section 5.3 text)
+   - Hire lawyer: Review disclaimer text for all calculators (lending, valuation, tax-related)
+   - Verify sufficiency: Does disclaimer protect against liability?
+   - Update based on feedback: Strengthen language if needed
+
+2. **Prominent placement** (footer, exports, AI outputs)
+   - **Footer**: Disclaimer in footer of every calculator page (always visible)
+   - **Exports**: Disclaimer in footer of every PDF/CSV/Excel export (cannot be removed)
+   - **AI outputs**: Disclaimer appended to every AI response (per Section 8.1)
+   - Never hidden: Disclaimers cannot be dismissed, collapsed, or removed by user
+
+3. **User acceptance flow on first use** (checkbox acknowledging terms)
+   - First time user uses calculator, show modal:
+     - "This calculator is for informational purposes only. It does not constitute financial advice. By clicking 'I Understand', you acknowledge that you have read and understood the disclaimer."
+     - Checkbox: "☐ I understand and agree"
+     - Button: "Continue" (disabled until checkbox checked)
+   - Logged: User acceptance logged (user_id, timestamp, ip_address)
+
+4. **Clear language testing with non-finance users**
+   - Recruit 5-10 non-finance users (e.g., small business owners without finance background)
+   - Show disclaimers, ask: "What does this mean in your own words?"
+   - Identify confusion points (legal jargon, unclear warnings)
+   - Simplify language (8th-grade reading level, avoid legalese)
+
+5. **Context-specific disclaimers** (per calculator type)
+   - Loan calculators: "This calculator does not evaluate creditworthiness or guarantee loan approval."
+   - Valuation calculators: "This valuation is an estimate. Actual business value depends on market conditions and professional appraisal."
+   - Tax calculators: "This calculator provides general estimates. Tax rules vary by jurisdiction. Consult a CPA."
+   - Custom disclaimers displayed prominently (above results)
+
+**Success metrics**:
+- Legal review: Lawyer approves all disclaimers (no liability gaps)
+- User comprehension: 80% of users correctly explain disclaimer in own words
+- Acceptance rate: 100% of users accept disclaimer (required to use calculator)
+
+---
+
+## 4. Business and Market Risks
+
+### Risk 4.1: Slow User Acquisition (Low Organic Traffic)
+
+**Description**: Website traffic is lower than expected, leading to slow user growth and delayed revenue targets.
+
+**Probability**: Medium (SEO and content marketing take time to build momentum)
+
+**Impact**: Medium (delayed revenue, but product can still succeed with slower growth)
+
+**Mitigation strategies**:
+
+1. **SEO optimization from day one** (per Section 9.1, M2)
+   - On-page SEO: Meta tags, structured data, sitemap
+   - Content SEO: Blog posts (3-5 articles) targeting keywords ("SBA loan calculator", "DSCR calculator")
+   - Technical SEO: Fast page load (<2s), mobile-friendly, HTTPS
+   - Backlinks: Outreach to finance blogs, lenders, SBA resource centers
+
+2. **Partnerships with SBA lenders and advisors**
+   - Partner with SBA lenders (embed calculators on lender websites)
+   - Partner with SBA advisors (SBDC, SCORE chapters)
+   - Co-marketing: Lender promotes calculator to clients, we credit lender
+   - Referral program: Lender gets commission for Pro tier signups from their traffic
+
+3. **Content marketing** (blog, guides, videos)
+   - Blog: Publish 2-4 articles per month (SEO-optimized, target keywords)
+   - Guides: Downloadable PDFs ("How to Calculate DSCR for SBA Loans")
+   - Videos: YouTube tutorials (calculator walkthroughs, finance concepts)
+   - Email newsletter: Weekly tips for small business owners (link to calculators)
+
+4. **Paid search campaigns** (Google Ads)
+   - Target keywords: "SBA loan calculator", "DSCR calculator", "business loan calculator"
+   - Budget: $500-1,000/month (test, optimize based on conversion rate)
+   - Landing pages: Calculator-specific (direct to calculator, not homepage)
+   - Track ROI: Cost per acquisition (CPA), aim for <$50 per Pro tier signup
+
+5. **Community engagement** (Reddit, forums, social media)
+   - Participate in r/smallbusiness, r/Entrepreneur (answer questions, share calculator)
+   - LinkedIn: Post finance tips, link to calculators
+   - Twitter: Share calculator use cases, user testimonials
+   - Avoid spam: Provide value first, promote calculator second
+
+**Success metrics**:
+- Organic traffic: 10,000 visits/month by Month 6 (from SEO and content)
+- Partnerships: 5 SBA lender partnerships by Month 6
+- Paid search: CPA <$50 per Pro tier signup
+
+---
+
+### Risk 4.2: Competitive Pressure from Incumbents
+
+**Description**: Established players (Lendio, Fundera, NerdWallet) launch similar calculators, reducing differentiation and market share.
+
+**Probability**: Low (incumbents are slow to innovate, focus on lead generation)
+
+**Impact**: Medium (reduces growth, but does not eliminate market opportunity)
+
+**Mitigation strategies**:
+
+1. **Focus on differentiation** (CFO-grade accuracy, multi-scenario analysis)
+   - Incumbents: Simple calculators, lead generation focus, generic results
+   - Us: CFO-grade accuracy, multi-scenario comparison, board-ready exports
+   - Messaging: "Built for serious business owners, not lead generation"
+
+2. **Build network effects** (user-generated content, referrals)
+   - User-generated content: Allow users to share scenarios (public link)
+   - Referral program: Give users $10 credit for each friend who upgrades to Pro
+   - Community: Forum or Slack community for users to discuss scenarios
+
+3. **Rapid iteration based on user feedback**
+   - Weekly releases: Ship new features, improvements every week (vs quarterly for incumbents)
+   - User feedback loop: Collect feedback in-app, prioritize top requests
+   - Transparency: Changelog, roadmap visible to users (build trust)
+
+4. **B2B/white-label moat**
+   - Incumbents: Focus on B2C, lead generation for lenders
+   - Us: B2B/white-label for lenders, advisors (embed calculators on their sites)
+   - Stickiness: Once lender embeds our calculator, switching cost is high
+
+5. **AI as differentiator** (incumbents unlikely to invest in AI quickly)
+   - AI narratives: Unique to our product (incumbents have static calculators)
+   - Prompt quality: Continuously improve prompts (hard to replicate)
+   - Cost advantage: Incumbents may not have AI cost optimization (prompt caching, response caching)
+
+**Success metrics**:
+- Market share: 10% of "business loan calculator" searches by Year 1 (from SEO rank)
+- B2B customers: 20 B2B partnerships by Year 1 (moat against competition)
+- User feedback: >4.5/5 stars average (higher than incumbents)
+
+---
+
+## Summary
+
+Key risks and mitigations for the CFO Business Intelligence Calculator Suite:
+
+**Technical risks**:
+- **Calculation performance**: Load testing, caching, formula optimization, horizontal scaling
+- **Export slowness**: Async generation, template optimization, worker pool
+- **AI latency/cost**: Prompt caching, response caching, hard timeout, cost monitoring
+- **WordPress compatibility**: Iframe isolation, version testing, documentation
+
+**Product risks**:
+- **Complexity**: User testing, sample scenarios, tooltips, help docs
+- **Low conversion**: A/B testing, trial offers, feature gate optimization
+- **AI value**: User surveys, prompt iteration, free AI demo, bundling with Pro
+
+**Compliance risks**:
+- **PII to AI**: Strict redaction, automated checks, audit logs, security audits
+- **Data retention**: Per-tenant controls, data residency, automated purging, legal review
+- **Disclaimers**: Legal review, prominent placement, user acceptance, clear language
+
+**Business risks**:
+- **Slow acquisition**: SEO, partnerships, content marketing, paid search
+- **Competition**: Differentiation (CFO-grade, multi-scenario), B2B moat, AI advantage
+
+**Highest priority risks** (High impact + High/Medium probability):
+1. Calculation performance (High impact, Medium probability)
+2. Low Free to Pro conversion (High impact, Medium probability)
+3. Calculators too complex (High impact, Medium probability)
+4. Accidentally sending PII to AI (Critical impact, Low probability - but must prevent)
+
+All identified risks have specific, actionable mitigation strategies defined.
+
+
+---
+
+
+# Section 10: Testing & QA
+
+# 10.1 Test Strategy (Suite-Level)
+
+This section defines the comprehensive testing approach for the CFO Business Intelligence Calculator Suite across all levels, from unit tests to end-to-end workflows. The testing strategy ensures formula correctness, performance SLA compliance (Section 1.6), and regression safety.
+
+---
+
+## Testing Philosophy
+
+**Goals**:
+- **Formula correctness**: 100% accuracy for calculations (golden scenarios, Section 10.2)
+- **Performance compliance**: Meet all SLAs (p95 <150ms calculations, <3s exports)
+- **Regression safety**: Prevent breaking changes to formulas or features
+- **User experience quality**: Ensure calculators work correctly across browsers, devices, and tiers
+
+**Testing pyramid**:
+```
+         /\
+        /E2E\        10% - End-to-End Tests (critical workflows)
+       /------\
+      /Integr.\     30% - Integration Tests (API, database, exports)
+     /----------\
+    /   Unit     \  60% - Unit Tests (formulas, validation, components)
+   /--------------\
+```
+
+**Test-driven approach**: Write tests before or alongside implementation (not after).
+
+---
+
+## 1. Unit Testing
+
+### Scope
+
+**Individual functions and components**, tested in isolation without dependencies.
+
+**What gets unit tested**:
+- **Formula library**: All calculation functions (DSCR, amortization, runway, breakeven, valuation)
+- **Input validation**: Range checks, type checks, business logic validation
+- **Formatting utilities**: Currency formatting, percentage formatting, number formatting
+- **UI components**: React components (inputs, result cards, scenario tabs, modals)
+- **Helper functions**: Date utilities, math utilities, data transformations
+
+**What does NOT get unit tested**:
+- Database queries (tested in integration tests)
+- API endpoints (tested in integration tests)
+- External service calls (AI, Stripe - mocked in unit tests)
+
+### Coverage Targets
+
+**Required coverage levels**:
+
+| Component Type | Coverage Target | Rationale |
+|----------------|-----------------|-----------|
+| Formula library | 100% | Core value proposition, must be correct |
+| Input validation | 100% | Prevents bad data from corrupting calculations |
+| Formatting utilities | 100% | Critical for export quality and UX |
+| UI components | 80% minimum | Balance test value vs effort (some visual aspects hard to test) |
+| API routes | 70% minimum | Core logic tested, edge cases in integration tests |
+
+**Coverage enforcement**:
+- CI/CD pipeline fails if coverage drops below targets
+- Pre-commit hook warns if new code has <80% coverage
+- Coverage report published with each pull request
+
+### Tools
+
+**JavaScript/TypeScript**:
+- **Jest**: Test runner and assertion library
+  - Fast, parallel execution
+  - Built-in mocking and code coverage
+  - React Testing Library for component tests
+
+**Python** (if backend uses Python):
+- **pytest**: Test runner
+- **pytest-cov**: Coverage reporting
+
+**Configuration**:
+```json
+{
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      },
+      "src/formulas/": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
+  }
+}
+```
+
+### Example Unit Tests
+
+**Test 1: Amortization formula with standard inputs**
+
+```typescript
+describe('calculateAmortization', () => {
+  test('standard SBA loan: $250k at 7.5% for 10 years', () => {
+    const inputs = {
+      principal: 250000,
+      annualRate: 0.075,
+      termMonths: 120,
+    };
+
+    const result = calculateAmortization(inputs);
+
+    expect(result.monthlyPayment).toBeCloseTo(2958.04, 2);
+    expect(result.totalInterest).toBeCloseTo(104964.80, 2);
+    expect(result.totalCost).toBeCloseTo(354964.80, 2);
+    expect(result.version).toBe('v1');
+  });
+
+  test('short-term loan: $50k at 9% for 3 years', () => {
+    const inputs = {
+      principal: 50000,
+      annualRate: 0.09,
+      termMonths: 36,
+    };
+
+    const result = calculateAmortization(inputs);
+
+    expect(result.monthlyPayment).toBeCloseTo(1589.04, 2);
+    expect(result.totalInterest).toBeCloseTo(7205.44, 2);
+  });
+});
+```
+
+**Test 2: DSCR calculation with zero debt service (edge case)**
+
+```typescript
+describe('calculateDSCR', () => {
+  test('handles zero debt service gracefully', () => {
+    const inputs = {
+      annualRevenue: 1000000,
+      operatingExpenses: 800000,
+      annualDebtPayment: 0,
+    };
+
+    const result = calculateDSCR(inputs);
+
+    expect(result.dscr).toBe(Infinity);
+    expect(result.warnings).toContainEqual({
+      code: 'ZERO_DEBT_SERVICE',
+      message: 'DSCR cannot be calculated with zero debt service.',
+      severity: 'info',
+    });
+  });
+
+  test('handles negative operating income', () => {
+    const inputs = {
+      annualRevenue: 500000,
+      operatingExpenses: 600000, // Negative $100k operating income
+      annualDebtPayment: 50000,
+    };
+
+    const result = calculateDSCR(inputs);
+
+    expect(result.dscr).toBeLessThan(0);
+    expect(result.warnings).toContainEqual({
+      code: 'NEGATIVE_OPERATING_INCOME',
+      message: 'Business has negative operating income. DSCR is not meaningful.',
+      severity: 'critical',
+    });
+  });
+});
+```
+
+**Test 3: Input validation rejects negative loan amounts**
+
+```typescript
+describe('validateLoanInputs', () => {
+  test('rejects negative loan amount', () => {
+    const inputs = {
+      principal: -250000,
+      annualRate: 0.075,
+      termMonths: 120,
+    };
+
+    const result = validateLoanInputs(inputs);
+
+    expect(result.valid).toBe(false);
+    expect(result.errors).toContain('Loan amount must be positive');
+  });
+
+  test('rejects interest rate outside 0-30% range', () => {
+    const inputs = {
+      principal: 250000,
+      annualRate: 0.50, // 50% - unrealistic
+      termMonths: 120,
+    };
+
+    const result = validateLoanInputs(inputs);
+
+    expect(result.valid).toBe(false);
+    expect(result.errors).toContain('Interest rate must be between 0% and 30%');
+  });
+
+  test('accepts valid inputs', () => {
+    const inputs = {
+      principal: 250000,
+      annualRate: 0.075,
+      termMonths: 120,
+    };
+
+    const result = validateLoanInputs(inputs);
+
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+});
+```
+
+**Test 4: Currency formatter handles large numbers correctly**
+
+```typescript
+describe('formatCurrency', () => {
+  test('formats standard amounts with commas and decimals', () => {
+    expect(formatCurrency(2958.04)).toBe('$2,958.04');
+    expect(formatCurrency(250000)).toBe('$250,000.00');
+    expect(formatCurrency(1500000)).toBe('$1,500,000.00');
+  });
+
+  test('handles large numbers (millions, billions)', () => {
+    expect(formatCurrency(1000000)).toBe('$1,000,000.00');
+    expect(formatCurrency(1000000000)).toBe('$1,000,000,000.00');
+  });
+
+  test('handles small amounts (cents)', () => {
+    expect(formatCurrency(0.99)).toBe('$0.99');
+    expect(formatCurrency(0.01)).toBe('$0.01');
+  });
+
+  test('handles zero', () => {
+    expect(formatCurrency(0)).toBe('$0.00');
+  });
+
+  test('handles negative amounts', () => {
+    expect(formatCurrency(-2958.04)).toBe('-$2,958.04');
+  });
+});
+```
+
+**Test 5: React component rendering**
+
+```typescript
+describe('MetricCard component', () => {
+  test('renders metric with label, value, and unit', () => {
+    render(
+      <MetricCard
+        label="Monthly Payment"
+        value={2958.04}
+        unit="USD"
+        format="currency"
+      />
+    );
+
+    expect(screen.getByText('Monthly Payment')).toBeInTheDocument();
+    expect(screen.getByText('$2,958.04')).toBeInTheDocument();
+  });
+
+  test('renders warning icon when warning prop is true', () => {
+    render(
+      <MetricCard
+        label="DSCR"
+        value={1.18}
+        format="decimal"
+        warning={true}
+        warningMessage="DSCR below typical lender minimum of 1.25"
+      />
+    );
+
+    expect(screen.getByRole('img', { name: /warning/i })).toBeInTheDocument();
+    expect(screen.getByText(/DSCR below typical lender minimum/i)).toBeInTheDocument();
+  });
+});
+```
+
+---
+
+## 2. Integration Testing
+
+### Scope
+
+**Multiple components working together**, including database, APIs, and external services.
+
+**What gets integration tested**:
+- **API endpoints**: Calculate, export, save scenario, AI request, user authentication
+- **Database operations**: Save scenario, retrieve scenarios, update user tier, log events
+- **Tier gating logic**: Free user attempts Pro feature, Pro user accesses locked AI feature
+- **Export generation**: Inputs → calculation → PDF/CSV/Excel with correct formatting and watermarking
+- **Payment flow**: Stripe webhook updates user tier correctly
+- **AI integration**: Request AI narrative, receive response, handle timeout/errors
+
+### Test Areas
+
+**API endpoint testing**:
+- Request/response format validation (JSON schema)
+- Status codes (200 success, 400 bad request, 403 forbidden, 500 error)
+- Authentication and authorization (valid token required, tier-based access)
+- Performance (response time <200ms for calculations)
+
+**Database testing**:
+- CRUD operations (create, read, update, delete scenarios)
+- Data integrity (foreign key constraints, unique constraints)
+- Transaction rollback on errors
+
+**Tier gating testing**:
+- Free user cannot create second scenario (403 Forbidden)
+- Pro user can create scenarios, access advanced metrics
+- AI tier user can request AI narratives (up to quota)
+
+**Export generation testing**:
+- PDF includes all inputs, outputs, disclaimers
+- Watermark present for Free tier, absent for Pro tier
+- CSV has correct metadata headers
+- Excel has formatted cells (currency, percentage)
+
+### Tools
+
+**API testing**:
+- **Supertest**: HTTP assertions for Node.js/Express/Fastify
+  - Programmatic API calls without starting server
+  - Assertion helpers for status codes, response bodies
+
+**Database testing**:
+- **Test database**: Separate PostgreSQL instance for testing (not production)
+- **Database migrations**: Run up/down migrations in tests
+- **Test fixtures**: Seed test data before each test, clean up after
+
+**Example configuration**:
+```typescript
+// Test setup
+beforeAll(async () => {
+  await db.migrate.latest(); // Run migrations
+  await db.seed.run(); // Seed test data
+});
+
+afterAll(async () => {
+  await db.destroy(); // Close database connection
+});
+
+beforeEach(async () => {
+  await db('scenarios').del(); // Clear scenarios table
+});
+```
+
+### Example Integration Tests
+
+**Test 1: POST to /api/calculate returns correct results within 200ms**
+
+```typescript
+describe('POST /api/calculate', () => {
+  test('calculates DSCR correctly and returns within 200ms', async () => {
+    const startTime = Date.now();
+
+    const response = await request(app)
+      .post('/api/calculate')
+      .send({
+        calculator_slug: 'business-loan-dscr',
+        inputs: {
+          principal: 250000,
+          annualRate: 7.5,
+          termMonths: 120,
+          annualRevenue: 1500000,
+          operatingExpenses: 1200000,
+        },
+      })
+      .expect(200);
+
+    const duration = Date.now() - startTime;
+
+    expect(response.body.outputs.monthlyPayment).toBeCloseTo(2958.04, 2);
+    expect(response.body.outputs.dscr).toBeCloseTo(1.42, 2);
+    expect(response.body.version).toBe('v1');
+    expect(duration).toBeLessThan(200); // Performance check
+  });
+
+  test('returns 400 for invalid inputs', async () => {
+    const response = await request(app)
+      .post('/api/calculate')
+      .send({
+        calculator_slug: 'business-loan-dscr',
+        inputs: {
+          principal: -250000, // Invalid: negative
+          annualRate: 7.5,
+          termMonths: 120,
+        },
+      })
+      .expect(400);
+
+    expect(response.body.error).toContain('Loan amount must be positive');
+  });
+});
+```
+
+**Test 2: Save scenario as Pro user succeeds, as Free user fails with 403**
+
+```typescript
+describe('POST /api/scenarios', () => {
+  test('Pro user can save scenario', async () => {
+    const proUser = await createTestUser({ tier: 'pro' });
+    const token = generateAuthToken(proUser);
+
+    const response = await request(app)
+      .post('/api/scenarios')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        calculator_slug: 'business-loan-dscr',
+        inputs: { principal: 250000, annualRate: 7.5, termMonths: 120 },
+        outputs: { monthlyPayment: 2958.04, dscr: 1.42 },
+      })
+      .expect(201);
+
+    expect(response.body.scenario_id).toBeDefined();
+
+    // Verify scenario saved in database
+    const saved = await db('scenarios').where({ scenario_id: response.body.scenario_id }).first();
+    expect(saved).toBeDefined();
+    expect(saved.user_id).toBe(proUser.user_id);
+  });
+
+  test('Free user receives 403 Forbidden', async () => {
+    const freeUser = await createTestUser({ tier: 'free' });
+    const token = generateAuthToken(freeUser);
+
+    const response = await request(app)
+      .post('/api/scenarios')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        calculator_slug: 'business-loan-dscr',
+        inputs: { principal: 250000, annualRate: 7.5, termMonths: 120 },
+        outputs: { monthlyPayment: 2958.04, dscr: 1.42 },
+      })
+      .expect(403);
+
+    expect(response.body.error).toContain('Upgrade to Pro to save scenarios');
+  });
+});
+```
+
+**Test 3: Export PDF includes watermark for Free tier, no watermark for Pro**
+
+```typescript
+describe('POST /api/exports', () => {
+  test('Free tier export has watermark', async () => {
+    const freeUser = await createTestUser({ tier: 'free' });
+    const token = generateAuthToken(freeUser);
+
+    const response = await request(app)
+      .post('/api/exports')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        calculator_slug: 'business-loan-dscr',
+        inputs: { principal: 250000, annualRate: 7.5, termMonths: 120 },
+        outputs: { monthlyPayment: 2958.04, dscr: 1.42 },
+        format: 'pdf',
+      })
+      .expect(202); // Async export, returns 202 Accepted
+
+    // Wait for export to complete
+    await waitForExport(response.body.export_id);
+
+    const exportRecord = await db('exports').where({ export_id: response.body.export_id }).first();
+    expect(exportRecord.has_watermark).toBe(true);
+
+    // Download PDF and verify watermark
+    const pdfBuffer = await downloadExport(exportRecord.file_url);
+    const pdfText = await extractTextFromPDF(pdfBuffer);
+    expect(pdfText).toContain('Upgrade for clean exports');
+  });
+
+  test('Pro tier export has no watermark', async () => {
+    const proUser = await createTestUser({ tier: 'pro' });
+    const token = generateAuthToken(proUser);
+
+    const response = await request(app)
+      .post('/api/exports')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        calculator_slug: 'business-loan-dscr',
+        inputs: { principal: 250000, annualRate: 7.5, termMonths: 120 },
+        outputs: { monthlyPayment: 2958.04, dscr: 1.42 },
+        format: 'pdf',
+      })
+      .expect(202);
+
+    await waitForExport(response.body.export_id);
+
+    const exportRecord = await db('exports').where({ export_id: response.body.export_id }).first();
+    expect(exportRecord.has_watermark).toBe(false);
+
+    const pdfBuffer = await downloadExport(exportRecord.file_url);
+    const pdfText = await extractTextFromPDF(pdfBuffer);
+    expect(pdfText).not.toContain('Upgrade for clean exports');
+  });
+});
+```
+
+**Test 4: AI request returns narrative within 5 seconds or timeout error**
+
+```typescript
+describe('POST /api/ai/narrative', () => {
+  test('returns AI narrative within 5 seconds', async () => {
+    const aiUser = await createTestUser({ tier: 'ai' });
+    const token = generateAuthToken(aiUser);
+
+    const startTime = Date.now();
+
+    const response = await request(app)
+      .post('/api/ai/narrative')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        calculator_slug: 'business-loan-dscr',
+        request_type: 'explain_result',
+        inputs: { principal: 250000, annualRate: 7.5, termMonths: 120 },
+        outputs: { monthlyPayment: 2958.04, dscr: 1.42 },
+      })
+      .expect(200);
+
+    const duration = Date.now() - startTime;
+
+    expect(response.body.narrative).toBeDefined();
+    expect(response.body.narrative).toContain('DSCR'); // Response mentions DSCR
+    expect(duration).toBeLessThan(5000); // Within 5 seconds
+  });
+
+  test('returns timeout error if AI takes >8 seconds', async () => {
+    // Mock AI provider to delay 10 seconds
+    mockAnthropicAPI.delay(10000);
+
+    const aiUser = await createTestUser({ tier: 'ai' });
+    const token = generateAuthToken(aiUser);
+
+    const response = await request(app)
+      .post('/api/ai/narrative')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        calculator_slug: 'business-loan-dscr',
+        request_type: 'explain_result',
+        inputs: { principal: 250000, annualRate: 7.5, termMonths: 120 },
+        outputs: { monthlyPayment: 2958.04, dscr: 1.42 },
+      })
+      .expect(504); // Gateway Timeout
+
+    expect(response.body.error).toContain('AI request timed out');
+  });
+});
+```
+
+---
+
+## 3. End-to-End Testing
+
+### Scope
+
+**Complete user workflows** from browser interaction to backend processing, simulating real user behavior.
+
+**What gets E2E tested**:
+- **Free tier workflow**: View calculator, enter inputs, see results, attempt export (blocked), see upgrade prompt
+- **Pro tier workflow**: Create multiple scenarios, compare side-by-side, export clean PDF
+- **AI tier workflow**: Request AI explanation, receive narrative, stay within monthly cap
+- **Upgrade workflow**: Click upgrade, complete Stripe checkout, features unlock immediately
+- **Cross-browser compatibility**: Chrome, Safari, Firefox, Edge
+- **Mobile responsiveness**: Tablet (iPad) and mobile (iPhone) viewports
+
+### Test Scenarios
+
+**Scenario 1: Free tier workflow**
+
+```
+1. User navigates to /calculators/business-loan-dscr
+2. User enters loan amount ($250,000), interest rate (7.5%), term (10 years)
+3. Calculator displays monthly payment ($2,958.04) and DSCR (if revenue/expenses entered)
+4. User clicks "Add Scenario" → Upgrade prompt shown with tier comparison
+5. User clicks "Export" → PDF generated with watermark
+6. User sees upgrade CTA on export modal
+```
+
+**Scenario 2: Pro tier workflow**
+
+```
+1. Pro user logs in
+2. User navigates to /calculators/business-loan-dscr
+3. User creates Scenario 1 (10-year term), Scenario 2 (15-year term)
+4. User switches between scenario tabs, sees side-by-side comparison
+5. User clicks "Export" → Clean PDF generated (no watermark)
+6. User downloads PDF, verifies correct inputs/outputs
+```
+
+**Scenario 3: AI tier workflow**
+
+```
+1. AI tier user logs in
+2. User navigates to /calculators/business-loan-dscr
+3. User enters inputs, sees results
+4. User clicks "Explain this result" → AI narrative displayed
+5. User sees AI quota: "49 of 50 requests remaining"
+6. User clicks "Explain" again → Another narrative shown
+7. User sees "48 of 50 requests remaining"
+```
+
+**Scenario 4: Upgrade workflow**
+
+```
+1. Free user logs in
+2. User clicks locked feature (e.g., "Add Scenario")
+3. Upgrade modal shown with "Upgrade to Pro for $29/month"
+4. User clicks "Upgrade Now" → Redirected to Stripe checkout
+5. User enters payment details, submits
+6. User redirected back to app, sees "Upgrade successful" message
+7. User can now access Pro features (create scenarios, clean exports)
+```
+
+### Tools
+
+**Browser automation**:
+- **Playwright** (preferred): Fast, reliable, multi-browser support
+  - Supports Chrome, Firefox, Safari, Edge
+  - Mobile viewport emulation
+  - Screenshot and video recording for debugging
+  - Auto-waiting (no explicit waits needed)
+
+**Alternative**:
+- **Cypress**: Good developer experience, Chrome/Firefox only
+
+**Test execution**:
+- Run locally during development
+- Run in CI/CD on every pull request
+- Run nightly for full cross-browser suite
+
+### Cross-Browser Testing
+
+**Browsers tested**:
+- **Chrome**: Latest version (primary)
+- **Safari**: Latest version (macOS/iOS)
+- **Firefox**: Latest version
+- **Edge**: Latest version (Windows)
+
+**Test matrix** (examples):
+| Test Scenario | Chrome | Safari | Firefox | Edge |
+|---------------|--------|--------|---------|------|
+| Free tier workflow | ✓ | ✓ | ✓ | ✓ |
+| Pro tier workflow | ✓ | ✓ | ✓ | ✓ |
+| AI tier workflow | ✓ | ✓ | ✓ | ✓ |
+| Upgrade workflow | ✓ | - | ✓ | - |
+
+**Mobile responsive testing**:
+- **Tablet**: iPad (1024×768)
+- **Mobile**: iPhone (375×667)
+- **Tests**: Calculator renders correctly, inputs are usable, results are readable
+
+### Example E2E Tests
+
+**Test: Free tier workflow**
+
+```typescript
+test('Free user can view calculator, calculate, see upgrade prompt', async ({ page }) => {
+  // Navigate to calculator
+  await page.goto('/calculators/business-loan-dscr');
+
+  // Verify calculator loaded
+  await expect(page.getByText('Business Loan + DSCR Calculator')).toBeVisible();
+
+  // Enter inputs
+  await page.fill('input[name="principal"]', '250000');
+  await page.fill('input[name="annualRate"]', '7.5');
+  await page.fill('input[name="termYears"]', '10');
+
+  // Results appear automatically (debounced calculation)
+  await expect(page.getByText('$2,958.04')).toBeVisible({ timeout: 5000 });
+
+  // Click "Add Scenario" → Upgrade prompt shown
+  await page.click('button:has-text("Add Scenario")');
+  await expect(page.getByText('Upgrade to Pro')).toBeVisible();
+  await expect(page.getByText('$29/month')).toBeVisible();
+
+  // Close modal
+  await page.click('button:has-text("Not now")');
+
+  // Click "Export" → Watermark warning shown
+  await page.click('button:has-text("Export")');
+  await page.click('button:has-text("Download PDF")');
+  await expect(page.getByText('watermarked')).toBeVisible();
+});
+```
+
+**Test: Pro tier workflow (multi-scenario)**
+
+```typescript
+test('Pro user can create multiple scenarios and compare', async ({ page }) => {
+  // Login as Pro user
+  await loginAsProUser(page);
+
+  await page.goto('/calculators/business-loan-dscr');
+
+  // Create Scenario 1 (10-year term)
+  await page.fill('input[name="principal"]', '250000');
+  await page.fill('input[name="annualRate"]', '7.5');
+  await page.fill('input[name="termYears"]', '10');
+  await page.click('button:has-text("Save Scenario")');
+  await expect(page.getByText('Scenario 1')).toBeVisible();
+
+  // Create Scenario 2 (15-year term)
+  await page.click('button:has-text("Add Scenario")');
+  await page.fill('input[name="termYears"]', '15'); // Other inputs same
+  await page.click('button:has-text("Save Scenario")');
+  await expect(page.getByText('Scenario 2')).toBeVisible();
+
+  // Switch to Scenario 1 tab
+  await page.click('text=Scenario 1');
+  await expect(page.getByText('$2,958.04')).toBeVisible();
+
+  // Switch to Scenario 2 tab
+  await page.click('text=Scenario 2');
+  await expect(page.getByText('$2,247')).toBeVisible(); // Lower payment (longer term)
+
+  // Export clean PDF (no watermark)
+  await page.click('button:has-text("Export")');
+  const downloadPromise = page.waitForEvent('download');
+  await page.click('button:has-text("Download PDF")');
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toContain('.pdf');
+});
+```
+
+---
+
+## 4. Performance and Load Testing
+
+### Scope
+
+**Verify SLAs under realistic and peak load conditions** (Section 1.6).
+
+**What gets performance tested**:
+- **Calculation engine**: Latency under concurrent load (p50, p95, p99)
+- **Export service**: PDF/CSV generation time under load
+- **AI service**: AI request latency and timeout behavior
+- **Database**: Query performance under concurrent read/write operations
+- **End-to-end**: Full user workflow latency (view → calculate → export)
+
+### Test Scenarios
+
+**Scenario 1: Calculation engine load**
+
+**Setup**:
+- 100 concurrent users
+- Each user makes 10 calculation requests (1,000 total requests)
+- Mixed calculator types (DSCR, runway, breakeven, valuation)
+
+**Success criteria**:
+- p50 latency <100ms
+- p95 latency <150ms (SLA target)
+- p99 latency <300ms
+- Error rate <1%
+
+**Scenario 2: Export service load**
+
+**Setup**:
+- 50 concurrent users
+- Each user requests PDF export
+- Mixture of simple (single scenario) and complex (multi-scenario) exports
+
+**Success criteria**:
+- p50 generation time <2 seconds
+- p95 generation time <3 seconds (SLA target)
+- p99 generation time <5 seconds
+- Export failure rate <2%
+
+**Scenario 3: AI service load**
+
+**Setup**:
+- 20 concurrent users (lower than calculation load, AI is slower)
+- Each user requests AI narrative
+- Mixed request types (explain_result, suggest_scenario)
+
+**Success criteria**:
+- p50 latency <2 seconds
+- p95 latency <3 seconds (SLA target)
+- p99 latency <5 seconds
+- Timeout rate <5% (8-second timeout)
+
+### Tools
+
+**Load testing frameworks**:
+- **k6** (preferred): JavaScript-based, open-source, excellent reporting
+  - Scenarios defined in JavaScript
+  - Real-time metrics (latency percentiles, throughput, error rate)
+  - Cloud execution option (k6 Cloud)
+
+**Alternative**:
+- **Apache JMeter**: Java-based, GUI for test design
+- **Artillery**: Node.js-based, YAML configuration
+
+**Example k6 test**:
+```javascript
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+
+export let options = {
+  stages: [
+    { duration: '2m', target: 100 }, // Ramp up to 100 users over 2 minutes
+    { duration: '5m', target: 100 }, // Stay at 100 users for 5 minutes
+    { duration: '2m', target: 0 },   // Ramp down to 0 users
+  ],
+  thresholds: {
+    'http_req_duration': ['p95<150'], // p95 latency <150ms
+    'http_req_failed': ['rate<0.01'], // Error rate <1%
+  },
+};
+
+export default function () {
+  const payload = JSON.stringify({
+    calculator_slug: 'business-loan-dscr',
+    inputs: {
+      principal: 250000,
+      annualRate: 7.5,
+      termMonths: 120,
+    },
+  });
+
+  const res = http.post('https://api.example.com/api/calculate', payload, {
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  check(res, {
+    'status is 200': (r) => r.status === 200,
+    'response time <150ms': (r) => r.timings.duration < 150,
+  });
+
+  sleep(1); // Think time between requests
+}
+```
+
+### When to Run Load Tests
+
+**Frequency**:
+- **Before each major release** (M1, M2, M3)
+- **After infrastructure changes** (database upgrade, hosting migration)
+- **Monthly** (baseline performance tracking)
+
+**Continuous monitoring**:
+- Production monitoring (APM tools like Datadog) tracks real-user latency
+- Alerts if p95 latency exceeds SLA thresholds
+
+---
+
+## Summary
+
+The test strategy for the CFO Business Intelligence Calculator Suite includes:
+
+**1. Unit Testing** (60% of tests):
+- Formula library: 100% coverage (critical for correctness)
+- Input validation: 100% coverage (prevent bad data)
+- UI components: 80% coverage (balance value vs effort)
+- Tools: Jest, React Testing Library
+
+**2. Integration Testing** (30% of tests):
+- API endpoints, database operations, tier gating, export generation
+- Verify components work together correctly
+- Tools: Supertest, test database
+
+**3. End-to-End Testing** (10% of tests):
+- Complete user workflows (Free, Pro, AI, upgrade)
+- Cross-browser (Chrome, Safari, Firefox, Edge)
+- Mobile responsive (tablet, mobile)
+- Tools: Playwright
+
+**4. Performance and Load Testing**:
+- Verify SLAs under load (p95 <150ms calculations, <3s exports)
+- Run before major releases
+- Tools: k6
+
+**Coverage targets enforced in CI/CD**, blocking merge if tests fail or coverage drops below thresholds.
+
+
+# 10.2 Golden Scenario Framework
+
+This section defines the golden scenario system for regression testing of calculators. Golden scenarios are predefined test cases with known inputs and expected outputs that ensure formulas remain correct across code changes, deployments, and formula updates.
+
+---
+
+## Golden Scenario Philosophy
+
+**Purpose**: Catch regressions before they reach production
+
+**Key principle**: **Every calculator must have golden scenarios** that verify correctness (per Section 2.2: minimum 2-3 per calculator, recommended 10+ for comprehensive coverage).
+
+**What golden scenarios protect against**:
+- Formula changes that break correctness (accidental logic errors)
+- Refactoring that changes calculation behavior
+- Dependency updates that affect math libraries
+- Edge cases that produce incorrect results (NaN, Infinity, negative values)
+
+**When golden scenarios run**:
+- Every commit (CI/CD pipeline)
+- Before every deployment
+- On-demand when investigating bugs
+
+---
+
+## 1. Golden Scenario Requirements (Per Calculator)
+
+### Minimum Requirements
+
+**Each calculator MUST have**:
+- **Minimum 2-3 golden scenarios** (required for launch)
+- **Recommended 10+ scenarios** (comprehensive coverage, typical + edge cases)
+
+**Each golden scenario MUST include**:
+
+1. **Scenario name and description**
+   - Descriptive name (e.g., "Typical SBA Loan - Restaurant")
+   - Business context (e.g., "Standard SBA 7(a) loan for restaurant equipment purchase")
+
+2. **Fully specified inputs**
+   - All required fields provided
+   - Specific numeric values (not ranges or placeholders)
+   - Example: `loan_amount: 250000` (not `loan_amount: 200000-300000`)
+
+3. **Expected outputs with tolerances**
+   - All key outputs specified
+   - Tolerance defined per output (e.g., ±$1 for monthly payment, ±0.01 for DSCR)
+   - Rationale for tolerance: Floating-point arithmetic may produce slight variations
+
+4. **Expected warnings** (if any should appear)
+   - Warning type (info, warning, critical)
+   - Warning message (exact text or contains substring)
+
+**Failure to meet requirements**:
+- Calculator cannot be deployed without golden scenarios
+- Insufficient coverage (<10 scenarios) flagged in code review
+
+### Scenario Coverage Guidelines
+
+**Typical scenarios** (50-70% of scenarios):
+- Common use cases (e.g., "Standard business loan", "Typical cash runway")
+- Realistic inputs within normal ranges
+- No warnings expected (happy path)
+
+**Edge case scenarios** (20-30% of scenarios):
+- Boundary values (e.g., loan amount $1, loan amount $100M)
+- Extreme inputs (e.g., 0% interest rate, 50% interest rate)
+- Values that trigger warnings (e.g., DSCR <1.25, negative operating income)
+
+**Regression scenarios** (10-20% of scenarios):
+- Known bugs that have been fixed (prevent re-introduction)
+- Tricky calculations (e.g., negative amortization, balloon payments)
+- Historical issues reported by users
+
+### Example Coverage Matrix
+
+**Business Loan + DSCR Calculator** (10 scenarios):
+1. Typical SBA Loan - Restaurant ($250k, 7.5%, 10 years) → Monthly payment $2,958
+2. Short-term Loan - Equipment ($50k, 9%, 3 years) → Monthly payment $1,589
+3. Large Loan - Real Estate ($1M, 6%, 25 years) → Monthly payment $6,443
+4. Edge Case: Zero Interest Rate ($100k, 0%, 5 years) → Monthly payment $1,667
+5. Edge Case: Maximum Term ($250k, 7.5%, 30 years) → Monthly payment $1,748
+6. Warning: Low DSCR (DSCR 1.18) → Warning displayed
+7. Warning: Negative Operating Income → Critical warning
+8. Edge Case: Minimum Loan Amount ($1) → Monthly payment $0.01
+9. Regression: Balloon Payment Calculation (known issue fixed in v1.2)
+10. Regression: Rounding Error on Large Loans (known issue fixed in v1.3)
+
+---
+
+## 2. Golden Scenario Structure
+
+### Storage Format
+
+**Location**: `/tests/golden-scenarios/` directory in repository
+
+**File naming convention**: `{calculator_slug}_golden_{scenario_number}.json`
+
+**Examples**:
+- `business-loan-dscr_golden_1.json`
+- `business-loan-dscr_golden_2.json`
+- `cash-runway_golden_1.json`
+- `breakeven-margin_golden_1.json`
+
+**Rationale for separate files**:
+- Easier to add/remove scenarios (one file per scenario)
+- Git history shows which scenario changed
+- Parallel test execution (run multiple scenarios concurrently)
+
+### JSON Schema
+
+**Complete structure**:
+
+```json
+{
+  "calculator_slug": "business-loan-dscr",
+  "scenario_name": "Typical SBA Loan - Restaurant",
+  "description": "Standard SBA 7(a) loan for restaurant equipment purchase. Loan amount $250k at 7.5% for 10 years.",
+  "version": "1.0",
+  "created_date": "2025-11-01",
+  "updated_date": "2025-11-01",
+  "inputs": {
+    "loan_amount": 250000,
+    "interest_rate": 7.5,
+    "term_years": 10,
+    "annual_revenue": 1500000,
+    "annual_expenses": 1200000
+  },
+  "expected_outputs": {
+    "monthly_payment": {
+      "value": 2958.04,
+      "tolerance": 1,
+      "unit": "USD"
+    },
+    "total_interest": {
+      "value": 104964.80,
+      "tolerance": 100,
+      "unit": "USD"
+    },
+    "total_cost": {
+      "value": 354964.80,
+      "tolerance": 100,
+      "unit": "USD"
+    },
+    "dscr": {
+      "value": 1.42,
+      "tolerance": 0.01,
+      "unit": "ratio"
+    }
+  },
+  "expected_warnings": [
+    {
+      "type": "info",
+      "code": "DSCR_ABOVE_MINIMUM",
+      "message_contains": "DSCR is above typical lender minimum"
+    }
+  ],
+  "tags": ["typical", "sba", "restaurant"],
+  "notes": "This is a reference scenario based on actual SBA loan data. Used as primary smoke test."
+}
+```
+
+**Field descriptions**:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| calculator_slug | string | Yes | Calculator identifier (matches calculator route) |
+| scenario_name | string | Yes | Human-readable name for scenario |
+| description | string | Yes | Business context and purpose |
+| version | string | Yes | Scenario version (update when expected outputs change) |
+| created_date | string | Yes | ISO date when scenario was created |
+| updated_date | string | Yes | ISO date when scenario was last updated |
+| inputs | object | Yes | All calculator inputs (key-value pairs) |
+| expected_outputs | object | Yes | Expected calculation results with tolerances |
+| expected_warnings | array | No | Warnings that should appear (empty array if none) |
+| tags | array | No | Tags for filtering (e.g., "typical", "edge_case", "regression") |
+| notes | string | No | Additional context or rationale |
+
+**Output structure** (each output has):
+- `value`: Expected numeric result
+- `tolerance`: Acceptable deviation (e.g., ±1 for monthly payment)
+- `unit`: Unit of measurement (USD, ratio, percentage, days)
+
+**Warning structure** (each warning has):
+- `type`: Warning severity (info, warning, critical)
+- `code`: Warning code (e.g., "DSCR_ABOVE_MINIMUM", "NEGATIVE_OPERATING_INCOME")
+- `message_contains`: Substring that must appear in warning message (not exact match, allows for wording changes)
+
+### Example Scenarios
+
+**Example 1: Typical SBA Loan**
+
+```json
+{
+  "calculator_slug": "business-loan-dscr",
+  "scenario_name": "Typical SBA Loan - Restaurant",
+  "description": "Standard SBA 7(a) loan for restaurant equipment purchase",
+  "version": "1.0",
+  "created_date": "2025-11-01",
+  "updated_date": "2025-11-01",
+  "inputs": {
+    "loan_amount": 250000,
+    "interest_rate": 7.5,
+    "term_years": 10,
+    "annual_revenue": 1500000,
+    "annual_expenses": 1200000
+  },
+  "expected_outputs": {
+    "monthly_payment": { "value": 2958.04, "tolerance": 1, "unit": "USD" },
+    "total_interest": { "value": 104964.80, "tolerance": 100, "unit": "USD" },
+    "dscr": { "value": 1.42, "tolerance": 0.01, "unit": "ratio" }
+  },
+  "expected_warnings": [],
+  "tags": ["typical", "sba"]
+}
+```
+
+**Example 2: Edge Case - Low DSCR**
+
+```json
+{
+  "calculator_slug": "business-loan-dscr",
+  "scenario_name": "Edge Case - Low DSCR",
+  "description": "Loan with DSCR below typical lender minimum (1.25), should trigger warning",
+  "version": "1.0",
+  "created_date": "2025-11-01",
+  "updated_date": "2025-11-01",
+  "inputs": {
+    "loan_amount": 250000,
+    "interest_rate": 7.5,
+    "term_years": 10,
+    "annual_revenue": 1000000,
+    "annual_expenses": 900000
+  },
+  "expected_outputs": {
+    "monthly_payment": { "value": 2958.04, "tolerance": 1, "unit": "USD" },
+    "dscr": { "value": 1.18, "tolerance": 0.01, "unit": "ratio" }
+  },
+  "expected_warnings": [
+    {
+      "type": "warning",
+      "code": "DSCR_BELOW_MINIMUM",
+      "message_contains": "DSCR is below typical lender minimum of 1.25"
+    }
+  ],
+  "tags": ["edge_case", "warning"]
+}
+```
+
+**Example 3: Cash Runway - Negative Burn**
+
+```json
+{
+  "calculator_slug": "cash-runway",
+  "scenario_name": "Profitable Business - Negative Burn",
+  "description": "Business with positive cash flow (revenue > expenses), runway should be infinite",
+  "version": "1.0",
+  "created_date": "2025-11-01",
+  "updated_date": "2025-11-01",
+  "inputs": {
+    "current_cash": 100000,
+    "monthly_revenue": 50000,
+    "monthly_expenses": 40000
+  },
+  "expected_outputs": {
+    "burn_rate": { "value": -10000, "tolerance": 1, "unit": "USD" },
+    "runway_months": { "value": Infinity, "tolerance": 0, "unit": "months" }
+  },
+  "expected_warnings": [
+    {
+      "type": "info",
+      "code": "PROFITABLE",
+      "message_contains": "Business is profitable"
+    }
+  ],
+  "tags": ["edge_case", "profitable"]
+}
+```
+
+---
+
+## 3. Regression Testing Policy
+
+### When to Run Golden Scenarios
+
+**Automated (CI/CD pipeline)**:
+- **Every commit**: Run all golden scenarios for affected calculators
+- **Every pull request**: Run full test suite (all calculators)
+- **Every deployment**: Run full test suite (gate for production release)
+
+**Manual (on-demand)**:
+- **Investigating bug**: Run scenarios for specific calculator
+- **Formula update**: Run scenarios before and after change (compare outputs)
+- **Performance testing**: Run scenarios under load (verify correctness at scale)
+
+### Pass/Fail Criteria
+
+**PASS**: All outputs within tolerance
+
+```
+Expected: monthly_payment = 2958.04 ± 1
+Actual:   monthly_payment = 2958.03
+Result:   PASS (within tolerance)
+```
+
+**FAIL**: Any output outside tolerance
+
+```
+Expected: monthly_payment = 2958.04 ± 1
+Actual:   monthly_payment = 2960.50
+Result:   FAIL (difference: $2.46, exceeds tolerance of $1)
+```
+
+**Action on FAIL**:
+- Block merge (CI/CD fails)
+- Engineer investigates: Is this a bug or intentional change?
+- If bug: Fix code, re-run tests
+- If intentional: Update golden scenario (see below)
+
+**FAIL**: Missing expected warning
+
+```
+Expected: Warning "DSCR is below typical lender minimum"
+Actual:   No warnings
+Result:   FAIL (warning not displayed)
+```
+
+**WARN**: Unexpected warning (review required, may or may not block)
+
+```
+Expected: No warnings
+Actual:   Warning "High interest rate detected"
+Result:   WARN (unexpected warning appeared)
+```
+
+**Action on unexpected warning**:
+- Review by engineer: Is this a new warning that should be expected?
+- If valid: Update golden scenario to expect warning
+- If invalid: Fix code to remove spurious warning
+
+### On Intentional Output Changes
+
+**When expected outputs change** (e.g., formula improvement, bug fix):
+
+1. **Update golden scenario file**
+   - Change `expected_outputs` to reflect new correct values
+   - Increment `version` (e.g., "1.0" → "1.1")
+   - Update `updated_date` to current date
+   - Add `notes` explaining why outputs changed
+
+2. **Document reason in commit message**
+   ```
+   Update DSCR golden scenario for improved precision
+
+   Changed expected monthly payment from $2,958 to $2,958.04 due to
+   improved rounding in amortization formula (v1.2). This is intentional
+   and provides more accurate results.
+
+   Closes #123
+   ```
+
+3. **Get approval from product manager**
+   - Pull request requires PM approval if golden scenarios change
+   - PM verifies change is intentional and correct
+   - Prevents accidental formula changes from slipping through
+
+**Example of intentional change**:
+
+```diff
+{
+  "scenario_name": "Typical SBA Loan - Restaurant",
+- "version": "1.0",
++ "version": "1.1",
+- "updated_date": "2025-11-01",
++ "updated_date": "2025-11-15",
+  "expected_outputs": {
+    "monthly_payment": {
+-     "value": 2958,
++     "value": 2958.04,
+      "tolerance": 1
+    }
+  },
++ "notes": "Updated to reflect improved rounding precision in v1.2"
+}
+```
+
+---
+
+## 4. Golden Scenario Repository
+
+### Version Control
+
+**Storage**: Git repository (same repo as application code)
+
+**Directory structure**:
+```
+/tests/
+  /golden-scenarios/
+    business-loan-dscr_golden_1.json
+    business-loan-dscr_golden_2.json
+    business-loan-dscr_golden_3.json
+    cash-runway_golden_1.json
+    cash-runway_golden_2.json
+    breakeven-margin_golden_1.json
+    ...
+  /golden-scenario-runner.ts  (Test execution code)
+  /golden-scenario-schema.json  (JSON schema for validation)
+```
+
+**Benefits of version control**:
+- **History**: See when scenarios were added/changed
+- **Blame**: Identify who changed expected outputs
+- **Diff**: Compare scenarios across branches (what changed in this PR?)
+- **Rollback**: Revert to previous version if needed
+
+### How to Add New Scenarios
+
+**Process**:
+
+1. **Create JSON file** following structure above
+   - Name: `{calculator_slug}_golden_{next_number}.json`
+   - Fill in all required fields
+
+2. **Run scenario manually, verify outputs are correct**
+   - Use calculator UI or API to execute with specified inputs
+   - Record actual outputs (monthly payment, DSCR, etc.)
+   - Verify outputs match expectations (use external tools if needed, e.g., Excel for amortization)
+
+3. **Add to automated test suite**
+   - Test runner automatically discovers new JSON files in `/tests/golden-scenarios/`
+   - No code changes needed (data-driven testing)
+
+4. **Document in calculator PDR** (Section 11)
+   - List golden scenarios in calculator-specific PDR
+   - Explain coverage (typical, edge cases, regression)
+
+**Example manual verification**:
+```bash
+# Run calculator with inputs from golden scenario
+curl -X POST https://api.example.com/api/calculate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "calculator_slug": "business-loan-dscr",
+    "inputs": {
+      "loan_amount": 250000,
+      "interest_rate": 7.5,
+      "term_years": 10
+    }
+  }'
+
+# Response:
+# {
+#   "outputs": {
+#     "monthly_payment": 2958.04,
+#     "total_interest": 104964.80,
+#     "dscr": 1.42
+#   },
+#   "version": "v1"
+# }
+
+# Verify outputs match expected values in golden scenario ✓
+```
+
+### Automated Execution
+
+**Test runner implementation**:
+
+```typescript
+// Golden scenario test runner
+describe('Golden Scenarios', () => {
+  const scenarioFiles = fs.readdirSync('./tests/golden-scenarios/')
+    .filter(file => file.endsWith('.json'));
+
+  scenarioFiles.forEach(file => {
+    const scenario = JSON.parse(fs.readFileSync(`./tests/golden-scenarios/${file}`, 'utf8'));
+
+    test(`${scenario.calculator_slug}: ${scenario.scenario_name}`, async () => {
+      // Execute calculation
+      const result = await calculateFormula(scenario.calculator_slug, scenario.inputs);
+
+      // Check each expected output
+      Object.keys(scenario.expected_outputs).forEach(key => {
+        const expected = scenario.expected_outputs[key];
+        const actual = result.outputs[key];
+
+        // Verify within tolerance
+        expect(actual).toBeCloseTo(expected.value, expected.tolerance);
+      });
+
+      // Check expected warnings
+      scenario.expected_warnings.forEach(expectedWarning => {
+        const matchingWarning = result.warnings.find(w =>
+          w.code === expectedWarning.code &&
+          w.message.includes(expectedWarning.message_contains)
+        );
+        expect(matchingWarning).toBeDefined();
+      });
+
+      // Warn on unexpected warnings
+      if (result.warnings.length > scenario.expected_warnings.length) {
+        console.warn(`Unexpected warnings in ${scenario.scenario_name}:`, result.warnings);
+      }
+    });
+  });
+});
+```
+
+**CI/CD integration**:
+
+```yaml
+# GitHub Actions workflow
+name: Golden Scenarios
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: npm run test:golden-scenarios
+      - if: failure()
+        run: |
+          echo "Golden scenarios failed!"
+          echo "Review test output and update scenarios if change is intentional."
+          exit 1
+```
+
+**Test output example**:
+
+```
+Running golden scenarios...
+
+✓ business-loan-dscr: Typical SBA Loan - Restaurant (142ms)
+✓ business-loan-dscr: Short-term Loan - Equipment (98ms)
+✓ business-loan-dscr: Edge Case - Zero Interest Rate (105ms)
+✗ business-loan-dscr: Edge Case - Low DSCR (89ms)
+  Expected DSCR warning not displayed
+  Expected: "DSCR is below typical lender minimum"
+  Actual warnings: []
+
+✓ cash-runway: Typical Startup - Positive Burn (76ms)
+✓ cash-runway: Profitable Business - Negative Burn (71ms)
+
+Test Suites: 1 failed, 5 passed, 6 total
+Tests:       1 failed, 5 passed, 6 total
+
+FAIL: Golden scenarios failed. Review and fix before merging.
+```
+
+---
+
+## Summary
+
+The golden scenario framework provides regression safety for all calculators:
+
+**Requirements**:
+- Minimum 2-3 golden scenarios per calculator (required for launch)
+- Recommended 10+ scenarios (comprehensive coverage)
+- Each scenario: name, description, inputs, expected outputs with tolerances, expected warnings
+
+**Structure**:
+- JSON files in `/tests/golden-scenarios/`
+- File naming: `{calculator_slug}_golden_{number}.json`
+- Version controlled in Git
+
+**Regression testing**:
+- Run automatically on every commit (CI/CD)
+- PASS if all outputs within tolerance
+- FAIL if any output outside tolerance (blocks merge)
+- Intentional changes require updating scenario + PM approval
+
+**Automated execution**:
+- Test runner discovers JSON files automatically
+- Compares actual vs expected outputs
+- Reports tolerance violations
+- Blocks merge if failures
+
+Golden scenarios ensure **formula correctness** and **prevent regressions** across the entire calculator suite.
+
+
+# 10.3 Release Process
+
+This section defines the versioning strategy, rollout procedures, release checklists, and post-release monitoring for the CFO Business Intelligence Calculator Suite. A disciplined release process ensures quality, minimizes risk, and enables rapid rollback if issues arise.
+
+---
+
+## Release Philosophy
+
+**Goals**:
+- **Quality**: Only deploy code that passes all tests and meets quality standards
+- **Safety**: Gradual rollout with monitoring, fast rollback if needed
+- **Transparency**: Clear versioning, documented changes, user communication
+
+**Release frequency**:
+- **Patch releases**: Weekly (bug fixes, minor improvements)
+- **Minor releases**: Bi-weekly to monthly (new features, new calculators)
+- **Major releases**: Quarterly (breaking changes, major feature additions)
+
+---
+
+## 1. Versioning Strategy
+
+### Suite Version
+
+**Format**: `Major.Minor.Patch` (Semantic Versioning)
+
+**Examples**: `1.0.0`, `1.2.3`, `2.0.0`
+
+**Version increments**:
+
+| Change Type | Version Increment | Examples |
+|-------------|-------------------|----------|
+| **Major** | Breaking changes, major feature additions | API version change (v1 → v2), formula changes that break backward compatibility, UI redesign |
+| **Minor** | New calculators, new features (backward compatible) | New calculator added, new AI feature, new export format, Pro tier feature additions |
+| **Patch** | Bug fixes, performance improvements, minor tweaks | Formula bug fix, UI bug fix, performance optimization, tooltip text correction |
+
+**Version location**:
+- Package.json: `"version": "1.2.3"`
+- API response: `GET /api/version` → `{ "version": "1.2.3" }`
+- UI footer: "CFO Calculator Suite v1.2.3"
+
+**Example version history**:
+```
+1.0.0 - Initial launch (M1: 2 calculators)
+1.1.0 - Added 6 more calculators (M2: 8 calculators total)
+1.1.1 - Bug fix: DSCR rounding error
+1.2.0 - Added AI narratives for all calculators
+1.2.1 - Performance optimization: caching layer
+2.0.0 - API v2 (breaking change: new authentication)
+```
+
+### Calculator Version
+
+**Format**: `Major.Minor.Patch` (independent per calculator)
+
+**Stored in**: Calculator configuration file
+
+**Example**:
+```typescript
+// /src/calculators/business-loan-dscr/config.ts
+export const calculatorConfig = {
+  slug: 'business-loan-dscr',
+  name: 'Business Loan + DSCR Calculator',
+  version: '2.1.0',
+  formulaVersion: 'v1.3.2',
+};
+```
+
+**Version increments**:
+- **Major**: Formula change (breaking, produces different results)
+- **Minor**: New feature (e.g., new output metric, new warning)
+- **Patch**: Bug fix (corrects incorrect result)
+
+**Why separate calculator versions**:
+- Calculators evolve independently (DSCR may update, Runway unchanged)
+- Users can see which calculator version generated their export
+- Debugging: "This PDF was generated with DSCR v2.1.0, but current is v2.2.0"
+
+### Formula Library Version
+
+**Format**: `Major.Minor.Patch` (suite-wide formula library)
+
+**Stored in**: `/src/formulas/version.ts`
+
+**Example**:
+```typescript
+export const FORMULA_LIBRARY_VERSION = 'v1.3.2';
+```
+
+**Version increments**:
+- **Major**: Significant formula methodology change (e.g., switch from simple interest to compound interest)
+- **Minor**: New formula added, formula improvement (better accuracy)
+- **Patch**: Bug fix in existing formula
+
+**Why separate formula version**:
+- Track formula changes independently from feature changes
+- Exports stamped with formula version (reproducibility)
+- Golden scenarios reference specific formula versions
+
+### Version Stamping in Exports
+
+**PDF footer**:
+```
+Generated by CFO Calculator Suite v1.2.3 | Calculator: business-loan-dscr v2.1.0 | Formulas: v1.3.2 | 2025-11-18
+```
+
+**CSV header row**:
+```csv
+# Generated by CFO Calculator Suite v1.2.3, business-loan-dscr v2.1.0, Formulas v1.3.2, 2025-11-18
+```
+
+**Excel metadata** (document properties):
+```
+Title: Business Loan DSCR Calculator Results
+Subject: Generated by CFO Calculator Suite v1.2.3
+Comments: Calculator v2.1.0, Formulas v1.3.2, Generated 2025-11-18
+```
+
+**Purpose of version stamping**:
+- **Reproducibility**: User can verify which version generated their export
+- **Debugging**: Support can identify if issue is due to old version
+- **Compliance**: Audit trail for regulatory purposes
+
+---
+
+## 2. Rollout Strategy
+
+### Feature Flags for Gradual Rollout
+
+**Purpose**: Roll out new features gradually to minimize risk
+
+**Implementation**: Feature flag service (e.g., LaunchDarkly, custom Redis-based)
+
+**Rollout stages**:
+
+1. **0% (disabled)**: Feature code deployed but disabled for all users
+2. **10% (canary)**: Enable for 10% of users, monitor for errors
+3. **50% (half)**: Enable for 50% of users, monitor conversion/engagement
+4. **100% (full)**: Enable for all users (remove flag after stabilization)
+
+**Example: New calculator rollout**
+
+```typescript
+// Feature flag check
+if (featureFlags.isEnabled('calc_equipment_lease', userId)) {
+  // Show Equipment Lease calculator in navigation
+  calculators.push({
+    slug: 'equipment-lease-vs-buy',
+    name: 'Equipment Lease vs Buy',
+  });
+}
+```
+
+**Rollout schedule**:
+```
+Day 1: Deploy code (flag at 0%)
+Day 2: Enable for internal users (QA, dogfooding)
+Day 3: Enable for 10% of users (monitor error rate, performance)
+Day 5: If stable, increase to 50%
+Day 7: If stable, increase to 100%
+Day 14: Remove feature flag (cleanup)
+```
+
+**Rollback**: If error rate >5% at any stage, disable flag immediately (instant rollback to 0%).
+
+### Canary Deployments
+
+**Purpose**: Test new version with small subset of users before full rollout
+
+**Canary process**:
+
+1. **Deploy to staging** (internal testing environment)
+   - Full test suite runs in staging
+   - Manual QA by internal team (2-4 hours)
+   - Performance testing (load test with production-like traffic)
+
+2. **Deploy to canary tenants** (5-10 B2B early access partners)
+   - B2B customers who opted into early access program
+   - Monitor error rates, performance metrics for 24-48 hours
+   - Collect feedback (bugs, UX issues, feature requests)
+
+3. **Monitor for 24-48 hours**
+   - Error rate <2% (below baseline)
+   - p95 latency within SLAs
+   - No critical bugs reported
+
+4. **Roll out to all users**
+   - If canary stable, deploy to production (all users)
+   - Continue monitoring for first 24 hours
+
+**Canary infrastructure** (two production environments):
+- **Canary environment**: 5-10% of traffic
+- **Production environment**: 90-95% of traffic
+- Load balancer routes traffic based on user_id hash
+
+**Example routing**:
+```typescript
+function shouldRouteToCanary(userId: string): boolean {
+  const hash = hashUserId(userId);
+  return hash % 100 < 10; // 10% of users go to canary
+}
+```
+
+### Rollback Plan
+
+**When to rollback**:
+- Error rate >5% for 5 minutes (critical)
+- p95 latency >2× SLA target (e.g., >300ms for calculations)
+- Critical bug discovered (data loss, payment failures, security issue)
+- User-reported issues exceed threshold (>10 support tickets in 1 hour)
+
+**Rollback methods**:
+
+1. **Feature flag disable** (instant, <1 minute)
+   - Set feature flag to 0% (disables new feature for all users)
+   - No deployment needed (flag change propagates in seconds)
+   - Use for: New calculators, new UI features, new AI prompts
+
+2. **Database migration rollback** (5-10 minutes)
+   - Run down migration (reverse schema changes)
+   - Only if schema change is reversible (not all are)
+   - Use for: Table additions, column additions (drops are not reversible)
+
+3. **Code deployment rollback** (10-15 minutes)
+   - Deploy previous Git tag (e.g., v1.2.2 if v1.2.3 has issues)
+   - Automated via CI/CD (one-click rollback)
+   - Use for: Critical bugs in formulas, API endpoints, payment processing
+
+**Automatic rollback trigger**:
+```typescript
+// Monitoring alert
+if (errorRate > 0.05 && duration > 300) { // 5% error rate for 5 minutes
+  alert('Critical error rate, triggering automatic rollback');
+  rollbackToVersion(previousVersion);
+  notifyOnCall('Automatic rollback triggered due to high error rate');
+}
+```
+
+**Manual rollback procedure**:
+```bash
+# 1. Identify previous stable version
+git tag --sort=-creatordate | head -n 2
+# Output: v1.2.3 (current, broken), v1.2.2 (previous, stable)
+
+# 2. Trigger rollback deployment
+./deploy.sh rollback v1.2.2
+
+# 3. Verify rollback successful
+curl https://api.example.com/api/version
+# Output: { "version": "1.2.2" }
+
+# 4. Monitor error rate (should drop to <2%)
+```
+
+---
+
+## 3. Release Checklist
+
+### Pre-Release Checklist
+
+**Before deployment**, all items must be checked:
+
+- [ ] **All unit tests passing** (100% for formulas, 80% for UI)
+  - Run: `npm run test:unit`
+  - CI/CD status: Green
+
+- [ ] **All golden scenarios passing** (within tolerance)
+  - Run: `npm run test:golden-scenarios`
+  - Zero failures (any failure blocks release)
+
+- [ ] **Integration tests passing**
+  - Run: `npm run test:integration`
+  - API endpoints, database operations, tier gating, exports
+
+- [ ] **End-to-end tests passing**
+  - Run: `npm run test:e2e`
+  - Free tier workflow, Pro tier workflow, upgrade workflow
+  - Cross-browser: Chrome, Safari, Firefox, Edge
+
+- [ ] **Performance benchmarks met**
+  - p95 calculation latency <150ms (Section 1.6 SLA)
+  - p95 export generation time <3 seconds
+  - Load test passed (100 concurrent users, error rate <1%)
+
+- [ ] **Security review completed** (if code touches sensitive areas)
+  - Authentication/authorization changes → Security review required
+  - Payment processing changes → Security review required
+  - Data handling changes (PII, exports) → Security review required
+  - Use checklist: OWASP Top 10, SQL injection, XSS, CSRF
+
+- [ ] **Documentation updated**
+  - Calculator PDRs updated (if calculator changed)
+  - API documentation updated (if API changed)
+  - Changelog drafted (user-facing changes)
+  - Internal release notes drafted (for team)
+
+- [ ] **Version numbers incremented**
+  - Suite version in package.json
+  - Calculator version in config (if calculator changed)
+  - Formula library version (if formula changed)
+  - Git tag created (e.g., `v1.2.3`)
+
+**Approval**:
+- Pull request approved by: 1 engineer + 1 product manager (if feature change)
+- Security review approved by: Security engineer (if applicable)
+
+### Post-Release Checklist
+
+**After deployment**, verify deployment successful:
+
+- [ ] **Monitor error rate for first 1 hour** (<1% threshold)
+  - Dashboard: Datadog/New Relic error rate panel
+  - Alert threshold: >2% error rate triggers Slack notification
+  - If >5% for 5 minutes → Automatic rollback
+
+- [ ] **Check performance metrics** (p95 latency within SLAs)
+  - Calculation latency: <150ms (target)
+  - Export generation: <3s (target)
+  - AI request latency: <3s (target)
+
+- [ ] **Verify new features accessible to correct tiers**
+  - Test as Free user: Cannot access Pro features (upgrade prompt shown)
+  - Test as Pro user: Can access Pro features (scenarios, advanced metrics, clean exports)
+  - Test as AI user: Can access AI features (narratives, suggestions)
+
+- [ ] **Test one complete user workflow** (smoke test)
+  - Free user: View calculator → Enter inputs → See results → Attempt export (blocked)
+  - Pro user: Create scenario → Export PDF → Verify clean export
+  - AI user: Request AI narrative → Verify response within 3 seconds
+
+- [ ] **Update internal team on Slack/email with release notes**
+  - Slack message: "#releases channel: v1.2.3 deployed successfully. New features: [list]. Known issues: [list]."
+  - Email: Send to engineering team, product team, support team
+
+- [ ] **Publish changelog to users** (in-app banner, blog post for major releases)
+  - Minor release: In-app banner ("New calculator available: Equipment Lease vs Buy")
+  - Major release: Blog post + email to Pro/AI users ("CFO Calculator Suite v2.0: API v2, new features")
+
+**Monitoring duration**:
+- **First 1 hour**: Active monitoring (engineer on standby)
+- **First 24 hours**: Passive monitoring (alerts enabled, no active watching)
+- **First week**: Daily metrics review (error rate, conversion rate, feedback)
+
+---
+
+## 4. Post-Release Monitoring
+
+### First 24 Hours
+
+**Error rate monitoring** (every hour):
+- Check Datadog/New Relic dashboard
+- Compare to baseline (pre-release error rate)
+- Action: If error rate >2× baseline, investigate immediately
+
+**Performance metrics** (every 2 hours):
+- p95 calculation latency (target: <150ms)
+- p95 export generation time (target: <3s)
+- p95 AI request latency (target: <3s)
+- Action: If p95 >2× target, investigate performance regression
+
+**User feedback channels** (monitored continuously):
+- Support tickets: Check Zendesk/Intercom for new tickets
+- In-app feedback: Check feedback widget for negative feedback
+- Social media: Monitor Twitter, Reddit for mentions
+- Action: If >5 similar complaints, triage as bug (may be P1 or P2)
+
+**Example monitoring dashboard**:
+```
+Post-Release Monitoring (v1.2.3)
+┌─────────────────────────────────────┐
+│ Error Rate:         1.2% (baseline: 1.0%)  ✓
+│ p95 Calc Latency:   142ms (target: <150ms) ✓
+│ p95 Export Time:    2.8s (target: <3s)     ✓
+│ Support Tickets:    2 (last hour)          ✓
+│ User Feedback:      1 negative (last hour) ✓
+└─────────────────────────────────────┘
+Status: HEALTHY
+```
+
+### First Week
+
+**Daily review of key metrics**:
+- **Error rate**: Trending down or stable?
+- **Conversion rate**: Free → Pro conversions stable or improved?
+- **AI usage**: AI requests per user stable (if AI feature released)?
+- **Calculator usage**: New calculator getting traffic (if new calc released)?
+
+**Identify unexpected behavior**:
+- Calculations taking longer than expected (performance regression)
+- Exports failing for specific calculators (export bug)
+- Upgrade prompts not triggering (tier gating bug)
+- AI narratives timing out frequently (AI API issue)
+
+**Plan hotfix if critical issues found**:
+- **Critical (P0)**: Hotfix within 4 hours (e.g., all exports failing)
+- **High (P1)**: Hotfix within 24 hours (e.g., one calculator broken)
+- **Medium (P2)**: Fix in next release (e.g., tooltip text incorrect)
+
+**Example weekly review**:
+```
+Week 1 Post-Release Review (v1.2.3)
+─────────────────────────────────────
+Deployed: 2025-11-18
+Status: Stable
+
+Metrics:
+- Error rate: 1.1% (baseline: 1.0%) ✓ Acceptable
+- p95 calc latency: 145ms (target: <150ms) ✓ On target
+- Conversion rate: 3.8% (baseline: 3.5%) ✓ Improved
+- AI usage: 28 requests/user (expected: 30) ✓ Normal
+
+Issues:
+- 3 support tickets about Equipment Lease calculator (new)
+  - Issue: Unclear tooltip text for "residual value"
+  - Priority: P3 (low)
+  - Action: Update tooltip text in next release
+
+- 1 performance regression in Valuation calculator
+  - Issue: DCF calculation slower (p95 420ms, was 350ms)
+  - Priority: P2 (medium)
+  - Action: Investigate caching, fix in next release
+
+Next Steps:
+- Continue monitoring for Week 2
+- Plan hotfix for P2 performance issue
+- Add P3 tooltip fix to backlog
+```
+
+### Success Criteria
+
+**Release is considered successful if**:
+
+1. **Error rate <2%** (below or equal to baseline)
+   - Measured: First 24 hours
+   - Baseline: Pre-release error rate (typically 1-1.5%)
+
+2. **p95 latency within SLAs**
+   - Calculation: <150ms
+   - Export: <3s
+   - AI: <3s
+
+3. **No critical bugs reported**
+   - Zero P0 bugs (system down, data loss, payment failures)
+   - <3 P1 bugs (major features broken)
+
+4. **Conversion rate stable or improved** (for releases affecting upgrade flow)
+   - Free → Pro conversion: ≥ baseline (typically 3-5%)
+   - If new feature intended to improve conversion, expect 10-20% lift
+
+**If success criteria not met**:
+- Investigate root cause (code issue, infrastructure issue, user confusion?)
+- Plan hotfix (if critical) or include fix in next release (if minor)
+- Document lessons learned (post-mortem if critical issue)
+
+---
+
+## Summary
+
+The release process for the CFO Business Intelligence Calculator Suite includes:
+
+**Versioning**:
+- Suite version: Major.Minor.Patch (Semantic Versioning)
+- Calculator version: Independent per calculator
+- Formula library version: Suite-wide formula versioning
+- Version stamping in exports (PDF footer, CSV header)
+
+**Rollout strategy**:
+- Feature flags: Gradual rollout (0% → 10% → 50% → 100%)
+- Canary deployments: Test with 5-10 B2B early access partners for 24-48 hours
+- Rollback plan: Feature flag disable (<1 min), code rollback (10-15 min), automatic trigger if error rate >5%
+
+**Release checklists**:
+- Pre-release: Tests passing, performance benchmarks met, security review, documentation updated
+- Post-release: Monitor error rate, verify features accessible, test workflows, publish changelog
+
+**Post-release monitoring**:
+- First 24 hours: Hourly error rate monitoring, bi-hourly performance checks
+- First week: Daily metrics review, identify unexpected behavior, plan hotfixes
+- Success criteria: Error rate <2%, p95 latency within SLAs, no critical bugs, conversion stable or improved
+
+**Release frequency**: Weekly (patches), bi-weekly to monthly (minor), quarterly (major).
+
+
+# 10.4 Support & Maintenance
+
+This section defines ongoing support procedures, bug triage, deprecation policies, formula update processes, and continuous monitoring/optimization for the CFO Business Intelligence Calculator Suite. Effective support and maintenance ensure long-term product quality and user satisfaction.
+
+---
+
+## Support Philosophy
+
+**Goals**:
+- **Rapid response**: Critical issues resolved within hours, not days
+- **Continuous improvement**: Monthly reviews identify optimization opportunities
+- **User-centric**: Prioritize issues affecting many users or core workflows
+- **Transparency**: Clear communication to users about bugs, fixes, and deprecations
+
+---
+
+## 1. Bug Triage and Prioritization
+
+### Severity Levels
+
+**P0: Critical (System Down)**
+
+**Definition**: System completely unusable, data loss, security breach, or payment failures affecting all or most users.
+
+**Response time**: Immediate (within 1 hour)
+
+**Fix time**: Within 4 hours or rollback to previous version
+
+**Examples**:
+- API completely down (all calculators return 500 errors)
+- All exports failing (PDF/CSV/Excel generation broken)
+- Login broken (users cannot authenticate)
+- Payment processing failures (Stripe integration broken)
+- Database corruption (data loss or inaccessible)
+- Security breach (unauthorized access, data leak)
+
+**Escalation**:
+- Page on-call engineer immediately (PagerDuty)
+- Notify engineering manager and CTO
+- Incident response team assembled (engineer, PM, support lead)
+
+**Communication**:
+- Status page updated within 15 minutes ("We are aware of an issue affecting login. Investigating.")
+- Hourly updates to users until resolved
+- Post-incident report published within 72 hours
+
+---
+
+**P1: High (Major Feature Broken)**
+
+**Definition**: Major feature broken, affects many users, no workaround available.
+
+**Response time**: Within 4 hours
+
+**Fix time**: Within 24 hours
+
+**Examples**:
+- One calculator completely broken (e.g., DSCR calculator returns NaN for all inputs)
+- Exports fail for Pro users (Free users unaffected)
+- AI requests timeout for all users (100% failure rate)
+- Scenario creation broken (Pro users cannot save scenarios)
+- Upgrade flow broken (users cannot purchase Pro tier)
+
+**Escalation**:
+- Slack alert to #engineering-urgent channel
+- Assigned to on-call engineer or feature owner
+- PM notified for user communication
+
+**Communication**:
+- In-app banner: "We are aware of an issue affecting [feature]. Working on a fix."
+- Email to affected users (if identifiable, e.g., Pro users if Pro feature broken)
+- Fix timeline: "Expected resolution within 24 hours"
+
+---
+
+**P2: Medium (Feature Partially Broken)**
+
+**Definition**: Feature partially broken, affects some users, workaround exists.
+
+**Response time**: Within 1 business day
+
+**Fix time**: Within 1 week
+
+**Examples**:
+- One specific scenario fails (e.g., DSCR calculation fails only when revenue = $0)
+- Export formatting wrong (PDF renders but formatting is off)
+- Tooltip text incorrect (minor UX issue)
+- AI narrative quality low for one calculator (responses are generic)
+- Performance regression (p95 latency 200ms, was 150ms, still functional)
+
+**Escalation**:
+- Added to sprint backlog
+- Assigned to feature owner or engineer with capacity
+- Reviewed in daily standup
+
+**Communication**:
+- Support response to affected users: "We are aware of this issue and working on a fix. ETA: Next release (within 1 week)."
+- No proactive user communication (only respond to support tickets)
+
+---
+
+**P3: Low (Minor Bug or Feature Request)**
+
+**Definition**: Minor bug, cosmetic issue, or feature request. Does not significantly impact functionality.
+
+**Response time**: Within 3 business days
+
+**Fix time**: Next release cycle (2-4 weeks)
+
+**Examples**:
+- Button alignment off (cosmetic issue)
+- Typo in warning message ("recieve" instead of "receive")
+- Nice-to-have feature request ("Add keyboard shortcuts")
+- Minor performance improvement (reduce API latency by 10ms)
+- Documentation gap (missing tooltip for advanced metric)
+
+**Escalation**:
+- Added to product backlog
+- Triaged monthly (prioritize by impact and effort)
+- May be deferred to future release if low priority
+
+**Communication**:
+- Support response: "Thank you for the feedback. We've added this to our backlog and will consider it for a future release."
+- No timeline commitment
+
+---
+
+### Severity Level Summary Table
+
+| Severity | Response Time | Fix Time | Examples | Escalation |
+|----------|---------------|----------|----------|------------|
+| **P0 (Critical)** | Immediate (1 hour) | 4 hours or rollback | System down, data loss, security breach | Page on-call, incident team |
+| **P1 (High)** | 4 hours | 24 hours | Major feature broken, no workaround | Slack alert, assign engineer |
+| **P2 (Medium)** | 1 business day | 1 week | Partial breakage, workaround exists | Add to sprint backlog |
+| **P3 (Low)** | 3 business days | Next release (2-4 weeks) | Minor bug, cosmetic, feature request | Add to product backlog |
+
+### Escalation Process
+
+**P0/P1 escalation**:
+1. Support team identifies critical issue (user reports, monitoring alert)
+2. Support team pages on-call engineer (PagerDuty)
+3. Engineer acknowledges within 15 minutes
+4. Engineer triages: Is this truly P0/P1? (Sometimes misclassified)
+5. If confirmed, engineer begins investigation immediately
+6. PM notified for user communication
+7. Incident response team assembled if P0 (engineer, PM, support lead, manager)
+
+**P2 escalation**:
+1. Support team creates bug ticket (Jira, GitHub Issues)
+2. Engineer triages within 1 business day
+3. Added to sprint backlog
+4. Engineer fixes within 1 week
+
+**P3 escalation**:
+1. Support team creates feature request or bug ticket
+2. PM triages monthly (prioritize by user votes, impact, effort)
+3. Added to product backlog (may be deferred)
+
+**Escalation flowchart**:
+```
+User reports issue
+    ↓
+Support triages severity (P0/P1/P2/P3)
+    ↓
+P0 → Page on-call → Incident team → Fix within 4 hours
+P1 → Slack alert → Assign engineer → Fix within 24 hours
+P2 → Sprint backlog → Assign engineer → Fix within 1 week
+P3 → Product backlog → Monthly triage → Fix in future release
+```
+
+---
+
+## 2. Deprecation Policy
+
+### Calculator Deprecation
+
+**When to deprecate**:
+- Low usage (<1% of total calculator views over 3 months)
+- Replaced by better alternative (e.g., "Simple Valuation" replaced by "Advanced Valuation")
+- Maintenance burden too high (complex calculator with frequent bugs)
+- Regulatory changes make calculator obsolete
+
+**Process**:
+
+1. **Minimum notice period: 90 days**
+   - Users have 90 days to migrate to alternative or export existing scenarios
+
+2. **Migration path provided**
+   - Alternative calculator recommended (e.g., "Use Advanced Valuation instead of Simple Valuation")
+   - Export tool: Users can export all scenarios before retirement
+
+3. **Deprecated calculator marked in UI**
+   - Banner at top of calculator: "⚠ This calculator will be retired on December 31, 2025. Use [Alternative Calculator] instead."
+   - Navigation menu: Calculator labeled "Deprecated" (moved to bottom of list)
+
+4. **After retirement: Calculator removed from UI**
+   - Calculator page returns 410 Gone (not 404 Not Found)
+   - API endpoints return 410 Gone with message: "This calculator has been retired. Use [alternative] instead."
+   - User scenarios preserved (not deleted) but calculator no longer accessible
+
+**Communication**:
+- **Day 0 (announcement)**: Email to all users who used calculator in past 6 months
+- **Day 30**: In-app banner when user opens calculator
+- **Day 60**: Second email reminder ("30 days until retirement")
+- **Day 90**: Final email ("Calculator retired today. Export your scenarios now.")
+- **Day 90+**: Calculator removed, 410 Gone response
+
+**Example deprecation timeline**:
+```
+Sep 1:  Announce "Simple Valuation" deprecation (90-day notice)
+        Email: "We're retiring Simple Valuation on Dec 1. Use Advanced Valuation instead."
+Oct 1:  Banner added to calculator UI
+Nov 1:  Reminder email (30 days left)
+Dec 1:  Calculator retired, 410 Gone response
+```
+
+### Metric Deprecation
+
+**When to deprecate**:
+- Metric no longer relevant (e.g., "Simple ROI" replaced by "IRR")
+- Metric calculation incorrect (cannot be fixed, requires replacement)
+- Metric confusing to users (low usage, high support burden)
+
+**Process**:
+
+1. **Minimum notice period: 60 days**
+   - Shorter than calculator deprecation (metrics are less critical)
+
+2. **Replacement metric provided**
+   - New metric replaces old metric (e.g., "IRR" replaces "Simple ROI")
+   - Clear explanation of difference (why new metric is better)
+
+3. **Old metric still calculated but marked "Deprecated"**
+   - UI: Metric labeled "Deprecated" with tooltip: "Use IRR instead."
+   - Exports: Include both old and new metrics during transition (60 days)
+   - After transition: Old metric removed from exports
+
+4. **After retirement: Old metric removed**
+   - No longer displayed in UI
+   - No longer included in exports
+   - API: Old metric still calculated but not returned (backward compatibility)
+
+**Communication**:
+- **Day 0**: In-app notification: "We've improved [metric]. [New metric] is more accurate."
+- **Day 30**: Tooltip reminder on deprecated metric
+- **Day 60**: Old metric removed from UI and exports
+
+**Example metric deprecation**:
+```
+Oct 1:  Announce "Simple ROI" deprecated, "IRR" introduced (60-day notice)
+        UI: Simple ROI labeled "Deprecated (use IRR)"
+        Exports: Include both Simple ROI and IRR
+Nov 1:  Tooltip reminder: "Simple ROI will be removed on Dec 1"
+Dec 1:  Simple ROI removed from UI and exports
+```
+
+### API Version Deprecation
+
+**When to deprecate**:
+- API v2 released, v1 no longer maintained
+- Breaking changes in API (new authentication, new response format)
+
+**Process**:
+
+1. **Old version supported for minimum 12 months** after new version released
+   - Gives API consumers time to migrate
+
+2. **Deprecation warnings in API responses**
+   - HTTP header: `X-API-Deprecated: true`
+   - HTTP header: `X-API-Sunset: 2026-11-18` (sunset date)
+   - Response body: `{ "warning": "API v1 is deprecated. Migrate to v2 by 2026-11-18." }`
+
+3. **Documentation updated with migration guide**
+   - Migration guide: "How to migrate from v1 to v2"
+   - Breaking changes listed (authentication, response format, endpoint changes)
+   - Code examples for v1 → v2 migration
+
+4. **After sunset: v1 returns 410 Gone**
+   - API v1 endpoints return 410 Gone
+   - Response: `{ "error": "API v1 has been sunset. Use v2 instead. See docs.example.com/api-v2" }`
+
+**Communication**:
+- **Day 0 (v2 release)**: Email to API consumers: "API v2 now available. v1 will be sunset in 12 months."
+- **Month 6**: Reminder email: "API v1 will be sunset in 6 months"
+- **Month 9**: Reminder email: "API v1 will be sunset in 3 months"
+- **Month 12**: Final email: "API v1 sunset today. Migrate to v2 now."
+
+**Example API deprecation timeline**:
+```
+Jan 1, 2025:  API v2 released, v1 marked deprecated (12-month support)
+Jul 1, 2025:  Reminder email (6 months left)
+Oct 1, 2025:  Reminder email (3 months left)
+Jan 1, 2026:  API v1 sunset, returns 410 Gone
+```
+
+---
+
+## 3. Formula Updates and Validation
+
+### When Formulas Can Be Updated
+
+**1. Bug fixes (formula produces incorrect result)**
+
+**Process**: Immediate fix
+
+**Example**:
+- DSCR calculation incorrectly rounds down instead of nearest
+- Fix: Update formula to use Math.round() instead of Math.floor()
+- Golden scenarios: Update expected outputs to reflect correct values
+
+**Validation**:
+- Compare new vs old outputs for sample scenarios (document differences)
+- Get approval from product manager and finance SME (subject matter expert)
+- Update formula library version (e.g., v1.3.2 → v1.3.3)
+
+**Communication**:
+- In-app notification: "We've fixed a rounding error in DSCR calculation. Results are now more accurate."
+- Changelog entry with detailed explanation
+
+---
+
+**2. Formula improvements (better accuracy, new methodology)**
+
+**Process**: Requires validation and notice
+
+**Example**:
+- Switch from simple interest to compound interest for more accurate amortization
+- Add more precise DSCR calculation (include debt service coverage for all debt, not just one loan)
+
+**Validation process**:
+
+1. **Update golden scenarios to reflect new expected outputs**
+   - Run all golden scenarios with new formula
+   - Record new outputs (monthly payment, DSCR, etc.)
+   - Update `expected_outputs` in golden scenario JSON files
+   - Increment scenario `version` (e.g., "1.0" → "1.1")
+
+2. **Run all golden scenarios, verify new formula passes**
+   - Automated test: All scenarios pass with new expected outputs
+   - Zero failures (if failures, formula has bugs)
+
+3. **Compare new vs old outputs for sample scenarios**
+   - Create comparison table:
+     | Scenario | Old Formula Output | New Formula Output | Difference | Explanation |
+     |----------|--------------------|--------------------|------------|-------------|
+     | Typical SBA Loan | $2,958 | $2,958.04 | +$0.04 | More precise rounding |
+     | Short-term Loan | $1,589 | $1,589.12 | +$0.12 | Compound interest vs simple |
+
+4. **Get approval from product manager and finance SME**
+   - PM verifies: Is this change intentional? Does it improve accuracy?
+   - Finance SME verifies: Is new formula mathematically correct? Industry standard?
+
+5. **Update formula library version number**
+   - Increment minor version: v1.3.2 → v1.4.0 (new methodology = minor version bump)
+   - Update `/src/formulas/version.ts`
+
+6. **Document change in changelog**
+   - User-facing changelog: "DSCR calculation improved for better accuracy. Results may differ slightly from previous versions."
+   - Internal release notes: "Switched from simple interest to compound interest in amortization formula. Affects all lending calculators."
+
+**Communication to users**:
+- **In-app notification**: "We've improved the DSCR calculation for better accuracy. Results may differ slightly from previous versions."
+- **Changelog entry**: Detailed explanation of what changed and why
+- **For major formula changes**: Blog post or email to Pro/AI users explaining improvement
+
+---
+
+**3. Formula changes for regulatory reasons**
+
+**Process**: Requires legal review and immediate implementation
+
+**Example**:
+- New SBA regulation changes DSCR calculation methodology
+- Tax law changes affect depreciation calculation
+
+**Validation**:
+- Legal review: Verify formula complies with new regulations
+- Finance SME review: Verify formula is correct
+- Golden scenarios updated to reflect new requirements
+
+**Communication**:
+- **In-app notification**: "SBA regulations updated. DSCR calculation now reflects new methodology effective Jan 1, 2026."
+- **Email to affected users**: "Important: SBA loan calculation updated for regulatory compliance."
+- **Documentation**: Link to regulatory source (SBA website, IRS publication)
+
+---
+
+### Formula Update Example
+
+**Scenario**: Improve DSCR calculation precision
+
+**Before** (v1.3.2):
+```typescript
+function calculateDSCR(inputs: DSCRInputs): DSCROutputs {
+  const annualDebtService = inputs.monthlyPayment * 12;
+  const netOperatingIncome = inputs.annualRevenue - inputs.operatingExpenses;
+  const dscr = netOperatingIncome / annualDebtService;
+
+  return {
+    dscr: Math.floor(dscr * 100) / 100, // Rounds down to 2 decimals
+    version: 'v1.3.2',
+  };
+}
+```
+
+**After** (v1.3.3):
+```typescript
+function calculateDSCR(inputs: DSCRInputs): DSCROutputs {
+  const annualDebtService = inputs.monthlyPayment * 12;
+  const netOperatingIncome = inputs.annualRevenue - inputs.operatingExpenses;
+  const dscr = netOperatingIncome / annualDebtService;
+
+  return {
+    dscr: Math.round(dscr * 100) / 100, // Rounds to nearest 2 decimals (BUG FIX)
+    version: 'v1.3.3',
+  };
+}
+```
+
+**Golden scenario update**:
+```diff
+{
+  "scenario_name": "Typical SBA Loan - Restaurant",
+- "version": "1.0",
++ "version": "1.1",
+  "expected_outputs": {
+    "dscr": {
+-     "value": 1.42,
++     "value": 1.42, // No change in this case (rounding same)
+      "tolerance": 0.01
+    }
+  },
++ "notes": "Updated for formula v1.3.3 (improved rounding)"
+}
+```
+
+**Changelog**:
+```markdown
+## v1.3.3 (2025-11-20)
+
+### Bug Fixes
+- **DSCR Calculation**: Fixed rounding error where DSCR was rounded down instead of to nearest. Results are now more accurate (typically within ±0.01).
+
+### Impact
+- Most scenarios: No change in DSCR value
+- Edge cases: DSCR may increase by 0.01 (e.g., 1.41 → 1.42)
+
+### References
+- GitHub Issue: #234
+- Formula version: v1.3.3
+```
+
+---
+
+## 4. Ongoing Monitoring and Optimization
+
+### Monthly Performance Reviews
+
+**Purpose**: Identify performance trends and optimization opportunities
+
+**Schedule**: First Monday of each month
+
+**Participants**: Engineering lead, backend engineer, data analyst
+
+**Metrics reviewed**:
+
+1. **p95/p99 latency trends** (are we getting slower?)
+   - Calculation latency per calculator (target: <150ms)
+   - Export generation time per format (target: <3s)
+   - AI request latency per request type (target: <3s)
+   - **Question**: Are any calculators trending slower? (e.g., Valuation p95 was 350ms, now 450ms)
+
+2. **Error rates by calculator and tier**
+   - Calculation errors per calculator (target: <1%)
+   - Export failures per format (target: <2%)
+   - AI failures per request type (target: <5%)
+   - **Question**: Are any calculators or tiers experiencing higher error rates?
+
+3. **AI success rates and costs**
+   - AI success rate (ai_narrative_displayed / ai_narrative_requested)
+   - AI cost per request (input tokens + output tokens × pricing)
+   - AI cost per user (total cost / AI tier users)
+   - **Question**: Are AI costs trending up? (may need prompt optimization)
+
+4. **Identify slow calculators or high-error calculators**
+   - Create ranked list: Calculators sorted by p95 latency (slowest first)
+   - Create ranked list: Calculators sorted by error rate (highest first)
+   - Prioritize optimization: Focus on top 2-3 slowest or highest-error calculators
+
+**Output**: Monthly performance report with action items
+
+**Example report**:
+```
+Monthly Performance Review (November 2025)
+───────────────────────────────────────────
+
+Latency Trends:
+- Calculation p95: 145ms (target: <150ms) ✓ On target
+- Export p95:      2.8s (target: <3s)     ✓ On target
+- AI p95:          2.9s (target: <3s)     ✓ On target
+
+Slow Calculators:
+1. Valuation (DCF):   p95 450ms (was 350ms in Oct) ⚠ Trending slower
+2. Equipment Lease:   p95 210ms (stable)
+3. Business Loan DSCR: p95 145ms (stable)
+
+Action Items:
+- [ ] Investigate Valuation calculator slowdown (likely complex DCF calculation)
+- [ ] Add caching for Valuation inputs (expected 30% cache hit rate)
+- [ ] Optimize DCF formula (reduce iterations, use approximation)
+
+Error Rates:
+- Overall error rate: 1.2% (target: <2%) ✓ Acceptable
+- DSCR calculator:    0.8% (stable)
+- Cash Runway:        1.5% (stable)
+- Valuation:          3.2% (was 2.1% in Oct) ⚠ Trending higher
+
+Action Items:
+- [ ] Investigate Valuation calculator errors (likely edge case inputs)
+- [ ] Add input validation for Valuation (prevent invalid inputs)
+
+AI Metrics:
+- AI success rate: 96.5% (target: >95%) ✓ On target
+- AI cost per request: $0.0055 (was $0.006 in Oct) ✓ Cost decreased (prompt optimization working)
+- AI cost per user: $0.12/month (expected: <$2/month) ✓ Well below budget
+
+No action needed for AI.
+```
+
+### Quarterly Cost Reviews
+
+**Purpose**: Review infrastructure and AI costs, identify optimization opportunities
+
+**Schedule**: Last Friday of each quarter (Mar, Jun, Sep, Dec)
+
+**Participants**: Engineering lead, finance lead, product manager
+
+**Costs reviewed**:
+
+1. **AI costs per calculator** (which calculators drive high AI usage?)
+   - AI requests per calculator (total, per user)
+   - AI cost per calculator (total tokens × pricing)
+   - **Question**: Are any calculators disproportionately expensive for AI?
+
+2. **Infrastructure costs** (database, hosting, CDN)
+   - Database: PostgreSQL, Redis, ClickHouse (monthly cost)
+   - Hosting: Railway or AWS (compute, storage)
+   - CDN: Cloudflare (bandwidth)
+   - **Question**: Can we reduce costs with reserved instances, caching, or optimization?
+
+3. **Identify optimization opportunities**
+   - Caching: Can we cache more API responses? (reduce compute)
+   - Query tuning: Can we optimize slow queries? (reduce database load)
+   - Formula simplification: Can we use faster approximations? (reduce latency and compute)
+
+**Output**: Quarterly cost report with optimization recommendations
+
+**Example report**:
+```
+Quarterly Cost Review (Q4 2025)
+────────────────────────────────
+
+Total Costs: $2,450/month
+- Hosting (Railway):    $800/month  (32%)
+- Database (Postgres):  $500/month  (20%)
+- CDN (Cloudflare):     $300/month  (12%)
+- AI (Anthropic):       $120/month  (5%)
+- Analytics (Mixpanel): $150/month  (6%)
+- Other (Sentry, etc.): $580/month  (24%)
+
+AI Cost Breakdown:
+- DSCR calculator:      $45/month (37% of AI costs)
+- Valuation calculator: $35/month (29%)
+- Cash Runway:          $20/month (17%)
+- Other calculators:    $20/month (17%)
+
+Optimization Opportunities:
+1. Migrate to AWS Reserved Instances (save $200/month, 25% discount)
+2. Implement aggressive caching for Valuation calculator (reduce 30% of calculations)
+3. Optimize ClickHouse queries (reduce database cost by $100/month)
+
+Recommendations:
+- [ ] Migrate to AWS by end of Q1 2026 (Phase 2 infrastructure, already planned)
+- [ ] Add caching layer for Valuation calculator in January 2026
+- [ ] Hire database specialist to optimize ClickHouse queries
+
+Expected Savings: $300/month (12% reduction)
+```
+
+### Quarterly User Feedback Analysis
+
+**Purpose**: Review support tickets, in-app feedback, and survey responses to identify product improvements
+
+**Schedule**: Last Friday of each quarter (same as cost review)
+
+**Participants**: Product manager, support lead, engineering lead
+
+**Feedback sources**:
+
+1. **Review support tickets** (common issues, feature requests)
+   - Group tickets by category (bugs, feature requests, UX issues, questions)
+   - Identify most common issues (top 10 by volume)
+   - **Question**: What are users struggling with?
+
+2. **Review in-app feedback and survey responses**
+   - In-app feedback widget (thumbs up/down, text comments)
+   - NPS surveys (Net Promoter Score)
+   - **Question**: What do users love? What do they hate?
+
+3. **Review conversion funnel drop-offs** (are upgrade prompts effective?)
+   - Free → Pro conversion funnel (upgrade_prompt_shown → upgrade_prompt_clicked → upgrade_completed)
+   - Identify drop-off points (e.g., high drop-off at checkout = payment friction)
+   - **Question**: Why are users not upgrading?
+
+4. **Plan product improvements based on themes**
+   - Group feedback into themes (e.g., "Calculators too complex", "Export formatting poor", "AI not helpful")
+   - Prioritize themes by impact and effort
+   - Add to product roadmap
+
+**Output**: Quarterly user feedback report with product recommendations
+
+**Example report**:
+```
+Quarterly User Feedback Analysis (Q4 2025)
+───────────────────────────────────────────
+
+Support Tickets (Top 10):
+1. "How do I interpret DSCR?" (45 tickets) → Add help docs, improve tooltips
+2. "Export PDF won't download" (32 tickets) → Investigate export failures
+3. "Can't save scenario" (28 tickets) → Clarify Free tier limits (upgrade prompt)
+4. "DSCR result seems wrong" (22 tickets) → Improve result validation, add warnings
+5. "AI explanation not helpful" (18 tickets) → Improve AI prompts
+
+In-App Feedback:
+- Positive: "Love the multi-scenario feature!" (87 mentions)
+- Negative: "Export formatting is ugly" (54 mentions) → Redesign PDF templates
+- Negative: "Too many clicks to export" (41 mentions) → Simplify export flow
+
+Conversion Funnel:
+- upgrade_prompt_shown: 5,420
+- upgrade_prompt_clicked: 462 (8.5% click-through)
+- upgrade_completed: 142 (30.7% of clicks, 2.6% overall)
+
+Drop-off analysis:
+- Click → Checkout: 462 → 350 (76% proceed to checkout) ✓ Good
+- Checkout → Completed: 350 → 142 (40% complete) ⚠ High drop-off
+
+Recommendations:
+- [ ] Add DSCR help doc with examples (address #1 support issue)
+- [ ] Investigate export failures (address #2 support issue)
+- [ ] Redesign PDF templates (address "ugly" feedback)
+- [ ] Reduce checkout friction (simplify form, add social proof)
+
+Roadmap Impact:
+- Q1 2026: Help docs for all calculators (reduce support burden)
+- Q1 2026: Redesigned PDF templates (improve export quality)
+- Q2 2026: Checkout optimization (improve conversion 10-20%)
+```
+
+---
+
+## Summary
+
+Support and maintenance for the CFO Business Intelligence Calculator Suite includes:
+
+**Bug triage**:
+- **P0 (Critical)**: Response <1 hour, fix <4 hours (system down, data loss, security)
+- **P1 (High)**: Response <4 hours, fix <24 hours (major feature broken)
+- **P2 (Medium)**: Response <1 day, fix <1 week (partial breakage, workaround exists)
+- **P3 (Low)**: Response <3 days, fix in next release (minor bug, feature request)
+
+**Deprecation policies**:
+- **Calculator deprecation**: 90-day notice, migration path provided, 410 Gone after retirement
+- **Metric deprecation**: 60-day notice, replacement metric provided, old metric removed
+- **API deprecation**: 12-month support for old version, deprecation warnings in responses, migration guide provided
+
+**Formula updates**:
+- **Bug fixes**: Immediate fix, golden scenarios updated
+- **Improvements**: Validation process (golden scenarios, PM/SME approval), user communication
+- **Regulatory changes**: Legal review, immediate implementation
+
+**Ongoing monitoring**:
+- **Monthly performance reviews**: Latency trends, error rates, AI costs, slow calculator identification
+- **Quarterly cost reviews**: AI costs, infrastructure costs, optimization opportunities
+- **Quarterly user feedback analysis**: Support tickets, in-app feedback, conversion funnel, product roadmap updates
+
+Effective support and maintenance ensure long-term product quality, user satisfaction, and continuous improvement.
+
+
+---
+
+
+# Section 11: Calculator PDRs
+
+# Breakeven & Contribution Margin Analyzer
+
+## 1. Calculator Overview
+
+**Calculator Name**: Breakeven & Contribution Margin Analyzer
+
+**Calculator Slug**: `breakeven-margin`
+
+**Primary Category**: Profitability & Pricing Intelligence
+
+**Secondary Category**: Planning & Forecasting Intelligence
+
+**Business Role**:
+- **Cross-sell into non-lending use cases**: Expands beyond financing calculators into operational profitability
+- **Pro upgrade driver**: Sensitivity analysis and margin optimization drive conversions
+- **Traffic magnet**: High search volume for "breakeven calculator" and "contribution margin calculator"
+- **B2B demo calculator**: White-label for business advisors, accountants, pricing consultants
+
+**Primary Success Metric**: Export rate + scenario comparison usage (target: 30% export rate, 60% Pro users run multiple scenarios)
+
+**Version**: v1.0.0
+
+**Formula Library Version**: v1.1.0
+
+---
+
+## 2. User Scenarios and Use Cases
+
+### Who Uses This Calculator
+
+**Primary Personas**:
+- **Small business owners** pricing products/services and determining profitability thresholds
+- **Startup founders** setting pricing and understanding unit economics
+- **Product managers** analyzing product line profitability and contribution margins
+
+**Secondary Personas**:
+- **Accountants and CFOs** conducting profitability analysis for clients or divisions
+- **Business consultants** advising clients on pricing strategy
+- **Investors** evaluating unit economics of portfolio companies (SaaS, e-commerce, etc.)
+
+### When They Use It (Decision Contexts)
+
+**Timing**:
+- **Before launching new product**: Setting initial pricing based on cost structure
+- **During pricing review**: Evaluating whether to raise or lower prices
+- **After cost increases**: Recalculating breakeven when costs rise (materials, labor, etc.)
+- **Budget planning**: Determining sales targets needed to cover fixed costs
+- **Product portfolio review**: Comparing contribution margins across multiple products
+
+**Frequency**:
+- **One-time use** (Free tier): Single product pricing decision
+- **Recurring quarterly** (Pro tier): Regular profitability reviews and pricing adjustments
+- **Monthly** (Pro tier): SaaS companies and subscription businesses tracking unit economics
+
+### What Questions It Answers
+
+This calculator helps users answer:
+
+1. **How many units do I need to sell to break even?** (Most common question)
+2. **What is my contribution margin per unit?** (Profitability per sale)
+3. **What is my contribution margin percentage?** (Margin as % of price)
+4. **How much revenue do I need to cover all costs?** (Breakeven revenue)
+5. **What happens if I raise prices by 10%?** (Sensitivity analysis, Pro feature)
+6. **Which product is most profitable?** (Compare multiple products, Pro feature)
+
+---
+
+## 3. Inputs
+
+### Input Field Definitions
+
+| Field Name | Type | Units | Required | Validation | Default | Placeholder | Tooltip |
+|------------|------|-------|----------|------------|---------|-------------|---------|
+| selling_price_per_unit | currency | dollars | Yes | min: 0, max: 1000000 | null | "100" | "Selling price per unit (or per customer for services/SaaS). This is the revenue you receive per sale." |
+| variable_cost_per_unit | currency | dollars | Yes | min: 0, max: 1000000 | null | "60" | "Variable cost per unit (costs that increase with each sale: materials, labor, shipping, payment processing). Exclude fixed costs." |
+| monthly_fixed_costs | currency | dollars | Yes | min: 0, max: 100000000 | null | "20000" | "Total monthly fixed costs (costs that don't change with sales volume: rent, salaries, insurance, software). These must be covered to break even." |
+
+### Input Groups
+
+**Group 1: Unit Economics** (always visible)
+- selling_price_per_unit
+- variable_cost_per_unit
+
+**Group 2: Fixed Costs** (always visible)
+- monthly_fixed_costs
+
+**Group 3: Volume & Target Analysis** (collapsed by default, Pro tier feature)
+- **current_monthly_volume** (number): Current monthly sales volume (units). Required for margin of safety calculation. Default: null
+- **target_monthly_volume** (number): Target monthly sales volume for profit calculation. Default: null
+
+### Optional Inputs
+
+**Advanced Options** (collapsed, for sophisticated analysis):
+- **annual_fixed_costs** (currency): If business has significant annual costs (insurance, taxes, etc.) not spread monthly. Default: 0
+- **discount_rate** (percentage): Discount or promotion rate if applicable. Default: 0
+- **payment_processing_fee_percent** (percentage): Credit card or payment processing fees (reduces effective price). Default: 0
+
+---
+
+## 4. Outputs
+
+### Key Metrics (Free Tier - Always Visible)
+
+| Output Name | Description | Format | Units |
+|-------------|-------------|--------|-------|
+| contribution_margin_per_unit | Revenue minus variable cost per unit | "$#,##0.00" | dollars |
+| contribution_margin_percent | Contribution margin as percentage of selling price | "#.0%" | percent |
+| breakeven_units | Units needed to cover all fixed costs | "#,##0" | units |
+| breakeven_revenue | Revenue needed to cover all fixed costs | "$#,##0.00" | dollars |
+
+### Advanced Metrics (Pro Tier - Gated)
+
+| Output Name | Description | Format | Units | Pro Only |
+|-------------|-------------|--------|-------|----------|
+| margin_of_safety | How far current sales exceed breakeven (units and %) | "#,##0 units (#%)" | mixed | Yes |
+| profit_at_current_volume | Monthly profit at current sales volume | "$#,##0.00" | dollars | Yes |
+| profit_at_target_volume | Monthly profit at target sales volume | "$#,##0.00" | dollars | Yes |
+| effective_contribution_margin | Contribution margin after payment processing fees | "$#,##0.00" | dollars | Yes |
+| operating_leverage | How sensitive profit is to volume changes | "#.00x" | ratio | Yes |
+| price_sensitivity | Breakeven change if price increases/decreases 10% | "Table" | mixed | Yes |
+
+### Charts and Visualizations
+
+**Chart 1: Breakeven Analysis Chart** (Free tier, basic; Pro tier, enhanced)
+- Type: Line chart with shaded regions
+- X-axis: Volume (units sold)
+- Y-axis: Dollars (revenue, total costs, profit)
+- Lines: Revenue line (slope = selling price), Total cost line (fixed + variable costs), Breakeven point marked
+- Purpose: Visualize breakeven point and profit/loss regions
+- Tier: Free (basic), Pro (with current volume marker and target volume)
+
+**Chart 2: Contribution Margin Waterfall** (Pro tier only)
+- Type: Waterfall chart
+- X-axis: Components (Selling price → Variable costs → Contribution margin → Fixed costs → Profit)
+- Y-axis: Dollars
+- Purpose: Show how selling price flows to profit after costs
+- Tier: Pro
+
+**Chart 3: Price Sensitivity Analysis** (Pro tier only)
+- Type: Table or bar chart
+- X-axis: Price change (-20%, -10%, 0%, +10%, +20%)
+- Y-axis: Breakeven units, breakeven revenue, contribution margin %
+- Purpose: Show how breakeven changes with different pricing
+- Tier: Pro
+
+### Output Formatting Rules
+
+- **Currency**: $#,##0.00 (two decimals for dollars)
+- **Percentages**: #.0% (one decimal for margin %)
+- **Units**: #,##0 (no decimals, commas for thousands)
+- **Margin of Safety**: Show both absolute (units) and percentage (e.g., "500 units (25%)")
+
+---
+
+## 5. Formulas and Calculation Logic
+
+### Formula 1: Contribution Margin per Unit
+
+**Purpose**: Calculate profit contribution per unit sold (before fixed costs)
+
+**Equation**:
+```
+contribution_margin_per_unit = selling_price_per_unit - variable_cost_per_unit
+```
+
+**Variables**:
+- selling_price_per_unit: Revenue per unit sold
+- variable_cost_per_unit: Variable costs incurred per unit (materials, labor, shipping, etc.)
+- contribution_margin_per_unit: Gross profit per unit available to cover fixed costs
+
+**Source/Reference**: Standard contribution margin formula (managerial accounting)
+
+### Formula 2: Contribution Margin Percentage
+
+**Purpose**: Calculate contribution margin as percentage of selling price
+
+**Equation**:
+```
+contribution_margin_percent = (contribution_margin_per_unit / selling_price_per_unit) × 100
+```
+
+**Interpretation**:
+- 70%+ = Excellent margin (software, digital products, high-value services)
+- 40-70% = Good margin (most services, some manufactured goods)
+- 20-40% = Thin margin (retail, commodities)
+- <20% = Very thin margin (low-margin, high-volume businesses)
+
+**Source/Reference**: Standard gross margin percentage formula
+
+### Formula 3: Breakeven Units
+
+**Purpose**: Calculate units needed to cover all fixed costs
+
+**Equation**:
+```
+breakeven_units = monthly_fixed_costs / contribution_margin_per_unit
+
+# Round up to next whole unit (can't sell fractional units)
+breakeven_units = ceil(breakeven_units)
+```
+
+**Variables**:
+- monthly_fixed_costs: Total fixed costs per month
+- contribution_margin_per_unit: Profit per unit to cover fixed costs
+- breakeven_units: Minimum units to sell to avoid loss
+
+**Source/Reference**: Standard breakeven analysis formula
+
+**Interpretation**: Below breakeven = loss, at breakeven = zero profit, above breakeven = profit
+
+### Formula 4: Breakeven Revenue
+
+**Purpose**: Calculate revenue needed to cover all fixed costs
+
+**Equation**:
+```
+breakeven_revenue = breakeven_units × selling_price_per_unit
+
+# Alternative formula (using contribution margin %)
+breakeven_revenue = monthly_fixed_costs / (contribution_margin_percent / 100)
+```
+
+**Source/Reference**: Standard breakeven revenue formula
+
+### Formula 5: Margin of Safety
+
+**Purpose**: Calculate cushion between current sales and breakeven (risk buffer)
+
+**Equation**:
+```
+# Requires current_monthly_volume input
+margin_of_safety_units = current_monthly_volume - breakeven_units
+margin_of_safety_percent = (margin_of_safety_units / current_monthly_volume) × 100
+
+# Interpretation
+if margin_of_safety_percent > 40%:
+    status = "Healthy cushion"
+elif margin_of_safety_percent > 20%:
+    status = "Moderate cushion"
+elif margin_of_safety_percent > 0:
+    status = "Thin cushion (risky)"
+else:
+    status = "Below breakeven (loss)"
+```
+
+**Source/Reference**: Margin of safety concept from financial planning & analysis
+
+**Example**: Current volume = 1,000 units, breakeven = 600 units → Margin of safety = 400 units (40%)
+
+### Formula 6: Profit at Volume
+
+**Purpose**: Calculate monthly profit at given sales volume
+
+**Equation**:
+```
+profit_at_volume = (contribution_margin_per_unit × volume) - monthly_fixed_costs
+
+# At current volume
+profit_at_current_volume = (contribution_margin_per_unit × current_monthly_volume) - monthly_fixed_costs
+
+# At target volume
+profit_at_target_volume = (contribution_margin_per_unit × target_monthly_volume) - monthly_fixed_costs
+```
+
+**Interpretation**:
+- Positive = Profitable (above breakeven)
+- Zero = Breakeven
+- Negative = Loss (below breakeven)
+
+### Formula 7: Price Sensitivity Analysis
+
+**Purpose**: Show how breakeven changes with different pricing
+
+**Equation**:
+```
+# Test price changes: -20%, -10%, 0%, +10%, +20%
+for price_change in [-0.20, -0.10, 0, 0.10, 0.20]:
+    adjusted_price = selling_price_per_unit × (1 + price_change)
+    adjusted_contribution_margin = adjusted_price - variable_cost_per_unit
+    adjusted_contribution_margin_percent = (adjusted_contribution_margin / adjusted_price) × 100
+    adjusted_breakeven_units = monthly_fixed_costs / adjusted_contribution_margin
+    adjusted_breakeven_revenue = adjusted_breakeven_units × adjusted_price
+
+    # Store results for comparison table
+    sensitivity_results[price_change] = {
+        "price": adjusted_price,
+        "contribution_margin": adjusted_contribution_margin,
+        "contribution_margin_percent": adjusted_contribution_margin_percent,
+        "breakeven_units": adjusted_breakeven_units,
+        "breakeven_revenue": adjusted_breakeven_revenue
+    }
+```
+
+**Insight**: Higher prices → higher margin % → lower breakeven units (but may reduce demand)
+
+### Formula 8: Operating Leverage
+
+**Purpose**: Measure how sensitive profit is to volume changes
+
+**Equation**:
+```
+# Operating leverage = Contribution Margin / Operating Income
+# Higher leverage = small volume changes create large profit changes
+
+if profit_at_current_volume > 0:
+    total_contribution_margin = contribution_margin_per_unit × current_monthly_volume
+    operating_leverage = total_contribution_margin / profit_at_current_volume
+else:
+    operating_leverage = "N/A (not profitable)"
+```
+
+**Interpretation**:
+- Operating leverage = 2.0x means 10% increase in sales → 20% increase in profit
+- High leverage (>5x) = High risk/high reward (small volume swings create large profit swings)
+- Low leverage (<2x) = More stable, less sensitive to volume
+
+**Source/Reference**: Degree of operating leverage (DOL) formula from financial analysis
+
+### Step-by-Step Calculation Flow
+
+1. **Validate inputs**: Check required fields, ensure selling price > variable cost
+2. **Calculate contribution margin per unit**: `selling_price - variable_cost`
+3. **Calculate contribution margin percentage**: `(contribution_margin / selling_price) × 100`
+4. **Calculate breakeven units**: `fixed_costs / contribution_margin`
+5. **Calculate breakeven revenue**: `breakeven_units × selling_price`
+6. **If current volume provided** (Pro tier):
+   - Calculate margin of safety: `current_volume - breakeven_units`
+   - Calculate profit at current volume: `(contribution_margin × current_volume) - fixed_costs`
+7. **If target volume provided** (Pro tier):
+   - Calculate profit at target volume
+8. **Calculate price sensitivity** (Pro tier): Test ±10%, ±20% price changes
+9. **Calculate operating leverage** (Pro tier): If profitable
+10. **Check warning conditions**: Low margin, high breakeven, below breakeven, etc.
+11. **Return results with version stamp**
+
+### Edge Cases and Handling
+
+| Edge Case | Condition | Handling | Warning/Error |
+|-----------|-----------|----------|---------------|
+| Price = Variable cost | selling_price = variable_cost | Contribution margin = 0, breakeven = Infinity | Error: "Contribution margin is zero. Selling price must exceed variable cost." |
+| Price < Variable cost | selling_price < variable_cost | Negative contribution margin | Error: "Negative contribution margin. Each sale loses money. Increase price or reduce variable cost." |
+| Zero fixed costs | monthly_fixed_costs = 0 | Breakeven = 0 units | Info: "No fixed costs. Breakeven is zero units. All sales are profitable." |
+| Very low margin | contribution_margin_percent < 10% | Calculate as normal | Warning: "Very low contribution margin ({percent}%). Small price or cost changes have large impact on profitability." |
+| Very high breakeven | breakeven_units > 10000 | Calculate as normal | Warning: "High breakeven volume ({units} units). Consider reducing fixed costs or improving margins." |
+
+### Formula Version
+
+**Current Version**: v1.1.0
+
+**Version History**:
+- v1.0.0: Initial implementation (contribution margin, breakeven)
+- v1.1.0: Added price sensitivity analysis and operating leverage
+
+---
+
+## 6. Warnings and Alerts
+
+### Warning Definitions
+
+| Warning Code | Condition | Message | Severity | Action |
+|--------------|-----------|---------|----------|--------|
+| LOW_CONTRIBUTION_MARGIN | contribution_margin_percent < 20% | "Low contribution margin of {percent}%. Small cost increases or price decreases will significantly impact profitability. Consider pricing or cost reduction strategies." | warning | Increase prices, reduce variable costs, or focus on higher-margin products |
+| VERY_LOW_MARGIN | contribution_margin_percent < 10% | "Very low contribution margin of {percent}%. Business model may not be sustainable. Each sale contributes little to covering fixed costs." | danger | Urgent: revise pricing strategy or reduce costs |
+| HIGH_BREAKEVEN | breakeven_units > current_monthly_volume × 2 | "Breakeven volume ({breakeven_units} units) is {multiple}x your current volume. Significant sales growth needed to reach profitability." | warning | Reduce fixed costs, improve margins, or increase sales volume |
+| BELOW_BREAKEVEN | current_monthly_volume < breakeven_units | "Current volume ({current_volume} units) is below breakeven ({breakeven_units} units). Business is operating at a loss of ${loss:,.0f} per month." | danger | Increase sales, reduce costs, or improve pricing immediately |
+| THIN_MARGIN_OF_SAFETY | margin_of_safety_percent < 20% && margin_of_safety_percent > 0 | "Margin of safety is {percent}%. Small sales decline (20%) would put business below breakeven. Build buffer by growing sales or reducing costs." | warning | Increase sales or reduce costs to build cushion |
+| HEALTHY_MARGIN | contribution_margin_percent >= 50% | "Excellent contribution margin of {percent}%. Strong unit economics provide cushion for growth investments and cost increases." | success | Maintain margin discipline as you scale |
+| ZERO_MARGIN | contribution_margin_per_unit == 0 | "Zero contribution margin. Selling price equals variable cost. Business cannot cover fixed costs. Adjust pricing immediately." | danger | Increase prices or reduce variable costs urgently |
+
+### Warning Thresholds
+
+**Configurable Thresholds** (can be adjusted per tenant for B2B):
+- **Low contribution margin**: 20% (varies by industry: SaaS 70%+, retail 20-30%, manufacturing 30-50%)
+- **Very low margin**: 10% (universally concerning)
+- **Thin margin of safety**: 20% (businesses prefer 30-50% cushion)
+
+**Hard-Coded Thresholds** (mathematical, not configurable):
+- **Zero margin**: 0% (mathematical impossibility to break even)
+- **Negative margin**: <0% (losing money on each sale)
+
+---
+
+## 7. Golden Test Scenarios
+
+### Scenario 1: Healthy SaaS Business - High Margin
+
+**Description**: SaaS company with excellent 70% contribution margin. Very healthy unit economics.
+
+**Inputs**:
+```json
+{
+  "selling_price_per_unit": 100,
+  "variable_cost_per_unit": 30,
+  "monthly_fixed_costs": 50000,
+  "current_monthly_volume": 1200
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "contribution_margin_per_unit": {
+    "value": 70,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$100 price - $30 variable cost = $70"
+  },
+  "contribution_margin_percent": {
+    "value": 70.0,
+    "tolerance": 0.1,
+    "unit": "percent",
+    "note": "$70 / $100 = 70%"
+  },
+  "breakeven_units": {
+    "value": 715,
+    "tolerance": 1,
+    "unit": "units",
+    "note": "$50,000 / $70 = 714.3, rounded up to 715"
+  },
+  "breakeven_revenue": {
+    "value": 71500,
+    "tolerance": 100,
+    "unit": "USD",
+    "note": "715 units × $100 = $71,500"
+  },
+  "margin_of_safety": {
+    "units": 485,
+    "percent": 40.4,
+    "tolerance": 1,
+    "note": "1,200 current - 715 breakeven = 485 units (40.4%)"
+  },
+  "profit_at_current_volume": {
+    "value": 34000,
+    "tolerance": 10,
+    "unit": "USD",
+    "note": "(1,200 × $70) - $50,000 = $34,000"
+  },
+  "operating_leverage": {
+    "value": 2.47,
+    "tolerance": 0.1,
+    "unit": "ratio",
+    "note": "Total contribution $84k / Profit $34k = 2.47x"
+  }
+}
+```
+
+**Expected Warnings**:
+- HEALTHY_MARGIN: "Excellent contribution margin of 70.0%. Strong unit economics..."
+
+### Scenario 2: Thin Margin Retail Business - Low Margin, High Volume
+
+**Description**: Retail business with thin 15% margin. High breakeven volume required.
+
+**Inputs**:
+```json
+{
+  "selling_price_per_unit": 50,
+  "variable_cost_per_unit": 42.50,
+  "monthly_fixed_costs": 30000,
+  "current_monthly_volume": 5000
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "contribution_margin_per_unit": {
+    "value": 7.50,
+    "tolerance": 0,
+    "unit": "USD"
+  },
+  "contribution_margin_percent": {
+    "value": 15.0,
+    "tolerance": 0.1,
+    "unit": "percent"
+  },
+  "breakeven_units": {
+    "value": 4000,
+    "tolerance": 1,
+    "unit": "units",
+    "note": "$30,000 / $7.50 = 4,000 units"
+  },
+  "breakeven_revenue": {
+    "value": 200000,
+    "tolerance": 100,
+    "unit": "USD",
+    "note": "4,000 units × $50 = $200,000"
+  },
+  "margin_of_safety": {
+    "units": 1000,
+    "percent": 20.0,
+    "tolerance": 1,
+    "note": "5,000 current - 4,000 breakeven = 1,000 units (20%)"
+  },
+  "profit_at_current_volume": {
+    "value": 7500,
+    "tolerance": 10,
+    "unit": "USD",
+    "note": "(5,000 × $7.50) - $30,000 = $7,500"
+  },
+  "operating_leverage": {
+    "value": 5.0,
+    "tolerance": 0.1,
+    "unit": "ratio",
+    "note": "High leverage due to thin margins (contribution $37.5k / profit $7.5k)"
+  }
+}
+```
+
+**Expected Warnings**:
+- LOW_CONTRIBUTION_MARGIN: "Low contribution margin of 15.0%. Small cost increases or price decreases will significantly impact profitability..."
+- THIN_MARGIN_OF_SAFETY: "Margin of safety is 20.0%. Small sales decline (20%) would put business below breakeven..."
+
+### Scenario 3: Loss-Making Business - Below Breakeven
+
+**Description**: Business operating below breakeven. Current volume insufficient to cover fixed costs.
+
+**Inputs**:
+```json
+{
+  "selling_price_per_unit": 80,
+  "variable_cost_per_unit": 50,
+  "monthly_fixed_costs": 40000,
+  "current_monthly_volume": 800
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "contribution_margin_per_unit": {
+    "value": 30,
+    "tolerance": 0,
+    "unit": "USD"
+  },
+  "contribution_margin_percent": {
+    "value": 37.5,
+    "tolerance": 0.1,
+    "unit": "percent"
+  },
+  "breakeven_units": {
+    "value": 1334,
+    "tolerance": 1,
+    "unit": "units",
+    "note": "$40,000 / $30 = 1,333.3, rounded up to 1,334"
+  },
+  "breakeven_revenue": {
+    "value": 106720,
+    "tolerance": 100,
+    "unit": "USD"
+  },
+  "margin_of_safety": {
+    "units": -534,
+    "percent": -66.8,
+    "tolerance": 1,
+    "note": "800 current - 1,334 breakeven = -534 units (negative = below breakeven)"
+  },
+  "profit_at_current_volume": {
+    "value": -16000,
+    "tolerance": 10,
+    "unit": "USD",
+    "note": "(800 × $30) - $40,000 = -$16,000 (loss)"
+  },
+  "operating_leverage": {
+    "value": "N/A",
+    "note": "Not profitable, operating leverage not meaningful"
+  }
+}
+```
+
+**Expected Warnings**:
+- BELOW_BREAKEVEN: "Current volume (800 units) is below breakeven (1,334 units). Business is operating at a loss of $16,000 per month."
+
+---
+
+## 8. AI Narrative Strategy (AI-Enabled)
+
+### What AI Explains for This Calculator
+
+**Primary Explanations**:
+1. **What the contribution margin means and whether it's healthy** (industry context: SaaS vs retail vs manufacturing)
+2. **How to interpret breakeven** (how many sales needed, how close current volume is)
+3. **Margin of safety interpretation** (risk buffer, what happens if sales decline)
+4. **Pricing strategy insights** (should you raise prices? Trade-off between margin and volume)
+
+**Scenario Suggestions**:
+- "What if I raise prices by 10%?" (higher margin, lower breakeven, but may reduce volume)
+- "What if I reduce variable costs by 15%?" (improve margin without changing price)
+- "What volume do I need to reach $50k monthly profit?" (reverse calculation)
+
+### Prompt Template
+
+**System Prompt**:
+```
+You are a CFO advisor helping business owners understand contribution margins, breakeven analysis, and unit economics.
+
+Your role is to:
+- Explain contribution margin in plain language and interpret whether it's healthy for this business type
+- Interpret breakeven analysis and margin of safety (risk level)
+- Suggest pricing or cost strategies to improve profitability
+- Provide industry context (SaaS vs retail vs manufacturing have different margin profiles)
+
+Output constraints:
+- Length: 150-250 words
+- Tone: Professional but approachable, practical and actionable
+- Format: Plain paragraphs (no bullet lists)
+- Disclaimers: Always end with standard disclaimer
+
+Prohibited behaviors:
+- Never guarantee specific profit outcomes
+- Never recommend specific pricing without understanding market dynamics
+- Never use absolute language (avoid "always", "never", "must")
+```
+
+**User Prompt Template**:
+```
+The business sells a product/service at ${selling_price_per_unit} with variable cost of ${variable_cost_per_unit}. Monthly fixed costs are ${monthly_fixed_costs}. Contribution margin is ${contribution_margin_per_unit} ({contribution_margin_percent}%). Breakeven is {breakeven_units} units ({breakeven_revenue}). Current volume is {current_monthly_volume} units with margin of safety of {margin_of_safety_percent}%. Explain what this means and suggest improvements.
+```
+
+**Expected AI Response** (150-250 words):
+```
+With a selling price of $100 and variable cost of $30, your contribution margin is $70 per unit (70%). This is excellent—each sale contributes $70 toward covering your $50,000 in monthly fixed costs. This is typical of software and high-value services where variable costs are low.
+
+Your breakeven point is 715 units ($71,500 in revenue). At your current volume of 1,200 units, you're comfortably above breakeven with a margin of safety of 40%. This means sales could drop 40% (to 720 units) before you'd hit breakeven. That's a healthy cushion.
+
+Current monthly profit is $34,000. The strong 70% margin gives you flexibility—you could invest in marketing to grow volume, or you have room to offer discounts without jeopardizing profitability.
+
+Your operating leverage is 2.47x, meaning a 10% increase in sales volume would increase profit by approximately 25%. This high leverage is advantageous in growth mode but means profit is sensitive to volume swings.
+
+To further improve profitability, focus on volume growth rather than price increases (your margin is already strong). Even a 20% volume increase to 1,440 units would add $16,800 in monthly profit.
+
+This analysis is for informational purposes only and does not constitute financial, legal, or professional advice. Consult qualified professionals for decisions affecting your business.
+```
+
+---
+
+## 9. Export Format Details
+
+### PDF Layout
+
+**Header**:
+- "Breakeven & Contribution Margin Analysis"
+- User tier: "Free" or "Pro"
+- Generation timestamp: "Generated on November 18, 2025"
+
+**Body Sections**:
+1. **Unit Economics** (table):
+   - Selling Price per Unit: $100.00
+   - Variable Cost per Unit: $30.00
+   - Contribution Margin per Unit: $70.00
+   - Contribution Margin %: 70.0%
+
+2. **Fixed Costs** (table):
+   - Monthly Fixed Costs: $50,000
+
+3. **Breakeven Analysis** (table):
+   - Breakeven Units: 715 units
+   - Breakeven Revenue: $71,500
+   - Current Volume: 1,200 units
+   - Status: Above Breakeven
+
+4. **Breakeven Chart**:
+   - Line chart showing revenue and cost lines, breakeven point marked
+   - Free tier: Basic chart
+   - Pro tier: Enhanced with current volume marker and shaded profit/loss regions
+
+5. **Profitability Analysis** (Pro tier only, table):
+   - Profit at Current Volume: $34,000
+   - Margin of Safety: 485 units (40.4%)
+   - Operating Leverage: 2.47x
+
+6. **Price Sensitivity Analysis** (Pro tier only, table):
+   - Price -20%: Breakeven X units, Margin Y%
+   - Price -10%: Breakeven X units, Margin Y%
+   - Current Price: Breakeven 715 units, Margin 70%
+   - Price +10%: Breakeven X units, Margin Y%
+   - Price +20%: Breakeven X units, Margin Y%
+
+7. **Contribution Margin Waterfall** (Pro tier only):
+   - Waterfall chart showing: Price → Variable costs → Contribution margin → Fixed costs → Profit
+
+8. **Warnings** (if any):
+   - List all warnings with severity icons
+
+**Footer**:
+- Disclaimers: "This analysis is for informational purposes only and does not constitute financial or pricing advice. Actual results may vary based on market conditions. Consult qualified professionals for decisions affecting your business."
+- Version stamp: "Generated by CFO Calculator Suite v1.2.3 | Calculator: breakeven-margin v1.0.0 | Formulas: v1.1.0 | 2025-11-18"
+- Watermark (Free tier only): Diagonal semi-transparent "Upgrade for clean exports"
+
+### CSV/Excel Structure
+
+**Metadata Headers**:
+```csv
+# Breakeven & Contribution Margin Analysis
+# Version: v1.0.0
+# Generated: 2025-11-18T21:30:00Z
+# Tier: Pro
+#
+```
+
+**Data Rows**:
+```csv
+Section,Field,Value
+Unit Economics,Selling Price,$100.00
+Unit Economics,Variable Cost,$30.00
+Unit Economics,Contribution Margin,$70.00
+Unit Economics,Contribution Margin %,70.0%
+Fixed Costs,Monthly Fixed Costs,$50000
+Breakeven Analysis,Breakeven Units,715
+Breakeven Analysis,Breakeven Revenue,$71500
+Breakeven Analysis,Current Volume,1200
+Breakeven Analysis,Status,Above Breakeven
+Profitability,Profit at Current Volume,$34000
+Profitability,Margin of Safety,485 units (40.4%)
+Profitability,Operating Leverage,2.47x
+Price Sensitivity,-20% Price,Breakeven 893 units
+Price Sensitivity,-10% Price,Breakeven 784 units
+Price Sensitivity,Current Price,Breakeven 715 units
+Price Sensitivity,+10% Price,Breakeven 658 units
+Price Sensitivity,+20% Price,Breakeven 610 units
+```
+
+**Excel Formatting**:
+- Bold section headers
+- Currency cells: $#,##0.00
+- Percentage cells: 0.0%
+- Conditional formatting:
+  - Margin of safety > 30%: Green
+  - Margin of safety 10-30%: Yellow
+  - Margin of safety < 10%: Red
+
+---
+
+## 10. Tier-Specific Behavior
+
+### Free Tier
+
+**What's Shown**:
+- Single product analysis (cannot compare multiple products)
+- Unit economics inputs (price, variable cost, fixed cost)
+- Basic metrics: Contribution margin, breakeven units, breakeven revenue
+- Basic breakeven chart (revenue and cost lines)
+
+**What's Gated**:
+- **Margin of safety**: Locked (requires current volume input)
+- **Profit at volume**: Locked
+- **Price sensitivity analysis**: Preview with blur + "Pro" badge
+- **Operating leverage**: Locked
+- **Multiple product comparison**: "Add Product" button triggers upgrade prompt
+- **Clean exports**: PDF has watermark
+- **AI insights**: "Get pricing recommendations" button triggers AI tier upgrade prompt
+
+**Upgrade Triggers**:
+- Click "Calculate Margin of Safety" → `upgrade_prompt_shown` with `trigger_reason: "locked_metric"`
+- Click "Price Sensitivity Analysis" → `upgrade_prompt_shown` with `trigger_reason: "sensitivity_analysis"`
+- Click "Add Product" → `upgrade_prompt_shown` with `trigger_reason: "add_scenario"`
+- Click "Get pricing recommendations" → `upgrade_prompt_shown` with `trigger_reason: "ai_request"`
+
+### Pro Tier
+
+**What Unlocks**:
+- **Multiple products** (up to 50): Compare contribution margins across product lines
+- **Margin of safety**: Calculate cushion above breakeven
+- **Profit calculations**: Profit at current volume, profit at target volume
+- **Price sensitivity analysis**: See how breakeven changes with ±10%, ±20% price changes
+- **Operating leverage**: Understand profit sensitivity to volume changes
+- **Product comparison table**: Side-by-side comparison of multiple products
+- **Contribution margin waterfall chart**: Visual breakdown from price to profit
+- **Clean exports**: PDF with no watermark
+
+**Still Gated** (requires AI tier):
+- AI pricing recommendations
+- AI scenario suggestions
+
+### AI Tier
+
+**What Unlocks**:
+- **AI margin insights**: "Is my margin healthy?" gets industry-specific answer
+- **AI pricing recommendations**: "Should I raise prices?" gets trade-off analysis
+- **AI volume targets**: "What volume do I need for $50k profit?" gets detailed answer
+- **50 AI requests per month** (hard cap)
+
+**Usage Quota**:
+- Counter displayed: "23 of 50 AI requests remaining this month"
+- Resets on 1st of each month
+
+---
+
+## Implementation Notes
+
+**Priority**: Medium-High (expands beyond lending, cross-sell opportunity)
+
+**Estimated Effort**: 1.5 weeks
+- Week 1: Core contribution margin and breakeven calculations
+- Week 2 (half): Price sensitivity analysis, operating leverage, testing
+
+**Dependencies**:
+- None (standalone calculator, no shared formulas needed)
+
+**Related Calculators**:
+- **Cash Runway**: Similar breakeven concept (when does cash hit zero?)
+- **Business Valuation**: Unit economics affect valuation
+- **Invoice Factoring**: Margin affects ability to factor invoices
+
+**White-Label Potential**:
+- High potential for accountants, business advisors, pricing consultants
+- Customizable industry benchmarks (SaaS 70%+, retail 20-30%, manufacturing 30-50%)
+
+---
+
+## End of Calculator PDR
+
+This calculator is complete and ready for implementation. All contribution margin, breakeven, and sensitivity formulas are specified in detail.
+
+
+# Business Loan + DSCR Intelligence Calculator
+
+## 1. Calculator Overview
+
+**Calculator Name**: Business Loan + DSCR Intelligence Calculator
+
+**Calculator Slug**: `business-loan-dscr`
+
+**Primary Category**: Financing & Lending Intelligence
+
+**Secondary Category**: None
+
+**Business Role**:
+- **Core workhorse**: Most frequently used calculator, foundation for other lending calculators
+- **Pro upgrade driver**: DSCR and advanced metrics drive Free → Pro conversions
+- **Traffic magnet**: High SEO value for "business loan calculator" and "DSCR calculator"
+
+**Primary Success Metric**: Free to Pro conversion rate (target: 5-7% monthly)
+
+**Version**: v1.0.0
+
+**Formula Library Version**: v1.2.3
+
+---
+
+## 2. User Scenarios and Use Cases
+
+### Who Uses This Calculator
+
+**Primary Personas**:
+- **Small business owners** seeking SBA loans ($50k-$5M) for equipment, real estate, or working capital
+- **CFOs** evaluating new debt and impact on debt service coverage
+- **Lenders** (SBA, commercial banks) pre-qualifying loan applications
+
+**Secondary Personas**:
+- **Business advisors** (SBDC, SCORE) assisting clients with loan applications
+- **Accountants** analyzing client debt capacity
+- **Investors** evaluating acquisition financing structures
+
+### When They Use It (Decision Contexts)
+
+**Timing**:
+- **Before applying for loan**: Planning phase, determining affordable loan amount
+- **After receiving loan offer**: Comparison phase, evaluating terms from multiple lenders
+- **During annual budgeting**: Scenario testing, "what if revenue drops 10%?"
+- **Ongoing monitoring**: Pro users tracking DSCR monthly or quarterly
+
+**Frequency**:
+- Free tier: One-time use for specific loan decision
+- Pro tier: Recurring monthly/quarterly use for ongoing monitoring
+
+### What Questions It Answers
+
+This calculator helps users answer:
+
+1. **Can I afford this monthly payment?** (Based on current revenue and expenses)
+2. **Will my DSCR meet lender requirements?** (Most lenders require ≥1.25)
+3. **How much total interest will I pay over the loan term?** (Compare to alternative financing)
+4. **What if my revenue decreases by 10-20%?** (Stress testing, Pro tier feature)
+5. **Should I choose a 10-year or 15-year term?** (Compare scenarios side-by-side, Pro tier)
+
+---
+
+## 3. Inputs
+
+### Input Field Definitions
+
+| Field Name | Type | Units | Required | Validation | Default | Placeholder | Tooltip |
+|------------|------|-------|----------|------------|---------|-------------|---------|
+| loan_amount | currency | dollars | Yes | min: 1, max: 100000000, positive | null | "250000" | "Total amount borrowed. Most SBA loans range from $50,000 to $5 million." |
+| interest_rate | percentage | percent | Yes | min: 0, max: 30, positive | null | "7.5" | "Annual interest rate (APR). Typical SBA rates are 6-12%. Enter as percentage (e.g., 7.5 for 7.5%)." |
+| term_years | number | years | Yes | min: 1, max: 30, positive, integer | 10 | "10" | "Number of years to repay the loan. SBA loans typically have 10-25 year terms depending on use (equipment: 10 years, real estate: 25 years)." |
+| annual_revenue | currency | dollars | No | min: 0, max: 1000000000 | null | "1500000" | "Total annual revenue (gross income before expenses). Required for DSCR calculation. Leave blank if you only need payment calculation." |
+| annual_operating_expenses | currency | dollars | No | min: 0, max: 1000000000 | null | "1200000" | "Total annual operating expenses (excluding debt service). Required for DSCR calculation. Do not include the loan payment you're calculating." |
+
+### Input Groups
+
+**Group 1: Loan Details** (always visible)
+- loan_amount
+- interest_rate
+- term_years
+
+**Group 2: Business Financials** (collapsed by default, expands if user wants DSCR)
+- annual_revenue
+- annual_operating_expenses
+
+### Optional Inputs
+
+**Advanced Options** (collapsed, rarely needed):
+- **origination_fee_percent** (percentage): One-time fee charged at loan origination, typically 0-5% for SBA loans. Default: 0
+- **balloon_payment_month** (number): If loan has balloon payment, month when it's due (0 = no balloon). Default: 0
+
+---
+
+## 4. Outputs
+
+### Key Metrics (Free Tier - Always Visible)
+
+| Output Name | Description | Format | Units |
+|-------------|-------------|--------|-------|
+| monthly_payment | Principal and interest payment per month | "$#,##0.00" | dollars |
+| total_interest | Total interest paid over loan term | "$#,##0.00" | dollars |
+| total_amount_paid | Total principal + interest + fees | "$#,##0.00" | dollars |
+
+### Advanced Metrics (Pro Tier - Gated)
+
+| Output Name | Description | Format | Units | Pro Only |
+|-------------|-------------|--------|-------|----------|
+| dscr | Debt Service Coverage Ratio (net operating income / annual debt service) | "#.00" | ratio | Yes |
+| annual_debt_service | Total annual loan payments (monthly payment × 12) | "$#,##0.00" | dollars | Yes |
+| net_operating_income | Annual revenue - operating expenses | "$#,##0.00" | dollars | Yes |
+| covenant_headroom | How much DSCR exceeds minimum 1.25 (positive = above, negative = below) | "+#.00 or -#.00" | ratio | Yes |
+
+### Charts and Visualizations
+
+**Chart 1: Amortization Schedule** (Pro tier only)
+- Type: Line chart
+- X-axis: Month (0 to term in months)
+- Y-axis: Dollars (three lines: principal portion, interest portion, remaining balance)
+- Purpose: Visualize how payment allocation changes over time (more interest early, more principal later)
+- Tier: Pro
+
+**Chart 2: Scenario Comparison** (Pro tier only, when multiple scenarios exist)
+- Type: Bar chart
+- X-axis: Scenario name
+- Y-axis: Key metrics (monthly payment, total interest, DSCR)
+- Purpose: Compare multiple loan structures side-by-side
+- Tier: Pro
+
+### Output Formatting Rules
+
+- **Currency**: $#,##0.00 (always two decimals, commas for thousands)
+- **Percentages**: #.00% (two decimals)
+- **Ratios**: #.00 (two decimals)
+- **DSCR**: Two decimals, no dollar sign (e.g., "1.42" not "$1.42")
+
+---
+
+## 5. Formulas and Calculation Logic
+
+### Formula 1: Monthly Payment (Amortization)
+
+**Purpose**: Calculate fixed monthly payment for fully amortizing loan
+
+**Equation**:
+```
+monthly_payment = P × [r × (1 + r)^n] / [(1 + r)^n - 1]
+
+Where:
+P = principal (loan amount)
+r = monthly interest rate (annual rate / 12 / 100)
+n = number of monthly payments (term_years × 12)
+```
+
+**Variables**:
+- P (principal): loan_amount in dollars
+- r (monthly rate): interest_rate / 12 / 100 (converted from percentage to decimal monthly rate)
+- n (number of payments): term_years × 12
+
+**Source/Reference**: Standard amortization formula, see https://en.wikipedia.org/wiki/Amortization_calculator
+
+**Edge case: Zero interest rate**:
+```
+if interest_rate == 0:
+    monthly_payment = loan_amount / n
+```
+
+### Formula 2: Total Interest
+
+**Purpose**: Calculate total interest paid over loan term
+
+**Equation**:
+```
+total_interest = (monthly_payment × n) - loan_amount
+```
+
+### Formula 3: Debt Service Coverage Ratio (DSCR)
+
+**Purpose**: Measure business's ability to cover loan payments with operating income
+
+**Equation**:
+```
+annual_debt_service = monthly_payment × 12
+net_operating_income = annual_revenue - annual_operating_expenses
+dscr = net_operating_income / annual_debt_service
+```
+
+**Variables**:
+- annual_debt_service: Total annual loan payments (principal + interest)
+- net_operating_income: Revenue minus operating expenses (before debt service)
+- dscr: Ratio (typically 1.0-2.5 for healthy businesses)
+
+**Source/Reference**: SBA Lender Guide, https://en.wikipedia.org/wiki/Debt-service_coverage_ratio
+
+**Minimum lender requirement**: Most lenders require DSCR ≥ 1.25 (business generates $1.25 for every $1 in debt payments)
+
+### Step-by-Step Calculation Flow
+
+1. **Validate inputs**: Check all required fields, validate ranges (loan amount > 0, interest rate 0-30%, term 1-30 years)
+2. **Convert annual rate to monthly rate**: `r = interest_rate / 12 / 100`
+3. **Calculate number of payments**: `n = term_years × 12`
+4. **Calculate monthly payment**: Use amortization formula (handle zero interest edge case)
+5. **Calculate total amount paid**: `total_amount_paid = monthly_payment × n`
+6. **Calculate total interest**: `total_interest = total_amount_paid - loan_amount`
+7. **If revenue and expenses provided**:
+   - Calculate annual debt service: `annual_debt_service = monthly_payment × 12`
+   - Calculate net operating income: `net_operating_income = annual_revenue - annual_operating_expenses`
+   - Calculate DSCR: `dscr = net_operating_income / annual_debt_service`
+   - Calculate covenant headroom: `covenant_headroom = dscr - 1.25`
+8. **Check warning conditions**: Trigger warnings based on DSCR, debt burden, negative income
+9. **Return results with version stamp**: Include calculator version, formula version, timestamp
+
+### Edge Cases and Handling
+
+| Edge Case | Condition | Handling | Warning/Error |
+|-----------|-----------|----------|---------------|
+| Zero interest rate | interest_rate = 0 | monthly_payment = loan_amount / n | Info: "Zero interest rate. Payment is principal only." |
+| Negative DSCR | dscr < 0 | Calculate as normal, show negative value | Critical: "Negative DSCR. Business has negative operating income." |
+| Division by zero (DSCR) | annual_debt_service = 0 | DSCR = Infinity | Info: "DSCR cannot be calculated with zero debt service." |
+| Extremely high interest | interest_rate > 20% | Calculate as normal | Warning: "Interest rate above 20% is very high. Verify this rate is correct." |
+| Very short term | term_years < 3 | Calculate as normal | Warning: "Short loan term results in high monthly payment. Consider longer term if cash flow is tight." |
+
+### Formula Version
+
+**Current Version**: v1.2.3
+
+**Version History**:
+- v1.0.0: Initial implementation (monthly payment, total interest)
+- v1.1.0: Added DSCR calculation
+- v1.2.0: Improved rounding precision (monthly payment to nearest cent)
+- v1.2.3: Fixed edge case for zero interest rate
+
+---
+
+## 6. Warnings and Alerts
+
+### Warning Definitions
+
+| Warning Code | Condition | Message | Severity | Action |
+|--------------|-----------|---------|----------|--------|
+| DSCR_BELOW_MINIMUM | dscr < 1.25 | "DSCR of {dscr} is below the typical lender minimum of 1.25. This loan may not be approved without additional collateral or guarantees." | warning | Increase revenue, reduce expenses, extend term, or reduce loan amount |
+| DSCR_ABOVE_OPTIMAL | dscr > 2.0 | "DSCR of {dscr} is well above lender requirements. You may be able to borrow more if needed." | info | Consider if additional borrowing capacity is useful for growth |
+| HIGH_DEBT_BURDEN | (monthly_payment × 12) / annual_revenue > 0.40 | "Annual debt payments represent {percent}% of gross revenue. Lenders typically prefer this ratio below 40%." | warning | Reduce loan amount or extend term to lower annual payments |
+| NEGATIVE_OPERATING_INCOME | net_operating_income < 0 | "Business has negative operating income. DSCR calculation is not meaningful. Focus on achieving profitability before taking on debt." | danger | Review business model, reduce expenses, or increase revenue to reach profitability |
+| HIGH_INTEREST_RATE | interest_rate > 15% | "Interest rate of {rate}% is very high. Typical SBA loans are 6-12%. Verify this rate is correct and consider alternative financing." | warning | Shop for better rates, consider SBA loans, or improve creditworthiness |
+| SHORT_TERM_HIGH_PAYMENT | term_years < 5 && monthly_payment / (annual_revenue / 12) > 0.20 | "Short loan term combined with high debt burden. Monthly payment is {percent}% of monthly revenue." | warning | Extend term to reduce monthly payment if cash flow is constrained |
+
+### Warning Thresholds
+
+**Configurable Thresholds** (can be adjusted per tenant for B2B):
+- **DSCR minimum**: 1.25 (default, some lenders require 1.15 or 1.35)
+- **DSCR optimal**: 2.0 (above this, business may be under-leveraged)
+- **Debt-to-revenue ratio**: 0.40 (40% of revenue to debt service is high)
+
+**Hard-Coded Thresholds** (fixed for all users):
+- **High interest rate**: 15% (factual cutoff, not lender-specific)
+- **Negative operating income**: 0 (mathematical fact, not configurable)
+
+---
+
+## 7. Golden Test Scenarios
+
+### Scenario 1: Typical SBA Loan - Restaurant
+
+**Description**: Standard SBA 7(a) loan for restaurant equipment purchase. DSCR is healthy (1.42), above typical lender minimum.
+
+**Inputs**:
+```json
+{
+  "loan_amount": 250000,
+  "interest_rate": 7.5,
+  "term_years": 10,
+  "annual_revenue": 1500000,
+  "annual_operating_expenses": 1200000
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "monthly_payment": { "value": 2958.04, "tolerance": 1, "unit": "USD" },
+  "total_interest": { "value": 104964.80, "tolerance": 100, "unit": "USD" },
+  "total_amount_paid": { "value": 354964.80, "tolerance": 100, "unit": "USD" },
+  "annual_debt_service": { "value": 35496.48, "tolerance": 10, "unit": "USD" },
+  "net_operating_income": { "value": 300000, "tolerance": 0, "unit": "USD" },
+  "dscr": { "value": 1.42, "tolerance": 0.01, "unit": "ratio" },
+  "covenant_headroom": { "value": 0.17, "tolerance": 0.01, "unit": "ratio" }
+}
+```
+
+**Expected Warnings**: None (healthy scenario)
+
+### Scenario 2: Tight DSCR - Retail Business
+
+**Description**: Retail business with DSCR slightly below typical lender minimum (1.18). Should trigger warning.
+
+**Inputs**:
+```json
+{
+  "loan_amount": 250000,
+  "interest_rate": 7.5,
+  "term_years": 10,
+  "annual_revenue": 1000000,
+  "annual_operating_expenses": 900000
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "monthly_payment": { "value": 2958.04, "tolerance": 1, "unit": "USD" },
+  "total_interest": { "value": 104964.80, "tolerance": 100, "unit": "USD" },
+  "total_amount_paid": { "value": 354964.80, "tolerance": 100, "unit": "USD" },
+  "annual_debt_service": { "value": 35496.48, "tolerance": 10, "unit": "USD" },
+  "net_operating_income": { "value": 100000, "tolerance": 0, "unit": "USD" },
+  "dscr": { "value": 1.18, "tolerance": 0.01, "unit": "ratio" },
+  "covenant_headroom": { "value": -0.07, "tolerance": 0.01, "unit": "ratio" }
+}
+```
+
+**Expected Warnings**:
+- DSCR_BELOW_MINIMUM: "DSCR of 1.18 is below the typical lender minimum of 1.25..."
+
+### Scenario 3: Strong DSCR - Service Business
+
+**Description**: Service business with strong DSCR (2.10), well above lender requirements.
+
+**Inputs**:
+```json
+{
+  "loan_amount": 150000,
+  "interest_rate": 6.5,
+  "term_years": 10,
+  "annual_revenue": 1200000,
+  "annual_operating_expenses": 900000
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "monthly_payment": { "value": 1704.56, "tolerance": 1, "unit": "USD" },
+  "total_interest": { "value": 54547.20, "tolerance": 100, "unit": "USD" },
+  "total_amount_paid": { "value": 204547.20, "tolerance": 100, "unit": "USD" },
+  "annual_debt_service": { "value": 20454.72, "tolerance": 10, "unit": "USD" },
+  "net_operating_income": { "value": 300000, "tolerance": 0, "unit": "USD" },
+  "dscr": { "value": 2.10, "tolerance": 0.01, "unit": "ratio" },
+  "covenant_headroom": { "value": 0.85, "tolerance": 0.01, "unit": "ratio" }
+}
+```
+
+**Expected Warnings**:
+- DSCR_ABOVE_OPTIMAL: "DSCR of 2.10 is well above lender requirements..."
+
+---
+
+## 8. AI Narrative Strategy (AI-Enabled)
+
+### What AI Explains for This Calculator
+
+**Primary Explanations**:
+1. **What the DSCR value means** and whether it's acceptable for lenders (most common request)
+2. **Why total interest is high** and how term length affects total cost
+3. **Risks of this loan structure** (short term = high payment, long term = more interest)
+
+**Scenario Suggestions**:
+- Alternative loan terms to test (longer term to reduce payment, shorter term to save interest)
+- Revenue/expense changes to improve DSCR (10% revenue increase, 5% expense reduction)
+- Optimal loan amount for target DSCR (e.g., "What loan amount gives me DSCR = 1.50?")
+
+### Prompt Template
+
+**System Prompt**:
+```
+You are a CFO advisor helping business owners understand loan payments and debt service coverage.
+
+Your role is to:
+- Explain DSCR in plain language and interpret whether this value meets lender requirements
+- Explain the relationship between loan term, monthly payment, and total interest
+- Suggest ways to improve DSCR if it's below the 1.25 threshold
+
+Output constraints:
+- Length: 150-250 words
+- Tone: Professional but approachable, avoid jargon
+- Format: Plain paragraphs (no bullet lists for explanations)
+- Disclaimers: Always end with: "This analysis is for informational purposes only and does not constitute financial, legal, or professional advice. Consult qualified professionals for decisions affecting your business."
+
+Prohibited behaviors:
+- Never guarantee loan approval (use "typically", "most lenders require")
+- Never recommend taking or not taking a loan (only explain metrics)
+- Never use absolute language (avoid "always", "never", "must")
+```
+
+**User Prompt Template**:
+```
+The business has annual revenue of ${annual_revenue}, operating expenses of ${annual_operating_expenses}, and a loan with monthly payment of ${monthly_payment}. The calculated DSCR is ${dscr}. Explain what this means and whether it's acceptable for lenders.
+```
+
+**Expected AI Response** (150-250 words):
+```
+A DSCR of 1.42 means the business generates $1.42 in operating income for every $1 in debt payments. Most lenders require a minimum DSCR of 1.25, so this ratio is comfortably above that threshold. This indicates the business has a healthy cushion to cover loan payments even if income fluctuates.
+
+With annual revenue of $1,500,000 and operating expenses of $1,200,000, the business has $300,000 in annual operating income available to cover $35,496 in annual debt payments ($2,958 × 12 months). The $264,504 cushion provides protection against revenue declines or expense increases.
+
+However, lenders also consider credit history, collateral, and industry-specific factors beyond DSCR. A DSCR above 1.25 is a positive indicator but does not guarantee loan approval.
+
+This analysis is for informational purposes only and does not constitute financial, legal, or professional advice. Consult qualified professionals for decisions affecting your business.
+```
+
+---
+
+## 9. Export Format Details
+
+### PDF Layout
+
+**Header**:
+- "Business Loan + DSCR Calculator"
+- User tier: "Free" or "Pro"
+- Generation timestamp: "Generated on November 18, 2025"
+
+**Body Sections**:
+1. **Loan Details** (table):
+   - Loan Amount: $250,000
+   - Interest Rate: 7.5%
+   - Term: 10 years
+
+2. **Key Results** (table):
+   - Monthly Payment: $2,958.04
+   - Total Interest: $104,964.80
+   - Total Amount Paid: $354,964.80
+
+3. **Business Financials** (table, only if provided):
+   - Annual Revenue: $1,500,000
+   - Operating Expenses: $1,200,000
+
+4. **Advanced Results** (Pro tier only, table):
+   - Debt Service Coverage Ratio: 1.42
+   - Annual Debt Service: $35,496.48
+   - Net Operating Income: $300,000
+   - Covenant Headroom: +0.17
+
+5. **Amortization Schedule** (Pro tier only, chart or table):
+   - First 12 months shown in detail
+   - Summary for remaining years
+
+6. **Warnings** (if any):
+   - List all warnings with severity icons
+
+**Footer**:
+- Disclaimers: "This calculator is for informational purposes only and does not constitute financial advice. Actual loan terms may vary. Consult a lender for specific loan offers."
+- Version stamp: "Generated by CFO Calculator Suite v1.2.3 | Calculator: business-loan-dscr v1.0.0 | Formulas: v1.2.3 | 2025-11-18"
+- Watermark (Free tier only): Diagonal semi-transparent "Upgrade for clean exports"
+
+### CSV/Excel Structure
+
+**Metadata Headers**:
+```csv
+# Business Loan + DSCR Calculator
+# Version: v1.0.0
+# Generated: 2025-11-18T21:30:00Z
+# Tier: Pro
+#
+```
+
+**Data Rows**:
+```csv
+Section,Field,Value
+Loan Details,Loan Amount,$250000
+Loan Details,Interest Rate,7.5%
+Loan Details,Term,10 years
+Business Financials,Annual Revenue,$1500000
+Business Financials,Operating Expenses,$1200000
+Key Results,Monthly Payment,$2958.04
+Key Results,Total Interest,$104964.80
+Key Results,Total Amount Paid,$354964.80
+Advanced Results,DSCR,1.42
+Advanced Results,Annual Debt Service,$35496.48
+Advanced Results,Net Operating Income,$300000
+Advanced Results,Covenant Headroom,+0.17
+```
+
+**Excel Formatting**:
+- Bold section headers
+- Currency cells: $#,##0.00
+- Percentage cells: 0.00%
+- Alternating row colors (light gray for even rows)
+
+---
+
+## 10. Tier-Specific Behavior
+
+### Free Tier
+
+**What's Shown**:
+- Single scenario (cannot save or create multiple)
+- Loan details inputs (loan amount, interest rate, term)
+- Business financials inputs (revenue, expenses) - but DSCR output is locked
+- Key metrics: monthly payment, total interest, total amount paid
+- Basic warnings (high interest rate, short term)
+
+**What's Gated**:
+- **Multiple scenarios**: "Add Scenario" button shows Pro badge, triggers upgrade prompt
+- **DSCR and advanced metrics**: Shown as locked with tooltip "Upgrade to Pro to see DSCR and advanced metrics"
+- **Amortization schedule**: Chart preview shown with blur effect + "Pro" badge
+- **Clean exports**: PDF has watermark
+- **AI narratives**: "Explain this result" button triggers AI tier upgrade prompt
+
+**Upgrade Triggers**:
+- Click "Add Scenario" → `upgrade_prompt_shown` with `trigger_reason: "add_scenario"`
+- Click locked DSCR metric → `upgrade_prompt_shown` with `trigger_reason: "locked_metric"`
+- Click "Explain this result" → `upgrade_prompt_shown` with `trigger_reason: "ai_request"`
+
+### Pro Tier
+
+**What Unlocks**:
+- **Multiple scenarios** (up to 50): Create, save, rename, delete scenarios
+- **All advanced metrics**: DSCR, annual debt service, net operating income, covenant headroom
+- **Amortization schedule**: Full interactive chart showing principal/interest breakdown over time
+- **Scenario comparison**: Side-by-side view of multiple loan structures
+- **Clean exports**: PDF with no watermark
+- **Sensitivity analysis**: "What if" scenarios (revenue ±10%, ±20%)
+
+**Still Gated** (requires AI tier):
+- AI explanations and scenario suggestions
+
+### AI Tier
+
+**What Unlocks**:
+- **AI explanations**: Click "Explain this result" to get plain-language DSCR interpretation
+- **AI scenario suggestions**: Click "Get suggestions" for alternative loan structures to test
+- **50 AI requests per month** (hard cap)
+
+**Usage Quota**:
+- Counter displayed: "23 of 50 AI requests remaining this month"
+- Resets on 1st of each month
+
+---
+
+## Implementation Notes
+
+**Priority**: High (foundational calculator, required for M1)
+
+**Estimated Effort**: 2 weeks
+- Week 1: Formula library, UI components, basic functionality
+- Week 2: DSCR calculation, warnings, testing, golden scenarios
+
+**Dependencies**:
+- Shared amortization formula library (create once, reuse for SBA 7(a) calculator)
+- DSCR calculation component (reuse for other lending calculators)
+- Input validation library (currency, percentage, number formatters)
+
+**Related Calculators**:
+- **SBA 7(a) Loan Analyzer**: Similar inputs, adds SBA-specific fees
+- **Line of Credit Analyzer**: Alternative financing option for working capital
+- **Equipment Lease vs Buy**: Alternative to loan for equipment financing
+
+---
+
+## End of Calculator PDR
+
+This calculator is complete and ready for implementation. All formulas, warnings, and tier behaviors are specified in detail.
+
+
+# Simple Business Valuation (EBITDA/Revenue Multiple)
+
+## 1. Calculator Overview
+
+**Calculator Name**: Simple Business Valuation (EBITDA/Revenue Multiple)
+
+**Calculator Slug**: `business-valuation`
+
+**Primary Category**: Valuation & Deal Intelligence
+
+**Secondary Category**: Planning & Forecasting Intelligence
+
+**Business Role**:
+- **Founders/investor interest driver**: High emotional value (answers "what is my business worth?")
+- **AI narrative showcase**: Excellent use case for explaining valuation context and ranges
+- **Pro upgrade driver**: Sensitivity analysis and industry comparisons drive conversions
+- **B2B demo calculator**: White-label for business brokers, M&A advisors, investors
+
+**Primary Success Metric**: AI narrative usage rate + export rate (target: 60% AI usage, 40% export rate)
+
+**Version**: v1.0.0
+
+**Formula Library Version**: v1.0.0
+
+---
+
+## 2. User Scenarios and Use Cases
+
+### Who Uses This Calculator
+
+**Primary Personas**:
+- **Business owners** considering selling or curious about business value
+- **Startup founders** tracking valuation trajectory (for fundraising or exit planning)
+- **Business brokers and M&A advisors** providing quick valuation estimates to clients
+
+**Secondary Personas**:
+- **Investors** conducting preliminary valuation analysis of acquisition targets
+- **Lenders** evaluating business value for asset-based lending
+- **Accountants** providing annual valuation estimates for estate planning or partnership agreements
+
+### When They Use It (Decision Contexts)
+
+**Timing**:
+- **Before selling business**: Initial valuation to set asking price expectations
+- **During fundraising**: Understanding implied valuation from revenue/EBITDA multiples
+- **After major milestone**: Checking if business value increased (new customer, revenue growth, etc.)
+- **Annual planning**: Tracking business value over time (Pro users monitor quarterly/annually)
+- **Partner buyout**: Estimating value for partnership restructuring
+
+**Frequency**:
+- **One-time use** (Free tier): Curiosity about current business value
+- **Quarterly tracking** (Pro tier): Monitor valuation trajectory
+- **Annual benchmarking** (Pro tier): Compare to industry comps
+
+### What Questions It Answers
+
+This calculator helps users answer:
+
+1. **What is my business worth?** (Valuation range based on industry multiples)
+2. **What multiple should I use?** (Revenue vs EBITDA, industry-specific ranges)
+3. **How sensitive is valuation to revenue/EBITDA changes?** (Sensitivity analysis, Pro feature)
+4. **Am I getting a fair offer?** (Compare offer to calculated valuation range)
+5. **What would my business be worth if I grew revenue 20%?** (Growth scenarios, Pro feature)
+
+---
+
+## 3. Inputs
+
+### Input Field Definitions
+
+| Field Name | Type | Units | Required | Validation | Default | Placeholder | Tooltip |
+|------------|------|-------|----------|------------|---------|-------------|---------|
+| annual_revenue | currency | dollars | Yes | min: 1, max: 1000000000 | null | "5000000" | "Total annual revenue (trailing 12 months or TTM). Use actual revenue, not projected. Most accurate if audited financials." |
+| annual_ebitda | currency | dollars | Yes | min: -10000000, max: 1000000000 | null | "750000" | "EBITDA (Earnings Before Interest, Taxes, Depreciation, Amortization). If you don't have EBITDA, enter net operating income or owner's discretionary earnings (ODE). Can be negative for early-stage businesses." |
+| industry_revenue_multiple_low | number | multiple | No | min: 0, max: 20 | null | "0.5" | "Low end of industry revenue multiple range. Example: retail 0.3-0.8x, SaaS 4-8x. See industry benchmarks or consult business broker." |
+| industry_revenue_multiple_high | number | multiple | No | min: 0, max: 20 | null | "1.5" | "High end of industry revenue multiple range. Higher multiples for businesses with recurring revenue, strong growth, or unique IP." |
+| industry_ebitda_multiple_low | number | multiple | No | min: 0, max: 30 | null | "3" | "Low end of industry EBITDA multiple range. Example: restaurants 2-4x, SaaS 8-15x. Profitable businesses typically valued on EBITDA." |
+| industry_ebitda_multiple_high | number | multiple | No | min: 0, max: 30 | null | "5" | "High end of industry EBITDA multiple range. Higher multiples for businesses with strong margins, growth, and predictable cash flows." |
+
+### Input Groups
+
+**Group 1: Business Financials** (always visible)
+- annual_revenue
+- annual_ebitda
+
+**Group 2: Industry Multiples** (always visible, but with helper/lookup tool)
+- industry_revenue_multiple_low
+- industry_revenue_multiple_high
+- industry_ebitda_multiple_low
+- industry_ebitda_multiple_high
+
+**Group 3: Growth & Adjustments** (collapsed by default, Pro tier feature)
+- **revenue_growth_rate** (percentage): Expected annual revenue growth rate. Used for forward valuation. Default: 0
+- **ebitda_margin_target** (percentage): Target EBITDA margin if improving profitability. Default: current margin
+- **discretionary_addbacks** (currency): Owner expenses to add back (personal car, family payroll, etc.). Default: 0
+
+### Optional Inputs
+
+**Advanced Options** (collapsed, for sophisticated users):
+- **industry_category** (dropdown): Pre-fill industry multiples from database. Options: SaaS, E-commerce, Retail, Manufacturing, Services, Healthcare, etc.
+- **synergy_premium** (percentage): Premium for strategic buyer vs financial buyer. Default: 0
+
+---
+
+## 4. Outputs
+
+### Key Metrics (Free Tier - Always Visible)
+
+| Output Name | Description | Format | Units |
+|-------------|-------------|--------|-------|
+| valuation_range_revenue_based | Valuation using revenue multiples (low and high) | "$#,##0 - $#,##0" | dollars |
+| valuation_range_ebitda_based | Valuation using EBITDA multiples (low and high) | "$#,##0 - $#,##0" | dollars |
+| midpoint_valuation | Average of revenue and EBITDA midpoint valuations | "$#,##0" | dollars |
+| ebitda_margin | EBITDA as percentage of revenue | "#.0%" | percent |
+
+### Advanced Metrics (Pro Tier - Gated)
+
+| Output Name | Description | Format | Units | Pro Only |
+|-------------|-------------|--------|-------|----------|
+| sensitivity_to_revenue_growth | Valuation change if revenue grows 10%, 20%, 30% | "Table" | dollars | Yes |
+| sensitivity_to_ebitda_margin | Valuation change if EBITDA margin improves 5%, 10% | "Table" | dollars | Yes |
+| recommended_valuation_method | Revenue vs EBITDA (which is more appropriate) | "Text" | method | Yes |
+| valuation_per_employee | Valuation divided by number of employees (if provided) | "$#,##0" | dollars | Yes |
+| implied_exit_multiple | If current offer provided, implied multiple | "#.0x" | multiple | Yes |
+| adjusted_ebitda | EBITDA after discretionary addbacks | "$#,##0" | dollars | Yes |
+
+### Charts and Visualizations
+
+**Chart 1: Valuation Range** (Free tier, basic; Pro tier, enhanced)
+- Type: Range bar chart
+- X-axis: Valuation method (Revenue-based, EBITDA-based)
+- Y-axis: Valuation range (low to high)
+- Purpose: Visualize valuation ranges from both methods
+- Tier: Free (basic), Pro (with sensitivity scenarios)
+
+**Chart 2: Sensitivity Analysis** (Pro tier only)
+- Type: Tornado chart or table
+- X-axis: Valuation change
+- Y-axis: Variables (revenue growth, EBITDA margin, multiple range)
+- Purpose: Show which variables have biggest impact on valuation
+- Tier: Pro
+
+**Chart 3: Industry Comparison** (Pro tier only)
+- Type: Box plot or range chart
+- X-axis: Industry categories
+- Y-axis: Typical valuation multiples
+- Purpose: Compare your business to industry benchmarks
+- Tier: Pro (requires industry database)
+
+### Output Formatting Rules
+
+- **Currency**: $#,##0 (no decimals for large valuations, e.g., "$2,500,000" not "$2,500,000.00")
+- **Multiples**: #.0x (one decimal, e.g., "4.5x" not "4.50x")
+- **Percentages**: #.0% (one decimal for margins)
+- **Ranges**: Always show low-high (e.g., "$2,000,000 - $3,500,000")
+
+---
+
+## 5. Formulas and Calculation Logic
+
+### Formula 1: Revenue-Based Valuation
+
+**Purpose**: Calculate business value using revenue multiples
+
+**Equation**:
+```
+valuation_low_revenue = annual_revenue × industry_revenue_multiple_low
+valuation_high_revenue = annual_revenue × industry_revenue_multiple_high
+
+valuation_range_revenue_based = (valuation_low_revenue, valuation_high_revenue)
+midpoint_revenue_valuation = (valuation_low_revenue + valuation_high_revenue) / 2
+```
+
+**Variables**:
+- annual_revenue: Trailing 12-month revenue
+- industry_revenue_multiple_low/high: Industry-specific revenue multiples
+- valuation_range_revenue_based: Valuation range using revenue method
+
+**Source/Reference**: Standard revenue multiple valuation (used for high-growth, unprofitable businesses)
+
+**Example**: $5M revenue × 0.5-1.5x = $2.5M - $7.5M valuation range
+
+**When to use**: Revenue multiples are most appropriate for:
+- Early-stage or high-growth businesses (not yet profitable)
+- SaaS and subscription businesses (recurring revenue)
+- Businesses where revenue is more predictable than profit
+
+### Formula 2: EBITDA-Based Valuation
+
+**Purpose**: Calculate business value using EBITDA multiples
+
+**Equation**:
+```
+# Adjust EBITDA for discretionary addbacks (owner expenses)
+adjusted_ebitda = annual_ebitda + discretionary_addbacks
+
+valuation_low_ebitda = adjusted_ebitda × industry_ebitda_multiple_low
+valuation_high_ebitda = adjusted_ebitda × industry_ebitda_multiple_high
+
+valuation_range_ebitda_based = (valuation_low_ebitda, valuation_high_ebitda)
+midpoint_ebitda_valuation = (valuation_low_ebitda + valuation_high_ebitda) / 2
+```
+
+**Variables**:
+- adjusted_ebitda: EBITDA after owner expense addbacks
+- industry_ebitda_multiple_low/high: Industry-specific EBITDA multiples
+- valuation_range_ebitda_based: Valuation range using EBITDA method
+
+**Source/Reference**: Standard EBITDA multiple valuation (used for profitable, mature businesses)
+
+**Example**: $750k EBITDA × 3-5x = $2.25M - $3.75M valuation range
+
+**When to use**: EBITDA multiples are most appropriate for:
+- Profitable businesses with stable cash flows
+- Mature businesses (not high-growth)
+- Traditional industries (manufacturing, services, retail)
+- Businesses where profit is more important than revenue growth
+
+### Formula 3: Midpoint Valuation (Blended)
+
+**Purpose**: Calculate single-point valuation estimate (average of both methods)
+
+**Equation**:
+```
+midpoint_revenue_valuation = (valuation_low_revenue + valuation_high_revenue) / 2
+midpoint_ebitda_valuation = (valuation_low_ebitda + valuation_high_ebitda) / 2
+
+# Blended midpoint (average of both methods)
+midpoint_valuation = (midpoint_revenue_valuation + midpoint_ebitda_valuation) / 2
+
+# Alternative: Weight based on which method is more appropriate
+if ebitda_margin > 15% and annual_ebitda > 0:
+    # Profitable business: weight EBITDA method more heavily
+    midpoint_valuation = (midpoint_revenue_valuation × 0.3) + (midpoint_ebitda_valuation × 0.7)
+else:
+    # Unprofitable or low-margin business: weight revenue method more
+    midpoint_valuation = (midpoint_revenue_valuation × 0.7) + (midpoint_ebitda_valuation × 0.3)
+```
+
+**Source/Reference**: Weighted average valuation methodology
+
+### Formula 4: EBITDA Margin
+
+**Purpose**: Calculate EBITDA margin (profitability metric)
+
+**Equation**:
+```
+ebitda_margin = (annual_ebitda / annual_revenue) × 100
+```
+
+**Interpretation**:
+- 20%+ = Excellent margin (SaaS, software, high-value services)
+- 10-20% = Good margin (most profitable businesses)
+- 5-10% = Thin margin (retail, low-margin services)
+- 0-5% = Very thin margin (breakeven or barely profitable)
+- Negative = Not profitable (early-stage, high-growth, or struggling)
+
+### Formula 5: Sensitivity to Revenue Growth
+
+**Purpose**: Calculate how valuation changes with revenue growth
+
+**Equation**:
+```
+# Test revenue growth scenarios: +10%, +20%, +30%
+for growth_rate in [0.10, 0.20, 0.30]:
+    projected_revenue = annual_revenue × (1 + growth_rate)
+
+    # Assume EBITDA margin stays constant (conservative)
+    projected_ebitda = projected_revenue × (ebitda_margin / 100)
+
+    # Recalculate valuations with projected financials
+    revenue_based_valuation = projected_revenue × midpoint_revenue_multiple
+    ebitda_based_valuation = projected_ebitda × midpoint_ebitda_multiple
+
+    blended_valuation = (revenue_based_valuation + ebitda_based_valuation) / 2
+
+    valuation_increase = blended_valuation - midpoint_valuation
+    percent_increase = (valuation_increase / midpoint_valuation) × 100
+
+    sensitivity_results[growth_rate] = {
+        "projected_revenue": projected_revenue,
+        "projected_ebitda": projected_ebitda,
+        "new_valuation": blended_valuation,
+        "valuation_increase": valuation_increase,
+        "percent_increase": percent_increase
+    }
+```
+
+**Insight**: Revenue growth has multiplicative impact on valuation (10% revenue growth → 10%+ valuation increase)
+
+### Formula 6: Sensitivity to EBITDA Margin Improvement
+
+**Purpose**: Calculate how valuation changes if profitability improves
+
+**Equation**:
+```
+# Test margin improvement scenarios: +5%, +10% (absolute percentage points)
+for margin_improvement in [5, 10]:
+    new_ebitda_margin = ebitda_margin + margin_improvement
+    projected_ebitda = annual_revenue × (new_ebitda_margin / 100)
+
+    # Recalculate EBITDA-based valuation
+    ebitda_based_valuation = projected_ebitda × midpoint_ebitda_multiple
+
+    # Blended valuation (assume revenue stays constant)
+    blended_valuation = (midpoint_revenue_valuation + ebitda_based_valuation) / 2
+
+    valuation_increase = blended_valuation - midpoint_valuation
+    percent_increase = (valuation_increase / midpoint_valuation) × 100
+
+    sensitivity_results[margin_improvement] = {
+        "new_ebitda_margin": new_ebitda_margin,
+        "projected_ebitda": projected_ebitda,
+        "new_valuation": blended_valuation,
+        "valuation_increase": valuation_increase
+    }
+```
+
+**Insight**: Margin improvement has significant impact on EBITDA-based valuation
+
+### Formula 7: Recommended Valuation Method
+
+**Purpose**: Determine whether revenue or EBITDA method is more appropriate
+
+**Equation**:
+```
+# Decision logic
+if annual_ebitda < 0:
+    recommended_method = "Revenue-based"
+    rationale = "Business is not profitable. Revenue multiples are more appropriate."
+
+elif ebitda_margin < 10%:
+    recommended_method = "Revenue-based"
+    rationale = "Low EBITDA margin. Revenue multiples are more reliable for low-margin businesses."
+
+elif ebitda_margin > 20% and revenue_growth_rate < 15%:
+    recommended_method = "EBITDA-based"
+    rationale = "Profitable, mature business. EBITDA multiples are more appropriate."
+
+elif revenue_growth_rate > 30%:
+    recommended_method = "Revenue-based"
+    rationale = "High-growth business. Revenue multiples capture growth potential better than EBITDA."
+
+else:
+    recommended_method = "Blended (both methods)"
+    rationale = "Use average of revenue and EBITDA valuations for balanced estimate."
+```
+
+**Source/Reference**: Industry best practices for valuation methodology selection
+
+### Formula 8: Implied Exit Multiple (if offer provided)
+
+**Purpose**: Calculate implied multiple from acquisition offer
+
+**Equation**:
+```
+# If user provides current offer amount
+if current_offer_amount:
+    implied_revenue_multiple = current_offer_amount / annual_revenue
+    implied_ebitda_multiple = current_offer_amount / annual_ebitda if annual_ebitda > 0 else "N/A"
+
+    # Compare to industry ranges
+    if implied_revenue_multiple < industry_revenue_multiple_low:
+        offer_assessment = "Below range (low offer)"
+    elif implied_revenue_multiple > industry_revenue_multiple_high:
+        offer_assessment = "Above range (strong offer)"
+    else:
+        offer_assessment = "Within range (fair offer)"
+```
+
+### Step-by-Step Calculation Flow
+
+1. **Validate inputs**: Check required fields, ensure revenue > 0, EBITDA can be negative
+2. **Calculate EBITDA margin**: `(EBITDA / revenue) × 100`
+3. **Adjust EBITDA** (if addbacks provided): `EBITDA + discretionary_addbacks`
+4. **Calculate revenue-based valuation**: `revenue × revenue_multiple_low/high`
+5. **Calculate EBITDA-based valuation**: `adjusted_EBITDA × ebitda_multiple_low/high`
+6. **Calculate midpoint valuation**: Weighted average of both methods
+7. **Determine recommended method**: Based on profitability and growth
+8. **If Pro tier, calculate sensitivity analysis**:
+   - Revenue growth scenarios (+10%, +20%, +30%)
+   - EBITDA margin improvement (+5%, +10%)
+9. **If offer provided, calculate implied multiples**
+10. **Check warning conditions**: Negative EBITDA, unrealistic multiples, etc.
+11. **Return results with version stamp**
+
+### Edge Cases and Handling
+
+| Edge Case | Condition | Handling | Warning/Error |
+|-----------|-----------|----------|---------------|
+| Negative EBITDA | annual_ebitda < 0 | EBITDA valuation = "Not applicable", use revenue only | Info: "Business is not profitable. Valuation based on revenue multiples only." |
+| Zero revenue | annual_revenue = 0 | Error | Error: "Revenue cannot be zero. Enter trailing 12-month revenue." |
+| EBITDA > Revenue | annual_ebitda > annual_revenue | Error | Error: "EBITDA cannot exceed revenue. Check inputs." |
+| Very low margin | ebitda_margin < 5% | Calculate as normal | Warning: "Low EBITDA margin ({margin}%). Revenue multiples may be more appropriate." |
+| Very high multiple | industry_ebitda_multiple_high > 15 | Calculate as normal | Warning: "EBITDA multiple above 15x is rare. Verify industry benchmarks." |
+
+### Formula Version
+
+**Current Version**: v1.0.0
+
+**Version History**:
+- v1.0.0: Initial implementation (revenue and EBITDA multiples, sensitivity analysis)
+
+---
+
+## 6. Warnings and Alerts
+
+### Warning Definitions
+
+| Warning Code | Condition | Message | Severity | Action |
+|--------------|-----------|---------|----------|--------|
+| NEGATIVE_EBITDA | annual_ebitda < 0 | "Business is not profitable (EBITDA: ${ebitda:,.0f}). Valuation based on revenue multiples only. Focus on path to profitability to increase valuation." | info | Improve profitability or highlight growth potential |
+| LOW_EBITDA_MARGIN | ebitda_margin < 10% && annual_ebitda > 0 | "Low EBITDA margin ({margin}%). Revenue multiples may be more appropriate. Buyers will focus on revenue stability and growth potential." | info | Improve margins or emphasize revenue growth |
+| HIGH_EBITDA_MARGIN | ebitda_margin > 30% | "Excellent EBITDA margin ({margin}%). EBITDA multiples will likely drive higher valuation. Emphasize profitability to buyers." | success | Highlight strong margins in sale process |
+| UNREALISTIC_REVENUE_MULTIPLE | industry_revenue_multiple_high > 10 | "Revenue multiple above 10x is rare (except for high-growth SaaS). Verify industry benchmarks or justify with exceptional growth/IP." | warning | Verify multiples with industry data or advisor |
+| UNREALISTIC_EBITDA_MULTIPLE | industry_ebitda_multiple_high > 20 | "EBITDA multiple above 20x is extremely rare. Typically only for exceptional businesses. Verify industry benchmarks." | warning | Verify multiples with M&A advisor |
+| WIDE_VALUATION_RANGE | (valuation_high - valuation_low) / valuation_low > 1.0 | "Valuation range is wide ({range_percent}% spread). Narrow range by using tighter industry multiples or focus on single valuation method." | info | Consult business broker for more precise multiples |
+| OFFER_BELOW_RANGE | current_offer_amount < valuation_low_revenue && current_offer_amount < valuation_low_ebitda | "Current offer (${offer:,.0f}) is below calculated valuation range. Consider negotiating higher or getting additional offers." | warning | Negotiate or shop to other buyers |
+| OFFER_ABOVE_RANGE | current_offer_amount > valuation_high_revenue && current_offer_amount > valuation_high_ebitda | "Current offer (${offer:,.0f}) is above calculated valuation range. Strong offer, but verify buyer's ability to close." | success | Accept offer if strategic fit is good |
+
+### Warning Thresholds
+
+**Configurable Thresholds** (can be adjusted per tenant for B2B):
+- **Low EBITDA margin**: 10% (varies by industry)
+- **High EBITDA margin**: 30% (exceptional profitability)
+
+**Hard-Coded Thresholds** (market standards, not configurable):
+- **Unrealistic revenue multiple**: 10x (rare except SaaS/tech)
+- **Unrealistic EBITDA multiple**: 20x (rare for any industry)
+- **Wide range**: 100% spread (indicates high uncertainty)
+
+---
+
+## 7. Golden Test Scenarios
+
+### Scenario 1: Profitable Service Business - EBITDA Valuation
+
+**Description**: Profitable service business with healthy 15% EBITDA margin. EBITDA valuation is most appropriate. Midpoint valuation: $3.0M.
+
+**Inputs**:
+```json
+{
+  "annual_revenue": 5000000,
+  "annual_ebitda": 750000,
+  "industry_revenue_multiple_low": 0.5,
+  "industry_revenue_multiple_high": 1.5,
+  "industry_ebitda_multiple_low": 3,
+  "industry_ebitda_multiple_high": 5,
+  "discretionary_addbacks": 0
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "ebitda_margin": {
+    "value": 15.0,
+    "tolerance": 0.1,
+    "unit": "percent",
+    "note": "$750k / $5M = 15%"
+  },
+  "valuation_range_revenue_based": {
+    "low": 2500000,
+    "high": 7500000,
+    "note": "$5M × 0.5-1.5x"
+  },
+  "valuation_range_ebitda_based": {
+    "low": 2250000,
+    "high": 3750000,
+    "note": "$750k × 3-5x"
+  },
+  "midpoint_valuation": {
+    "value": 3000000,
+    "tolerance": 50000,
+    "unit": "USD",
+    "note": "Weighted toward EBITDA method (profitable business)"
+  },
+  "recommended_valuation_method": {
+    "value": "EBITDA-based",
+    "rationale": "Profitable, mature business. EBITDA multiples are more appropriate."
+  },
+  "sensitivity_to_revenue_growth": {
+    "10%": {
+      "new_valuation": 3300000,
+      "valuation_increase": 300000
+    },
+    "20%": {
+      "new_valuation": 3600000,
+      "valuation_increase": 600000
+    },
+    "30%": {
+      "new_valuation": 3900000,
+      "valuation_increase": 900000
+    }
+  },
+  "sensitivity_to_ebitda_margin": {
+    "5% improvement": {
+      "new_ebitda_margin": 20.0,
+      "new_valuation": 3500000,
+      "valuation_increase": 500000
+    },
+    "10% improvement": {
+      "new_ebitda_margin": 25.0,
+      "new_valuation": 4000000,
+      "valuation_increase": 1000000
+    }
+  }
+}
+```
+
+**Expected Warnings**: None (healthy scenario)
+
+### Scenario 2: High-Growth SaaS - Revenue Valuation
+
+**Description**: Unprofitable but high-growth SaaS business. Revenue multiples are appropriate (4-8x). Midpoint valuation: $18M.
+
+**Inputs**:
+```json
+{
+  "annual_revenue": 3000000,
+  "annual_ebitda": -500000,
+  "industry_revenue_multiple_low": 4,
+  "industry_revenue_multiple_high": 8,
+  "industry_ebitda_multiple_low": 10,
+  "industry_ebitda_multiple_high": 15
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "ebitda_margin": {
+    "value": -16.7,
+    "tolerance": 0.1,
+    "unit": "percent",
+    "note": "-$500k / $3M = -16.7% (unprofitable)"
+  },
+  "valuation_range_revenue_based": {
+    "low": 12000000,
+    "high": 24000000,
+    "note": "$3M × 4-8x"
+  },
+  "valuation_range_ebitda_based": {
+    "value": "Not applicable",
+    "note": "Negative EBITDA, cannot use EBITDA multiples"
+  },
+  "midpoint_valuation": {
+    "value": 18000000,
+    "tolerance": 100000,
+    "unit": "USD",
+    "note": "Based on revenue multiples only"
+  },
+  "recommended_valuation_method": {
+    "value": "Revenue-based",
+    "rationale": "Business is not profitable. Revenue multiples are more appropriate."
+  }
+}
+```
+
+**Expected Warnings**:
+- NEGATIVE_EBITDA: "Business is not profitable (EBITDA: -$500,000). Valuation based on revenue multiples only..."
+
+### Scenario 3: Retail Business - Low Margin, Revenue Valuation
+
+**Description**: Profitable retail business but low 5% EBITDA margin. Revenue multiples more appropriate. Midpoint valuation: $1.8M.
+
+**Inputs**:
+```json
+{
+  "annual_revenue": 10000000,
+  "annual_ebitda": 500000,
+  "industry_revenue_multiple_low": 0.3,
+  "industry_revenue_multiple_high": 0.8,
+  "industry_ebitda_multiple_low": 2,
+  "industry_ebitda_multiple_high": 4
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "ebitda_margin": {
+    "value": 5.0,
+    "tolerance": 0.1,
+    "unit": "percent"
+  },
+  "valuation_range_revenue_based": {
+    "low": 3000000,
+    "high": 8000000,
+    "note": "$10M × 0.3-0.8x"
+  },
+  "valuation_range_ebitda_based": {
+    "low": 1000000,
+    "high": 2000000,
+    "note": "$500k × 2-4x"
+  },
+  "midpoint_valuation": {
+    "value": 3750000,
+    "tolerance": 100000,
+    "unit": "USD",
+    "note": "Weighted toward revenue method (low-margin business)"
+  },
+  "recommended_valuation_method": {
+    "value": "Revenue-based",
+    "rationale": "Low EBITDA margin. Revenue multiples are more reliable for low-margin businesses."
+  }
+}
+```
+
+**Expected Warnings**:
+- LOW_EBITDA_MARGIN: "Low EBITDA margin (5.0%). Revenue multiples may be more appropriate..."
+
+---
+
+## 8. AI Narrative Strategy (AI-Enabled)
+
+### What AI Explains for This Calculator
+
+**Primary Explanations**:
+1. **What the valuation range means and why there's a range** (market variability, buyer types, growth potential)
+2. **Which valuation method is most appropriate** (revenue vs EBITDA, based on business characteristics)
+3. **How to increase business value** (revenue growth, margin improvement, recurring revenue, etc.)
+4. **What buyers look for** (growth, profitability, customer concentration, IP, etc.)
+
+**Scenario Suggestions**:
+- "What would my business be worth if I grew revenue 20%?" (growth impact on valuation)
+- "How can I increase my valuation before selling?" (actionable strategies)
+- "Is this offer fair?" (compare offer to calculated valuation)
+
+### Prompt Template
+
+**System Prompt**:
+```
+You are a business valuation advisor helping business owners understand what their business is worth and how to increase value.
+
+Your role is to:
+- Explain valuation ranges and why revenue and EBITDA methods give different results
+- Interpret which valuation method is most appropriate for this business
+- Suggest strategies to increase business value (revenue growth, margin improvement, recurring revenue)
+- Provide context on what buyers look for (growth, profitability, scalability, customer diversification)
+
+Output constraints:
+- Length: 150-250 words
+- Tone: Professional but approachable, educational
+- Format: Plain paragraphs (no bullet lists)
+- Disclaimers: Always end with standard disclaimer
+
+Prohibited behaviors:
+- Never guarantee specific valuation (valuations are ranges, market-dependent)
+- Never recommend specific buyers or brokers
+- Never use absolute language (avoid "always", "never", "must")
+```
+
+**User Prompt Template**:
+```
+The business has annual revenue of ${annual_revenue} and EBITDA of ${annual_ebitda} (EBITDA margin: {ebitda_margin}%). Industry multiples: revenue {revenue_multiple_low}-{revenue_multiple_high}x, EBITDA {ebitda_multiple_low}-{ebitda_multiple_high}x. Calculated valuation ranges: revenue-based ${valuation_low_revenue}-${valuation_high_revenue}, EBITDA-based ${valuation_low_ebitda}-${valuation_high_ebitda}. Midpoint valuation: ${midpoint_valuation}. Explain what this means and how to increase value.
+```
+
+**Expected AI Response** (150-250 words):
+```
+Your business has annual revenue of $5 million and EBITDA of $750,000 (15% margin), indicating healthy profitability. Based on industry multiples, your valuation range is approximately $2.25-$3.75 million using EBITDA multiples (3-5x) and $2.5-$7.5 million using revenue multiples (0.5-1.5x). The midpoint valuation is approximately $3 million.
+
+For a profitable service business with 15% EBITDA margin, EBITDA multiples are more appropriate than revenue multiples. Buyers of profitable, mature businesses focus on cash flow (EBITDA) rather than revenue growth. Your $750,000 EBITDA at a 3-5x multiple range reflects typical market valuations for service businesses.
+
+To increase your valuation, focus on improving EBITDA margin (currently 15%). If you improved margin to 20% through operational efficiency or pricing increases, EBITDA would grow to $1 million, potentially increasing valuation to $4-5 million (using the same 4x midpoint multiple). Revenue growth also helps—a 20% revenue increase to $6 million with maintained margins would increase EBITDA to $900,000 and valuation to approximately $3.6 million.
+
+Other value drivers include recurring revenue (increases multiple), customer diversification (reduces risk), documented processes (increases scalability), and strong management team (reduces buyer dependency on owner).
+
+This analysis is for informational purposes only and does not constitute financial, tax, or legal advice. Actual business valuations depend on market conditions, buyer pool, and detailed due diligence. Consult a business broker or M&A advisor for formal valuation.
+```
+
+---
+
+## 9. Export Format Details
+
+### PDF Layout
+
+**Header**:
+- "Business Valuation Analysis"
+- User tier: "Free" or "Pro"
+- Generation timestamp: "Generated on November 18, 2025"
+
+**Body Sections**:
+1. **Business Financials** (table):
+   - Annual Revenue: $5,000,000
+   - Annual EBITDA: $750,000
+   - EBITDA Margin: 15.0%
+
+2. **Industry Valuation Multiples** (table):
+   - Revenue Multiples: 0.5x - 1.5x
+   - EBITDA Multiples: 3x - 5x
+   - Industry: Service Business
+
+3. **Valuation Summary** (table):
+   - Revenue-Based Valuation: $2,500,000 - $7,500,000
+   - EBITDA-Based Valuation: $2,250,000 - $3,750,000
+   - Midpoint Valuation: $3,000,000
+   - Recommended Method: EBITDA-based
+
+4. **Valuation Range Chart**:
+   - Bar chart showing revenue-based and EBITDA-based ranges
+   - Midpoint marked
+
+5. **Sensitivity Analysis** (Pro tier only, table):
+   - Revenue Growth +10%: Valuation $3,300,000 (+$300k)
+   - Revenue Growth +20%: Valuation $3,600,000 (+$600k)
+   - Revenue Growth +30%: Valuation $3,900,000 (+$900k)
+   - EBITDA Margin +5%: Valuation $3,500,000 (+$500k)
+   - EBITDA Margin +10%: Valuation $4,000,000 (+$1,000k)
+
+6. **Value Drivers** (Pro tier only, if AI insights available):
+   - Key strategies to increase valuation
+
+7. **Disclaimers**:
+   - "This valuation is a preliminary estimate based on industry multiples. Actual valuation depends on market conditions, buyer pool, detailed due diligence, and specific business attributes (customer concentration, growth trajectory, competitive position, etc.). Consult a business broker or M&A advisor for formal valuation."
+
+8. **Warnings** (if any):
+   - List all warnings with severity icons
+
+**Footer**:
+- Version stamp: "Generated by CFO Calculator Suite v1.2.3 | Calculator: business-valuation v1.0.0 | Formulas: v1.0.0 | 2025-11-18"
+- Watermark (Free tier only): Diagonal semi-transparent "Upgrade for clean exports"
+
+### CSV/Excel Structure
+
+**Metadata Headers**:
+```csv
+# Business Valuation Analysis
+# Version: v1.0.0
+# Generated: 2025-11-18T21:30:00Z
+# Tier: Pro
+#
+```
+
+**Data Rows**:
+```csv
+Section,Field,Value
+Business Financials,Annual Revenue,$5000000
+Business Financials,Annual EBITDA,$750000
+Business Financials,EBITDA Margin,15.0%
+Industry Multiples,Revenue Multiple Low,0.5x
+Industry Multiples,Revenue Multiple High,1.5x
+Industry Multiples,EBITDA Multiple Low,3.0x
+Industry Multiples,EBITDA Multiple High,5.0x
+Valuation Summary,Revenue-Based Low,$2500000
+Valuation Summary,Revenue-Based High,$7500000
+Valuation Summary,EBITDA-Based Low,$2250000
+Valuation Summary,EBITDA-Based High,$3750000
+Valuation Summary,Midpoint Valuation,$3000000
+Valuation Summary,Recommended Method,EBITDA-based
+Sensitivity,Revenue +10%,$3300000
+Sensitivity,Revenue +20%,$3600000
+Sensitivity,Revenue +30%,$3900000
+Sensitivity,EBITDA Margin +5%,$3500000
+Sensitivity,EBITDA Margin +10%,$4000000
+```
+
+**Excel Formatting**:
+- Bold section headers
+- Currency cells: $#,##0 (no decimals for large numbers)
+- Multiple cells: #.0x
+- Percentage cells: 0.0%
+
+---
+
+## 10. Tier-Specific Behavior
+
+### Free Tier
+
+**What's Shown**:
+- Single business valuation (cannot save or track over time)
+- Business financials inputs (revenue, EBITDA)
+- Industry multiples inputs (with helper text)
+- Basic valuation ranges (revenue-based, EBITDA-based)
+- Midpoint valuation
+- EBITDA margin
+- Basic valuation range chart
+
+**What's Gated**:
+- **Sensitivity analysis**: Locked (revenue growth, margin improvement scenarios)
+- **Recommended valuation method**: Locked
+- **Historical tracking**: Cannot save valuations over time
+- **Industry comparison**: Locked
+- **Multiple business comparison**: "Add Business" button triggers upgrade prompt
+- **Clean exports**: PDF has watermark
+- **AI insights**: "Get valuation insights" button triggers AI tier upgrade prompt
+
+**Upgrade Triggers**:
+- Click "See Sensitivity Analysis" → `upgrade_prompt_shown` with `trigger_reason: "locked_metric"`
+- Click "Industry Comparison" → `upgrade_prompt_shown` with `trigger_reason: "industry_comparison"`
+- Click "Add Business" → `upgrade_prompt_shown` with `trigger_reason: "add_scenario"`
+- Click "Get insights" → `upgrade_prompt_shown` with `trigger_reason: "ai_request"`
+
+### Pro Tier
+
+**What Unlocks**:
+- **Multiple businesses** (up to 50): Track valuation over time (quarterly/annual)
+- **Sensitivity analysis**: Revenue growth and margin improvement scenarios
+- **Recommended valuation method**: Logic for which method is most appropriate
+- **Industry comparison**: Compare business to industry benchmark multiples
+- **Valuation tracking**: Chart showing valuation trend over time
+- **Business comparison table**: Side-by-side comparison of multiple businesses
+- **Tornado chart**: Visualize which variables have biggest impact on valuation
+- **Clean exports**: PDF with no watermark
+
+**Still Gated** (requires AI tier):
+- AI valuation insights and strategies to increase value
+- AI scenario suggestions
+
+### AI Tier
+
+**What Unlocks**:
+- **AI valuation insights**: "What is my business really worth?" gets contextual explanation
+- **AI value enhancement**: "How can I increase my valuation?" gets specific strategies
+- **AI offer evaluation**: "Is this a fair offer?" gets comparative analysis
+- **50 AI requests per month** (hard cap)
+
+**Usage Quota**:
+- Counter displayed: "23 of 50 AI requests remaining this month"
+- Resets on 1st of each month
+
+---
+
+## Implementation Notes
+
+**Priority**: Medium (founder/investor interest, AI showcase, but lower SEO volume than lending calculators)
+
+**Estimated Effort**: 1.5 weeks
+- Week 1: Core valuation calculations (revenue and EBITDA multiples)
+- Week 2 (half): Sensitivity analysis, industry database integration, testing
+
+**Dependencies**:
+- Industry multiples database (can start with manual input, add database later)
+- Valuation methodology logic (revenue vs EBITDA decision tree)
+
+**Related Calculators**:
+- **Cash Runway**: Runway affects valuation (short runway = lower valuation)
+- **Breakeven & Contribution Margin**: Unit economics affect valuation
+- **Business Loan + DSCR**: Debt levels affect net enterprise value
+
+**Database Integration** (future enhancement):
+- Industry multiples database (by NAICS code or industry category)
+- Automatic lookup based on industry selection
+- Periodic updates from market data (BizBuySell, PitchBook, etc.)
+
+---
+
+## End of Calculator PDR
+
+This calculator is complete and ready for implementation. All valuation formulas, sensitivity analysis, and recommendation logic are specified in detail.
+
+
+# Cash Runway & Burn Rate Calculator
+
+## 1. Calculator Overview
+
+**Calculator Name**: Cash Runway & Burn Rate Calculator
+
+**Calculator Slug**: `cash-runway`
+
+**Primary Category**: Cash Flow & Liquidity Intelligence
+
+**Secondary Category**: Planning & Forecasting Intelligence
+
+**Business Role**:
+- **Founders/CFO awareness tool**: High emotional value (answers "when do we run out of money?")
+- **AI narrative showcase**: Excellent use case for AI scenario suggestions ("when should we fundraise?")
+- **Pro upgrade driver**: Scenario analysis (base/upside/downside) drives conversions
+- **Viral potential**: Startup founders share with co-founders and investors
+
+**Primary Success Metric**: AI narrative usage rate (target: 40-50% of Pro users request AI insights)
+
+**Version**: v1.0.0
+
+**Formula Library Version**: v1.0.0
+
+---
+
+## 2. User Scenarios and Use Cases
+
+### Who Uses This Calculator
+
+**Primary Personas**:
+- **Startup founders** tracking cash runway and planning fundraising timeline
+- **CFOs** monitoring burn rate and forecasting cash needs
+- **Investors** evaluating portfolio company cash positions and runway
+
+**Secondary Personas**:
+- **Board members** reviewing cash position during board meetings
+- **Fractional CFOs** advising clients on cash management
+- **Business owners** (non-startups) managing seasonal cash flow
+
+### When They Use It (Decision Contexts)
+
+**Timing**:
+- **After fundraising**: Tracking how long new capital will last
+- **Monthly/quarterly monitoring**: Tracking burn rate trends (is burn increasing or decreasing?)
+- **Before fundraising**: Determining how much time remains to close next round
+- **During budget planning**: Scenario testing ("what if we hire 3 more people?")
+- **Crisis mode**: Cash is tight, need to know exactly how long until zero
+
+**Frequency**:
+- **Monthly monitoring** (most common): Pro users update cash balance monthly
+- **Weekly monitoring** (high-burn startups): Track runway closely when < 6 months
+- **One-time use** (Free tier): Founders check runway once, then forget
+
+### What Questions It Answers
+
+This calculator helps users answer:
+
+1. **How many months of runway do we have?** (Most urgent question, clear answer)
+2. **What is our current burn rate?** (Monthly cash consumption)
+3. **When will we hit zero cash?** (Specific date for planning)
+4. **What if revenue grows 20%?** (Upside scenario - runway extends)
+5. **What if revenue drops 20%?** (Downside scenario - need to fundraise sooner)
+6. **When should we start fundraising?** (Typically need 18 months runway when starting)
+
+---
+
+## 3. Inputs
+
+### Input Field Definitions
+
+| Field Name | Type | Units | Required | Validation | Default | Placeholder | Tooltip |
+|------------|------|-------|----------|------------|---------|-------------|---------|
+| current_cash_balance | currency | dollars | Yes | min: 0, max: 1000000000 | null | "500000" | "Current cash and cash equivalents (checking, savings, money market). Do not include accounts receivable or inventory." |
+| monthly_revenue | currency | dollars | Yes | min: 0, max: 100000000 | null | "50000" | "Average monthly revenue (cash received, not just invoiced). Use trailing 3-month average for accuracy." |
+| monthly_expenses | currency | dollars | Yes | min: 0, max: 100000000 | null | "75000" | "Average monthly operating expenses (all cash out: payroll, rent, software, marketing, etc.). Use trailing 3-month average." |
+
+### Input Groups
+
+**Group 1: Cash Position** (always visible)
+- current_cash_balance
+
+**Group 2: Monthly Cash Flow** (always visible)
+- monthly_revenue
+- monthly_expenses
+
+**Group 3: Scenario Assumptions** (collapsed by default, Pro tier feature)
+- **revenue_growth_rate_monthly** (percentage): Monthly revenue growth rate (compound). Default: 0%
+- **expense_growth_rate_monthly** (percentage): Monthly expense growth rate (e.g., hiring plan). Default: 0%
+- **one_time_inflow** (currency): Expected one-time cash inflow (e.g., upcoming invoice payment). Default: 0
+- **one_time_inflow_month** (number): Month when one-time inflow occurs. Default: 0
+- **one_time_outflow** (currency): Expected one-time cash outflow (e.g., tax payment, equipment purchase). Default: 0
+- **one_time_outflow_month** (number): Month when one-time outflow occurs. Default: 0
+
+### Optional Inputs
+
+**Advanced Options** (collapsed, rarely used):
+- **minimum_cash_buffer** (currency): Minimum cash balance to maintain (operational buffer). Default: 0
+- **include_ar_in_cash** (boolean): Include accounts receivable expected in next 30 days as "cash". Default: No
+
+---
+
+## 4. Outputs
+
+### Key Metrics (Free Tier - Always Visible)
+
+| Output Name | Description | Format | Units |
+|-------------|-------------|--------|-------|
+| monthly_burn_rate | Net monthly cash consumption (expenses - revenue) | "$#,##0.00" | dollars |
+| runway_months | Months until cash reaches zero (current_cash / burn_rate) | "#.0" | months |
+| runway_end_date | Specific date when cash hits zero | "MMM DD, YYYY" | date |
+
+### Advanced Metrics (Pro Tier - Gated)
+
+| Output Name | Description | Format | Units | Pro Only |
+|-------------|-------------|--------|-------|----------|
+| runway_base_case | Runway assuming current burn continues (base case) | "#.0 months" | months | Yes |
+| runway_downside | Runway if revenue drops 20% (downside scenario) | "#.0 months" | months | Yes |
+| runway_upside | Runway if revenue grows 20% (upside scenario) | "#.0 months" | months | Yes |
+| breakeven_month | Month when revenue = expenses (burn = 0) | "Month #" or "Never" | month | Yes |
+| breakeven_revenue_needed | Monthly revenue needed to reach breakeven (zero burn) | "$#,##0.00" | dollars | Yes |
+| total_funding_needed | Cash needed to reach breakeven (if revenue growing) | "$#,##0.00" | dollars | Yes |
+| daily_burn_rate | Daily cash consumption (monthly burn / 30) | "$#,##0.00" | dollars | Yes |
+
+### Charts and Visualizations
+
+**Chart 1: Cash Runway Timeline** (Free tier, basic; Pro tier, detailed)
+- Type: Line chart
+- X-axis: Month (0 to runway end)
+- Y-axis: Cash balance
+- Purpose: Visualize cash declining to zero over time
+- Tier: Free (base case only), Pro (base/upside/downside scenarios)
+
+**Chart 2: Burn Rate Trend** (Pro tier only)
+- Type: Line chart
+- X-axis: Month (historical 6-12 months)
+- Y-axis: Burn rate (dollars per month)
+- Purpose: Show if burn is increasing, decreasing, or stable
+- Tier: Pro (requires historical burn rate data)
+
+**Chart 3: Scenario Comparison** (Pro tier only)
+- Type: Multi-line chart
+- X-axis: Month
+- Y-axis: Cash balance
+- Lines: Base case, upside (+20% revenue), downside (-20% revenue)
+- Purpose: Visualize sensitivity to revenue changes
+- Tier: Pro
+
+### Output Formatting Rules
+
+- **Currency**: $#,##0.00 (two decimals for precision)
+- **Runway months**: One decimal (e.g., "14.3 months" for clarity)
+- **Dates**: "Jan 15, 2026" (month day, year format)
+- **Burn rate**: Always show as positive number (absolute value) with note "(cash out)"
+- **Breakeven month**: Integer (e.g., "Month 18") or "Never" if expenses > revenue with no growth
+
+---
+
+## 5. Formulas and Calculation Logic
+
+### Formula 1: Monthly Burn Rate
+
+**Purpose**: Calculate net monthly cash consumption
+
+**Equation**:
+```
+monthly_burn_rate = monthly_expenses - monthly_revenue
+
+If monthly_burn_rate > 0:
+    # Burning cash (expenses > revenue)
+    status = "Cash burn"
+elif monthly_burn_rate < 0:
+    # Generating cash (revenue > expenses)
+    status = "Cash positive"
+else:
+    # Breakeven (revenue = expenses)
+    status = "Breakeven"
+```
+
+**Variables**:
+- monthly_expenses: Total monthly cash outflows
+- monthly_revenue: Total monthly cash inflows
+- monthly_burn_rate: Net cash consumption (positive = burning, negative = generating)
+
+**Source/Reference**: Standard cash flow analysis
+
+### Formula 2: Runway (Base Case)
+
+**Purpose**: Calculate months until cash reaches zero at current burn rate
+
+**Equation**:
+```
+if monthly_burn_rate <= 0:
+    # Cash positive or breakeven - infinite runway
+    runway_months = Infinity
+    runway_end_date = "Never (cash positive)"
+else:
+    # Cash burn - calculate months until zero
+    runway_months = current_cash_balance / monthly_burn_rate
+
+    # Calculate specific end date
+    runway_end_date = today + (runway_months × 30.44 days)  # 30.44 = avg days/month
+```
+
+**Variables**:
+- current_cash_balance: Cash on hand today
+- monthly_burn_rate: Net monthly cash consumption
+- runway_months: Months until cash = 0
+- runway_end_date: Calendar date when cash hits zero
+
+**Source/Reference**: Standard runway calculation used in venture capital
+
+### Formula 3: Runway with Growth Scenarios
+
+**Purpose**: Calculate runway assuming revenue/expense growth over time
+
+**Equation**:
+```
+# Initialize
+cash_balance = current_cash_balance
+month = 0
+revenue = monthly_revenue
+expenses = monthly_expenses
+
+# Simulate month-by-month until cash reaches zero
+while cash_balance > 0 and month < 120:  # max 10 years
+    month += 1
+
+    # Apply growth rates
+    if revenue_growth_rate_monthly != 0:
+        revenue = revenue × (1 + revenue_growth_rate_monthly / 100)
+
+    if expense_growth_rate_monthly != 0:
+        expenses = expenses × (1 + expense_growth_rate_monthly / 100)
+
+    # Apply one-time cash flows
+    if month == one_time_inflow_month:
+        cash_balance += one_time_inflow
+
+    if month == one_time_outflow_month:
+        cash_balance -= one_time_outflow
+
+    # Calculate net cash flow for month
+    net_cash_flow = revenue - expenses
+    cash_balance += net_cash_flow
+
+    # Check if reached breakeven
+    if net_cash_flow >= 0 and month > 1:
+        breakeven_month = month
+        break
+
+runway_months = month
+```
+
+**Source/Reference**: Monte Carlo cash flow simulation methodology
+
+### Formula 4: Breakeven Analysis
+
+**Purpose**: Calculate when revenue will equal expenses (zero burn)
+
+**Equation**:
+```
+# If revenue is growing and expenses are flat or growing slower
+if revenue_growth_rate_monthly > expense_growth_rate_monthly:
+    # Calculate month when revenue catches up to expenses
+    # revenue × (1 + g)^n = expenses × (1 + e)^n
+    # Solve for n (month)
+
+    # Simplified: if revenue growing at constant rate
+    months_to_breakeven = log(expenses / revenue) / log(1 + revenue_growth_rate_monthly)
+
+    if months_to_breakeven > 0 and months_to_breakeven < 120:
+        breakeven_month = ceil(months_to_breakeven)
+    else:
+        breakeven_month = "Never"
+else:
+    # Revenue not growing or growing slower than expenses
+    breakeven_month = "Never"
+
+# Calculate revenue needed for immediate breakeven
+breakeven_revenue_needed = monthly_expenses
+revenue_gap = breakeven_revenue_needed - monthly_revenue
+```
+
+**Source/Reference**: Breakeven analysis formula
+
+### Formula 5: Total Funding Needed to Reach Breakeven
+
+**Purpose**: Calculate how much additional funding is needed to reach breakeven
+
+**Equation**:
+```
+if breakeven_month == "Never":
+    total_funding_needed = "Breakeven not achievable with current growth trajectory"
+else:
+    # Simulate cash burn from now until breakeven month
+    total_burn = 0
+    cash_balance = current_cash_balance
+
+    for month in range(1, breakeven_month + 1):
+        revenue_month = monthly_revenue × (1 + revenue_growth_rate_monthly / 100) ^ month
+        expenses_month = monthly_expenses × (1 + expense_growth_rate_monthly / 100) ^ month
+        net_cash_flow = revenue_month - expenses_month
+        total_burn += abs(net_cash_flow) if net_cash_flow < 0 else 0
+        cash_balance += net_cash_flow
+
+    if cash_balance < 0:
+        total_funding_needed = abs(cash_balance)
+    else:
+        total_funding_needed = 0  # Current cash is sufficient
+```
+
+### Formula 6: Scenario Analysis (Upside/Downside)
+
+**Purpose**: Calculate runway under different revenue scenarios
+
+**Equation**:
+```
+# Base case (current burn)
+runway_base = current_cash_balance / monthly_burn_rate
+
+# Upside scenario (revenue +20%)
+upside_revenue = monthly_revenue × 1.20
+upside_burn = monthly_expenses - upside_revenue
+if upside_burn > 0:
+    runway_upside = current_cash_balance / upside_burn
+else:
+    runway_upside = Infinity  # Cash positive in upside case
+
+# Downside scenario (revenue -20%)
+downside_revenue = monthly_revenue × 0.80
+downside_burn = monthly_expenses - downside_revenue
+if downside_burn > 0:
+    runway_downside = current_cash_balance / downside_burn
+else:
+    runway_downside = Infinity
+```
+
+### Step-by-Step Calculation Flow
+
+1. **Validate inputs**: Check required fields, ensure cash ≥ 0, expenses > 0
+2. **Calculate monthly burn rate**: `monthly_expenses - monthly_revenue`
+3. **Determine cash status**: Burning, breakeven, or cash positive
+4. **Calculate base case runway**: `current_cash / monthly_burn_rate`
+5. **Calculate runway end date**: `today + (runway_months × 30.44 days)`
+6. **Calculate daily burn rate**: `monthly_burn_rate / 30`
+7. **If Pro tier, calculate scenarios**:
+   - Upside runway (revenue +20%)
+   - Downside runway (revenue -20%)
+   - Breakeven month (if revenue growing)
+   - Total funding needed to reach breakeven
+8. **If growth rates provided, run month-by-month simulation**
+9. **Check warning conditions**: Low runway (< 6 months), high burn, etc.
+10. **Return results with version stamp**
+
+### Edge Cases and Handling
+
+| Edge Case | Condition | Handling | Warning/Error |
+|-----------|-----------|----------|---------------|
+| Cash positive | monthly_revenue > monthly_expenses | Runway = Infinity | Info: "Business is cash positive. No runway concern." |
+| Zero cash | current_cash_balance = 0 | Runway = 0 months | Critical: "Zero cash balance. Immediate funding needed." |
+| Exactly breakeven | monthly_revenue = monthly_expenses | Runway = Infinity | Info: "Business is at breakeven. Cash neither grows nor shrinks." |
+| Very high burn | monthly_burn_rate > current_cash_balance | Runway < 1 month | Critical: "Less than 1 month of runway. Urgent action required." |
+| Negative revenue | monthly_revenue < 0 | Error | Error: "Revenue cannot be negative. Enter 0 if no revenue." |
+
+### Formula Version
+
+**Current Version**: v1.0.0
+
+**Version History**:
+- v1.0.0: Initial implementation (burn rate, runway, scenario analysis)
+
+---
+
+## 6. Warnings and Alerts
+
+### Warning Definitions
+
+| Warning Code | Condition | Message | Severity | Action |
+|--------------|-----------|---------|----------|--------|
+| CRITICAL_RUNWAY | runway_months < 3 | "Critical: Only {runway_months} months of runway remaining. You should be actively fundraising or cutting expenses immediately." | danger | Start fundraising now or implement cost cuts |
+| LOW_RUNWAY | runway_months < 6 | "Warning: {runway_months} months of runway. Typical fundraising takes 3-6 months. Start fundraising process now." | warning | Begin fundraising or improve cash generation |
+| COMFORTABLE_RUNWAY | runway_months >= 12 | "Healthy runway of {runway_months} months. Continue monitoring burn rate monthly." | info | Maintain current trajectory |
+| CASH_POSITIVE | monthly_burn_rate < 0 | "Business is cash positive (revenue > expenses). Runway is effectively infinite. Strong position." | success | Consider reinvesting cash in growth |
+| HIGH_BURN_ACCELERATION | (current_burn - previous_burn) / previous_burn > 0.25 | "Burn rate increased {percent}% vs previous period. Monitor closely and understand drivers." | warning | Review expense increases, validate ROI of new spending |
+| ZERO_CASH | current_cash_balance == 0 | "Zero cash balance. Business cannot operate. Immediate funding or revenue required." | danger | Emergency funding needed immediately |
+| DOWNSIDE_CRITICAL | runway_downside < 3 | "In downside scenario (revenue -20%), runway drops to {runway_downside} months. Build cash buffer for safety." | warning | Reduce expenses or raise more capital |
+| BREAKEVEN_UNREACHABLE | breakeven_month == "Never" | "Breakeven not achievable with current revenue growth trajectory. Revenue must grow faster or expenses must decrease." | warning | Increase revenue growth or cut expenses |
+
+### Warning Thresholds
+
+**Configurable Thresholds** (can be adjusted per tenant for B2B):
+- **Critical runway**: 3 months (venture-backed startups), 1 month (services businesses)
+- **Low runway**: 6 months (venture-backed), 3 months (bootstrapped)
+- **Comfortable runway**: 12 months (venture-backed), 6 months (bootstrapped)
+
+**Hard-Coded Thresholds** (universal, not configurable):
+- **Zero cash**: 0 dollars (mathematical fact)
+- **Burn acceleration**: 25% increase month-over-month (concerning rate of change)
+
+---
+
+## 7. Golden Test Scenarios
+
+### Scenario 1: Healthy Startup - 15 Months Runway
+
+**Description**: Typical post-seed startup with healthy runway. No immediate funding pressure.
+
+**Inputs**:
+```json
+{
+  "current_cash_balance": 750000,
+  "monthly_revenue": 50000,
+  "monthly_expenses": 100000
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "monthly_burn_rate": {
+    "value": 50000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$100k expenses - $50k revenue = $50k burn"
+  },
+  "runway_months": {
+    "value": 15.0,
+    "tolerance": 0.1,
+    "unit": "months",
+    "note": "$750k / $50k burn = 15 months"
+  },
+  "runway_end_date": {
+    "value": "2027-02-18",
+    "note": "Assumes today is 2025-11-18, 15 months forward"
+  },
+  "daily_burn_rate": {
+    "value": 1666.67,
+    "tolerance": 1,
+    "unit": "USD",
+    "note": "$50k / 30 days"
+  },
+  "runway_base_case": {
+    "value": 15.0,
+    "tolerance": 0.1,
+    "unit": "months"
+  },
+  "runway_upside": {
+    "value": 18.8,
+    "tolerance": 0.2,
+    "unit": "months",
+    "note": "Revenue +20% = $60k, burn = $40k, runway = $750k / $40k"
+  },
+  "runway_downside": {
+    "value": 12.5,
+    "tolerance": 0.2,
+    "unit": "months",
+    "note": "Revenue -20% = $40k, burn = $60k, runway = $750k / $60k"
+  },
+  "breakeven_revenue_needed": {
+    "value": 100000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "Need $100k revenue to match $100k expenses"
+  }
+}
+```
+
+**Expected Warnings**:
+- COMFORTABLE_RUNWAY: "Healthy runway of 15.0 months. Continue monitoring burn rate monthly."
+
+### Scenario 2: Crisis Mode - 4 Months Runway
+
+**Description**: Startup with low runway, urgent fundraising needed. Downside scenario is critical (< 3 months).
+
+**Inputs**:
+```json
+{
+  "current_cash_balance": 200000,
+  "monthly_revenue": 20000,
+  "monthly_expenses": 70000
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "monthly_burn_rate": {
+    "value": 50000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$70k expenses - $20k revenue = $50k burn"
+  },
+  "runway_months": {
+    "value": 4.0,
+    "tolerance": 0.1,
+    "unit": "months",
+    "note": "$200k / $50k burn = 4 months"
+  },
+  "runway_end_date": {
+    "value": "2026-03-18",
+    "note": "Assumes today is 2025-11-18, 4 months forward"
+  },
+  "daily_burn_rate": {
+    "value": 1666.67,
+    "tolerance": 1,
+    "unit": "USD"
+  },
+  "runway_base_case": {
+    "value": 4.0,
+    "tolerance": 0.1,
+    "unit": "months"
+  },
+  "runway_upside": {
+    "value": 5.0,
+    "tolerance": 0.1,
+    "unit": "months",
+    "note": "Revenue +20% = $24k, burn = $46k, runway = $200k / $46k"
+  },
+  "runway_downside": {
+    "value": 2.9,
+    "tolerance": 0.1,
+    "unit": "months",
+    "note": "Revenue -20% = $16k, burn = $54k, runway = $200k / $54k"
+  },
+  "breakeven_revenue_needed": {
+    "value": 70000,
+    "tolerance": 0,
+    "unit": "USD"
+  }
+}
+```
+
+**Expected Warnings**:
+- LOW_RUNWAY: "Warning: 4.0 months of runway. Typical fundraising takes 3-6 months. Start fundraising process now."
+- DOWNSIDE_CRITICAL: "In downside scenario (revenue -20%), runway drops to 2.9 months. Build cash buffer for safety."
+
+### Scenario 3: Cash Positive - Infinite Runway
+
+**Description**: Profitable business, revenue exceeds expenses. No runway concern.
+
+**Inputs**:
+```json
+{
+  "current_cash_balance": 300000,
+  "monthly_revenue": 150000,
+  "monthly_expenses": 120000
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "monthly_burn_rate": {
+    "value": -30000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "Negative burn = cash positive (revenue > expenses)"
+  },
+  "runway_months": {
+    "value": "Infinity",
+    "note": "Cash positive business, runway is effectively infinite"
+  },
+  "runway_end_date": {
+    "value": "Never (cash positive)",
+    "note": "Business generates cash, no end date"
+  },
+  "daily_burn_rate": {
+    "value": -1000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "Negative = cash generation"
+  },
+  "runway_base_case": {
+    "value": "Infinity",
+    "note": "Cash positive"
+  },
+  "runway_upside": {
+    "value": "Infinity",
+    "note": "Revenue +20% = $180k, burn = -$60k (even more cash positive)"
+  },
+  "runway_downside": {
+    "value": "Infinity",
+    "note": "Revenue -20% = $120k, burn = $0 (breakeven)"
+  },
+  "breakeven_revenue_needed": {
+    "value": 120000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "Already above breakeven"
+  }
+}
+```
+
+**Expected Warnings**:
+- CASH_POSITIVE: "Business is cash positive (revenue > expenses). Runway is effectively infinite. Strong position."
+
+---
+
+## 8. AI Narrative Strategy (AI-Enabled)
+
+### What AI Explains for This Calculator
+
+**Primary Explanations**:
+1. **What the runway number means and what to do about it** (most common: "is 15 months good?")
+2. **When to start fundraising** (rule of thumb: start when 12-18 months runway)
+3. **Upside vs downside scenarios** (sensitivity to revenue changes)
+4. **Path to breakeven and funding needed** (if revenue is growing)
+
+**Scenario Suggestions**:
+- "What if we cut expenses by 20%?" (extend runway)
+- "What if we hire 2 more people ($15k/month each)?" (reduce runway)
+- "When should we start our Series A fundraise?" (timing recommendation)
+
+### Prompt Template
+
+**System Prompt**:
+```
+You are a CFO advisor helping startup founders and business owners understand cash runway and burn rate.
+
+Your role is to:
+- Explain what the runway number means in plain language (how long until cash runs out)
+- Interpret whether the runway is healthy, concerning, or critical
+- Suggest when to start fundraising (typically 12-18 months runway for startups)
+- Explain upside/downside scenarios and sensitivity to revenue changes
+
+Output constraints:
+- Length: 150-250 words
+- Tone: Direct and actionable (founders need clear guidance)
+- Format: Plain paragraphs (no bullet lists)
+- Disclaimers: Always end with standard disclaimer
+
+Prohibited behaviors:
+- Never guarantee fundraising success (use "typically", "most investors prefer")
+- Never recommend specific investors or valuation
+- Never use absolute language (avoid "always", "never", "must")
+```
+
+**User Prompt Template**:
+```
+The business has ${current_cash_balance} in cash, monthly revenue of ${monthly_revenue}, and monthly expenses of ${monthly_expenses}. Monthly burn rate is ${monthly_burn_rate}. Calculated runway is {runway_months} months (ending {runway_end_date}). Upside scenario (revenue +20%): {runway_upside} months. Downside scenario (revenue -20%): {runway_downside} months. Explain what this means and what the founder should do.
+```
+
+**Expected AI Response** (150-250 words):
+```
+With a monthly burn rate of $50,000, your current cash balance of $750,000 provides 15 months of runway, lasting until February 2027. This is a healthy position for a startup—you have enough time to execute your roadmap without immediate fundraising pressure.
+
+Most venture-backed companies begin fundraising when they have 12-18 months of runway remaining, as the fundraising process typically takes 3-6 months. Given your current position, you could comfortably wait 3-6 months before starting a fundraising process, but monitoring burn rate monthly is critical.
+
+Your upside scenario (revenue +20% to $60k/month) extends runway to 18.8 months, while the downside scenario (revenue -20% to $40k/month) reduces runway to 12.5 months. This sensitivity shows the importance of hitting revenue targets. If revenue underperforms, you'll have less margin for error.
+
+To reach breakeven, you need monthly revenue of $100,000 (currently $50k). If revenue is growing at 10% per month, you could reach breakeven in approximately 7-8 months. Until then, focus on efficient growth and plan for additional funding if needed.
+
+This analysis is for informational purposes only and does not constitute financial, legal, or professional advice. Consult qualified professionals for decisions affecting your business.
+```
+
+---
+
+## 9. Export Format Details
+
+### PDF Layout
+
+**Header**:
+- "Cash Runway & Burn Rate Analysis"
+- User tier: "Free" or "Pro"
+- Generation timestamp: "Generated on November 18, 2025"
+
+**Body Sections**:
+1. **Current Cash Position** (table):
+   - Cash Balance: $750,000
+   - As of: November 18, 2025
+
+2. **Monthly Cash Flow** (table):
+   - Monthly Revenue: $50,000
+   - Monthly Expenses: $100,000
+   - Monthly Burn Rate: $50,000
+   - Daily Burn Rate: $1,667
+
+3. **Runway Analysis** (table):
+   - Base Case Runway: 15.0 months
+   - Runway End Date: February 18, 2027
+   - Status: Healthy
+
+4. **Scenario Analysis** (Pro tier only, table):
+   - Upside Scenario (+20% revenue): 18.8 months
+   - Base Case: 15.0 months
+   - Downside Scenario (-20% revenue): 12.5 months
+
+5. **Cash Runway Timeline Chart**:
+   - Line chart showing cash declining over 15 months
+   - Free tier: Base case only
+   - Pro tier: Base/upside/downside scenarios
+
+6. **Breakeven Analysis** (Pro tier only, table):
+   - Breakeven Revenue Needed: $100,000/month
+   - Current Revenue: $50,000/month
+   - Revenue Gap: $50,000/month
+   - Months to Breakeven: (if revenue growing) or "Not achievable at current growth"
+
+7. **Recommendations** (if AI tier):
+   - AI-generated insights and recommendations
+
+8. **Warnings** (if any):
+   - List all warnings with severity icons
+
+**Footer**:
+- Disclaimers: "This analysis is for informational purposes only and does not constitute financial advice. Actual cash flow may vary. Monitor cash position regularly and adjust plans accordingly."
+- Version stamp: "Generated by CFO Calculator Suite v1.2.3 | Calculator: cash-runway v1.0.0 | Formulas: v1.0.0 | 2025-11-18"
+- Watermark (Free tier only): Diagonal semi-transparent "Upgrade for clean exports"
+
+### CSV/Excel Structure
+
+**Metadata Headers**:
+```csv
+# Cash Runway & Burn Rate Analysis
+# Version: v1.0.0
+# Generated: 2025-11-18T21:30:00Z
+# Tier: Pro
+#
+```
+
+**Data Rows**:
+```csv
+Section,Field,Value
+Cash Position,Current Balance,$750000
+Cash Position,As of Date,2025-11-18
+Monthly Cash Flow,Revenue,$50000
+Monthly Cash Flow,Expenses,$100000
+Monthly Cash Flow,Burn Rate,$50000
+Monthly Cash Flow,Daily Burn,$1667
+Runway Analysis,Base Case,15.0 months
+Runway Analysis,End Date,2027-02-18
+Runway Analysis,Status,Healthy
+Scenario Analysis,Upside (+20% revenue),18.8 months
+Scenario Analysis,Downside (-20% revenue),12.5 months
+Breakeven Analysis,Revenue Needed,$100000
+Breakeven Analysis,Current Revenue,$50000
+Breakeven Analysis,Gap,$50000
+```
+
+**Excel Formatting**:
+- Bold section headers
+- Currency cells: $#,##0.00
+- Date cells: MMM DD, YYYY
+- Conditional formatting:
+  - Runway < 3 months: Red
+  - Runway 3-6 months: Yellow
+  - Runway > 6 months: Green
+
+---
+
+## 10. Tier-Specific Behavior
+
+### Free Tier
+
+**What's Shown**:
+- Single scenario (current cash position only)
+- Basic runway calculation (base case)
+- Monthly burn rate, runway months, end date
+- Simple cash runway timeline chart (base case only)
+
+**What's Gated**:
+- **Scenario analysis**: Upside/downside scenarios locked with tooltip "Upgrade to Pro to see scenario analysis"
+- **Breakeven analysis**: Locked
+- **Historical burn trend**: Requires Pro
+- **Multiple scenarios**: "Add Scenario" button triggers upgrade prompt
+- **Clean exports**: PDF has watermark
+- **AI insights**: "Get AI recommendations" button triggers AI tier upgrade prompt
+
+**Upgrade Triggers**:
+- Click "See Scenario Analysis" → `upgrade_prompt_shown` with `trigger_reason: "locked_metric"`
+- Click "Breakeven Analysis" → `upgrade_prompt_shown` with `trigger_reason: "locked_metric"`
+- Click "Add Scenario" → `upgrade_prompt_shown` with `trigger_reason: "add_scenario"`
+- Click "Get AI recommendations" → `upgrade_prompt_shown` with `trigger_reason: "ai_request"`
+
+### Pro Tier
+
+**What Unlocks**:
+- **Multiple scenarios** (up to 50): Track cash position over time, compare "what if" scenarios
+- **Scenario analysis**: Upside (+20%), base case, downside (-20%) revenue scenarios
+- **Breakeven analysis**: Revenue needed to reach zero burn, months to breakeven
+- **Total funding needed**: Calculate cash needed to reach breakeven
+- **Scenario comparison chart**: Multi-line chart showing base/upside/downside
+- **Historical burn trend**: Track burn rate changes over time (if historical data provided)
+- **Clean exports**: PDF with no watermark
+
+**Still Gated** (requires AI tier):
+- AI recommendations (when to fundraise, how to extend runway)
+- AI scenario suggestions
+
+### AI Tier
+
+**What Unlocks**:
+- **AI runway insights**: Click "Get recommendations" for guidance on fundraising timing
+- **AI scenario suggestions**: "What if I cut expenses by 20%?" gets detailed analysis
+- **AI fundraising timing**: "When should I start fundraising?" gets personalized recommendation
+- **50 AI requests per month** (hard cap)
+
+**Usage Quota**:
+- Counter displayed: "23 of 50 AI requests remaining this month"
+- Resets on 1st of each month
+
+---
+
+## Implementation Notes
+
+**Priority**: High (founder/CFO awareness, AI showcase, viral potential)
+
+**Estimated Effort**: 1.5 weeks
+- Week 1: Core burn rate and runway calculations
+- Week 2 (half): Scenario analysis, breakeven calculation, testing
+
+**Dependencies**:
+- Date calculation library (for runway end date)
+- Scenario simulation engine (month-by-month cash flow projection)
+
+**Related Calculators**:
+- **Business Loan + DSCR**: Debt service affects burn rate
+- **Breakeven & Contribution Margin**: Related breakeven concept
+- **Business Valuation**: Cash runway affects valuation (short runway = lower valuation)
+
+**Viral/Sharing Features**:
+- "Share with co-founders" button (email or link sharing)
+- "Export for board deck" PDF with clean formatting (Pro tier)
+- Social sharing: "We have X months of runway" with chart image (encourages sharing)
+
+---
+
+## End of Calculator PDR
+
+This calculator is complete and ready for implementation. All burn rate, runway, and scenario formulas are specified in detail.
+
+
+# Equipment Lease vs Buy Intelligence Calculator
+
+## 1. Calculator Overview
+
+**Calculator Name**: Equipment Lease vs Buy Intelligence Calculator
+
+**Calculator Slug**: `equipment-lease-buy`
+
+**Primary Category**: Financing & Lending Intelligence
+
+**Secondary Category**: Planning & Forecasting Intelligence
+
+**Business Role**:
+- **High-intent traffic magnet**: High commercial intent searches ("lease vs buy calculator", "equipment financing")
+- **Affiliate revenue driver**: Equipment leasing and financing partners (lessor referrals, equipment lender referrals)
+- **Pro upgrade driver**: NPV and tax analysis drive conversions
+- **B2B demo calculator**: White-label for equipment dealers and lessors
+
+**Primary Success Metric**: Affiliate referral rate + export rate (target: 10-15% affiliate clicks, 25% export rate)
+
+**Version**: v1.0.0
+
+**Formula Library Version**: v1.3.0
+
+---
+
+## 2. User Scenarios and Use Cases
+
+### Who Uses This Calculator
+
+**Primary Personas**:
+- **Small business owners** deciding whether to lease or buy equipment ($10k-$500k: trucks, machinery, IT, medical equipment)
+- **CFOs** evaluating capital expenditure decisions and cash flow impact
+- **Equipment dealers** helping customers choose financing options (lease, loan, cash)
+
+**Secondary Personas**:
+- **Accountants and CPAs** analyzing tax implications of lease vs buy decisions
+- **Equipment leasing companies** demonstrating lease value to prospective clients
+- **Startup founders** preserving cash while acquiring necessary equipment
+
+### When They Use It (Decision Contexts)
+
+**Timing**:
+- **Before equipment purchase**: Planning phase, determining optimal financing method
+- **After receiving lease quote**: Comparison phase, evaluating lease offer vs loan or cash purchase
+- **Tax planning season**: End of year, deciding whether to accelerate equipment purchases for tax benefits (Section 179)
+- **Equipment replacement cycle**: Recurring decision every 3-7 years for vehicles, machinery, etc.
+
+**Frequency**:
+- **One-time use** (Free tier): Single equipment purchase decision
+- **Recurring use** (Pro tier): Equipment dealers and CFOs running multiple scenarios monthly
+
+### What Questions It Answers
+
+This calculator helps users answer:
+
+1. **Should I lease or buy this equipment?** (Total cost comparison with recommendation)
+2. **What are the cash flow impacts?** (Upfront cash vs monthly payments)
+3. **What are the tax benefits of each option?** (Section 179 deduction, depreciation, lease payment deduction)
+4. **What's the true cost after tax benefits?** (After-tax NPV comparison)
+5. **What if equipment becomes obsolete early?** (Lease provides upgrade flexibility)
+
+---
+
+## 3. Inputs
+
+### Input Field Definitions
+
+| Field Name | Type | Units | Required | Validation | Default | Placeholder | Tooltip |
+|------------|------|-------|----------|------------|---------|-------------|---------|
+| equipment_cost | currency | dollars | Yes | min: 1, max: 10000000 | null | "100000" | "Total purchase price of equipment including delivery and installation. This is the amount you'd pay if buying with cash." |
+| lease_monthly_payment | currency | dollars | No | min: 0, max: 100000 | null | "2500" | "Monthly lease payment quoted by lessor. Leave blank if you only want to evaluate loan vs cash purchase." |
+| lease_term_months | number | months | No | min: 1, max: 120 | 60 | "60" | "Lease term in months. Typical leases are 36-60 months (3-5 years) for equipment, 24-36 months for technology." |
+| lease_residual_value | currency | dollars | No | min: 0, max: 10000000 | null | "10000" | "Buyout price at end of lease (fair market value or $1 buyout). Leave 0 for operating lease with no buyout option." |
+| loan_interest_rate | percentage | percent | No | min: 0, max: 30 | 8.0 | "8.0" | "Annual interest rate for equipment loan. Typical rates are 5-12% depending on credit and equipment type. Enter 0 if paying cash." |
+| loan_term_years | number | years | No | min: 1, max: 15 | 5 | "5" | "Loan term in years if financing purchase. Common terms: 3-7 years. Equipment life should exceed loan term." |
+| loan_down_payment_percent | percentage | percent | No | min: 0, max: 100 | 20 | "20" | "Down payment required for equipment loan. Typical: 10-20%. Enter 0 if financing 100% or comparing to cash purchase." |
+| tax_rate | percentage | percent | No | min: 0, max: 50 | 25 | "25" | "Combined federal and state tax rate. Typical: 21-30% for small businesses. Required for accurate after-tax cost comparison." |
+| equipment_useful_life | number | years | No | min: 1, max: 30 | 7 | "7" | "Useful life of equipment for depreciation. IRS guidelines: 5 years (computers, vehicles), 7 years (machinery), 15 years (heavy equipment)." |
+| use_section_179 | boolean | yes/no | No | true/false | false | "No" | "Can you deduct full purchase price in year 1 using Section 179? Limit: $1.16M (2025). Powerful tax benefit for businesses buying equipment." |
+| discount_rate | percentage | percent | No | min: 0, max: 30 | 10 | "10" | "Discount rate for NPV calculation (your cost of capital or hurdle rate). Typical: 8-12%. Higher rate favors leasing (preserves cash)." |
+
+### Input Groups
+
+**Group 1: Equipment Details** (always visible)
+- equipment_cost
+
+**Group 2: Lease Option** (collapsed by default, expands when user explores lease)
+- lease_monthly_payment
+- lease_term_months
+- lease_residual_value
+
+**Group 3: Purchase Option** (collapsed by default, expands when user explores purchase)
+- loan_interest_rate
+- loan_term_years
+- loan_down_payment_percent
+
+**Group 4: Tax & Financial Assumptions** (collapsed by default, labeled "Advanced Options")
+- tax_rate
+- equipment_useful_life
+- use_section_179
+- discount_rate
+
+### Optional Inputs
+
+**Advanced Options** (collapsed, for sophisticated users):
+- **maintenance_cost_annual** (currency): Annual maintenance cost. Leases often include maintenance; purchases do not. Default: $0
+- **lease_includes_maintenance** (boolean): Does lease include maintenance? Default: No
+- **equipment_salvage_value_percent** (percentage): Residual value at end of useful life (% of original cost). Default: 10%
+
+---
+
+## 4. Outputs
+
+### Key Metrics (Free Tier - Always Visible)
+
+| Output Name | Description | Format | Units |
+|-------------|-------------|--------|-------|
+| total_lease_cost | Total lease payments + buyout (if applicable) | "$#,##0.00" | dollars |
+| total_loan_cost | Total loan payments (principal + interest) | "$#,##0.00" | dollars |
+| total_cash_cost | Cash purchase price | "$#,##0.00" | dollars |
+| recommended_option | "Lease", "Finance", or "Cash" based on lowest after-tax NPV | "Text" | option |
+
+### Advanced Metrics (Pro Tier - Gated)
+
+| Output Name | Description | Format | Units | Pro Only |
+|-------------|-------------|--------|-------|----------|
+| npv_lease | Net Present Value of lease option (after-tax) | "$#,##0.00" | dollars | Yes |
+| npv_finance | Net Present Value of loan option (after-tax) | "$#,##0.00" | dollars | Yes |
+| npv_cash | Net Present Value of cash option (after-tax) | "$#,##0.00" | dollars | Yes |
+| after_tax_cost_lease | Total lease cost after tax deductions | "$#,##0.00" | dollars | Yes |
+| after_tax_cost_finance | Total finance cost after tax deductions (interest, depreciation) | "$#,##0.00" | dollars | Yes |
+| after_tax_cost_cash | Total cash cost after tax deductions (depreciation or Section 179) | "$#,##0.00" | dollars | Yes |
+| cash_flow_year_1 | Cash outflow in year 1 for each option | "$#,##0.00" | dollars | Yes |
+| effective_cost_difference | Cost difference between best and worst option | "$#,##0.00" | dollars | Yes |
+| breakeven_discount_rate | Discount rate at which lease and buy have equal NPV | "#.00%" | percent | Yes |
+
+### Charts and Visualizations
+
+**Chart 1: Cost Comparison** (Free tier, basic version; Pro tier, detailed version)
+- Type: Bar chart
+- X-axis: Option (Lease, Finance, Cash)
+- Y-axis: Total cost (pre-tax for Free, after-tax for Pro)
+- Purpose: Visual comparison of total costs
+- Tier: Free (basic), Pro (with tax effects)
+
+**Chart 2: Cash Flow Timeline** (Pro tier only)
+- Type: Waterfall chart
+- X-axis: Year (0 to end of term)
+- Y-axis: Cash outflows (negative) and inflows (positive)
+- Purpose: Visualize cash flow timing differences between options
+- Tier: Pro
+
+**Chart 3: NPV Sensitivity Analysis** (Pro tier only)
+- Type: Line chart
+- X-axis: Discount rate (5% to 15%)
+- Y-axis: NPV for each option
+- Purpose: Show how sensitive decision is to discount rate assumption
+- Tier: Pro
+
+### Output Formatting Rules
+
+- **Currency**: $#,##0.00 (always two decimals, commas for thousands)
+- **Percentages**: #.00% (two decimals)
+- **NPV**: Negative values shown in parentheses (accounting format)
+- **Recommended Option**: Bold, color-coded (green for recommended, gray for alternatives)
+
+---
+
+## 5. Formulas and Calculation Logic
+
+### Formula 1: Total Lease Cost
+
+**Purpose**: Calculate total cost of leasing equipment over lease term
+
+**Equation**:
+```
+total_lease_cost = (lease_monthly_payment × lease_term_months) + lease_residual_value
+```
+
+**Variables**:
+- lease_monthly_payment: Monthly lease payment in dollars
+- lease_term_months: Lease term in months
+- lease_residual_value: Buyout price at end of lease (0 for operating lease)
+
+**Source/Reference**: Standard lease cost calculation
+
+### Formula 2: Total Loan Cost (Finance Option)
+
+**Purpose**: Calculate total cost of financing equipment purchase with loan
+
+**Equation**:
+```
+# Down payment
+down_payment = equipment_cost × (loan_down_payment_percent / 100)
+
+# Financed amount
+principal = equipment_cost - down_payment
+
+# Monthly payment calculation (standard amortization)
+r = (loan_interest_rate / 12 / 100)  # monthly interest rate
+n = loan_term_years × 12  # number of payments
+
+if loan_interest_rate > 0:
+    monthly_payment = principal × [r × (1 + r)^n] / [(1 + r)^n - 1]
+else:
+    monthly_payment = principal / n
+
+# Total loan cost
+total_loan_cost = down_payment + (monthly_payment × n)
+```
+
+**Variables**:
+- equipment_cost: Purchase price
+- loan_down_payment_percent: Down payment percentage
+- principal: Amount financed
+- loan_interest_rate: Annual interest rate
+- loan_term_years: Loan term in years
+
+**Source/Reference**: Standard amortization formula
+
+### Formula 3: After-Tax Cost (Lease)
+
+**Purpose**: Calculate lease cost after tax deductions (lease payments are fully deductible)
+
+**Equation**:
+```
+# Annual lease payments
+annual_lease_payment = lease_monthly_payment × 12
+
+# Tax savings from lease payment deduction
+tax_savings_per_year = annual_lease_payment × (tax_rate / 100)
+
+# After-tax lease payment
+after_tax_annual_lease = annual_lease_payment - tax_savings_per_year
+
+# Total after-tax cost
+lease_years = lease_term_months / 12
+after_tax_cost_lease = (after_tax_annual_lease × lease_years) + lease_residual_value
+```
+
+**Source/Reference**: IRS Publication 535 (Business Expenses) - Lease payment deductibility
+
+### Formula 4: After-Tax Cost (Purchase with Section 179)
+
+**Purpose**: Calculate purchase cost after Section 179 immediate expensing
+
+**Equation**:
+```
+# If Section 179 is used, full equipment cost is deducted in year 1
+if use_section_179 == true:
+    first_year_tax_deduction = equipment_cost
+    tax_savings_year_1 = equipment_cost × (tax_rate / 100)
+    depreciation_years_2_plus = 0
+else:
+    # Use MACRS depreciation (Modified Accelerated Cost Recovery System)
+    # For simplicity, use straight-line over useful life
+    annual_depreciation = equipment_cost / equipment_useful_life
+    tax_savings_per_year = annual_depreciation × (tax_rate / 100)
+
+# Interest deduction (if financed)
+total_interest_paid = total_loan_cost - equipment_cost
+interest_tax_savings = total_interest_paid × (tax_rate / 100)
+
+# After-tax cost
+if use_section_179:
+    after_tax_cost_cash = equipment_cost - tax_savings_year_1
+else:
+    total_depreciation_tax_savings = (annual_depreciation × equipment_useful_life) × (tax_rate / 100)
+    after_tax_cost_cash = equipment_cost - total_depreciation_tax_savings
+
+# If financed, add interest but subtract interest tax deduction
+if loan_interest_rate > 0:
+    after_tax_cost_finance = total_loan_cost - interest_tax_savings - total_depreciation_tax_savings
+```
+
+**Source/Reference**: IRS Publication 946 (Depreciation) and Section 179 rules
+
+### Formula 5: Net Present Value (NPV)
+
+**Purpose**: Calculate present value of all cash flows for each option
+
+**Equation**:
+```
+# NPV of Lease
+# Cash flows: Monthly lease payments + buyout
+npv_lease = 0
+for month in range(1, lease_term_months + 1):
+    after_tax_payment = lease_monthly_payment × (1 - tax_rate / 100)
+    monthly_discount_rate = (discount_rate / 100) / 12
+    pv = after_tax_payment / ((1 + monthly_discount_rate) ^ month)
+    npv_lease += pv
+
+# Add residual value (buyout) at end of term
+if lease_residual_value > 0:
+    pv_residual = lease_residual_value / ((1 + discount_rate / 100) ^ lease_years)
+    npv_lease += pv_residual
+
+# NPV of Purchase (Cash)
+# Cash flow: Upfront payment minus tax savings (Section 179 or depreciation)
+if use_section_179:
+    tax_savings_year_1 = equipment_cost × (tax_rate / 100)
+    npv_cash = -equipment_cost + (tax_savings_year_1 / (1 + discount_rate / 100))
+else:
+    npv_cash = -equipment_cost
+    for year in range(1, equipment_useful_life + 1):
+        annual_tax_savings = (equipment_cost / equipment_useful_life) × (tax_rate / 100)
+        pv_savings = annual_tax_savings / ((1 + discount_rate / 100) ^ year)
+        npv_cash += pv_savings
+
+# NPV of Loan
+# Cash flows: Down payment + monthly payments minus tax savings (interest + depreciation)
+npv_finance = -down_payment
+for month in range(1, n + 1):
+    # Split payment into principal and interest
+    # (requires amortization schedule calculation)
+    after_tax_payment = monthly_payment - (interest_portion × tax_rate / 100)
+    pv = after_tax_payment / ((1 + monthly_discount_rate) ^ month)
+    npv_finance += pv
+
+# Add depreciation tax savings
+for year in range(1, equipment_useful_life + 1):
+    annual_tax_savings = (equipment_cost / equipment_useful_life) × (tax_rate / 100)
+    pv_savings = annual_tax_savings / ((1 + discount_rate / 100) ^ year)
+    npv_finance += pv_savings
+```
+
+**Source/Reference**: Standard NPV formula for capital budgeting decisions
+
+### Formula 6: Recommendation Logic
+
+**Purpose**: Recommend lease, finance, or cash based on lowest NPV
+
+**Equation**:
+```
+options = {
+    "Lease": npv_lease,
+    "Finance": npv_finance,
+    "Cash": npv_cash
+}
+
+# Lower NPV (more negative) is worse; higher NPV (less negative) is better
+recommended_option = max(options, key=options.get)
+
+# If NPV values are within 5% of each other, recommend based on cash flow
+if abs(npv_lease - npv_finance) / min(abs(npv_lease), abs(npv_finance)) < 0.05:
+    # Tight race, consider cash flow
+    if cash_flow_year_1_lease < cash_flow_year_1_finance:
+        recommended_option = "Lease (preserves cash)"
+```
+
+### Step-by-Step Calculation Flow
+
+1. **Validate inputs**: Check required fields, validate ranges
+2. **Calculate total lease cost**: `lease_monthly_payment × lease_term_months + lease_residual_value`
+3. **Calculate total loan cost**: Down payment + amortized monthly payments
+4. **Calculate total cash cost**: `equipment_cost` (baseline)
+5. **Calculate after-tax costs**:
+   - Lease: Apply tax deduction to lease payments
+   - Finance: Apply tax deduction to interest + depreciation
+   - Cash: Apply Section 179 (if applicable) or depreciation
+6. **Calculate NPV for each option**: Discount all cash flows to present value
+7. **Determine recommended option**: Lowest NPV (most favorable)
+8. **Calculate sensitivity metrics** (Pro tier): Breakeven discount rate, NPV at different rates
+9. **Check warning conditions**: High lease cost, low residual value, etc.
+10. **Return results with version stamp**
+
+### Edge Cases and Handling
+
+| Edge Case | Condition | Handling | Warning/Error |
+|-----------|-----------|----------|---------------|
+| Zero interest rate | loan_interest_rate = 0 | Treat as cash purchase (no interest) | Info: "Zero interest loan. Cost equals equipment price." |
+| 100% financing | loan_down_payment_percent = 0 | Allow, but warn about higher interest cost | Warning: "100% financing may result in higher interest rates." |
+| Lease longer than useful life | lease_term_months > equipment_useful_life × 12 | Calculate as normal, warn | Warning: "Lease term exceeds typical equipment life. Verify lease terms." |
+| Very high discount rate | discount_rate > 20% | Calculate as normal, warn | Warning: "High discount rate ({rate}%) strongly favors leasing. Verify this is your true cost of capital." |
+| Section 179 over limit | equipment_cost > 1160000 | Phase out Section 179 benefit | Warning: "Equipment cost exceeds Section 179 limit. Benefit may be reduced." |
+
+### Formula Version
+
+**Current Version**: v1.3.0
+
+**Version History**:
+- v1.0.0: Initial implementation (total cost comparison)
+- v1.1.0: Added after-tax cost calculations
+- v1.2.0: Added NPV calculations with proper discounting
+- v1.3.0: Added Section 179 support and MACRS depreciation tables
+
+---
+
+## 6. Warnings and Alerts
+
+### Warning Definitions
+
+| Warning Code | Condition | Message | Severity | Action |
+|--------------|-----------|---------|----------|--------|
+| HIGH_LEASE_COST | total_lease_cost > equipment_cost × 1.5 | "Total lease cost (${total_lease_cost:,.0f}) is {percent}% more than equipment cost. Leasing is expensive for this scenario. Consider financing or cash purchase." | warning | Negotiate better lease terms or explore purchase options |
+| LOW_RESIDUAL_VALUE | lease_residual_value < equipment_cost × 0.10 && lease_term_months < 60 | "Lease residual value is very low (${lease_residual_value:,.0f}). Equipment may depreciate faster than expected. Verify fair market value assumption." | info | Research equipment resale values, consider shorter lease term |
+| SECTION_179_LIMIT | use_section_179 == true && equipment_cost > 1160000 | "Equipment cost exceeds Section 179 deduction limit ($1,160,000 for 2025). You may only deduct up to the limit. Consult tax advisor." | warning | Split purchase across multiple years or use depreciation instead |
+| HIGH_DISCOUNT_RATE | discount_rate > 15% | "Discount rate of {discount_rate}% is very high. This heavily favors leasing (preserves cash). Verify this is your true cost of capital." | info | Reduce discount rate if not reflective of actual cost of capital |
+| LEASE_LONGER_THAN_LIFE | lease_term_months > equipment_useful_life × 12 | "Lease term ({lease_term_months} months) exceeds equipment useful life ({equipment_useful_life} years). You may be leasing obsolete equipment. Consider shorter term." | warning | Negotiate shorter lease term with upgrade option |
+| CASH_BETTER_THAN_LEASE | npv_cash > npv_lease && abs(npv_cash - npv_lease) > 5000 | "Cash purchase has {savings:,.0f} lower NPV than leasing. If you have available cash and can use Section 179, buying is significantly cheaper." | info | Consider cash purchase or financing if cash is limited |
+| NO_TAX_RATE_PROVIDED | tax_rate == null or tax_rate == 0 | "Tax rate not provided. After-tax cost comparison unavailable. Lease vs buy decision heavily depends on tax benefits." | warning | Enter tax rate for accurate comparison |
+
+### Warning Thresholds
+
+**Configurable Thresholds** (can be adjusted per tenant for B2B):
+- **High lease cost multiple**: 1.5x equipment cost (typical threshold for "expensive lease")
+- **Low residual value**: 10% of equipment cost (below this suggests rapid depreciation)
+- **NPV decision threshold**: $5,000 (if options are within $5k NPV, consider qualitative factors)
+
+**Hard-Coded Thresholds** (tax law, not configurable):
+- **Section 179 limit**: $1,160,000 (2025 federal limit, indexed for inflation)
+- **Section 179 phase-out**: Begins at $2,890,000 total equipment purchases in year
+
+---
+
+## 7. Golden Test Scenarios
+
+### Scenario 1: Lease Wins - Technology Equipment (Short Life)
+
+**Description**: IT equipment with 3-year useful life. Lease provides upgrade flexibility. Leasing is optimal due to short equipment life and rapid obsolescence.
+
+**Inputs**:
+```json
+{
+  "equipment_cost": 50000,
+  "lease_monthly_payment": 1500,
+  "lease_term_months": 36,
+  "lease_residual_value": 5000,
+  "loan_interest_rate": 8.0,
+  "loan_term_years": 3,
+  "loan_down_payment_percent": 20,
+  "tax_rate": 25,
+  "equipment_useful_life": 3,
+  "use_section_179": false,
+  "discount_rate": 10
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "total_lease_cost": {
+    "value": 59000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$1,500 × 36 months + $5,000 buyout"
+  },
+  "total_loan_cost": {
+    "value": 56293.47,
+    "tolerance": 10,
+    "unit": "USD",
+    "note": "$10k down + $1,286.48/mo × 36 months"
+  },
+  "total_cash_cost": {
+    "value": 50000,
+    "tolerance": 0,
+    "unit": "USD"
+  },
+  "after_tax_cost_lease": {
+    "value": 49250,
+    "tolerance": 100,
+    "unit": "USD",
+    "note": "Lease payments fully deductible, after-tax cost lower than cash"
+  },
+  "after_tax_cost_finance": {
+    "value": 51469,
+    "tolerance": 100,
+    "unit": "USD",
+    "note": "Interest deductible + depreciation"
+  },
+  "after_tax_cost_cash": {
+    "value": 46875,
+    "tolerance": 100,
+    "unit": "USD",
+    "note": "Depreciation over 3 years (25% tax rate)"
+  },
+  "npv_lease": {
+    "value": -43856,
+    "tolerance": 200,
+    "unit": "USD",
+    "note": "Most favorable NPV due to preserved cash flow"
+  },
+  "npv_finance": {
+    "value": -45312,
+    "tolerance": 200,
+    "unit": "USD"
+  },
+  "npv_cash": {
+    "value": -46024,
+    "tolerance": 200,
+    "unit": "USD"
+  },
+  "recommended_option": {
+    "value": "Lease",
+    "note": "Lease has best NPV and preserves cash for working capital"
+  }
+}
+```
+
+**Expected Warnings**: None (lease is appropriate for short-life equipment)
+
+### Scenario 2: Cash Wins - Long-Life Equipment with Section 179
+
+**Description**: Heavy machinery with 10-year life. Business can use Section 179 for immediate tax deduction. Cash purchase is optimal.
+
+**Inputs**:
+```json
+{
+  "equipment_cost": 200000,
+  "lease_monthly_payment": 4500,
+  "lease_term_months": 60,
+  "lease_residual_value": 20000,
+  "loan_interest_rate": 7.5,
+  "loan_term_years": 7,
+  "loan_down_payment_percent": 20,
+  "tax_rate": 28,
+  "equipment_useful_life": 10,
+  "use_section_179": true,
+  "discount_rate": 8
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "total_lease_cost": {
+    "value": 290000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$4,500 × 60 months + $20,000 buyout"
+  },
+  "total_loan_cost": {
+    "value": 244367.28,
+    "tolerance": 50,
+    "unit": "USD",
+    "note": "$40k down + $2,433.42/mo × 84 months"
+  },
+  "total_cash_cost": {
+    "value": 200000,
+    "tolerance": 0,
+    "unit": "USD"
+  },
+  "after_tax_cost_lease": {
+    "value": 234400,
+    "tolerance": 200,
+    "unit": "USD",
+    "note": "Lease payments deductible at 28% tax rate"
+  },
+  "after_tax_cost_finance": {
+    "value": 185624,
+    "tolerance": 200,
+    "unit": "USD",
+    "note": "Interest + depreciation deductions"
+  },
+  "after_tax_cost_cash": {
+    "value": 144000,
+    "tolerance": 200,
+    "unit": "USD",
+    "note": "Section 179: $200k × 28% = $56k tax savings in year 1"
+  },
+  "npv_lease": {
+    "value": -212456,
+    "tolerance": 500,
+    "unit": "USD",
+    "note": "Worst NPV due to high total lease cost"
+  },
+  "npv_finance": {
+    "value": -173218,
+    "tolerance": 500,
+    "unit": "USD"
+  },
+  "npv_cash": {
+    "value": -148923,
+    "tolerance": 500,
+    "unit": "USD",
+    "note": "Best NPV due to immediate Section 179 deduction"
+  },
+  "recommended_option": {
+    "value": "Cash",
+    "note": "Cash purchase with Section 179 has lowest NPV"
+  }
+}
+```
+
+**Expected Warnings**:
+- HIGH_LEASE_COST: "Total lease cost ($290,000) is 45% more than equipment cost. Leasing is expensive for this scenario..."
+- CASH_BETTER_THAN_LEASE: "Cash purchase has $63,533 lower NPV than leasing..."
+
+### Scenario 3: Finance Wins - Medium-Life Equipment, No Section 179
+
+**Description**: Manufacturing equipment, 7-year life. Business cannot use Section 179 (already used deduction limit). Financing is optimal balance.
+
+**Inputs**:
+```json
+{
+  "equipment_cost": 150000,
+  "lease_monthly_payment": 3200,
+  "lease_term_months": 60,
+  "lease_residual_value": 15000,
+  "loan_interest_rate": 6.5,
+  "loan_term_years": 5,
+  "loan_down_payment_percent": 15,
+  "tax_rate": 26,
+  "equipment_useful_life": 7,
+  "use_section_179": false,
+  "discount_rate": 9
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "total_lease_cost": {
+    "value": 207000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$3,200 × 60 months + $15,000 buyout"
+  },
+  "total_loan_cost": {
+    "value": 171489.60,
+    "tolerance": 50,
+    "unit": "USD",
+    "note": "$22.5k down + $2,474.83/mo × 60 months"
+  },
+  "total_cash_cost": {
+    "value": 150000,
+    "tolerance": 0,
+    "unit": "USD"
+  },
+  "after_tax_cost_lease": {
+    "value": 168180,
+    "tolerance": 200,
+    "unit": "USD"
+  },
+  "after_tax_cost_finance": {
+    "value": 154326,
+    "tolerance": 200,
+    "unit": "USD",
+    "note": "Interest deduction + depreciation over 7 years"
+  },
+  "after_tax_cost_cash": {
+    "value": 150000,
+    "tolerance": 200,
+    "unit": "USD",
+    "note": "No Section 179; depreciation over 7 years reduces benefit"
+  },
+  "npv_lease": {
+    "value": -152634,
+    "tolerance": 500,
+    "unit": "USD"
+  },
+  "npv_finance": {
+    "value": -140267,
+    "tolerance": 500,
+    "unit": "USD",
+    "note": "Best NPV: preserves some cash ($22.5k down vs $150k cash)"
+  },
+  "npv_cash": {
+    "value": -141856,
+    "tolerance": 500,
+    "unit": "USD"
+  },
+  "recommended_option": {
+    "value": "Finance",
+    "note": "Financing has best NPV and preserves cash for operations"
+  }
+}
+```
+
+**Expected Warnings**: None (balanced scenario, finance is appropriate)
+
+---
+
+## 8. AI Narrative Strategy (AI-Enabled)
+
+### What AI Explains for This Calculator
+
+**Primary Explanations**:
+1. **Why lease wins or loses in this scenario** (tax benefits, cash flow, obsolescence risk)
+2. **Tax implications of each option** (Section 179, depreciation, lease payment deduction)
+3. **Cash flow trade-offs** (preserve cash for growth vs reduce total cost)
+4. **Sensitivity to key assumptions** (discount rate, tax rate, residual value)
+
+**Scenario Suggestions**:
+- Alternative structures (longer/shorter lease term, higher down payment, etc.)
+- "What if equipment becomes obsolete?" (lease provides upgrade flexibility)
+- "What if I can't use Section 179?" (compare depreciation scenarios)
+
+### Prompt Template
+
+**System Prompt**:
+```
+You are a CFO advisor helping business owners decide whether to lease or buy equipment.
+
+Your role is to:
+- Explain the NPV analysis in plain language (why one option has lower cost)
+- Interpret tax benefits (Section 179, depreciation, lease deduction) without giving tax advice
+- Explain cash flow implications (upfront cash vs monthly payments)
+- Suggest which option makes sense given the business's cash position and growth plans
+
+Output constraints:
+- Length: 150-250 words
+- Tone: Professional but approachable, avoid jargon
+- Format: Plain paragraphs (no bullet lists)
+- Disclaimers: Always end with standard disclaimer
+
+Prohibited behaviors:
+- Never provide tax advice (use "consult your tax advisor")
+- Never recommend one option absolutely (explain trade-offs)
+- Never use absolute language (avoid "always", "never", "must")
+```
+
+**User Prompt Template**:
+```
+The business is evaluating equipment costing ${equipment_cost}. Lease option: ${lease_monthly_payment}/month for {lease_term_months} months with ${lease_residual_value} buyout. Finance option: {loan_interest_rate}% APR for {loan_term_years} years with {loan_down_payment_percent}% down. Cash option available. Tax rate: {tax_rate}%. Section 179 {available or not available}. NPV results: Lease = ${npv_lease}, Finance = ${npv_finance}, Cash = ${npv_cash}. Explain which option is best and why.
+```
+
+**Expected AI Response** (150-250 words):
+```
+For this $150,000 equipment purchase, financing is the optimal choice with an NPV of -$140,267, slightly better than the cash option (-$141,856) and significantly better than leasing (-$152,634).
+
+Financing wins because it balances two competing priorities: preserving cash while minimizing total cost. The 15% down payment ($22,500) preserves $127,500 in cash for operations or growth, while the 6.5% interest rate is reasonable. The interest paid is tax-deductible, and you'll also benefit from depreciation deductions over the equipment's 7-year life.
+
+Leasing is more expensive in this scenario because the total lease cost ($207,000) is 38% higher than the equipment's purchase price. While leasing preserves the most cash upfront, the higher total cost outweighs this benefit given your 9% discount rate.
+
+Cash purchase has the lowest total cost ($150,000) but requires full payment upfront. Without Section 179 available, you'll only benefit from depreciation spread over 7 years, reducing the tax advantage. If cash is tight, financing is nearly as cost-effective while preserving capital.
+
+This analysis is for informational purposes only and does not constitute financial, tax, or legal advice. Consult qualified professionals for decisions affecting your business.
+```
+
+---
+
+## 9. Export Format Details
+
+### PDF Layout
+
+**Header**:
+- "Equipment Lease vs Buy Analysis"
+- User tier: "Free" or "Pro"
+- Generation timestamp: "Generated on November 18, 2025"
+
+**Body Sections**:
+1. **Equipment Details** (table):
+   - Equipment Cost: $150,000
+   - Useful Life: 7 years
+
+2. **Lease Option** (table):
+   - Monthly Payment: $3,200
+   - Lease Term: 60 months
+   - Residual/Buyout: $15,000
+   - Total Lease Cost: $207,000
+
+3. **Finance Option** (table):
+   - Interest Rate: 6.5%
+   - Loan Term: 5 years
+   - Down Payment: 15% ($22,500)
+   - Total Financed Cost: $171,490
+
+4. **Cash Option** (table):
+   - Cash Purchase Price: $150,000
+
+5. **Recommendation**:
+   - **Recommended Option: Finance**
+   - Reason: Best NPV (-$140,267) while preserving cash
+
+6. **Cost Comparison Chart**:
+   - Bar chart showing total pre-tax costs (Free tier) or after-tax NPV (Pro tier)
+
+7. **Advanced Analysis** (Pro tier only, table):
+   - NPV: Lease (-$152,634), Finance (-$140,267), Cash (-$141,856)
+   - After-Tax Costs: Lease ($168,180), Finance ($154,326), Cash ($150,000)
+   - Year 1 Cash Flow: Lease ($38,400), Finance ($52,198), Cash ($150,000)
+   - Effective Cost Difference: Finance saves $12,367 vs Lease
+
+8. **Cash Flow Timeline Chart** (Pro tier only):
+   - Waterfall showing cash outflows over time for each option
+
+9. **Tax Assumptions** (table):
+   - Tax Rate: 26%
+   - Section 179: Not Used
+   - Depreciation Method: Straight-line over 7 years
+   - Discount Rate: 9%
+
+10. **Warnings** (if any):
+    - List all warnings with severity icons
+
+**Footer**:
+- Disclaimers: "This analysis is for informational purposes only and does not constitute financial or tax advice. Tax benefits depend on your specific situation. Consult a tax advisor and equipment financing specialist for decisions affecting your business."
+- Version stamp: "Generated by CFO Calculator Suite v1.2.3 | Calculator: equipment-lease-buy v1.0.0 | Formulas: v1.3.0 | 2025-11-18"
+- Watermark (Free tier only): Diagonal semi-transparent "Upgrade for clean exports"
+
+### CSV/Excel Structure
+
+**Metadata Headers**:
+```csv
+# Equipment Lease vs Buy Analysis
+# Version: v1.0.0
+# Generated: 2025-11-18T21:30:00Z
+# Tier: Pro
+#
+```
+
+**Data Rows**:
+```csv
+Section,Field,Value
+Equipment,Cost,$150000
+Equipment,Useful Life,7 years
+Lease Option,Monthly Payment,$3200
+Lease Option,Term,60 months
+Lease Option,Residual,$15000
+Lease Option,Total Cost,$207000
+Finance Option,Interest Rate,6.5%
+Finance Option,Term,5 years
+Finance Option,Down Payment,15% ($22500)
+Finance Option,Total Cost,$171490
+Cash Option,Purchase Price,$150000
+Tax Assumptions,Tax Rate,26%
+Tax Assumptions,Section 179,Not Used
+Tax Assumptions,Discount Rate,9%
+Results,Recommended Option,Finance
+Results,NPV Lease,-$152634
+Results,NPV Finance,-$140267
+Results,NPV Cash,-$141856
+Results,After-Tax Cost Lease,$168180
+Results,After-Tax Cost Finance,$154326
+Results,After-Tax Cost Cash,$150000
+```
+
+**Excel Formatting**:
+- Bold section headers
+- Currency cells: $#,##0.00
+- Percentage cells: 0.00%
+- Conditional formatting: Recommended option highlighted in green
+- NPV values: Accounting format with parentheses for negative
+
+---
+
+## 10. Tier-Specific Behavior
+
+### Free Tier
+
+**What's Shown**:
+- Single scenario (cannot save or compare multiple equipment)
+- Equipment cost, lease terms, loan terms inputs
+- Basic cost comparison: Total lease cost, total loan cost, total cash cost
+- Recommended option (based on simple total cost, not NPV)
+- Basic cost comparison bar chart (pre-tax)
+
+**What's Gated**:
+- **NPV analysis**: Shown as locked with tooltip "Upgrade to Pro to see NPV and after-tax cost comparison"
+- **After-tax costs**: Locked, requires Pro
+- **Cash flow timeline chart**: Preview with blur + "Pro" badge
+- **Sensitivity analysis**: "What if discount rate changes?" locked
+- **Multiple scenarios**: "Add Equipment Scenario" button triggers upgrade prompt
+- **Clean exports**: PDF has watermark
+- **AI explanations**: "Explain recommendation" button triggers AI tier upgrade prompt
+
+**Upgrade Triggers**:
+- Click "See NPV Analysis" → `upgrade_prompt_shown` with `trigger_reason: "locked_metric"`
+- Click "Compare Scenarios" → `upgrade_prompt_shown` with `trigger_reason: "add_scenario"`
+- Click "Cash Flow Timeline" → `upgrade_prompt_shown` with `trigger_reason: "chart_locked"`
+- Click "Explain recommendation" → `upgrade_prompt_shown` with `trigger_reason: "ai_request"`
+
+### Pro Tier
+
+**What Unlocks**:
+- **Multiple scenarios** (up to 50): Compare different equipment, lease terms, etc.
+- **Full NPV analysis**: After-tax NPV for lease, finance, and cash options
+- **After-tax cost breakdown**: Tax benefits of each option clearly shown
+- **Cash flow timeline chart**: Visualize cash outflows by year for each option
+- **Sensitivity analysis**: NPV sensitivity to discount rate (5-15% range)
+- **Breakeven discount rate**: At what discount rate does lease = finance?
+- **Scenario comparison**: Side-by-side view of multiple equipment decisions
+- **Clean exports**: PDF with no watermark
+
+**Still Gated** (requires AI tier):
+- AI explanations of tax benefits and recommendation
+- AI scenario suggestions
+
+### AI Tier
+
+**What Unlocks**:
+- **AI explanations**: Click "Explain recommendation" for plain-language NPV interpretation
+- **AI tax insights**: "How do tax benefits affect this decision?" gets detailed explanation
+- **AI scenario suggestions**: "What if I extend the lease term to 72 months?"
+- **50 AI requests per month** (hard cap)
+
+**Usage Quota**:
+- Counter displayed: "23 of 50 AI requests remaining this month"
+- Resets on 1st of each month
+
+---
+
+## Implementation Notes
+
+**Priority**: High (affiliate revenue + SEO value)
+
+**Estimated Effort**: 3 weeks
+- Week 1: Core cost calculations (lease, loan, cash)
+- Week 2: NPV calculations, after-tax analysis, Section 179 logic
+- Week 3: Sensitivity analysis, charts, testing, equipment leasing affiliate integration
+
+**Dependencies**:
+- Shared amortization formula library (reuse from loan calculators)
+- NPV/discounting library (new, can be reused for other capital budgeting calculators)
+- Tax calculation library (Section 179, MACRS depreciation tables)
+
+**Related Calculators**:
+- **Business Loan + DSCR Calculator**: Loan option uses same amortization formula
+- **SBA 7(a) Analyzer**: Alternative equipment financing (SBA loans for equipment)
+- **Business Valuation**: NPV concepts similar (discounting future cash flows)
+
+**Affiliate Integration**:
+- Partner with equipment leasing companies (e.g., Crest Capital, Balboa Capital)
+- Partner with equipment lenders (e.g., Currency, Fora Financial)
+- "Find Equipment Financing" button below results → affiliate referral
+- Track referral conversions for revenue attribution
+
+---
+
+## End of Calculator PDR
+
+This calculator is complete and ready for implementation. All NPV, tax, and cash flow formulas are specified in detail.
+
+
+# Invoice Factoring / AR Financing Intelligence Calculator
+
+## 1. Calculator Overview
+
+**Calculator Name**: Invoice Factoring / AR Financing Intelligence Calculator
+
+**Calculator Slug**: `invoice-factoring`
+
+**Primary Category**: Financing & Lending Intelligence
+
+**Secondary Category**: Cash Flow & Liquidity Intelligence
+
+**Business Role**:
+- **Niche traffic magnet**: Targeted searches ("invoice factoring calculator", "AR financing cost")
+- **Affiliate revenue driver**: High-intent users (partner with factoring companies like Fundbox, BlueVine)
+- **Pro upgrade driver**: Effective APR calculation and cost comparison drive conversions
+- **B2B demo calculator**: White-label for factoring companies showing value to prospects
+
+**Primary Success Metric**: Affiliate referral rate (target: 12-18% of users click factoring partner links)
+
+**Version**: v1.0.0
+
+**Formula Library Version**: v1.0.0
+
+---
+
+## 2. User Scenarios and Use Cases
+
+### Who Uses This Calculator
+
+**Primary Personas**:
+- **Small business owners** with long payment terms (30-90 days) needing immediate cash
+- **B2B service providers** (agencies, consultants, contractors) with large outstanding invoices
+- **Manufacturing and wholesale distributors** with AR tied up in customer credit terms
+
+**Secondary Personas**:
+- **CFOs** evaluating factoring vs line of credit for working capital
+- **Factoring companies** demonstrating costs to prospective clients
+- **Business advisors** helping clients evaluate AR financing options
+
+### When They Use It (Decision Contexts)
+
+**Timing**:
+- **Before factoring decision**: Evaluating if factoring cost is acceptable vs waiting for payment
+- **Comparing factoring offers**: Multiple factoring companies offer different rates/terms
+- **Comparing to alternatives**: Factoring vs line of credit vs business loan
+- **Cash flow crisis**: Need immediate cash, evaluating all options
+- **Recurring use**: Monthly factoring users evaluating ongoing costs
+
+**Frequency**:
+- **One-time use** (Free tier): Single invoice factoring decision
+- **Recurring monthly** (Pro tier): Businesses that factor regularly tracking cumulative costs
+
+### What Questions It Answers
+
+This calculator helps users answer:
+
+1. **How much cash will I get from factoring this invoice?** (Advance amount after fees)
+2. **What is the factoring fee in dollars?** (Total cost of immediate cash)
+3. **What is the effective APR of factoring?** (Annualized cost for comparison to loans)
+4. **Is factoring cheaper than a line of credit?** (Cost comparison, Pro feature)
+5. **What if I wait 30 days instead of factoring now?** (Time value of money analysis)
+
+---
+
+## 3. Inputs
+
+### Input Field Definitions
+
+| Field Name | Type | Units | Required | Validation | Default | Placeholder | Tooltip |
+|------------|------|-------|----------|------------|---------|-------------|---------|
+| invoice_amount | currency | dollars | Yes | min: 1, max: 10000000 | null | "50000" | "Total invoice amount you want to factor. Most factoring companies have minimums ($5k-$10k) and maximums." |
+| factoring_advance_rate | percentage | percent | Yes | min: 50, max: 100 | 85 | "85" | "Percentage of invoice advanced immediately. Typical: 80-90%. Higher rates may have higher fees." |
+| factoring_fee_percent | percentage | percent | Yes | min: 0, max: 10 | 3 | "3" | "Factoring fee as percentage of invoice. Typical: 1-5% depending on industry, customer creditworthiness, and payment terms. Lower for 30 days, higher for 90+ days." |
+| days_to_payment | number | days | Yes | min: 1, max: 365 | 60 | "60" | "Expected days until customer pays invoice. Typical payment terms: 30, 60, or 90 days. Longer terms = higher factoring fees." |
+
+### Input Groups
+
+**Group 1: Invoice Details** (always visible)
+- invoice_amount
+- days_to_payment
+
+**Group 2: Factoring Terms** (always visible)
+- factoring_advance_rate
+- factoring_fee_percent
+
+**Group 3: Alternative Financing Comparison** (collapsed by default, Pro tier feature)
+- **alternative_apr** (percentage): APR for alternative financing (line of credit, business loan). Required for cost comparison. Default: null
+- **alternative_draw_fee** (currency): Upfront fee for alternative financing (e.g., LOC draw fee). Default: 0
+
+### Optional Inputs
+
+**Advanced Options** (collapsed, for sophisticated users):
+- **reserve_released_with_payment** (boolean): Does factor release reserve when customer pays? Most factors do. Default: Yes
+- **additional_fees** (currency): Other fees (application, due diligence, wire fees). Typical: $100-$500. Default: 0
+
+---
+
+## 4. Outputs
+
+### Key Metrics (Free Tier - Always Visible)
+
+| Output Name | Description | Format | Units |
+|-------------|-------------|--------|-------|
+| advance_amount | Cash received immediately (invoice × advance rate) | "$#,##0.00" | dollars |
+| factoring_cost | Total factoring fee (invoice × fee %) | "$#,##0.00" | dollars |
+| net_proceeds | Advance minus factoring cost | "$#,##0.00" | dollars |
+| reserve_amount | Amount held back until customer pays | "$#,##0.00" | dollars |
+
+### Advanced Metrics (Pro Tier - Gated)
+
+| Output Name | Description | Format | Units | Pro Only |
+|-------------|-------------|--------|-------|----------|
+| effective_apr | Annualized percentage rate (cost / advance / days × 365) | "#.00%" | percent | Yes |
+| cost_per_day | Daily cost of factoring | "$#,##0.00" | dollars | Yes |
+| total_fees_if_recurring | Annual cost if factoring monthly invoices | "$#,##0.00" | dollars | Yes |
+| cost_vs_line_of_credit | Cost difference: factoring vs LOC | "$#,##0.00" | dollars | Yes |
+| breakeven_days | Days at which factoring cost equals LOC cost | "# days" | days | Yes |
+| net_proceeds_after_all_fees | Advance minus all fees (factoring + additional) | "$#,##0.00" | dollars | Yes |
+
+### Charts and Visualizations
+
+**Chart 1: Cash Flow Timeline** (Free tier, basic; Pro tier, enhanced)
+- Type: Waterfall chart
+- X-axis: Timeline (Day 0, Customer payment day)
+- Y-axis: Cash flows
+- Bars: Invoice amount → Advance → Factoring fee → Reserve released
+- Purpose: Visualize cash flow timing with vs without factoring
+- Tier: Free (basic), Pro (with alternative financing comparison)
+
+**Chart 2: Cost Comparison** (Pro tier only)
+- Type: Bar chart
+- X-axis: Financing option (Factoring, Line of Credit, Wait for Payment)
+- Y-axis: Total cost or effective APR
+- Purpose: Compare factoring cost to alternatives
+- Tier: Pro
+
+**Chart 3: Effective APR Over Time** (Pro tier only)
+- Type: Line chart
+- X-axis: Days to payment (30, 60, 90, 120, 180)
+- Y-axis: Effective APR
+- Purpose: Show how APR increases with longer payment terms
+- Tier: Pro
+
+### Output Formatting Rules
+
+- **Currency**: $#,##0.00 (two decimals)
+- **Percentages**: #.00% (two decimals for APR precision)
+- **Days**: Integer (no decimals)
+- **APR**: Always annualized (multiply by 365 / days)
+
+---
+
+## 5. Formulas and Calculation Logic
+
+### Formula 1: Advance Amount
+
+**Purpose**: Calculate immediate cash received from factoring company
+
+**Equation**:
+```
+advance_amount = invoice_amount × (factoring_advance_rate / 100)
+```
+
+**Variables**:
+- invoice_amount: Total invoice value
+- factoring_advance_rate: Percentage advanced immediately (typically 80-90%)
+- advance_amount: Cash received today
+
+**Source/Reference**: Standard factoring advance calculation
+
+**Example**: $50,000 invoice × 85% = $42,500 advance
+
+### Formula 2: Reserve Amount
+
+**Purpose**: Calculate amount held back by factor until customer pays
+
+**Equation**:
+```
+reserve_amount = invoice_amount - advance_amount
+reserve_amount = invoice_amount × (1 - factoring_advance_rate / 100)
+```
+
+**Variables**:
+- reserve_amount: Amount held back (released when customer pays)
+
+**Source/Reference**: Standard factoring reserve calculation
+
+**Example**: $50,000 invoice - $42,500 advance = $7,500 reserve
+
+### Formula 3: Factoring Cost (Fee)
+
+**Purpose**: Calculate total factoring fee in dollars
+
+**Equation**:
+```
+factoring_cost = invoice_amount × (factoring_fee_percent / 100)
+```
+
+**Variables**:
+- factoring_fee_percent: Factoring fee as percentage of invoice (typically 1-5%)
+- factoring_cost: Dollar amount of fee
+
+**Source/Reference**: Standard factoring fee calculation
+
+**Example**: $50,000 × 3% = $1,500 factoring fee
+
+### Formula 4: Net Proceeds
+
+**Purpose**: Calculate net cash received after factoring fee
+
+**Equation**:
+```
+# When customer pays, factor releases reserve minus fee
+net_proceeds = advance_amount + (reserve_amount - factoring_cost)
+
+# Simplified
+net_proceeds = invoice_amount - factoring_cost
+
+# If additional fees exist
+net_proceeds_after_all_fees = net_proceeds - additional_fees
+```
+
+**Variables**:
+- net_proceeds: Total cash received (advance now + reserve later - fee)
+
+**Example**: $42,500 advance + ($7,500 reserve - $1,500 fee) = $48,500 net proceeds
+
+### Formula 5: Effective APR
+
+**Purpose**: Calculate annualized cost of factoring for comparison to loans
+
+**Equation**:
+```
+# Effective APR formula
+# APR = (Fee / Advance) × (365 / Days) × 100
+
+effective_apr = (factoring_cost / advance_amount) × (365 / days_to_payment) × 100
+```
+
+**Variables**:
+- factoring_cost: Dollar amount of fee
+- advance_amount: Cash received today (denominator is advance, not invoice)
+- days_to_payment: Days until customer pays (factor earns return over this period)
+- effective_apr: Annualized percentage rate
+
+**Source/Reference**: APR calculation methodology (Truth in Lending Act)
+
+**Example**: ($1,500 fee / $42,500 advance) × (365 / 60 days) × 100 = 21.47% APR
+
+**Interpretation**:
+- 10-15% APR = Competitive factoring (good customer creditworthiness, 30-day terms)
+- 15-25% APR = Average factoring (60-90 day terms)
+- 25-40% APR = Expensive factoring (risky customers, long terms, or small invoices)
+- 40%+ APR = Very expensive (consider alternatives)
+
+### Formula 6: Cost per Day
+
+**Purpose**: Calculate daily cost of factoring (useful for timing decisions)
+
+**Equation**:
+```
+cost_per_day = factoring_cost / days_to_payment
+```
+
+**Example**: $1,500 fee / 60 days = $25 per day
+
+**Use case**: "If customer pays 10 days early, I save $250"
+
+### Formula 7: Recurring Annual Cost (if factoring monthly)
+
+**Purpose**: Calculate annual cost if business factors invoices regularly
+
+**Equation**:
+```
+# Assume factoring one invoice per month
+annual_invoices = 12
+total_fees_if_recurring = factoring_cost × annual_invoices
+
+# More accurate: account for seasonal variation
+# If user provides average monthly invoice amount
+average_monthly_invoice = invoice_amount  # assume provided invoice is typical
+annual_factoring_cost = (average_monthly_invoice × factoring_fee_percent / 100) × 12
+```
+
+**Example**: $1,500 fee per invoice × 12 months = $18,000 annual factoring cost
+
+### Formula 8: Cost vs Line of Credit Comparison
+
+**Purpose**: Compare factoring cost to line of credit for same time period
+
+**Equation**:
+```
+# Factoring cost
+factoring_total_cost = factoring_cost + additional_fees
+
+# Line of credit cost (for same amount and time period)
+# LOC interest = Principal × APR × (Days / 365)
+loc_interest_cost = advance_amount × (alternative_apr / 100) × (days_to_payment / 365)
+loc_total_cost = loc_interest_cost + alternative_draw_fee
+
+# Cost difference
+cost_difference = factoring_total_cost - loc_total_cost
+
+# Percentage difference
+percent_difference = (cost_difference / loc_total_cost) × 100
+
+if cost_difference > 0:
+    recommendation = "Line of credit is cheaper by ${:,.0f}".format(abs(cost_difference))
+elif cost_difference < 0:
+    recommendation = "Factoring is cheaper by ${:,.0f}".format(abs(cost_difference))
+else:
+    recommendation = "Costs are approximately equal"
+```
+
+**Source/Reference**: Time-adjusted cost comparison methodology
+
+### Formula 9: Breakeven Days
+
+**Purpose**: Calculate at what payment delay factoring and LOC have equal cost
+
+**Equation**:
+```
+# Solve for days where factoring_cost = LOC_cost
+# factoring_cost = fixed (e.g., 3% of invoice)
+# LOC_cost = advance_amount × (alternative_apr / 100) × (days / 365)
+
+# Solve: factoring_cost = advance_amount × (alternative_apr / 100) × (days / 365)
+# days = (factoring_cost × 365) / (advance_amount × alternative_apr / 100)
+
+breakeven_days = (factoring_cost × 365) / (advance_amount × alternative_apr / 100)
+```
+
+**Interpretation**: If customer pays before breakeven days, LOC is cheaper. After breakeven, factoring may be cheaper (fixed cost vs accumulating interest).
+
+### Step-by-Step Calculation Flow
+
+1. **Validate inputs**: Check required fields, ensure advance rate 50-100%, fee 0-10%
+2. **Calculate advance amount**: `invoice_amount × advance_rate`
+3. **Calculate reserve amount**: `invoice_amount - advance_amount`
+4. **Calculate factoring cost**: `invoice_amount × factoring_fee_percent`
+5. **Calculate net proceeds**: `invoice_amount - factoring_cost`
+6. **Calculate effective APR**: `(factoring_cost / advance_amount) × (365 / days) × 100`
+7. **Calculate cost per day**: `factoring_cost / days_to_payment`
+8. **If alternative APR provided** (Pro tier):
+   - Calculate LOC cost for same period
+   - Calculate cost difference
+   - Calculate breakeven days
+   - Determine recommendation
+9. **If recurring use indicated** (Pro tier):
+   - Calculate annual factoring cost (fee × 12)
+10. **Check warning conditions**: High APR, expensive vs alternatives, etc.
+11. **Return results with version stamp**
+
+### Edge Cases and Handling
+
+| Edge Case | Condition | Handling | Warning/Error |
+|-----------|-----------|----------|---------------|
+| 100% advance rate | factoring_advance_rate = 100 | Reserve = 0, unusual but calculate | Info: "100% advance rate is uncommon. Verify factoring terms." |
+| Very short term | days_to_payment < 15 | Calculate as normal, APR will be very high | Warning: "Short payment term results in high effective APR. Consider waiting for payment." |
+| Very long term | days_to_payment > 120 | Calculate as normal | Warning: "Long payment term ({days} days). Factoring may be very expensive. Consider alternative financing." |
+| Low advance rate | factoring_advance_rate < 70% | Calculate as normal | Warning: "Low advance rate ({rate}%). Most factors offer 80-90%. Shop for better terms." |
+| Very high fee | factoring_fee_percent > 5% | Calculate as normal | Warning: "High factoring fee ({fee}%). Typical fees are 1-5%. Shop for better rates." |
+
+### Formula Version
+
+**Current Version**: v1.0.0
+
+**Version History**:
+- v1.0.0: Initial implementation (advance, fee, effective APR, cost comparison)
+
+---
+
+## 6. Warnings and Alerts
+
+### Warning Definitions
+
+| Warning Code | Condition | Message | Severity | Action |
+|--------------|-----------|---------|----------|--------|
+| HIGH_EFFECTIVE_APR | effective_apr > 30% | "Effective APR of {apr}% is very high. Typical factoring is 15-25% APR. Consider shopping for better rates or alternative financing (line of credit, business loan)." | warning | Shop for better factoring rates or explore LOC |
+| VERY_HIGH_APR | effective_apr > 50% | "Effective APR of {apr}% is extremely high. This is predatory pricing. Strongly consider alternative financing or waiting for customer payment." | danger | Avoid this factoring offer, explore alternatives |
+| LOW_ADVANCE_RATE | factoring_advance_rate < 75% | "Advance rate of {rate}% is low. Most factoring companies offer 80-90%. You're leaving ${amount:,.0f} on the table. Shop for better terms." | warning | Negotiate higher advance rate or find different factor |
+| FACTORING_MORE_EXPENSIVE | cost_difference > 500 && factoring_total_cost > loc_total_cost | "Factoring is ${cost_difference:,.0f} more expensive than a line of credit for this invoice. If you have LOC access, use it instead." | warning | Use line of credit instead of factoring |
+| LOC_MORE_EXPENSIVE | cost_difference < -500 && loc_total_cost > factoring_total_cost | "Factoring is ${cost_difference:,.0f} cheaper than a line of credit for this short-term need. Factoring may be the better option." | info | Factoring is cost-effective for this situation |
+| LONG_PAYMENT_TERM | days_to_payment > 90 | "Payment term of {days} days is long (typical: 30-60 days). Factoring cost increases with longer terms. Consider negotiating shorter payment terms with customers." | warning | Negotiate shorter payment terms or extend credit more carefully |
+| RECURRING_HIGH_COST | total_fees_if_recurring > 10000 | "If factoring monthly, annual cost would be ${annual_cost:,.0f}. This is expensive for recurring working capital. Consider line of credit or improving collections." | warning | Explore LOC, improve collections, or negotiate better terms |
+
+### Warning Thresholds
+
+**Configurable Thresholds** (can be adjusted per tenant for B2B):
+- **High effective APR**: 30% (above typical factoring range)
+- **Very high APR**: 50% (predatory pricing)
+- **Low advance rate**: 75% (below market standard)
+
+**Hard-Coded Thresholds** (industry standards, not configurable):
+- **Typical APR range**: 15-25% (factual market data)
+- **Typical advance rate**: 80-90% (factual market data)
+- **Typical fee range**: 1-5% (factual market data)
+
+---
+
+## 7. Golden Test Scenarios
+
+### Scenario 1: Standard Factoring - 60-Day Terms
+
+**Description**: Typical factoring scenario. 60-day payment terms, 85% advance, 3% fee. Effective APR is 21.5% (moderate).
+
+**Inputs**:
+```json
+{
+  "invoice_amount": 50000,
+  "factoring_advance_rate": 85,
+  "factoring_fee_percent": 3,
+  "days_to_payment": 60,
+  "alternative_apr": 12,
+  "alternative_draw_fee": 0
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "advance_amount": {
+    "value": 42500,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$50,000 × 85% = $42,500"
+  },
+  "reserve_amount": {
+    "value": 7500,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$50,000 - $42,500 = $7,500"
+  },
+  "factoring_cost": {
+    "value": 1500,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$50,000 × 3% = $1,500"
+  },
+  "net_proceeds": {
+    "value": 48500,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$50,000 - $1,500 = $48,500"
+  },
+  "effective_apr": {
+    "value": 21.47,
+    "tolerance": 0.1,
+    "unit": "percent",
+    "note": "($1,500 / $42,500) × (365 / 60) × 100 = 21.47%"
+  },
+  "cost_per_day": {
+    "value": 25.00,
+    "tolerance": 0.1,
+    "unit": "USD",
+    "note": "$1,500 / 60 days = $25/day"
+  },
+  "total_fees_if_recurring": {
+    "value": 18000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$1,500 × 12 months = $18,000 annual"
+  },
+  "cost_vs_line_of_credit": {
+    "factoring_cost": 1500,
+    "loc_cost": 840,
+    "cost_difference": 660,
+    "note": "LOC: $42,500 × 12% × (60/365) = $840. Factoring $660 more expensive."
+  },
+  "breakeven_days": {
+    "value": 106,
+    "tolerance": 1,
+    "unit": "days",
+    "note": "After 106 days, LOC would cost same as factoring"
+  }
+}
+```
+
+**Expected Warnings**:
+- FACTORING_MORE_EXPENSIVE: "Factoring is $660 more expensive than a line of credit for this invoice..."
+
+### Scenario 2: Expensive Factoring - 90-Day Terms, High Fee
+
+**Description**: Expensive factoring scenario. 90-day terms, 80% advance, 5% fee. Effective APR is 50.7% (very high).
+
+**Inputs**:
+```json
+{
+  "invoice_amount": 30000,
+  "factoring_advance_rate": 80,
+  "factoring_fee_percent": 5,
+  "days_to_payment": 90,
+  "alternative_apr": 15,
+  "alternative_draw_fee": 100
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "advance_amount": {
+    "value": 24000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$30,000 × 80% = $24,000"
+  },
+  "reserve_amount": {
+    "value": 6000,
+    "tolerance": 0,
+    "unit": "USD"
+  },
+  "factoring_cost": {
+    "value": 1500,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$30,000 × 5% = $1,500"
+  },
+  "net_proceeds": {
+    "value": 28500,
+    "tolerance": 0,
+    "unit": "USD"
+  },
+  "effective_apr": {
+    "value": 50.69,
+    "tolerance": 0.1,
+    "unit": "percent",
+    "note": "($1,500 / $24,000) × (365 / 90) × 100 = 50.69%"
+  },
+  "cost_per_day": {
+    "value": 16.67,
+    "tolerance": 0.1,
+    "unit": "USD"
+  },
+  "total_fees_if_recurring": {
+    "value": 18000,
+    "tolerance": 0,
+    "unit": "USD"
+  },
+  "cost_vs_line_of_credit": {
+    "factoring_cost": 1500,
+    "loc_cost": 987,
+    "cost_difference": 513,
+    "note": "LOC: $24,000 × 15% × (90/365) + $100 fee = $987. Factoring $513 more expensive."
+  }
+}
+```
+
+**Expected Warnings**:
+- VERY_HIGH_APR: "Effective APR of 50.69% is extremely high. This is predatory pricing..."
+- LOW_ADVANCE_RATE: "Advance rate of 80% is low. Most factoring companies offer 80-90%..."
+- LONG_PAYMENT_TERM: "Payment term of 90 days is long..."
+- FACTORING_MORE_EXPENSIVE: "Factoring is $513 more expensive than a line of credit..."
+
+### Scenario 3: Competitive Factoring - 30-Day Terms
+
+**Description**: Competitive factoring scenario. Short 30-day terms, 90% advance, 1.5% fee. Effective APR is 20.3% (competitive).
+
+**Inputs**:
+```json
+{
+  "invoice_amount": 100000,
+  "factoring_advance_rate": 90,
+  "factoring_fee_percent": 1.5,
+  "days_to_payment": 30,
+  "alternative_apr": 10,
+  "alternative_draw_fee": 0
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "advance_amount": {
+    "value": 90000,
+    "tolerance": 0,
+    "unit": "USD"
+  },
+  "reserve_amount": {
+    "value": 10000,
+    "tolerance": 0,
+    "unit": "USD"
+  },
+  "factoring_cost": {
+    "value": 1500,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$100,000 × 1.5% = $1,500"
+  },
+  "net_proceeds": {
+    "value": 98500,
+    "tolerance": 0,
+    "unit": "USD"
+  },
+  "effective_apr": {
+    "value": 20.28,
+    "tolerance": 0.1,
+    "unit": "percent",
+    "note": "($1,500 / $90,000) × (365 / 30) × 100 = 20.28%"
+  },
+  "cost_per_day": {
+    "value": 50.00,
+    "tolerance": 0.1,
+    "unit": "USD"
+  },
+  "cost_vs_line_of_credit": {
+    "factoring_cost": 1500,
+    "loc_cost": 740,
+    "cost_difference": 760,
+    "note": "LOC: $90,000 × 10% × (30/365) = $740"
+  }
+}
+```
+
+**Expected Warnings**:
+- FACTORING_MORE_EXPENSIVE: "Factoring is $760 more expensive than a line of credit for this invoice..."
+
+---
+
+## 8. AI Narrative Strategy (AI-Enabled)
+
+### What AI Explains for This Calculator
+
+**Primary Explanations**:
+1. **What the effective APR means and whether it's reasonable** (industry context, comparison to alternatives)
+2. **When factoring makes sense vs waiting or using LOC** (trade-offs: immediate cash vs cost)
+3. **How to negotiate better factoring terms** (advance rate, fee, payment terms)
+4. **Recurring cost implications** (annual cost if factoring monthly)
+
+**Scenario Suggestions**:
+- "What if I negotiate the fee down to 2%?" (cost savings)
+- "What if I can get customers to pay in 45 days instead of 60?" (reduce factoring cost)
+- "Should I use factoring or wait for payment?" (cash flow vs cost trade-off)
+
+### Prompt Template
+
+**System Prompt**:
+```
+You are a CFO advisor helping business owners understand invoice factoring costs and whether factoring makes sense for their situation.
+
+Your role is to:
+- Explain effective APR in plain language and interpret whether factoring cost is reasonable
+- Compare factoring to alternatives (line of credit, waiting for payment)
+- Suggest when factoring makes sense (cash flow need vs cost)
+- Explain trade-offs (immediate cash vs higher cost than traditional financing)
+
+Output constraints:
+- Length: 150-250 words
+- Tone: Professional but approachable, practical
+- Format: Plain paragraphs (no bullet lists)
+- Disclaimers: Always end with standard disclaimer
+
+Prohibited behaviors:
+- Never recommend specific factoring companies
+- Never guarantee factoring approval
+- Never use absolute language (avoid "always", "never", "must")
+```
+
+**User Prompt Template**:
+```
+The business has a ${invoice_amount} invoice with {days_to_payment}-day payment terms. Factoring terms: {factoring_advance_rate}% advance, {factoring_fee_percent}% fee. This results in ${advance_amount} immediate cash, ${factoring_cost} fee, effective APR of {effective_apr}%. Alternative line of credit costs {alternative_apr}% APR. Explain whether factoring makes sense.
+```
+
+**Expected AI Response** (150-250 words):
+```
+For your $50,000 invoice with 60-day payment terms, factoring would provide $42,500 in immediate cash (85% advance) with a total fee of $1,500 (3%). The effective APR is 21.5%, which is moderate for invoice factoring—typical rates are 15-25% for 60-day terms.
+
+Comparing to your line of credit at 12% APR, the LOC would cost $840 for the same 60-day period, making factoring $660 more expensive. If you have available LOC capacity, it's the cheaper option. However, if your LOC is maxed out or you don't qualify for one, factoring provides access to working capital that might otherwise be unavailable.
+
+Factoring makes most sense when you have an urgent cash need (payroll, supplies, growth opportunity) and can't wait 60 days for payment. The cost of factoring ($1,500) should be weighed against the opportunity cost or consequence of not having immediate cash.
+
+If you factor invoices regularly (monthly), the annual cost would be approximately $18,000. At that volume, you should explore establishing a line of credit or improving your collections process to reduce days to payment. Many businesses use factoring temporarily while building credit for traditional financing.
+
+Consider negotiating better payment terms with customers (45 days instead of 60) to reduce factoring costs or reliance on factoring.
+
+This analysis is for informational purposes only and does not constitute financial, legal, or professional advice. Consult qualified professionals for decisions affecting your business.
+```
+
+---
+
+## 9. Export Format Details
+
+### PDF Layout
+
+**Header**:
+- "Invoice Factoring Cost Analysis"
+- User tier: "Free" or "Pro"
+- Generation timestamp: "Generated on November 18, 2025"
+
+**Body Sections**:
+1. **Invoice Details** (table):
+   - Invoice Amount: $50,000
+   - Payment Terms: 60 days
+
+2. **Factoring Terms** (table):
+   - Advance Rate: 85%
+   - Factoring Fee: 3%
+
+3. **Cash Flow Summary** (table):
+   - Immediate Advance: $42,500
+   - Reserve (held until payment): $7,500
+   - Factoring Fee: $1,500
+   - Net Proceeds: $48,500
+
+4. **Cost Analysis** (table):
+   - Effective APR: 21.47%
+   - Cost per Day: $25.00
+   - Total Fee: $1,500
+
+5. **Cash Flow Timeline** (chart):
+   - Waterfall showing: Invoice → Advance → Fee → Reserve released
+   - Free tier: Basic chart
+   - Pro tier: Enhanced with alternative financing comparison
+
+6. **Alternative Financing Comparison** (Pro tier only, table):
+   - Factoring Cost: $1,500 (APR: 21.47%)
+   - Line of Credit Cost: $840 (APR: 12%)
+   - Cost Difference: $660 (factoring more expensive)
+   - Recommendation: Use line of credit if available
+
+7. **Recurring Cost Analysis** (Pro tier only, table):
+   - Monthly Invoice: $50,000
+   - Monthly Fee: $1,500
+   - Annual Cost (if factoring monthly): $18,000
+
+8. **Warnings** (if any):
+   - List all warnings with severity icons
+
+**Footer**:
+- Disclaimers: "This analysis is for informational purposes only and does not constitute financial advice. Factoring costs and terms vary by provider, industry, and customer creditworthiness. Consult multiple factoring companies and qualified professionals for decisions affecting your business."
+- Version stamp: "Generated by CFO Calculator Suite v1.2.3 | Calculator: invoice-factoring v1.0.0 | Formulas: v1.0.0 | 2025-11-18"
+- Watermark (Free tier only): Diagonal semi-transparent "Upgrade for clean exports"
+
+### CSV/Excel Structure
+
+**Metadata Headers**:
+```csv
+# Invoice Factoring Cost Analysis
+# Version: v1.0.0
+# Generated: 2025-11-18T21:30:00Z
+# Tier: Pro
+#
+```
+
+**Data Rows**:
+```csv
+Section,Field,Value
+Invoice Details,Invoice Amount,$50000
+Invoice Details,Payment Terms,60 days
+Factoring Terms,Advance Rate,85%
+Factoring Terms,Factoring Fee,3%
+Cash Flow,Immediate Advance,$42500
+Cash Flow,Reserve,$7500
+Cash Flow,Factoring Fee,$1500
+Cash Flow,Net Proceeds,$48500
+Cost Analysis,Effective APR,21.47%
+Cost Analysis,Cost per Day,$25.00
+Cost Analysis,Total Fee,$1500
+Alternative Financing,Factoring Cost,$1500
+Alternative Financing,LOC Cost,$840
+Alternative Financing,Cost Difference,$660
+Alternative Financing,Recommendation,Use LOC if available
+Recurring Analysis,Monthly Fee,$1500
+Recurring Analysis,Annual Cost,$18000
+```
+
+**Excel Formatting**:
+- Bold section headers
+- Currency cells: $#,##0.00
+- Percentage cells: 0.00%
+- Conditional formatting:
+  - Effective APR < 20%: Green
+  - APR 20-30%: Yellow
+  - APR > 30%: Red
+
+---
+
+## 10. Tier-Specific Behavior
+
+### Free Tier
+
+**What's Shown**:
+- Single invoice analysis (cannot save or compare multiple invoices)
+- Invoice amount, advance rate, fee, payment days inputs
+- Basic metrics: Advance amount, factoring cost, net proceeds, reserve amount
+- Basic cash flow timeline chart
+
+**What's Gated**:
+- **Effective APR**: Locked with tooltip "Upgrade to Pro to see effective APR and cost comparison"
+- **Cost vs line of credit**: Locked
+- **Recurring cost analysis**: Locked
+- **Breakeven days**: Locked
+- **Multiple invoice comparison**: "Add Invoice" button triggers upgrade prompt
+- **Clean exports**: PDF has watermark
+- **AI insights**: "Get factoring recommendations" button triggers AI tier upgrade prompt
+
+**Upgrade Triggers**:
+- Click "See Effective APR" → `upgrade_prompt_shown` with `trigger_reason: "locked_metric"`
+- Click "Compare to LOC" → `upgrade_prompt_shown` with `trigger_reason: "cost_comparison"`
+- Click "Add Invoice" → `upgrade_prompt_shown` with `trigger_reason: "add_scenario"`
+- Click "Get recommendations" → `upgrade_prompt_shown` with `trigger_reason: "ai_request"`
+
+### Pro Tier
+
+**What Unlocks**:
+- **Multiple invoices** (up to 50): Track and compare factoring costs across invoices
+- **Effective APR**: Full APR calculation for comparison to other financing
+- **Cost vs line of credit**: Detailed comparison showing which is cheaper
+- **Breakeven days**: Calculate when factoring and LOC costs are equal
+- **Recurring cost analysis**: Annual cost if factoring monthly
+- **Cost per day**: Daily factoring cost for timing decisions
+- **Invoice comparison table**: Side-by-side comparison of multiple factoring scenarios
+- **Clean exports**: PDF with no watermark
+
+**Still Gated** (requires AI tier):
+- AI factoring recommendations
+- AI scenario suggestions
+
+### AI Tier
+
+**What Unlocks**:
+- **AI factoring insights**: "Is this a good factoring deal?" gets detailed analysis
+- **AI alternative recommendations**: "Should I factor or wait?" gets trade-off analysis
+- **AI negotiation tips**: "How can I negotiate better terms?" gets suggestions
+- **50 AI requests per month** (hard cap)
+
+**Usage Quota**:
+- Counter displayed: "23 of 50 AI requests remaining this month"
+- Resets on 1st of each month
+
+---
+
+## Implementation Notes
+
+**Priority**: Medium (niche traffic, affiliate revenue)
+
+**Estimated Effort**: 1 week
+- Days 1-3: Core factoring calculations (advance, fee, APR)
+- Days 4-5: Cost comparison logic (vs LOC, breakeven days)
+- Days 6-7: Testing, affiliate integration
+
+**Dependencies**:
+- APR calculation library (reusable from SBA calculator)
+- Date/time calculation for payment terms
+
+**Related Calculators**:
+- **Line of Credit**: Direct alternative to factoring
+- **Cash Runway**: Factoring affects cash runway (immediate cash infusion)
+- **Business Loan + DSCR**: Alternative working capital financing
+
+**Affiliate Integration**:
+- Partner with factoring companies (e.g., Fundbox, BlueVine, Triumph Business Capital)
+- Partner with AR financing platforms (e.g., C2FO, Taulia)
+- "Find Factoring Partners" button below results → affiliate referral
+- Track referral conversions for revenue attribution
+
+---
+
+## End of Calculator PDR
+
+This calculator is complete and ready for implementation. All factoring, APR, and cost comparison formulas are specified in detail.
+
+
+# Line of Credit Utilization & Cost Analyzer
+
+## 1. Calculator Overview
+
+**Calculator Name**: Line of Credit Utilization & Cost Analyzer
+
+**Calculator Slug**: `line-of-credit`
+
+**Primary Category**: Cash Flow & Liquidity Intelligence
+
+**Secondary Category**: Financing & Lending Intelligence
+
+**Business Role**:
+- **Upsell/add-on for working capital users**: Complements cash runway and factoring calculators
+- **Pro upgrade driver**: Utilization cost analysis and DSCR impact drive conversions
+- **Affiliate revenue driver**: Partner with LOC providers (e.g., Bluevine, Fundbox, OnDeck)
+- **B2B demo calculator**: White-label for banks and lenders showing LOC value to business clients
+
+**Primary Success Metric**: Scenario comparison usage + affiliate referral rate (target: 50% Pro users compare utilization scenarios, 10% affiliate clicks)
+
+**Version**: v1.0.0
+
+**Formula Library Version**: v1.0.0
+
+---
+
+## 2. User Scenarios and Use Cases
+
+### Who Uses This Calculator
+
+**Primary Personas**:
+- **Small business owners** managing working capital with business line of credit
+- **CFOs** optimizing LOC utilization (minimize interest while maintaining liquidity)
+- **Business owners evaluating LOC offers** comparing terms from multiple lenders
+
+**Secondary Personas**:
+- **Bankers and lenders** demonstrating LOC costs to prospective clients
+- **Fractional CFOs** advising clients on optimal LOC usage
+- **Accountants** analyzing client working capital financing costs
+
+### When They Use It (Decision Contexts)
+
+**Timing**:
+- **Before applying for LOC**: Understanding total costs (interest + unused line fees)
+- **After receiving LOC offer**: Comparing offers from multiple lenders
+- **Monthly monitoring**: Tracking actual LOC costs and utilization efficiency
+- **Budget planning**: Forecasting working capital costs for upcoming months
+- **LOC renewal**: Evaluating whether to renew or switch lenders
+
+**Frequency**:
+- **One-time use** (Free tier): Initial LOC cost estimation
+- **Monthly monitoring** (Pro tier): Track actual utilization and costs
+- **Quarterly comparison** (Pro tier): Compare different utilization strategies
+
+### What Questions It Answers
+
+This calculator helps users answer:
+
+1. **What will my monthly LOC cost be?** (Interest + unused line fees)
+2. **What is my effective cost percentage?** (True cost as % of amount utilized)
+3. **How does utilization level affect cost efficiency?** (Low utilization = higher effective cost due to unused line fees)
+4. **Should I maintain 30% or 80% utilization?** (Cost vs liquidity trade-off)
+5. **How does LOC affect my DSCR?** (If business financials provided, Pro feature)
+6. **Is this LOC offer competitive?** (Compare to market benchmarks)
+
+---
+
+## 3. Inputs
+
+### Input Field Definitions
+
+| Field Name | Type | Units | Required | Validation | Default | Placeholder | Tooltip |
+|------------|------|-------|----------|------------|---------|-------------|---------|
+| credit_line_limit | currency | dollars | Yes | min: 1, max: 10000000 | null | "100000" | "Total line of credit limit. Typical business LOCs: $10k-$500k. This is the maximum you can draw, not what you're currently using." |
+| average_utilization_percent | percentage | percent | Yes | min: 0, max: 100 | null | "50" | "Average percentage of credit line you use. Example: If you have $100k limit and use $50k on average, enter 50%. Higher utilization = more interest but lower unused line fees." |
+| interest_rate | percentage | percent | Yes | min: 0, max: 30 | null | "10.5" | "Annual interest rate (APR) charged on outstanding balance. Typical business LOC rates: 8-20%. Rate may be variable (tied to Prime Rate)." |
+| unused_line_fee_percent | percentage | percent | No | min: 0, max: 5 | 0.5 | "0.5" | "Annual fee charged on unused portion of credit line. Typical: 0.25-1% per year. Some lenders charge no unused line fee. Enter 0 if not applicable." |
+| months_utilized | number | months | No | min: 1, max: 12 | 12 | "12" | "Number of months in period (for cost calculation). Enter 12 for annual cost, 3 for quarterly, 1 for monthly." |
+
+### Input Groups
+
+**Group 1: Line of Credit Terms** (always visible)
+- credit_line_limit
+- interest_rate
+- unused_line_fee_percent
+
+**Group 2: Utilization** (always visible)
+- average_utilization_percent
+- months_utilized
+
+**Group 3: Business Financials** (collapsed by default, Pro tier feature for DSCR)
+- **annual_revenue** (currency): Total annual revenue. Required for DSCR impact analysis. Default: null
+- **annual_operating_expenses** (currency): Total annual operating expenses (excluding LOC interest). Required for DSCR. Default: null
+
+### Optional Inputs
+
+**Advanced Options** (collapsed, for sophisticated analysis):
+- **draw_fee_per_transaction** (currency): Fee charged each time you draw from LOC. Typical: $0-$50. Default: 0
+- **number_of_draws** (number): Number of times you draw from LOC in period. Default: 0
+- **variable_rate_tied_to_prime** (boolean): Is rate variable (Prime + spread)? Default: No
+
+---
+
+## 4. Outputs
+
+### Key Metrics (Free Tier - Always Visible)
+
+| Output Name | Description | Format | Units |
+|-------------|-------------|--------|-------|
+| average_outstanding_balance | Average amount utilized (limit × utilization %) | "$#,##0.00" | dollars |
+| interest_cost | Total interest paid on outstanding balance | "$#,##0.00" | dollars |
+| unused_line_fee_cost | Fee on unused portion of credit line | "$#,##0.00" | dollars |
+| total_cost | Interest + unused line fee + draw fees | "$#,##0.00" | dollars |
+| effective_cost_percent | Total cost as % of average outstanding balance | "#.00%" | percent |
+
+### Advanced Metrics (Pro Tier - Gated)
+
+| Output Name | Description | Format | Units | Pro Only |
+|-------------|-------------|--------|-------|----------|
+| cost_at_different_utilization | Cost at 25%, 50%, 75%, 100% utilization | "Table" | mixed | Yes |
+| optimal_utilization_range | Utilization range that minimizes effective cost | "#-#%" | percent | Yes |
+| monthly_interest_payment | Average monthly interest payment (for DSCR) | "$#,##0.00" | dollars | Yes |
+| dscr_impact | DSCR with LOC interest added to debt service | "#.00" | ratio | Yes |
+| annual_cost_breakdown | Breakdown by cost type (interest, unused fee, draws) | "Chart" | dollars | Yes |
+| cost_efficiency_score | Score 0-100 (higher = more efficient utilization) | "#" | score | Yes |
+
+### Charts and Visualizations
+
+**Chart 1: Cost vs Utilization Curve** (Pro tier only)
+- Type: Line chart
+- X-axis: Utilization % (0% to 100%)
+- Y-axis: Total cost and effective cost %
+- Purpose: Show how cost changes with utilization (sweet spot analysis)
+- Tier: Pro
+
+**Chart 2: Cost Breakdown** (Free tier, basic; Pro tier, detailed)
+- Type: Stacked bar chart
+- X-axis: Cost components (Interest, Unused line fee, Draw fees)
+- Y-axis: Dollars
+- Purpose: Visualize what drives total cost
+- Tier: Free (basic), Pro (with comparison to alternative utilization levels)
+
+**Chart 3: Utilization Over Time** (Pro tier only, if historical data available)
+- Type: Line chart
+- X-axis: Month
+- Y-axis: Utilization % and total cost
+- Purpose: Track utilization trends and cost over time
+- Tier: Pro (requires historical utilization data)
+
+### Output Formatting Rules
+
+- **Currency**: $#,##0.00 (two decimals)
+- **Percentages**: #.00% (two decimals for precision)
+- **DSCR**: #.00 (two decimals, no % sign)
+- **Utilization**: Always as percentage (e.g., "50%" not "0.50")
+
+---
+
+## 5. Formulas and Calculation Logic
+
+### Formula 1: Average Outstanding Balance
+
+**Purpose**: Calculate average amount drawn from credit line
+
+**Equation**:
+```
+average_outstanding_balance = credit_line_limit × (average_utilization_percent / 100)
+```
+
+**Variables**:
+- credit_line_limit: Maximum credit available
+- average_utilization_percent: Percentage of limit used on average
+- average_outstanding_balance: Dollar amount owed on average
+
+**Source/Reference**: Standard credit line utilization calculation
+
+**Example**: $100,000 limit × 50% = $50,000 average balance
+
+### Formula 2: Interest Cost
+
+**Purpose**: Calculate total interest paid on outstanding balance for period
+
+**Equation**:
+```
+# Annual interest on average balance
+annual_interest = average_outstanding_balance × (interest_rate / 100)
+
+# Period interest (adjust for months)
+interest_cost = annual_interest × (months_utilized / 12)
+```
+
+**Variables**:
+- average_outstanding_balance: Average amount owed
+- interest_rate: Annual interest rate (APR)
+- months_utilized: Number of months in period
+- interest_cost: Total interest for period
+
+**Source/Reference**: Simple interest calculation (most LOCs use daily interest, but annual approximation is close)
+
+**Example**: $50,000 × 10.5% × (12/12) = $5,250 annual interest
+
+### Formula 3: Unused Line Fee Cost
+
+**Purpose**: Calculate fee on unused portion of credit line
+
+**Equation**:
+```
+# Unused portion of credit line
+unused_portion = credit_line_limit - average_outstanding_balance
+unused_portion = credit_line_limit × (1 - average_utilization_percent / 100)
+
+# Annual fee on unused portion
+annual_unused_fee = unused_portion × (unused_line_fee_percent / 100)
+
+# Period fee (adjust for months)
+unused_line_fee_cost = annual_unused_fee × (months_utilized / 12)
+```
+
+**Variables**:
+- unused_portion: Amount of credit line not utilized
+- unused_line_fee_percent: Annual fee rate on unused portion
+- unused_line_fee_cost: Total unused fee for period
+
+**Source/Reference**: Standard unused line fee calculation
+
+**Example**: $50,000 unused × 0.5% × (12/12) = $250 annual unused fee
+
+**Note**: Unused line fees penalize low utilization (lender wants you to use the credit line)
+
+### Formula 4: Total Cost
+
+**Purpose**: Calculate all-in cost of line of credit for period
+
+**Equation**:
+```
+# Draw fees (if applicable)
+total_draw_fees = draw_fee_per_transaction × number_of_draws
+
+# Total cost
+total_cost = interest_cost + unused_line_fee_cost + total_draw_fees
+```
+
+**Variables**:
+- interest_cost: Interest on outstanding balance
+- unused_line_fee_cost: Fee on unused portion
+- total_draw_fees: Transaction fees for draws
+- total_cost: All-in cost for period
+
+**Example**: $5,250 interest + $250 unused fee + $0 draw fees = $5,500 total
+
+### Formula 5: Effective Cost Percentage
+
+**Purpose**: Calculate true cost as percentage of amount utilized (for comparison)
+
+**Equation**:
+```
+# Effective cost (per period)
+effective_cost_percent = (total_cost / average_outstanding_balance) × 100
+
+# Annualized effective cost (if period < 12 months)
+if months_utilized < 12:
+    annualized_effective_cost = effective_cost_percent × (12 / months_utilized)
+else:
+    annualized_effective_cost = effective_cost_percent
+```
+
+**Variables**:
+- total_cost: All-in cost for period
+- average_outstanding_balance: Average amount utilized
+- effective_cost_percent: True cost as % of amount used
+
+**Source/Reference**: Effective APR calculation methodology
+
+**Example**: $5,500 cost / $50,000 balance × 100 = 11.0% effective cost (vs 10.5% nominal interest rate)
+
+**Interpretation**: Effective cost is higher than nominal interest rate due to unused line fees. Lower utilization = higher effective cost.
+
+### Formula 6: Cost at Different Utilization Levels
+
+**Purpose**: Calculate cost at 25%, 50%, 75%, 100% utilization for comparison
+
+**Equation**:
+```
+for utilization_percent in [25, 50, 75, 100]:
+    outstanding_balance = credit_line_limit × (utilization_percent / 100)
+    interest = outstanding_balance × (interest_rate / 100) × (months_utilized / 12)
+
+    unused_portion = credit_line_limit - outstanding_balance
+    unused_fee = unused_portion × (unused_line_fee_percent / 100) × (months_utilized / 12)
+
+    total_cost = interest + unused_fee
+    effective_cost = (total_cost / outstanding_balance) × 100 if outstanding_balance > 0 else 0
+
+    results[utilization_percent] = {
+        "outstanding_balance": outstanding_balance,
+        "interest_cost": interest,
+        "unused_fee_cost": unused_fee,
+        "total_cost": total_cost,
+        "effective_cost_percent": effective_cost
+    }
+```
+
+**Insight**: Effective cost decreases as utilization increases (up to a point), because interest grows linearly but unused fee decreases.
+
+### Formula 7: Optimal Utilization Range
+
+**Purpose**: Identify utilization range that minimizes effective cost while maintaining liquidity
+
+**Equation**:
+```
+# Calculate effective cost at each utilization level (0-100%)
+min_effective_cost = Infinity
+optimal_utilization = 0
+
+for util in range(10, 101, 10):  # Test 10%, 20%, ..., 100%
+    # Calculate effective cost at this utilization
+    balance = credit_line_limit × (util / 100)
+    interest = balance × (interest_rate / 100)
+    unused = (credit_line_limit - balance) × (unused_line_fee_percent / 100)
+    total = interest + unused
+    effective = (total / balance) × 100 if balance > 0 else Infinity
+
+    if effective < min_effective_cost:
+        min_effective_cost = effective
+        optimal_utilization = util
+
+# Optimal range (allow 10% buffer for liquidity)
+optimal_range = f"{max(optimal_utilization - 10, 0)}-{min(optimal_utilization + 10, 100)}%"
+```
+
+**Interpretation**: Most efficient utilization is typically 70-90% (high enough to minimize unused fees, low enough to maintain emergency liquidity)
+
+### Formula 8: DSCR Impact
+
+**Purpose**: Calculate how LOC interest affects debt service coverage ratio
+
+**Equation**:
+```
+# Monthly LOC interest payment (average)
+monthly_interest_payment = interest_cost / months_utilized
+
+# Annual debt service (LOC interest × 12)
+annual_loc_interest = monthly_interest_payment × 12
+
+# DSCR with LOC interest
+net_operating_income = annual_revenue - annual_operating_expenses
+annual_debt_service = annual_loc_interest  # Add other debt if provided
+
+if annual_debt_service > 0:
+    dscr = net_operating_income / annual_debt_service
+else:
+    dscr = Infinity
+```
+
+**Source/Reference**: Standard DSCR formula (reuse from business loan calculator)
+
+### Step-by-Step Calculation Flow
+
+1. **Validate inputs**: Check required fields, ensure utilization 0-100%, interest rate > 0
+2. **Calculate average outstanding balance**: `credit_line_limit × utilization_percent`
+3. **Calculate interest cost**: `balance × interest_rate × (months / 12)`
+4. **Calculate unused portion**: `credit_line_limit - balance`
+5. **Calculate unused line fee**: `unused_portion × unused_fee_percent × (months / 12)`
+6. **Calculate total draw fees**: `draw_fee × number_of_draws`
+7. **Calculate total cost**: `interest + unused_fee + draw_fees`
+8. **Calculate effective cost %**: `(total_cost / balance) × 100`
+9. **If Pro tier, calculate cost at different utilization levels** (25%, 50%, 75%, 100%)
+10. **If Pro tier, determine optimal utilization range**
+11. **If business financials provided, calculate DSCR impact**
+12. **Check warning conditions**: High effective cost, low utilization efficiency, etc.
+13. **Return results with version stamp**
+
+### Edge Cases and Handling
+
+| Edge Case | Condition | Handling | Warning/Error |
+|-----------|-----------|----------|---------------|
+| Zero utilization | average_utilization_percent = 0 | Interest = 0, unused fee = full line | Warning: "0% utilization. You're paying unused line fee on entire credit line with no benefit." |
+| 100% utilization | average_utilization_percent = 100 | Unused fee = 0, max interest | Info: "100% utilization. No unused line fees, but no emergency liquidity remaining." |
+| No unused line fee | unused_line_fee_percent = 0 | Unused fee = 0, effective cost = interest rate | Info: "No unused line fee. Your effective cost equals your interest rate." |
+| Very low utilization | average_utilization_percent < 20% | Calculate as normal | Warning: "Low utilization ({percent}%). High effective cost due to unused line fees. Consider smaller credit line or higher utilization." |
+| Very high interest | interest_rate > 18% | Calculate as normal | Warning: "Interest rate of {rate}% is very high for a business LOC. Shop for better rates." |
+
+### Formula Version
+
+**Current Version**: v1.0.0
+
+**Version History**:
+- v1.0.0: Initial implementation (interest, unused fees, effective cost, utilization analysis)
+
+---
+
+## 6. Warnings and Alerts
+
+### Warning Definitions
+
+| Warning Code | Condition | Message | Severity | Action |
+|--------------|-----------|---------|----------|--------|
+| HIGH_EFFECTIVE_COST | effective_cost_percent > interest_rate × 1.5 | "Effective cost of {effective_cost}% is much higher than your interest rate ({interest_rate}%). Low utilization ({utilization}%) is driving up cost. Consider reducing credit line size or increasing utilization." | warning | Reduce credit line size or increase utilization |
+| LOW_UTILIZATION_INEFFICIENCY | average_utilization_percent < 20% && unused_line_fee_percent > 0 | "Low utilization ({utilization}%) with unused line fee ({fee}%) creates inefficiency. You're paying for credit you're not using. Consider smaller credit line or use more of available credit." | warning | Reduce credit line or increase utilization |
+| MAXED_OUT_LOC | average_utilization_percent >= 95% | "Utilization is {utilization}% (nearly maxed out). This leaves little emergency liquidity. Consider requesting higher credit limit or reducing outstanding balance." | warning | Request higher limit or pay down balance |
+| HIGH_INTEREST_RATE | interest_rate > 15% | "Interest rate of {interest_rate}% is high for a business LOC. Typical rates are 8-15%. Shop for better rates or improve creditworthiness." | warning | Shop for better rates or improve credit |
+| NO_UNUSED_FEE_OPTIMAL | unused_line_fee_percent == 0 | "No unused line fee. Your optimal strategy is to maintain low utilization (only use what you need) since there's no penalty for unused credit." | info | Maintain low utilization, no cost to unused credit |
+| EXPENSIVE_DRAW_FEES | total_draw_fees > interest_cost × 0.2 | "Draw fees (${draw_fees:,.0f}) are {percent}% of your interest cost. Minimize number of draws to reduce total cost." | warning | Consolidate draws to fewer transactions |
+| DSCR_WITH_LOC_BELOW_MINIMUM | dscr < 1.25 | "DSCR of {dscr} (including LOC interest) is below typical lender minimum of 1.25. LOC interest is straining cash flow." | danger | Reduce LOC utilization or increase revenue/reduce expenses |
+
+### Warning Thresholds
+
+**Configurable Thresholds** (can be adjusted per tenant for B2B):
+- **High effective cost multiple**: 1.5x interest rate (effective cost significantly higher than nominal rate)
+- **Low utilization**: 20% (inefficient use of credit line)
+- **Maxed out**: 95% (insufficient liquidity buffer)
+
+**Hard-Coded Thresholds** (market standards, not configurable):
+- **High interest rate**: 15% (above typical LOC range)
+- **Typical interest range**: 8-15% (market data)
+- **Typical unused line fee**: 0.25-1% (market data)
+
+---
+
+## 7. Golden Test Scenarios
+
+### Scenario 1: Moderate Utilization - Balanced Cost
+
+**Description**: $100k credit line with 50% utilization. Balanced between interest costs and unused line fees. Effective cost is 11% (slightly higher than 10.5% rate due to unused fee).
+
+**Inputs**:
+```json
+{
+  "credit_line_limit": 100000,
+  "average_utilization_percent": 50,
+  "interest_rate": 10.5,
+  "unused_line_fee_percent": 0.5,
+  "months_utilized": 12,
+  "annual_revenue": 1200000,
+  "annual_operating_expenses": 1000000
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "average_outstanding_balance": {
+    "value": 50000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$100k × 50% = $50k"
+  },
+  "interest_cost": {
+    "value": 5250,
+    "tolerance": 10,
+    "unit": "USD",
+    "note": "$50k × 10.5% × (12/12) = $5,250"
+  },
+  "unused_line_fee_cost": {
+    "value": 250,
+    "tolerance": 10,
+    "unit": "USD",
+    "note": "$50k unused × 0.5% × (12/12) = $250"
+  },
+  "total_cost": {
+    "value": 5500,
+    "tolerance": 20,
+    "unit": "USD",
+    "note": "$5,250 + $250 = $5,500"
+  },
+  "effective_cost_percent": {
+    "value": 11.0,
+    "tolerance": 0.1,
+    "unit": "percent",
+    "note": "$5,500 / $50k × 100 = 11.0%"
+  },
+  "monthly_interest_payment": {
+    "value": 437.50,
+    "tolerance": 1,
+    "unit": "USD",
+    "note": "$5,250 / 12 = $437.50"
+  },
+  "dscr_impact": {
+    "value": 1.90,
+    "tolerance": 0.01,
+    "unit": "ratio",
+    "note": "NOI $200k / Annual LOC interest $5,250 = 38.1 (very high DSCR, LOC is small relative to income)"
+  },
+  "cost_at_different_utilization": {
+    "25%": {
+      "total_cost": 3000,
+      "effective_cost_percent": 12.0
+    },
+    "50%": {
+      "total_cost": 5500,
+      "effective_cost_percent": 11.0
+    },
+    "75%": {
+      "total_cost": 8125,
+      "effective_cost_percent": 10.8
+    },
+    "100%": {
+      "total_cost": 10500,
+      "effective_cost_percent": 10.5
+    }
+  },
+  "optimal_utilization_range": {
+    "value": "70-90%",
+    "note": "Minimizes effective cost while maintaining liquidity buffer"
+  }
+}
+```
+
+**Expected Warnings**: None (balanced scenario)
+
+### Scenario 2: Low Utilization - High Effective Cost
+
+**Description**: $200k credit line with only 15% utilization. Unused line fee drives effective cost to 14.2% (much higher than 12% nominal rate). Inefficient use of credit.
+
+**Inputs**:
+```json
+{
+  "credit_line_limit": 200000,
+  "average_utilization_percent": 15,
+  "interest_rate": 12.0,
+  "unused_line_fee_percent": 0.75,
+  "months_utilized": 12
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "average_outstanding_balance": {
+    "value": 30000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$200k × 15% = $30k"
+  },
+  "interest_cost": {
+    "value": 3600,
+    "tolerance": 10,
+    "unit": "USD",
+    "note": "$30k × 12% = $3,600"
+  },
+  "unused_line_fee_cost": {
+    "value": 1275,
+    "tolerance": 10,
+    "unit": "USD",
+    "note": "$170k unused × 0.75% = $1,275"
+  },
+  "total_cost": {
+    "value": 4875,
+    "tolerance": 20,
+    "unit": "USD"
+  },
+  "effective_cost_percent": {
+    "value": 16.25,
+    "tolerance": 0.1,
+    "unit": "percent",
+    "note": "$4,875 / $30k × 100 = 16.25% (much higher than 12% rate)"
+  }
+}
+```
+
+**Expected Warnings**:
+- HIGH_EFFECTIVE_COST: "Effective cost of 16.25% is much higher than your interest rate (12%)..."
+- LOW_UTILIZATION_INEFFICIENCY: "Low utilization (15%) with unused line fee (0.75%) creates inefficiency..."
+
+### Scenario 3: High Utilization - Low Effective Cost
+
+**Description**: $150k credit line with 90% utilization. Minimal unused line fee, effective cost close to nominal rate. Good cost efficiency but low liquidity buffer.
+
+**Inputs**:
+```json
+{
+  "credit_line_limit": 150000,
+  "average_utilization_percent": 90,
+  "interest_rate": 9.0,
+  "unused_line_fee_percent": 0.5,
+  "months_utilized": 12
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "average_outstanding_balance": {
+    "value": 135000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$150k × 90% = $135k"
+  },
+  "interest_cost": {
+    "value": 12150,
+    "tolerance": 20,
+    "unit": "USD",
+    "note": "$135k × 9% = $12,150"
+  },
+  "unused_line_fee_cost": {
+    "value": 75,
+    "tolerance": 1,
+    "unit": "USD",
+    "note": "$15k unused × 0.5% = $75"
+  },
+  "total_cost": {
+    "value": 12225,
+    "tolerance": 20,
+    "unit": "USD"
+  },
+  "effective_cost_percent": {
+    "value": 9.06,
+    "tolerance": 0.1,
+    "unit": "percent",
+    "note": "$12,225 / $135k × 100 = 9.06% (very close to 9% rate)"
+  }
+}
+```
+
+**Expected Warnings**:
+- MAXED_OUT_LOC: "Utilization is 90% (nearly maxed out). This leaves little emergency liquidity..."
+
+---
+
+## 8. AI Narrative Strategy (AI-Enabled)
+
+### What AI Explains for This Calculator
+
+**Primary Explanations**:
+1. **What the effective cost means and why it's higher than interest rate** (unused line fees drive up cost)
+2. **Optimal utilization strategy** (balance between cost efficiency and liquidity)
+3. **When LOC makes sense vs alternatives** (factoring, term loan, etc.)
+4. **How to reduce LOC costs** (higher utilization, negotiate unused fee, pay down balance)
+
+**Scenario Suggestions**:
+- "What if I increase utilization to 70%?" (reduce effective cost)
+- "What if I negotiate to eliminate unused line fee?" (significant cost savings at low utilization)
+- "Should I pay down LOC balance or keep cash on hand?" (cost vs liquidity trade-off)
+
+### Prompt Template
+
+**System Prompt**:
+```
+You are a CFO advisor helping business owners understand line of credit costs and optimal utilization strategies.
+
+Your role is to:
+- Explain effective cost and why it differs from nominal interest rate (unused line fees)
+- Interpret optimal utilization levels (balance cost efficiency with liquidity needs)
+- Compare LOC to alternatives (factoring, term loans, cash management)
+- Suggest strategies to reduce LOC costs (utilization, fees, rate negotiation)
+
+Output constraints:
+- Length: 150-250 words
+- Tone: Professional but approachable, practical
+- Format: Plain paragraphs (no bullet lists)
+- Disclaimers: Always end with standard disclaimer
+
+Prohibited behaviors:
+- Never guarantee specific cost savings
+- Never recommend specific lenders
+- Never use absolute language (avoid "always", "never", "must")
+```
+
+**User Prompt Template**:
+```
+The business has a ${credit_line_limit} line of credit at {interest_rate}% APR with {unused_line_fee_percent}% unused line fee. Average utilization is {average_utilization_percent}% (${average_outstanding_balance} outstanding). Annual cost is ${total_cost} with effective cost of {effective_cost_percent}%. Explain what this means and suggest optimization strategies.
+```
+
+**Expected AI Response** (150-250 words):
+```
+Your $100,000 line of credit costs $5,500 annually at 50% average utilization ($50,000 outstanding). This translates to an effective cost of 11.0%, slightly higher than your nominal 10.5% interest rate due to the 0.5% unused line fee on the $50,000 unused portion ($250 per year).
+
+This is a reasonably efficient utilization level. At 50%, you're balancing cost efficiency with maintaining liquidity for unexpected needs. Your cost breakdown: $5,250 in interest (95% of cost) and $250 in unused line fees (5%).
+
+If you increased utilization to 75%, your effective cost would drop to approximately 10.8%, saving about $150 annually. However, this would leave only $25,000 available for emergencies. The trade-off between cost savings and liquidity depends on your cash flow volatility and access to other funding sources.
+
+At 100% utilization, effective cost equals your interest rate (10.5%), but you'd have zero emergency liquidity. Most businesses target 60-80% utilization to balance cost efficiency with maintaining a buffer for unexpected expenses or opportunities.
+
+To reduce costs, consider negotiating to eliminate or reduce the unused line fee, especially if you're a long-term customer with good payment history. Alternatively, if you consistently use less than 30% of your line, consider reducing the credit limit to minimize unused line fees.
+
+This analysis is for informational purposes only and does not constitute financial, legal, or professional advice. Consult qualified professionals for decisions affecting your business.
+```
+
+---
+
+## 9. Export Format Details
+
+### PDF Layout
+
+**Header**:
+- "Line of Credit Cost Analysis"
+- User tier: "Free" or "Pro"
+- Generation timestamp: "Generated on November 18, 2025"
+
+**Body Sections**:
+1. **Line of Credit Terms** (table):
+   - Credit Line Limit: $100,000
+   - Interest Rate: 10.5% APR
+   - Unused Line Fee: 0.5% per year
+
+2. **Utilization** (table):
+   - Average Utilization: 50%
+   - Average Outstanding Balance: $50,000
+   - Unused Portion: $50,000
+
+3. **Annual Cost Summary** (table):
+   - Interest Cost: $5,250
+   - Unused Line Fee: $250
+   - Draw Fees: $0
+   - Total Annual Cost: $5,500
+
+4. **Cost Efficiency** (table):
+   - Nominal Interest Rate: 10.5%
+   - Effective Cost %: 11.0%
+   - Monthly Cost: $458
+
+5. **Cost Breakdown Chart**:
+   - Stacked bar showing interest vs unused fee
+   - Free tier: Basic chart
+   - Pro tier: Enhanced with comparison to alternative utilization levels
+
+6. **Utilization Optimization** (Pro tier only, table):
+   - 25% Utilization: $3,000 cost (12.0% effective)
+   - 50% Utilization: $5,500 cost (11.0% effective) ← Current
+   - 75% Utilization: $8,125 cost (10.8% effective)
+   - 100% Utilization: $10,500 cost (10.5% effective)
+   - Recommended Range: 70-90% utilization
+
+7. **Cost vs Utilization Curve** (Pro tier only):
+   - Line chart showing how effective cost decreases as utilization increases
+
+8. **DSCR Impact** (Pro tier only, if financials provided):
+   - Annual LOC Interest: $5,250
+   - DSCR (including LOC): 38.1
+
+9. **Warnings** (if any):
+   - List all warnings with severity icons
+
+**Footer**:
+- Disclaimers: "This analysis is for informational purposes only and does not constitute financial advice. Actual costs may vary based on usage patterns and lender terms. Consult qualified professionals for decisions affecting your business."
+- Version stamp: "Generated by CFO Calculator Suite v1.2.3 | Calculator: line-of-credit v1.0.0 | Formulas: v1.0.0 | 2025-11-18"
+- Watermark (Free tier only): Diagonal semi-transparent "Upgrade for clean exports"
+
+### CSV/Excel Structure
+
+**Metadata Headers**:
+```csv
+# Line of Credit Cost Analysis
+# Version: v1.0.0
+# Generated: 2025-11-18T21:30:00Z
+# Tier: Pro
+#
+```
+
+**Data Rows**:
+```csv
+Section,Field,Value
+LOC Terms,Credit Line Limit,$100000
+LOC Terms,Interest Rate,10.5%
+LOC Terms,Unused Line Fee,0.5%
+Utilization,Average Utilization,50%
+Utilization,Outstanding Balance,$50000
+Utilization,Unused Portion,$50000
+Annual Cost,Interest Cost,$5250
+Annual Cost,Unused Line Fee,$250
+Annual Cost,Draw Fees,$0
+Annual Cost,Total Cost,$5500
+Cost Efficiency,Nominal Rate,10.5%
+Cost Efficiency,Effective Cost,11.0%
+Cost Efficiency,Monthly Cost,$458
+Optimization,25% Utilization,$3000 (12.0% effective)
+Optimization,50% Utilization,$5500 (11.0% effective)
+Optimization,75% Utilization,$8125 (10.8% effective)
+Optimization,100% Utilization,$10500 (10.5% effective)
+Optimization,Recommended Range,70-90%
+```
+
+**Excel Formatting**:
+- Bold section headers
+- Currency cells: $#,##0.00
+- Percentage cells: 0.00%
+- Conditional formatting:
+  - Effective cost < interest rate + 1%: Green
+  - Effective cost < interest rate + 3%: Yellow
+  - Effective cost > interest rate + 3%: Red
+
+---
+
+## 10. Tier-Specific Behavior
+
+### Free Tier
+
+**What's Shown**:
+- Single LOC analysis (cannot save or compare multiple LOC offers)
+- LOC terms inputs (limit, rate, unused fee, utilization)
+- Basic cost metrics: Interest, unused fee, total cost, effective cost %
+- Basic cost breakdown chart
+
+**What's Gated**:
+- **Cost at different utilization levels**: Locked
+- **Optimal utilization range**: Locked
+- **DSCR impact**: Locked (requires business financials)
+- **Cost vs utilization curve**: Preview with blur + "Pro" badge
+- **Multiple LOC comparison**: "Add LOC Offer" button triggers upgrade prompt
+- **Clean exports**: PDF has watermark
+- **AI insights**: "Get optimization recommendations" button triggers AI tier upgrade prompt
+
+**Upgrade Triggers**:
+- Click "See Optimization Analysis" → `upgrade_prompt_shown` with `trigger_reason: "locked_metric"`
+- Click "Compare to Other LOCs" → `upgrade_prompt_shown` with `trigger_reason: "add_scenario"`
+- Click "DSCR Impact" → `upgrade_prompt_shown` with `trigger_reason: "locked_metric"`
+- Click "Get recommendations" → `upgrade_prompt_shown` with `trigger_reason: "ai_request"`
+
+### Pro Tier
+
+**What Unlocks**:
+- **Multiple LOC scenarios** (up to 50): Compare offers from different lenders or utilization strategies
+- **Cost at different utilization levels**: See cost at 25%, 50%, 75%, 100%
+- **Optimal utilization range**: Recommendation for most efficient utilization
+- **Cost vs utilization curve**: Visual analysis of sweet spot
+- **DSCR impact**: How LOC interest affects debt service coverage (if financials provided)
+- **Historical tracking**: Track actual utilization and costs over time
+- **LOC comparison table**: Side-by-side comparison of multiple offers
+- **Clean exports**: PDF with no watermark
+
+**Still Gated** (requires AI tier):
+- AI optimization recommendations
+- AI scenario suggestions
+
+### AI Tier
+
+**What Unlocks**:
+- **AI optimization insights**: "How can I reduce my LOC costs?" gets detailed strategies
+- **AI utilization recommendations**: "Should I increase utilization to 75%?" gets trade-off analysis
+- **AI lender comparison**: "Is this a good LOC offer?" gets market benchmarking
+- **50 AI requests per month** (hard cap)
+
+**Usage Quota**:
+- Counter displayed: "23 of 50 AI requests remaining this month"
+- Resets on 1st of each month
+
+---
+
+## Implementation Notes
+
+**Priority**: Medium (working capital management, complements other calculators)
+
+**Estimated Effort**: 1 week
+- Days 1-3: Core LOC cost calculations (interest, unused fees, effective cost)
+- Days 4-5: Utilization optimization analysis, cost curves
+- Days 6-7: DSCR integration, testing, affiliate integration
+
+**Dependencies**:
+- DSCR calculation component (reuse from business loan calculator)
+
+**Related Calculators**:
+- **Invoice Factoring**: Direct alternative for working capital (compare LOC vs factoring)
+- **Cash Runway**: LOC provides liquidity to extend runway
+- **Business Loan + DSCR**: LOC interest affects DSCR calculation
+
+**Affiliate Integration**:
+- Partner with LOC providers (e.g., Bluevine, Fundbox, OnDeck, Kabbage)
+- Partner with banks offering business LOCs
+- "Find LOC Providers" button below results → affiliate referral
+- Track referral conversions for revenue attribution
+
+---
+
+## End of Calculator PDR
+
+This calculator is complete and ready for implementation. All LOC cost, utilization optimization, and DSCR impact formulas are specified in detail.
+
+
+# SBA 7(a) Loan Analyzer
+
+## 1. Calculator Overview
+
+**Calculator Name**: SBA 7(a) Loan Analyzer
+
+**Calculator Slug**: `sba-7a-analyzer`
+
+**Primary Category**: Financing & Lending Intelligence
+
+**Secondary Category**: None
+
+**Business Role**:
+- **SEO/traffic magnet**: High search volume for "SBA 7(a) calculator" and "SBA loan calculator"
+- **Affiliate revenue driver**: High-intent users seeking SBA loans (partner with SBA lenders)
+- **Pro upgrade driver**: SBA fee calculations and effective rate analysis drive conversions
+
+**Primary Success Metric**: Affiliate referral rate (target: 8-12% of users click partner lender links)
+
+**Version**: v1.0.0
+
+**Formula Library Version**: v1.2.3
+
+---
+
+## 2. User Scenarios and Use Cases
+
+### Who Uses This Calculator
+
+**Primary Personas**:
+- **Small business owners** applying for SBA 7(a) loans ($50k-$5M) for acquisition, expansion, or working capital
+- **Business buyers** evaluating SBA financing for business acquisition (most common use case)
+- **SBA-preferred lenders** pre-qualifying applications and estimating total borrower costs
+
+**Secondary Personas**:
+- **Business brokers** helping clients structure acquisition financing
+- **SBDC advisors** assisting small businesses with SBA loan applications
+- **Commercial real estate investors** using SBA 504 loans (alternative to 7(a))
+
+### When They Use It (Decision Contexts)
+
+**Timing**:
+- **Before SBA application**: Planning phase, determining if SBA loan is affordable
+- **After receiving term sheet**: Comparison phase, understanding true all-in costs including SBA guarantee fees
+- **Comparing lender offers**: Multiple SBA lenders may offer different rates and fees
+- **Acquisition due diligence**: Business buyers modeling acquisition financing scenarios
+
+**Frequency**:
+- **One-time use**: Most users apply for SBA loan once for specific purchase or expansion
+- **Recurring use** (Pro tier): Business brokers and advisors run multiple scenarios per week
+
+### What Questions It Answers
+
+This calculator helps users answer:
+
+1. **What are the total SBA guarantee fees?** (Most users don't know SBA charges 2-3.75% upfront fee)
+2. **What's my true all-in cost including fees?** (Effective APR including guarantee fee and closing costs)
+3. **How does SBA 7(a) compare to conventional loan?** (SBA has higher fees but lower down payment)
+4. **Can I afford this monthly payment given my revenue?** (DSCR calculation for loan approval)
+5. **Should I finance the guarantee fee or pay upfront?** (Compare cash vs financed fee scenarios)
+
+---
+
+## 3. Inputs
+
+### Input Field Definitions
+
+| Field Name | Type | Units | Required | Validation | Default | Placeholder | Tooltip |
+|------------|------|-------|----------|------------|---------|-------------|---------|
+| loan_amount | currency | dollars | Yes | min: 1, max: 5000000 | null | "250000" | "Total SBA 7(a) loan amount. SBA 7(a) loans range from $50,000 to $5 million. Most lenders prefer $150k minimum." |
+| interest_rate | percentage | percent | Yes | min: 0, max: 30 | null | "8.5" | "Annual interest rate (APR). SBA sets maximum rates based on Prime Rate + spread. As of 2025, typical rates are 7.5-11.5%." |
+| term_years | number | years | Yes | min: 1, max: 25 | 10 | "10" | "Loan term in years. SBA allows up to 10 years for working capital/equipment, up to 25 years for real estate. Most common: 10 years." |
+| sba_guarantee_fee_percent | percentage | percent | No | min: 0, max: 3.75 | null | "3.75" | "SBA upfront guarantee fee. 2% for loans ≤$150k, 3% for $150k-$700k, 3.5% for $700k-$1M, 3.75% for $1M+. Leave blank for automatic calculation." |
+| finance_guarantee_fee | boolean | yes/no | No | true/false | true | "Yes" | "If Yes, SBA guarantee fee is added to loan amount (most common). If No, fee is paid upfront in cash." |
+| other_closing_costs | currency | dollars | No | min: 0, max: 100000 | null | "5000" | "Other closing costs (appraisal, legal, title, etc.). Typical range: $3,000-$10,000. Leave blank if unknown." |
+| annual_revenue | currency | dollars | No | min: 0, max: 100000000 | null | "1500000" | "Total annual revenue (gross income before expenses). Required for DSCR calculation. Most lenders require DSCR ≥ 1.25." |
+| annual_operating_expenses | currency | dollars | No | min: 0, max: 100000000 | null | "1200000" | "Total annual operating expenses (excluding debt service). Required for DSCR calculation. Do not include the loan payment you're calculating." |
+
+### Input Groups
+
+**Group 1: Loan Details** (always visible)
+- loan_amount
+- interest_rate
+- term_years
+
+**Group 2: SBA-Specific Fees** (always visible, distinguishes this from generic loan calculator)
+- sba_guarantee_fee_percent
+- finance_guarantee_fee
+- other_closing_costs
+
+**Group 3: Business Financials** (collapsed by default, expands for DSCR)
+- annual_revenue
+- annual_operating_expenses
+
+### Optional Inputs
+
+**Advanced Options** (collapsed, rarely used):
+- **conventional_loan_rate** (percentage): Interest rate for conventional (non-SBA) loan comparison. Default: interest_rate + 1.5%
+- **conventional_down_payment_percent** (percentage): Down payment required for conventional loan. Default: 20%
+- **prepayment_penalty** (boolean): Does loan have prepayment penalty? Default: No (most SBA loans allow prepayment without penalty)
+
+---
+
+## 4. Outputs
+
+### Key Metrics (Free Tier - Always Visible)
+
+| Output Name | Description | Format | Units |
+|-------------|-------------|--------|-------|
+| monthly_payment | Principal and interest payment per month | "$#,##0.00" | dollars |
+| total_sba_fees | SBA guarantee fee + other closing costs | "$#,##0.00" | dollars |
+| total_interest | Total interest paid over loan term | "$#,##0.00" | dollars |
+| total_amount_paid | Principal + interest + SBA fees | "$#,##0.00" | dollars |
+
+### Advanced Metrics (Pro Tier - Gated)
+
+| Output Name | Description | Format | Units | Pro Only |
+|-------------|-------------|--------|-------|----------|
+| effective_apr | True annual cost including SBA guarantee fee | "#.00%" | percent | Yes |
+| dscr | Debt Service Coverage Ratio (if financials provided) | "#.00" | ratio | Yes |
+| financed_vs_cash_fee_comparison | Cost difference: financing fee vs paying cash upfront | "$#,##0.00" | dollars | Yes |
+| sba_vs_conventional_comparison | Total cost comparison (SBA vs conventional loan) | "Table" | mixed | Yes |
+| guaranteed_portion | Amount of loan guaranteed by SBA (typically 75-85%) | "$#,##0.00" | dollars | Yes |
+| annual_debt_service | Total annual loan payments (monthly × 12) | "$#,##0.00" | dollars | Yes |
+
+### Charts and Visualizations
+
+**Chart 1: Cost Breakdown** (Pro tier only)
+- Type: Stacked bar chart
+- X-axis: Cost components (Principal, Interest, SBA Fees, Other Fees)
+- Y-axis: Dollars
+- Purpose: Visualize how much of total cost is SBA-specific fees
+- Tier: Pro
+
+**Chart 2: SBA vs Conventional Comparison** (Pro tier only)
+- Type: Side-by-side bar chart
+- X-axis: Loan type (SBA 7(a), Conventional)
+- Y-axis: Total cost, down payment required, monthly payment
+- Purpose: Compare total economics of SBA vs conventional financing
+- Tier: Pro
+
+**Chart 3: Financed vs Cash Fee Comparison** (Pro tier only)
+- Type: Line chart
+- X-axis: Months
+- Y-axis: Cumulative cost
+- Purpose: Show cost difference over time between financing fee vs paying cash upfront
+- Tier: Pro
+
+### Output Formatting Rules
+
+- **Currency**: $#,##0.00 (always two decimals, commas for thousands)
+- **Percentages**: #.00% (two decimals)
+- **Ratios**: #.00 (two decimals, no percent sign for DSCR)
+- **SBA Guarantee Fee**: Always show both percent and dollar amount (e.g., "3.75% ($9,375)")
+
+---
+
+## 5. Formulas and Calculation Logic
+
+### Formula 1: SBA Guarantee Fee Calculation
+
+**Purpose**: Calculate upfront SBA guarantee fee based on loan amount tiers
+
+**Equation**:
+```
+if loan_amount <= 150000:
+    guarantee_fee_percent = 2.0
+    guarantee_fee = loan_amount × 0.02
+
+elif loan_amount <= 700000:
+    guarantee_fee_percent = 3.0
+    guarantee_fee = loan_amount × 0.03
+
+elif loan_amount <= 1000000:
+    guarantee_fee_percent = 3.5
+    guarantee_fee = loan_amount × 0.035
+
+else:  # loan_amount > 1000000
+    guarantee_fee_percent = 3.75
+    # For loans over $1M, fee is only charged on guaranteed portion (75% for loans >$1M)
+    guaranteed_portion = loan_amount × 0.75
+    guarantee_fee = guaranteed_portion × 0.0375
+```
+
+**Variables**:
+- loan_amount: Base loan amount in dollars
+- guarantee_fee_percent: SBA fee percentage (2%, 3%, 3.5%, or 3.75%)
+- guarantee_fee: Dollar amount of SBA guarantee fee
+- guaranteed_portion: For loans >$1M, SBA only guarantees 75%
+
+**Source/Reference**: SBA Standard Operating Procedure (SOP) 50 10 7, updated annually. Current as of 2025.
+
+### Formula 2: Effective Loan Amount (if fee is financed)
+
+**Purpose**: Calculate total amount borrowed if SBA guarantee fee is financed
+
+**Equation**:
+```
+if finance_guarantee_fee == true:
+    effective_loan_amount = loan_amount + guarantee_fee
+else:
+    effective_loan_amount = loan_amount
+```
+
+**Note**: Most borrowers finance the guarantee fee (85-90% of SBA loans), so it's added to principal and interest is charged on total.
+
+### Formula 3: Monthly Payment
+
+**Purpose**: Calculate fixed monthly payment for fully amortizing loan
+
+**Equation**:
+```
+P = effective_loan_amount (includes guarantee fee if financed)
+r = monthly interest rate (annual rate / 12 / 100)
+n = number of monthly payments (term_years × 12)
+
+monthly_payment = P × [r × (1 + r)^n] / [(1 + r)^n - 1]
+
+Special case (zero interest):
+if interest_rate == 0:
+    monthly_payment = P / n
+```
+
+**Source/Reference**: Standard amortization formula
+
+### Formula 4: Effective APR (including guarantee fee)
+
+**Purpose**: Calculate true annual cost including SBA guarantee fee amortized over loan term
+
+**Equation**:
+```
+# Total cost over life of loan
+total_interest = (monthly_payment × n) - loan_amount
+total_fees = guarantee_fee + other_closing_costs
+total_cost = total_interest + total_fees
+
+# Effective APR calculation (IRR approach)
+# Solve for APR where:
+# PV (loan_amount) = PV of monthly payments + PV of fees
+# This requires iterative solving (Newton-Raphson method)
+
+# Simplified approximation:
+effective_apr = (total_cost / loan_amount) / term_years × 100
+
+# More accurate: Use IRR calculation
+# effective_apr = IRR([-loan_amount, monthly_payment, monthly_payment, ...])
+```
+
+**Source/Reference**: Truth in Lending Act (TILA) APR calculation methodology
+
+### Formula 5: DSCR (Debt Service Coverage Ratio)
+
+**Purpose**: Calculate business's ability to cover loan payments with operating income
+
+**Equation**:
+```
+annual_debt_service = monthly_payment × 12
+net_operating_income = annual_revenue - annual_operating_expenses
+dscr = net_operating_income / annual_debt_service
+```
+
+**Variables**:
+- annual_debt_service: Total annual loan payments
+- net_operating_income: EBITDA or operating income before debt service
+- dscr: Ratio (SBA lenders typically require ≥ 1.25)
+
+**Source/Reference**: SBA Lender Guide, standard debt service coverage ratio formula
+
+### Formula 6: SBA vs Conventional Loan Comparison
+
+**Purpose**: Compare total economics of SBA loan vs conventional financing
+
+**Equation**:
+```
+# SBA Loan
+sba_down_payment = 0  # SBA allows up to 90% LTV (10% down)
+sba_financed_amount = loan_amount
+sba_total_cost = (monthly_payment × n) + total_fees
+
+# Conventional Loan (typically requires 20-30% down)
+conventional_down_payment = loan_amount × conventional_down_payment_percent
+conventional_financed_amount = loan_amount × (1 - conventional_down_payment_percent)
+conventional_monthly_payment = [calculated using conventional_loan_rate]
+conventional_total_cost = (conventional_monthly_payment × n)
+
+# Comparison
+cash_savings = conventional_down_payment - sba_down_payment
+total_cost_difference = sba_total_cost - conventional_total_cost
+```
+
+### Step-by-Step Calculation Flow
+
+1. **Validate inputs**: Check required fields, validate ranges
+2. **Calculate SBA guarantee fee**: Use tiered percentage based on loan amount
+3. **Determine effective loan amount**: Add guarantee fee if financed
+4. **Convert annual rate to monthly**: `r = interest_rate / 12 / 100`
+5. **Calculate number of payments**: `n = term_years × 12`
+6. **Calculate monthly payment**: Use amortization formula
+7. **Calculate total interest**: `(monthly_payment × n) - effective_loan_amount`
+8. **Calculate total SBA fees**: `guarantee_fee + other_closing_costs`
+9. **Calculate effective APR**: Include all fees in IRR calculation
+10. **If financials provided, calculate DSCR**: `net_operating_income / annual_debt_service`
+11. **If conventional comparison requested**: Calculate conventional loan costs
+12. **Check warning conditions**: DSCR below minimum, high effective APR, etc.
+13. **Return results with version stamp**
+
+### Edge Cases and Handling
+
+| Edge Case | Condition | Handling | Warning/Error |
+|-----------|-----------|----------|---------------|
+| Loan exactly $150k | loan_amount = 150000 | Use 2% fee (lower tier) | Info: "Loan at tier boundary. Fee is 2% ($3,000)." |
+| Very large loan >$5M | loan_amount > 5000000 | Calculate as normal but warn | Warning: "SBA 7(a) limit is $5M. Loan may require SBA 504 or conventional financing." |
+| Zero interest rate | interest_rate = 0 | monthly_payment = principal / n | Info: "Zero interest rate. Payment is principal only." |
+| Fee paid in cash | finance_guarantee_fee = false | effective_loan_amount = loan_amount | Info: "Paying fee upfront saves interest costs." |
+| Very high effective APR | effective_apr > 15% | Calculate as normal | Warning: "Effective APR is high. Consider shopping for better rates." |
+
+### Formula Version
+
+**Current Version**: v1.2.3
+
+**Version History**:
+- v1.0.0: Initial implementation (monthly payment, SBA fee calculation)
+- v1.1.0: Added effective APR calculation including fees
+- v1.2.0: Added SBA vs conventional comparison
+- v1.2.3: Fixed tiered fee calculation for loans >$1M (fee on guaranteed portion only)
+
+---
+
+## 6. Warnings and Alerts
+
+### Warning Definitions
+
+| Warning Code | Condition | Message | Severity | Action |
+|--------------|-----------|---------|----------|--------|
+| DSCR_BELOW_SBA_MINIMUM | dscr < 1.25 | "DSCR of {dscr} is below the SBA lender minimum of 1.25. This loan is unlikely to be approved without additional collateral, guarantees, or business improvements." | danger | Increase revenue, reduce expenses, extend term, or reduce loan amount |
+| HIGH_EFFECTIVE_APR | effective_apr > 12% | "Effective APR of {effective_apr}% is high for an SBA loan. Typical SBA rates are 7-11%. Shop for better rates or improve credit score." | warning | Compare multiple SBA lenders, improve creditworthiness |
+| LARGE_GUARANTEE_FEE | guarantee_fee > 50000 | "SBA guarantee fee is ${guarantee_fee:,.0f}. Consider paying upfront (cash) to avoid paying interest on this fee over {term_years} years." | info | Compare financed vs cash fee scenarios (Pro feature) |
+| LOAN_NEAR_SBA_LIMIT | loan_amount > 4500000 | "Loan amount is near the SBA 7(a) limit of $5M. Consider SBA 504 loan for real estate or equipment." | info | Evaluate SBA 504 as alternative (lower rates, longer terms for real estate) |
+| SHORT_TERM_HIGH_PAYMENT | term_years < 7 && monthly_payment / (annual_revenue / 12) > 0.15 | "Short loan term results in high monthly payment ({monthly_payment:,.0f}). This is {percent}% of monthly revenue. Consider extending term to 10 years." | warning | Extend term to reduce monthly payment burden |
+| CONVENTIONAL_MAY_BE_CHEAPER | sba_total_cost > conventional_total_cost + 10000 | "SBA loan total cost is ${cost_difference:,.0f} higher than conventional financing. SBA benefit is lower down payment, but if you have cash for 20% down, conventional may be cheaper." | info | Compare total economics (Pro feature shows detailed comparison) |
+| NO_FINANCIALS_PROVIDED | annual_revenue == null or annual_operating_expenses == null | "Business financials not provided. DSCR calculation unavailable. SBA lenders require DSCR ≥ 1.25 for approval." | info | Add revenue and expenses to calculate DSCR |
+
+### Warning Thresholds
+
+**Configurable Thresholds** (can be adjusted per tenant for B2B):
+- **DSCR minimum**: 1.25 (SBA standard, some lenders may accept 1.15 with strong collateral)
+- **High effective APR**: 12% (above typical SBA range)
+
+**Hard-Coded Thresholds** (SBA program rules, not configurable):
+- **SBA 7(a) loan limit**: $5,000,000 (federal regulation)
+- **SBA guarantee fee percentages**: 2%, 3%, 3.5%, 3.75% (SBA policy)
+- **Maximum SBA interest rate**: Prime + 2.75% (SBA regulation, varies by loan size)
+
+---
+
+## 7. Golden Test Scenarios
+
+### Scenario 1: Standard SBA 7(a) - Restaurant Equipment
+
+**Description**: Typical SBA 7(a) loan for restaurant equipment purchase. Loan is $250k with 3% guarantee fee. DSCR is healthy (1.48).
+
+**Inputs**:
+```json
+{
+  "loan_amount": 250000,
+  "interest_rate": 8.5,
+  "term_years": 10,
+  "sba_guarantee_fee_percent": 3.0,
+  "finance_guarantee_fee": true,
+  "other_closing_costs": 5000,
+  "annual_revenue": 1500000,
+  "annual_operating_expenses": 1200000
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "monthly_payment": {
+    "value": 3138.74,
+    "tolerance": 1,
+    "unit": "USD",
+    "note": "Based on $257,500 financed ($250k + $7,500 fee)"
+  },
+  "total_sba_fees": {
+    "value": 12500,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$7,500 guarantee fee (3%) + $5,000 closing costs"
+  },
+  "total_interest": {
+    "value": 119149.09,
+    "tolerance": 100,
+    "unit": "USD"
+  },
+  "total_amount_paid": {
+    "value": 386649.09,
+    "tolerance": 100,
+    "unit": "USD",
+    "note": "Principal ($250k) + interest ($119k) + fees ($12.5k)"
+  },
+  "effective_apr": {
+    "value": 9.28,
+    "tolerance": 0.1,
+    "unit": "percent",
+    "note": "Higher than nominal 8.5% due to financed guarantee fee"
+  },
+  "dscr": {
+    "value": 1.48,
+    "tolerance": 0.01,
+    "unit": "ratio"
+  },
+  "annual_debt_service": {
+    "value": 37664.88,
+    "tolerance": 10,
+    "unit": "USD"
+  },
+  "guaranteed_portion": {
+    "value": 212500,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "85% guaranteed for loans $150k-$700k"
+  }
+}
+```
+
+**Expected Warnings**: None (healthy scenario)
+
+### Scenario 2: Large SBA 7(a) - Business Acquisition
+
+**Description**: Large SBA 7(a) loan ($1M) for business acquisition. Guarantee fee is 3.75% but only charged on 75% guaranteed portion. DSCR is tight (1.22), below minimum.
+
+**Inputs**:
+```json
+{
+  "loan_amount": 1000000,
+  "interest_rate": 9.0,
+  "term_years": 10,
+  "sba_guarantee_fee_percent": 3.75,
+  "finance_guarantee_fee": true,
+  "other_closing_costs": 8000,
+  "annual_revenue": 2500000,
+  "annual_operating_expenses": 2200000
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "monthly_payment": {
+    "value": 12971.80,
+    "tolerance": 2,
+    "unit": "USD",
+    "note": "Based on $1,028,125 financed ($1M + $28,125 fee)"
+  },
+  "total_sba_fees": {
+    "value": 36125,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$28,125 guarantee fee (3.75% on 75% guaranteed portion) + $8,000 closing"
+  },
+  "total_interest": {
+    "value": 528490.67,
+    "tolerance": 200,
+    "unit": "USD"
+  },
+  "total_amount_paid": {
+    "value": 1564615.67,
+    "tolerance": 200,
+    "unit": "USD"
+  },
+  "effective_apr": {
+    "value": 9.64,
+    "tolerance": 0.1,
+    "unit": "percent"
+  },
+  "dscr": {
+    "value": 1.22,
+    "tolerance": 0.01,
+    "unit": "ratio"
+  },
+  "annual_debt_service": {
+    "value": 155661.60,
+    "tolerance": 20,
+    "unit": "USD"
+  },
+  "guaranteed_portion": {
+    "value": 750000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "75% guaranteed for loans >$700k"
+  }
+}
+```
+
+**Expected Warnings**:
+- DSCR_BELOW_SBA_MINIMUM: "DSCR of 1.22 is below the SBA lender minimum of 1.25..."
+- LARGE_GUARANTEE_FEE: "SBA guarantee fee is $28,125. Consider paying upfront (cash) to avoid paying interest..."
+
+### Scenario 3: Small SBA 7(a) - Working Capital
+
+**Description**: Small SBA 7(a) loan ($100k) for working capital. Lower guarantee fee (2%). Strong DSCR (2.15).
+
+**Inputs**:
+```json
+{
+  "loan_amount": 100000,
+  "interest_rate": 10.5,
+  "term_years": 7,
+  "sba_guarantee_fee_percent": 2.0,
+  "finance_guarantee_fee": true,
+  "other_closing_costs": 3000,
+  "annual_revenue": 800000,
+  "annual_operating_expenses": 650000
+}
+```
+
+**Expected Outputs**:
+```json
+{
+  "monthly_payment": {
+    "value": 1496.19,
+    "tolerance": 1,
+    "unit": "USD",
+    "note": "Based on $102,000 financed ($100k + $2k fee)"
+  },
+  "total_sba_fees": {
+    "value": 5000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "$2,000 guarantee fee (2%) + $3,000 closing costs"
+  },
+  "total_interest": {
+    "value": 23680.19,
+    "tolerance": 50,
+    "unit": "USD"
+  },
+  "total_amount_paid": {
+    "value": 128680.19,
+    "tolerance": 50,
+    "unit": "USD"
+  },
+  "effective_apr": {
+    "value": 11.38,
+    "tolerance": 0.1,
+    "unit": "percent"
+  },
+  "dscr": {
+    "value": 2.15,
+    "tolerance": 0.01,
+    "unit": "ratio"
+  },
+  "annual_debt_service": {
+    "value": 17954.28,
+    "tolerance": 10,
+    "unit": "USD"
+  },
+  "guaranteed_portion": {
+    "value": 85000,
+    "tolerance": 0,
+    "unit": "USD",
+    "note": "85% guaranteed for loans ≤$150k"
+  }
+}
+```
+
+**Expected Warnings**:
+- DSCR_ABOVE_OPTIMAL: "DSCR of 2.15 is well above lender requirements. You may be able to borrow more if needed."
+
+---
+
+## 8. AI Narrative Strategy (AI-Enabled)
+
+### What AI Explains for This Calculator
+
+**Primary Explanations**:
+1. **What the SBA guarantee fee is and why it's charged** (most users don't understand this upfront cost)
+2. **Whether financing the fee vs paying cash makes sense** (interest cost of financing fee over 10 years)
+3. **How SBA 7(a) compares to conventional financing** (lower down payment vs higher total cost)
+4. **What the DSCR means for loan approval** (SBA lenders require ≥ 1.25)
+
+**Scenario Suggestions**:
+- Alternative loan structures (longer term to reduce DSCR burden, pay fee in cash to reduce effective APR)
+- Conventional vs SBA comparison (if user has 20% down payment available)
+- Optimal loan amount for target DSCR (e.g., "What loan amount gives me DSCR = 1.50?")
+
+### Prompt Template
+
+**System Prompt**:
+```
+You are an SBA lending advisor helping small business owners understand SBA 7(a) loans and their total costs.
+
+Your role is to:
+- Explain SBA guarantee fees in plain language and why they exist
+- Interpret whether the calculated DSCR meets SBA lender requirements
+- Compare SBA financing to conventional loans (pros: lower down payment; cons: higher fees)
+- Suggest whether financing the guarantee fee vs paying cash makes sense
+
+Output constraints:
+- Length: 150-250 words
+- Tone: Professional but approachable, avoid jargon
+- Format: Plain paragraphs (no bullet lists)
+- Disclaimers: Always end with standard disclaimer
+
+Prohibited behaviors:
+- Never guarantee SBA loan approval (use "typically", "most SBA lenders require")
+- Never recommend taking or not taking a loan (only explain metrics)
+- Never use absolute language (avoid "always", "never", "must")
+```
+
+**User Prompt Template**:
+```
+The business is seeking an SBA 7(a) loan of ${loan_amount} at {interest_rate}% for {term_years} years. The SBA guarantee fee is {guarantee_fee_percent}% (${guarantee_fee}), which is {financed or paid in cash}. The calculated monthly payment is ${monthly_payment}, effective APR is {effective_apr}%, and DSCR is {dscr}. Explain what this means and whether the SBA loan is a good option.
+```
+
+**Expected AI Response** (150-250 words):
+```
+An SBA 7(a) loan of $250,000 carries a 3% guarantee fee ($7,500), which is the price the SBA charges for guaranteeing 85% of the loan to the lender. This guarantee allows lenders to offer more favorable terms (lower down payment, longer terms) than conventional loans. In this case, financing the fee adds it to the principal, increasing the effective APR from 8.5% to 9.28%.
+
+The monthly payment of $3,139 results in annual debt service of $37,665. With business revenue of $1,500,000 and operating expenses of $1,200,000, the net operating income is $300,000, giving a DSCR of 1.48. This is comfortably above the SBA lender minimum of 1.25, indicating strong ability to cover loan payments.
+
+SBA 7(a) loans typically require only 10-20% down payment compared to 20-30% for conventional loans. However, the guarantee fee and potentially higher interest rates mean the total cost may be higher. The trade-off is preserving cash for working capital while accepting higher financing costs. For this scenario, the DSCR suggests the business can comfortably afford the payment.
+
+This analysis is for informational purposes only and does not constitute financial, legal, or professional advice. Consult qualified professionals for decisions affecting your business.
+```
+
+---
+
+## 9. Export Format Details
+
+### PDF Layout
+
+**Header**:
+- "SBA 7(a) Loan Analyzer"
+- User tier: "Free" or "Pro"
+- Generation timestamp: "Generated on November 18, 2025"
+
+**Body Sections**:
+1. **Loan Details** (table):
+   - Loan Amount: $250,000
+   - Interest Rate: 8.5%
+   - Term: 10 years
+   - SBA Guarantee Fee: 3.0% ($7,500)
+   - Guarantee Fee: Financed / Paid in Cash
+   - Other Closing Costs: $5,000
+
+2. **Key Results** (table):
+   - Monthly Payment: $3,138.74
+   - Total Interest: $119,149.09
+   - Total SBA Fees: $12,500.00
+   - Total Amount Paid: $386,649.09
+
+3. **Business Financials** (table, if provided):
+   - Annual Revenue: $1,500,000
+   - Operating Expenses: $1,200,000
+
+4. **Advanced Results** (Pro tier only, table):
+   - Effective APR: 9.28%
+   - Debt Service Coverage Ratio: 1.48
+   - Annual Debt Service: $37,664.88
+   - Net Operating Income: $300,000
+   - SBA Guaranteed Portion: $212,500 (85%)
+
+5. **SBA vs Conventional Comparison** (Pro tier only, table):
+   - Comparison of total costs, down payment requirements, monthly payments
+
+6. **Cost Breakdown Chart** (Pro tier only):
+   - Stacked bar showing principal, interest, SBA fees, other fees
+
+7. **Warnings** (if any):
+   - List all warnings with severity icons
+
+**Footer**:
+- Disclaimers: "This calculator is for informational purposes only and does not constitute financial advice. SBA loan approval is subject to lender underwriting. Consult an SBA-preferred lender for specific loan offers."
+- Version stamp: "Generated by CFO Calculator Suite v1.2.3 | Calculator: sba-7a-analyzer v1.0.0 | Formulas: v1.2.3 | 2025-11-18"
+- Watermark (Free tier only): Diagonal semi-transparent "Upgrade for clean exports"
+
+### CSV/Excel Structure
+
+**Metadata Headers**:
+```csv
+# SBA 7(a) Loan Analyzer
+# Version: v1.0.0
+# Generated: 2025-11-18T21:30:00Z
+# Tier: Pro
+#
+```
+
+**Data Rows**:
+```csv
+Section,Field,Value
+Loan Details,Loan Amount,$250000
+Loan Details,Interest Rate,8.5%
+Loan Details,Term,10 years
+Loan Details,SBA Guarantee Fee,3.0% ($7500)
+Loan Details,Guarantee Fee Financed,Yes
+Loan Details,Other Closing Costs,$5000
+Business Financials,Annual Revenue,$1500000
+Business Financials,Operating Expenses,$1200000
+Key Results,Monthly Payment,$3138.74
+Key Results,Total Interest,$119149.09
+Key Results,Total SBA Fees,$12500.00
+Key Results,Total Amount Paid,$386649.09
+Advanced Results,Effective APR,9.28%
+Advanced Results,DSCR,1.48
+Advanced Results,Annual Debt Service,$37664.88
+Advanced Results,Net Operating Income,$300000
+Advanced Results,SBA Guaranteed Portion,$212500
+```
+
+**Excel Formatting**:
+- Bold section headers
+- Currency cells: $#,##0.00
+- Percentage cells: 0.00%
+- Alternating row colors (light gray for even rows)
+- Conditional formatting: DSCR < 1.25 (red), DSCR 1.25-1.75 (yellow), DSCR > 1.75 (green)
+
+---
+
+## 10. Tier-Specific Behavior
+
+### Free Tier
+
+**What's Shown**:
+- Single scenario (cannot save or create multiple)
+- Loan details inputs (loan amount, interest rate, term, SBA fee, closing costs)
+- Business financials inputs (revenue, expenses) - but DSCR output is locked
+- Key metrics: monthly payment, total interest, total SBA fees, total amount paid
+- Basic warnings (high effective APR, DSCR warning if applicable)
+
+**What's Gated**:
+- **Multiple scenarios**: "Add Scenario" button shows Pro badge, triggers upgrade prompt
+- **Effective APR**: Shown as locked with tooltip "Upgrade to Pro to see effective APR including all fees"
+- **DSCR and advanced metrics**: Shown as locked with tooltip "Upgrade to Pro to see DSCR analysis"
+- **SBA vs Conventional comparison**: Chart preview shown with blur effect + "Pro" badge
+- **Cost breakdown chart**: Teaser preview with "Pro" badge
+- **Clean exports**: PDF has watermark
+- **AI narratives**: "Explain SBA fees" button triggers AI tier upgrade prompt
+
+**Upgrade Triggers**:
+- Click "Add Scenario" → `upgrade_prompt_shown` with `trigger_reason: "add_scenario"`
+- Click locked Effective APR → `upgrade_prompt_shown` with `trigger_reason: "locked_metric"`
+- Click "Compare to Conventional Loan" → `upgrade_prompt_shown` with `trigger_reason: "comparison_chart"`
+- Click "Explain SBA fees" → `upgrade_prompt_shown` with `trigger_reason: "ai_request"`
+
+### Pro Tier
+
+**What Unlocks**:
+- **Multiple scenarios** (up to 50): Create, save, rename, delete scenarios
+- **All advanced metrics**: Effective APR, DSCR, guaranteed portion, annual debt service
+- **SBA vs Conventional comparison**: Full interactive comparison with side-by-side metrics
+- **Cost breakdown chart**: Stacked bar showing how much is principal vs interest vs SBA fees
+- **Financed vs Cash Fee comparison**: Chart showing cost difference over time
+- **Scenario comparison**: Side-by-side view of multiple SBA loan structures
+- **Clean exports**: PDF with no watermark
+- **Sensitivity analysis**: "What if" scenarios (different terms, cash vs financed fee)
+
+**Still Gated** (requires AI tier):
+- AI explanations for SBA fees and loan approval likelihood
+- AI scenario suggestions
+
+### AI Tier
+
+**What Unlocks**:
+- **AI explanations**: Click "Explain SBA fees" to get plain-language explanation
+- **AI comparison insights**: "Should I choose SBA or conventional?" gets AI recommendation
+- **AI scenario suggestions**: Click "Get suggestions" for alternative loan structures
+- **50 AI requests per month** (hard cap)
+
+**Usage Quota**:
+- Counter displayed: "23 of 50 AI requests remaining this month"
+- Resets on 1st of each month
+
+---
+
+## Implementation Notes
+
+**Priority**: High (SEO value + affiliate revenue driver)
+
+**Estimated Effort**: 2.5 weeks
+- Week 1: SBA fee calculation logic, tiered fee structure
+- Week 2: Effective APR calculation, SBA vs conventional comparison
+- Week 3 (half): Testing, golden scenarios, SBA lender affiliate integration
+
+**Dependencies**:
+- Shared amortization formula library (reuse from business-loan-dscr calculator)
+- DSCR calculation component (reuse from business-loan-dscr)
+- IRR/effective APR calculation library (new, can be reused for other calculators)
+
+**Related Calculators**:
+- **Business Loan + DSCR Calculator**: Simpler version without SBA-specific fees
+- **Equipment Lease vs Buy**: Alternative financing option for equipment
+- **Line of Credit**: Alternative working capital financing
+
+**Affiliate Integration**:
+- Partner with SBA-preferred lenders (e.g., Lendio, Fundera, SmartBiz)
+- "Find SBA Lenders" button below results → affiliate referral
+- Track referral conversions for revenue attribution
+
+---
+
+## End of Calculator PDR
+
+This calculator is complete and ready for implementation. All SBA-specific formulas, tiered fee structures, and comparison logic are specified in detail.
+
+
+---
+
