@@ -1,10 +1,9 @@
 # CFO Business Intelligence Calculator Suite
-## Complete Product Design Review
+## Complete Product Design Review (PDR)
 
-**Version**: v1.0  
-**Date**: November 18, 2025  
-**Document Status**: Complete  
-**Total Pages**: ~220 pages
+**Version:** 2.0.0  
+**Date:** November 18, 2025  
+**Status:** Complete (Including JSON Assembly Line)
 
 ---
 
@@ -74,15 +73,21 @@
 - 10.4 Support & Maintenance
 
 ## Section 11: Calculator PDRs
-- 11.1 Calculator PDR Template
-- 11.2 Business Loan + DSCR
-- 11.3 SBA 7(a) Analyzer
-- 11.4 Equipment Lease vs Buy
-- 11.5 Cash Runway
-- 11.6 Breakeven & Margin
-- 11.7 Invoice Factoring
-- 11.8 Line of Credit
-- 11.9 Business Valuation
+- Business Loan + DSCR Calculator
+- SBA 7(a) Loan Analyzer
+- Equipment Lease vs Buy
+- Cash Runway & Burn Rate
+- Breakeven & Contribution Margin
+- Invoice Factoring / AR Financing
+- Line of Credit Utilization
+- Simple Business Valuation
+
+## Section 12: JSON Assembly Line System
+- 12.1 Assembly Line Architecture
+- 12.2 JSON Schema Specification
+- 12.3 Formula Library API
+- 12.4 Deployment Pipeline
+- 12.5 Calculator Examples
 
 ---
 
@@ -24698,6 +24703,4355 @@ Advanced Results,SBA Guaranteed Portion,$212500
 ## End of Calculator PDR
 
 This calculator is complete and ready for implementation. All SBA-specific formulas, tiered fee structures, and comparison logic are specified in detail.
+
+
+---
+
+
+# Section 12: JSON Assembly Line System
+
+# 12.1 Assembly Line Architecture
+
+## Overview
+
+The JSON Assembly Line is the core system that enables rapid creation and deployment of calculators from simple JSON configuration files. This architecture transforms the calculator development process from weeks of custom coding to minutes of configuration, enabling the platform to scale from 8 MVP calculators to 450+ calculators.
+
+**Core principle:** One JSON file = one fully functional calculator, deployed in 5-10 minutes.
+
+**Key benefits:**
+- **Speed:** 5-10 minutes from JSON creation to live calculator
+- **Consistency:** All calculators follow the same design patterns (Section 4)
+- **Maintainability:** Centralized formula library, no code duplication
+- **Quality:** Automated validation and testing before deployment
+- **Scale:** Non-technical team members can create calculators
+
+---
+
+## System Components
+
+### 1. JSON Configuration Files
+
+**Purpose:** The single source of truth for each calculator.
+
+**Location structure:**
+```
+/calculators/configs/
+  ├── business-loan-dscr.json
+  ├── sba-7a-analyzer.json
+  ├── equipment-lease-buy.json
+  ├── cash-runway.json
+  └── [450+ more calculators]
+```
+
+**Key characteristics:**
+- **One file per calculator** – Each JSON file defines a complete calculator
+- **Version controlled** – Stored in Git, full change history
+- **Human-readable** – Non-developers can understand and edit
+- **Self-documenting** – Field names and structure are intuitive
+- **Lightweight** – Typical size: 5-15 KB per calculator
+
+**Example minimal structure:**
+```json
+{
+  "calculator_meta": {
+    "calculator_slug": "simple-loan-payment",
+    "calculator_name": "Simple Loan Payment Calculator",
+    "calculator_version": "1.0.0",
+    "category": "financing-lending"
+  },
+  "inputs": [...],
+  "calculations": [...],
+  "outputs": {...}
+}
+```
+
+**Validation:** Every JSON file is validated against the schema (Section 12.2) before deployment.
+
+---
+
+### 2. Calculator Engine (Processor)
+
+**Purpose:** The brain of the assembly line that transforms JSON into working calculators.
+
+**Core responsibilities:**
+
+1. **Schema Validation**
+   - Validates JSON against schema (Section 12.2)
+   - Ensures all required fields are present
+   - Checks data types and constraints
+   - Returns detailed error messages if invalid
+
+2. **Component Generation**
+   - Reads `inputs` section → generates React input components
+   - Reads `outputs` section → generates result cards
+   - Reads `warnings` section → generates alert components
+   - Applies design system (Section 4) automatically
+
+3. **Formula Wiring**
+   - Reads `calculations` section
+   - Maps calculation steps to formula library functions
+   - Manages data flow between calculation steps
+   - Handles dependencies (step B needs output from step A)
+
+4. **Tier Gating Application**
+   - Reads `tier_config` section
+   - Applies feature flags based on user tier
+   - Hides/shows metrics according to tier rules
+   - Enforces scenario limits
+
+5. **Export Template Creation**
+   - Reads `export_config` section
+   - Generates PDF layout templates
+   - Creates CSV column definitions
+   - Includes watermarks for Free tier
+
+**Technology:**
+- TypeScript for type safety
+- Runtime validation using Zod or similar
+- Caching for frequently used calculators
+- Error handling with detailed logging
+
+**Performance:**
+- Calculator JSON parsed at build time (not runtime)
+- Generated components cached
+- First calculation: < 300ms (including UI update)
+
+---
+
+### 3. Formula Library
+
+**Purpose:** Centralized, versioned, tested mathematical functions that calculators call.
+
+**Key characteristics:**
+- **Pure functions** – No side effects, deterministic results
+- **Versioned** – Formula library has semantic versioning (v1.0.0, v1.1.0)
+- **Tested** – Each formula has golden scenarios (Section 10.2)
+- **Reusable** – One formula, many calculators
+
+**Formula categories:**
+1. Loan & Debt (calculateMonthlyPayment, calculateDSCR, etc.)
+2. Cash Flow (calculateBurnRate, calculateRunway, etc.)
+3. Profitability (calculateContributionMargin, calculateBreakeven, etc.)
+4. Valuation (calculateNPV, calculateIRR, etc.)
+5. Utilities (formatCurrency, validatePositive, etc.)
+
+**Example formula interface:**
+```typescript
+interface FormulaFunction {
+  name: string;
+  version: string;
+  inputs: Array<{name: string; type: string; required: boolean}>;
+  output: {type: string; structure?: object};
+  execute: (...args: any[]) => any;
+}
+```
+
+**How calculators call formulas:**
+```json
+{
+  "step_id": "calc_monthly_payment",
+  "formula_function": "calculateMonthlyPayment",
+  "inputs": ["loan_amount", "interest_rate", "term_years"],
+  "output_variable": "monthly_payment"
+}
+```
+
+The Calculator Engine looks up `calculateMonthlyPayment` in the Formula Library, passes the input values, and stores the result in `monthly_payment` for use in subsequent steps.
+
+**Detailed specifications:** See Section 12.3 for complete formula library API.
+
+---
+
+### 4. UI Generator
+
+**Purpose:** Automatically creates React components from JSON configuration.
+
+**Input-to-Component mapping:**
+
+| JSON input type | Generated component | Design system reference |
+|-----------------|---------------------|-------------------------|
+| `number` | Number input with validation | Section 4.2 |
+| `currency` | Currency input with $ symbol | Section 4.2 |
+| `percentage` | Percentage input with % symbol | Section 4.2 |
+| `dropdown` | Select dropdown | Section 4.2 |
+| `slider` | Range slider with live value | Section 4.2 |
+
+**Output-to-Component mapping:**
+
+| JSON output type | Generated component | Visual style |
+|------------------|---------------------|--------------|
+| `key_metrics` | Large result card | Primary color, large font |
+| `advanced_metrics` | Standard result card | Secondary color, standard font |
+| `chart` | Chart component | Uses design tokens |
+
+**Warning-to-Component mapping:**
+
+| JSON severity | Generated component | Visual treatment |
+|---------------|---------------------|------------------|
+| `info` | Blue alert box | Informational icon |
+| `warning` | Yellow alert box | Warning icon |
+| `danger` | Red alert box | Error icon |
+
+**Component generation process:**
+```
+JSON inputs array
+  ↓
+For each input:
+  1. Determine component type (currency, percentage, etc.)
+  2. Apply validation rules (min, max, required)
+  3. Add tooltip if provided
+  4. Wire onChange handler to state management
+  5. Apply design system styles (Section 4.3)
+  ↓
+Generated React component tree
+```
+
+**Benefits:**
+- **Consistency:** All calculators use identical UI patterns
+- **Accessibility:** ARIA labels auto-generated from field names
+- **Responsive:** Mobile-first design applied automatically
+- **Themeable:** Design tokens (Section 4.3) applied uniformly
+
+---
+
+### 5. Validation Engine
+
+**Purpose:** Catch errors before calculators go live.
+
+**Validation types:**
+
+1. **Schema Validation (Build Time)**
+   - Is the JSON syntactically valid?
+   - Does it match the schema structure? (Section 12.2)
+   - Are all required fields present?
+   - Are data types correct?
+
+2. **Formula Validation (Build Time)**
+   - Do all referenced formula functions exist in the library?
+   - Do input counts match formula signatures?
+   - Are output variable names unique?
+
+3. **Tier Config Validation (Build Time)**
+   - Are tier rules logically consistent?
+   - Do referenced metric_ids exist in outputs?
+   - Are scenario limits valid?
+
+4. **Golden Scenario Validation (Build Time, Optional)**
+   - If a `golden_scenarios.json` file exists alongside the calculator JSON
+   - Run calculations with golden inputs
+   - Compare outputs to expected values
+   - Fail build if outputs don't match within tolerance (±0.01 for currency)
+
+**Example golden scenario validation:**
+```json
+// golden_scenarios.json
+{
+  "scenarios": [
+    {
+      "name": "Standard 7% loan",
+      "inputs": {
+        "loan_amount": 100000,
+        "interest_rate": 7.0,
+        "term_years": 10
+      },
+      "expected_outputs": {
+        "monthly_payment": 1161.08,
+        "total_interest": 39329.60
+      }
+    }
+  ]
+}
+```
+
+If validation fails, build stops and detailed error report is generated.
+
+**Error reporting:**
+- Line number where error occurred (for schema errors)
+- Which formula is missing (for formula errors)
+- Which expected output doesn't match (for golden scenario errors)
+- Suggested fixes
+
+---
+
+### 6. Deployment System
+
+**Purpose:** Automated pipeline from Git commit to live calculator.
+
+**Deployment flow:**
+
+```
+Developer commits JSON
+  ↓
+Git push to feature branch
+  ↓
+CI/CD triggered (GitHub Actions)
+  ↓
+Validation Engine runs
+  ├─ Schema validation
+  ├─ Formula validation
+  ├─ Tier config validation
+  └─ Golden scenario validation (if exists)
+  ↓
+All validations pass?
+  ├─ YES → Merge to main allowed
+  └─ NO → Build fails, PR blocked
+  ↓
+Merge to main branch
+  ↓
+Production build triggered
+  ├─ UI components generated
+  ├─ Formula library wired
+  ├─ Export templates created
+  └─ WordPress shortcode generated
+  ↓
+Deploy to production (blue-green)
+  ↓
+Health check + smoke test
+  ↓
+Calculator live in < 10 minutes
+```
+
+**WordPress shortcode auto-generation:**
+When a calculator deploys, the system automatically generates a WordPress shortcode:
+
+```
+[cfo_calculator slug="business-loan-dscr"]
+```
+
+This shortcode is documented in `/docs/wordpress-shortcodes.md` with usage instructions.
+
+**Rollback process:**
+- Revert Git commit
+- Previous version re-deployed automatically
+- Takes < 5 minutes
+- Zero downtime (blue-green deployment)
+
+---
+
+## Data Flow Diagram
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│ 1. CONFIGURATION LAYER (JSON Files)                             │
+│                                                                  │
+│  /calculators/configs/business-loan-dscr.json                   │
+│  ├─ calculator_meta                                             │
+│  ├─ inputs (loan_amount, interest_rate, etc.)                  │
+│  ├─ calculations (call formula library)                        │
+│  ├─ outputs (monthly_payment, dscr, etc.)                      │
+│  ├─ warnings (conditional alerts)                              │
+│  ├─ tier_config (feature gating rules)                         │
+│  └─ export_config (PDF/CSV templates)                          │
+└────────────────────┬─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────────────────────────────┐
+│ 2. VALIDATION LAYER (Build Time)                                │
+│                                                                  │
+│  Validation Engine                                              │
+│  ├─ Schema validation (Zod/JSON Schema)                        │
+│  ├─ Formula existence check                                     │
+│  ├─ Tier config validation                                      │
+│  └─ Golden scenario testing (if provided)                      │
+│                                                                  │
+│  Result: PASS → Continue | FAIL → Block deployment             │
+└────────────────────┬─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────────────────────────────┐
+│ 3. GENERATION LAYER (Build Time)                                │
+│                                                                  │
+│  UI Generator                    Formula Wiring Engine          │
+│  ├─ Input components    +        ├─ Parse calculations array   │
+│  ├─ Output cards                 ├─ Map to formula library     │
+│  └─ Warning components           └─ Create execution DAG       │
+│                                                                  │
+│  Export Generator                                                │
+│  ├─ PDF template                                                │
+│  └─ CSV structure                                               │
+└────────────────────┬─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────────────────────────────┐
+│ 4. RUNTIME LAYER (User Interaction)                             │
+│                                                                  │
+│  User enters inputs → React state updated                       │
+│         ↓                                                        │
+│  Trigger calculation → Calculator Engine                        │
+│         ↓                                                        │
+│  Execute formula steps in order:                                │
+│    Step 1: calculateMonthlyPayment(inputs) → monthly_payment    │
+│    Step 2: calculateDSCR(monthly_payment, noi) → dscr          │
+│         ↓                                                        │
+│  Apply tier gating → Show/hide outputs based on user tier      │
+│         ↓                                                        │
+│  Evaluate warnings → Show alerts if conditions met             │
+│         ↓                                                        │
+│  Render results → Update UI (< 300ms total)                    │
+└────────────────────┬─────────────────────────────────────────────┘
+                     │
+                     ▼
+┌──────────────────────────────────────────────────────────────────┐
+│ 5. EXPORT LAYER (PDF/CSV Generation)                            │
+│                                                                  │
+│  User clicks "Export to PDF"                                    │
+│         ↓                                                        │
+│  Export Engine reads export_config from JSON                    │
+│         ↓                                                        │
+│  Generate PDF using template + current scenario data           │
+│         ↓                                                        │
+│  Apply watermark if Free tier                                   │
+│         ↓                                                        │
+│  Return PDF (< 3 seconds, p95 SLA from Section 1.6)           │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Time to Deploy: 5-10 Minutes
+
+**Breakdown:**
+
+| Step | Time | Notes |
+|------|------|-------|
+| Create JSON config | 3-5 min | Copy from template, fill in fields |
+| Commit to Git | 30 sec | Standard git workflow |
+| CI/CD validation | 1-2 min | Automated schema + formula checks |
+| Build and deploy | 2-3 min | UI generation, formula wiring, deployment |
+| Health check | 30 sec | Automated smoke test |
+| **TOTAL** | **7-11 min** | **Typically ~10 minutes** |
+
+**Comparison to custom development:**
+
+| Approach | Time to Deploy | Lines of Code | Maintainability |
+|----------|----------------|---------------|-----------------|
+| Custom React component | 2-4 weeks | 500-1000 lines | Hard (unique code per calculator) |
+| JSON Assembly Line | 5-10 minutes | 50-100 lines JSON | Easy (centralized formula library) |
+
+**Scalability:**
+- **8 calculators (MVP):** ~2 hours total to create all JSON configs
+- **450+ calculators:** ~75 hours (~2 weeks for one person)
+- **Maintenance:** Update formula library once, all calculators benefit
+
+---
+
+## Benefits Over Custom Development
+
+### Speed
+- **Before:** 2-4 weeks to build a custom calculator
+- **After:** 5-10 minutes to deploy from JSON
+
+### Consistency
+- **Before:** Each calculator had unique UI/UX patterns
+- **After:** All calculators use identical design system (Section 4)
+
+### Quality
+- **Before:** Manual testing, easy to miss edge cases
+- **After:** Automated validation, golden scenarios enforce correctness
+
+### Maintainability
+- **Before:** 450 calculators × 500 lines = 225,000 lines of code to maintain
+- **After:** 450 JSON files + 1 formula library (shared code)
+
+### Iteration Speed
+- **Before:** Bug fix requires updating 450+ code files
+- **After:** Fix formula library once, all calculators updated
+
+### Non-Technical Contribution
+- **Before:** Only developers can create calculators
+- **After:** Product managers can create calculators from JSON templates
+
+---
+
+## Architecture Principles
+
+### 1. Separation of Concerns
+- **Configuration (JSON)** – What the calculator does
+- **Logic (Formula Library)** – How calculations are performed
+- **Presentation (UI Generator)** – How results are displayed
+- **Infrastructure (Deployment)** – How it gets to production
+
+### 2. Convention Over Configuration
+- Default behaviors applied automatically
+- Only specify exceptions in JSON
+- Example: All currency inputs get $ symbol automatically
+
+### 3. Fail-Fast Validation
+- Catch errors at build time, not runtime
+- Block deployment if validation fails
+- Detailed error messages for quick fixes
+
+### 4. Progressive Enhancement
+- Start with simple JSON (minimal fields)
+- Add complexity as needed (warnings, AI config, export config)
+- Calculators work with minimal configuration
+
+### 5. Version Everything
+- Calculator JSON has semantic versions
+- Formula library has semantic versions
+- Breaking changes trigger major version bumps
+- Backward compatibility maintained for 2 major versions
+
+---
+
+## Integration with Other Systems
+
+### WordPress Integration
+- Auto-generated shortcodes: `[cfo_calculator slug="calculator-name"]`
+- Shortcode accepts parameters: `tier="pro"`, `hide_export="true"`
+- Responsive embed, inherits WordPress theme styles
+
+### Analytics Integration (Section 7)
+- Standard events tracked automatically for all calculators
+- Custom events defined in JSON analytics_config (optional)
+- All events follow event taxonomy (Section 7.1)
+
+### AI Integration (Section 8)
+- Optional ai_config section in JSON
+- If present, "Generate AI Narrative" button added automatically
+- AI prompt template uses calculator-specific context
+
+### Tier Gating (Section 6)
+- tier_config section defines what's visible per tier
+- Feature flags applied automatically by Calculator Engine
+- Upgrade prompts shown for gated features
+
+---
+
+## Next Steps
+
+- **Section 12.2:** Complete JSON schema specification with all field definitions
+- **Section 12.3:** Formula library API with function signatures and examples
+- **Section 12.4:** Detailed deployment pipeline with CI/CD configuration
+- **Section 12.5:** Complete JSON examples for 3 calculator types
+
+
+# 12.2 JSON Schema Specification
+
+## Overview
+
+This document defines the complete JSON schema for calculator configuration files. Every calculator in the CFO Business Intelligence Calculator Suite is defined by a single JSON file that conforms to this schema.
+
+**Schema version:** 1.0.0
+**Validation:** All JSON files are validated against this schema at build time
+**Naming convention:** snake_case for all field names
+
+---
+
+## Root-Level Structure
+
+Every calculator JSON file has this top-level structure:
+
+```json
+{
+  "calculator_meta": {...},
+  "inputs": [...],
+  "calculations": [...],
+  "outputs": {...},
+  "warnings": [...],
+  "tier_config": {...},
+  "export_config": {...},
+  "ai_config": {...}
+}
+```
+
+**Required sections:** `calculator_meta`, `inputs`, `calculations`, `outputs`
+**Optional sections:** `warnings`, `tier_config`, `export_config`, `ai_config`
+
+---
+
+## Section 1: calculator_meta
+
+**Purpose:** Identifies the calculator and provides metadata for routing, categorization, and tracking.
+
+**Schema:**
+```json
+{
+  "calculator_meta": {
+    "calculator_slug": "string (required, unique)",
+    "calculator_name": "string (required)",
+    "calculator_version": "string (required, semantic version)",
+    "category": "enum (required)",
+    "description": "string (required, 1-2 sentences)",
+    "business_role": "enum (required)",
+    "success_metric": "string (optional)"
+  }
+}
+```
+
+**Field definitions:**
+
+| Field | Type | Required | Description | Validation |
+|-------|------|----------|-------------|------------|
+| `calculator_slug` | string | Yes | Unique identifier, used in URLs and routing | Must be kebab-case, alphanumeric + hyphens only, max 50 chars |
+| `calculator_name` | string | Yes | Display name shown to users | Max 80 chars |
+| `calculator_version` | string | Yes | Semantic version (e.g., "1.0.0", "1.2.3") | Must match semver pattern |
+| `category` | enum | Yes | Calculator category (see below) | Must be one of 5 valid categories |
+| `description` | string | Yes | Brief description (1-2 sentences) | Max 200 chars |
+| `business_role` | enum | Yes | Calculator's business purpose (see below) | Must be one of 4 valid roles |
+| `success_metric` | string | No | Key metric to track success (e.g., "conversion_rate") | Max 50 chars |
+
+**Valid `category` values:**
+- `financing-lending` – Loan, lease, and debt analysis calculators
+- `cash-flow` – Cash runway, burn rate, working capital calculators
+- `profitability` – Margin, breakeven, contribution analysis calculators
+- `valuation` – Business valuation, NPV, IRR calculators
+- `planning` – Forecast, scenario planning, what-if calculators
+
+**Valid `business_role` values:**
+- `traffic_magnet` – Free tier, SEO-optimized, high-volume usage
+- `pro_driver` – Advanced features drive Pro tier upgrades
+- `ai_showcase` – Highlights AI narrative capabilities
+- `b2b_demo` – Demonstrates API/white-label capabilities
+
+**Example:**
+```json
+{
+  "calculator_meta": {
+    "calculator_slug": "business-loan-dscr",
+    "calculator_name": "Business Loan + DSCR Calculator",
+    "calculator_version": "1.0.0",
+    "category": "financing-lending",
+    "description": "Calculate monthly loan payments and Debt Service Coverage Ratio (DSCR) to assess loan affordability for commercial lending.",
+    "business_role": "pro_driver",
+    "success_metric": "pro_upgrade_rate"
+  }
+}
+```
+
+---
+
+## Section 2: inputs
+
+**Purpose:** Defines all input fields the user will fill out.
+
+**Schema:**
+```json
+{
+  "inputs": [
+    {
+      "field_id": "string (required, unique)",
+      "field_name": "string (required)",
+      "field_type": "enum (required)",
+      "units": "string (required)",
+      "required": "boolean (required)",
+      "default_value": "number or null (optional)",
+      "placeholder": "string (optional)",
+      "tooltip": "string (optional)",
+      "validation": {
+        "min": "number or null (optional)",
+        "max": "number or null (optional)",
+        "must_be_positive": "boolean (optional)",
+        "custom_rule": "string (optional)"
+      }
+    }
+  ]
+}
+```
+
+**Field definitions:**
+
+| Field | Type | Required | Description | Validation |
+|-------|------|----------|-------------|------------|
+| `field_id` | string | Yes | Unique identifier for this input | snake_case, alphanumeric + underscores, max 50 chars |
+| `field_name` | string | Yes | Display label shown to user | Max 80 chars |
+| `field_type` | enum | Yes | Type of input control (see below) | Must be valid type |
+| `units` | string | Yes | Unit of measurement (dollars, percent, months, etc.) | Max 20 chars |
+| `required` | boolean | Yes | Whether input is required | true or false |
+| `default_value` | number/null | No | Pre-populated value | Must match field_type |
+| `placeholder` | string | No | Placeholder text in empty input | Max 50 chars |
+| `tooltip` | string | No | Help text (1-2 sentences) | Max 200 chars |
+| `validation` | object | No | Validation rules (see below) | - |
+
+**Valid `field_type` values:**
+- `number` – Generic numeric input (no units shown)
+- `currency` – Dollar amount ($)
+- `percentage` – Percentage (%)
+- `dropdown` – Select from predefined options
+- `slider` – Range slider with min/max
+
+**Validation object:**
+
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| `min` | number/null | Minimum allowed value | 0, 1000, null |
+| `max` | number/null | Maximum allowed value | 100, 10000000, null |
+| `must_be_positive` | boolean | Enforce value > 0 | true |
+| `custom_rule` | string | Custom validation expression | "term_years <= 30" |
+
+**Example inputs:**
+```json
+{
+  "inputs": [
+    {
+      "field_id": "loan_amount",
+      "field_name": "Loan Amount",
+      "field_type": "currency",
+      "units": "dollars",
+      "required": true,
+      "default_value": null,
+      "placeholder": "250000",
+      "tooltip": "The total amount you are borrowing from the lender.",
+      "validation": {
+        "min": 1000,
+        "max": 100000000,
+        "must_be_positive": true
+      }
+    },
+    {
+      "field_id": "interest_rate",
+      "field_name": "Annual Interest Rate",
+      "field_type": "percentage",
+      "units": "percent",
+      "required": true,
+      "default_value": 7.5,
+      "placeholder": "7.5",
+      "tooltip": "The annual interest rate (APR) for the loan.",
+      "validation": {
+        "min": 0.1,
+        "max": 30,
+        "must_be_positive": true
+      }
+    },
+    {
+      "field_id": "term_years",
+      "field_name": "Loan Term",
+      "field_type": "number",
+      "units": "years",
+      "required": true,
+      "default_value": 10,
+      "placeholder": "10",
+      "tooltip": "The length of the loan in years.",
+      "validation": {
+        "min": 1,
+        "max": 30,
+        "must_be_positive": true,
+        "custom_rule": "term_years <= 30"
+      }
+    }
+  ]
+}
+```
+
+---
+
+## Section 3: calculations
+
+**Purpose:** Defines the calculation steps that transform inputs into outputs.
+
+**Schema:**
+```json
+{
+  "calculations": [
+    {
+      "step_id": "string (required, unique)",
+      "formula_function": "string (required)",
+      "inputs": ["array of field_ids or step_ids (required)"],
+      "output_variable": "string (required, unique)",
+      "notes": "string (optional)"
+    }
+  ]
+}
+```
+
+**Field definitions:**
+
+| Field | Type | Required | Description | Validation |
+|-------|------|----------|-------------|------------|
+| `step_id` | string | Yes | Unique identifier for this calculation step | snake_case, max 50 chars |
+| `formula_function` | string | Yes | Name of formula library function to call | Must exist in formula library (Section 12.3) |
+| `inputs` | array | Yes | Array of field_id or output_variable names to pass to formula | Must reference existing fields/variables |
+| `output_variable` | string | Yes | Variable name to store the result | snake_case, max 50 chars, must be unique |
+| `notes` | string | No | Developer notes explaining this calculation | Max 200 chars |
+
+**Calculation execution order:**
+- Calculations execute in array order (top to bottom)
+- Later steps can reference `output_variable` from earlier steps
+- Circular dependencies are not allowed (validation error if detected)
+
+**Example calculations:**
+```json
+{
+  "calculations": [
+    {
+      "step_id": "calc_monthly_payment",
+      "formula_function": "calculateMonthlyPayment",
+      "inputs": ["loan_amount", "interest_rate", "term_years"],
+      "output_variable": "monthly_payment",
+      "notes": "Standard amortizing loan payment formula"
+    },
+    {
+      "step_id": "calc_annual_debt_service",
+      "formula_function": "multiplyBy12",
+      "inputs": ["monthly_payment"],
+      "output_variable": "annual_debt_service",
+      "notes": "Monthly payment × 12 for annual debt service"
+    },
+    {
+      "step_id": "calc_dscr",
+      "formula_function": "calculateDSCR",
+      "inputs": ["net_operating_income", "annual_debt_service"],
+      "output_variable": "dscr",
+      "notes": "DSCR = NOI / Annual Debt Service"
+    }
+  ]
+}
+```
+
+---
+
+## Section 4: outputs
+
+**Purpose:** Defines which calculated values are displayed to the user.
+
+**Schema:**
+```json
+{
+  "outputs": {
+    "key_metrics": [
+      {
+        "metric_id": "string (required, unique)",
+        "metric_name": "string (required)",
+        "variable": "string (required)",
+        "format": "enum (required)",
+        "decimals": "number (optional, default 2)",
+        "tooltip": "string (optional)"
+      }
+    ],
+    "advanced_metrics": [
+      {
+        "metric_id": "string (required, unique)",
+        "metric_name": "string (required)",
+        "variable": "string (required)",
+        "format": "enum (required)",
+        "decimals": "number (optional, default 2)",
+        "tooltip": "string (optional)"
+      }
+    ]
+  }
+}
+```
+
+**Field definitions:**
+
+| Field | Type | Required | Description | Validation |
+|-------|------|----------|-------------|------------|
+| `metric_id` | string | Yes | Unique identifier for this metric | snake_case, max 50 chars |
+| `metric_name` | string | Yes | Display label shown to user | Max 80 chars |
+| `variable` | string | Yes | References an output_variable from calculations | Must exist in calculations |
+| `format` | enum | Yes | How to display the value (see below) | Must be valid format |
+| `decimals` | number | No | Number of decimal places (default: 2) | 0-4 |
+| `tooltip` | string | No | Help text explaining this metric | Max 200 chars |
+
+**Valid `format` values:**
+- `currency` – Display as dollars (e.g., "$2,958.04")
+- `percentage` – Display as percentage (e.g., "7.5%")
+- `number` – Display as plain number (e.g., "12,345")
+- `ratio` – Display as ratio (e.g., "1.42")
+
+**Key vs Advanced metrics:**
+- **key_metrics:** Always visible to all users (Free, Pro, AI, B2B)
+- **advanced_metrics:** Gated by tier (typically Pro+ only, defined in tier_config)
+
+**Example outputs:**
+```json
+{
+  "outputs": {
+    "key_metrics": [
+      {
+        "metric_id": "monthly_payment",
+        "metric_name": "Monthly Payment",
+        "variable": "monthly_payment",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Your estimated monthly loan payment including principal and interest."
+      },
+      {
+        "metric_id": "total_interest",
+        "metric_name": "Total Interest Paid",
+        "variable": "total_interest",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Total interest you will pay over the life of the loan."
+      }
+    ],
+    "advanced_metrics": [
+      {
+        "metric_id": "dscr",
+        "metric_name": "Debt Service Coverage Ratio (DSCR)",
+        "variable": "dscr",
+        "format": "ratio",
+        "decimals": 2,
+        "tooltip": "DSCR measures your ability to cover loan payments. Lenders typically require 1.25 or higher."
+      },
+      {
+        "metric_id": "effective_apr",
+        "metric_name": "Effective APR",
+        "variable": "effective_apr",
+        "format": "percentage",
+        "decimals": 3,
+        "tooltip": "True annual percentage rate including all fees and costs."
+      }
+    ]
+  }
+}
+```
+
+---
+
+## Section 5: warnings
+
+**Purpose:** Defines conditional alerts displayed based on calculation results.
+
+**Schema:**
+```json
+{
+  "warnings": [
+    {
+      "warning_id": "string (required, unique)",
+      "condition": "string (required)",
+      "severity": "enum (required)",
+      "message": "string (required)"
+    }
+  ]
+}
+```
+
+**Field definitions:**
+
+| Field | Type | Required | Description | Validation |
+|-------|------|----------|-------------|------------|
+| `warning_id` | string | Yes | Unique identifier for this warning | snake_case, max 50 chars |
+| `condition` | string | Yes | Boolean expression that triggers warning | Must be valid expression |
+| `severity` | enum | Yes | Visual treatment (see below) | info, warning, danger |
+| `message` | string | Yes | Plain language warning text | Max 300 chars |
+
+**Valid `severity` values:**
+- `info` – Blue alert box, informational
+- `warning` – Yellow alert box, caution
+- `danger` – Red alert box, critical issue
+
+**Condition expression syntax:**
+- Use output_variable names from calculations
+- Operators: `<`, `>`, `<=`, `>=`, `==`, `!=`, `&&`, `||`
+- Example: `dscr < 1.25`
+- Example: `dscr >= 1.25 && dscr < 1.5`
+
+**Example warnings:**
+```json
+{
+  "warnings": [
+    {
+      "warning_id": "dscr_too_low",
+      "condition": "dscr < 1.25",
+      "severity": "danger",
+      "message": "Your DSCR is below 1.25. Most commercial lenders require a minimum DSCR of 1.25 to approve a loan. Consider reducing the loan amount or increasing your net operating income."
+    },
+    {
+      "warning_id": "dscr_marginal",
+      "condition": "dscr >= 1.25 && dscr < 1.5",
+      "severity": "warning",
+      "message": "Your DSCR is above the minimum threshold but relatively tight. Consider building in a buffer to account for revenue fluctuations."
+    },
+    {
+      "warning_id": "dscr_excellent",
+      "condition": "dscr >= 2.0",
+      "severity": "info",
+      "message": "Your DSCR is excellent (2.0+). You have strong cash flow coverage for this loan and may qualify for better rates."
+    }
+  ]
+}
+```
+
+---
+
+## Section 6: tier_config
+
+**Purpose:** Defines which features are available to which user tiers.
+
+**Schema:**
+```json
+{
+  "tier_config": {
+    "free_tier": {
+      "max_scenarios": "number (required)",
+      "visible_outputs": ["array of metric_ids (required)"]
+    },
+    "pro_tier": {
+      "max_scenarios": "number (required)",
+      "visible_outputs": ["array of metric_ids (required)"]
+    },
+    "ai_enabled": "boolean (required)"
+  }
+}
+```
+
+**Field definitions:**
+
+| Field | Type | Required | Description | Validation |
+|-------|------|----------|-------------|------------|
+| `free_tier.max_scenarios` | number | Yes | Max scenarios a Free user can save | Typically 1 |
+| `free_tier.visible_outputs` | array | Yes | Which metrics Free users can see | Must reference valid metric_ids |
+| `pro_tier.max_scenarios` | number | Yes | Max scenarios a Pro user can save | Typically 50 |
+| `pro_tier.visible_outputs` | array | Yes | Which metrics Pro users can see | Must reference valid metric_ids |
+| `ai_enabled` | boolean | Yes | Whether AI narratives are available | true or false |
+
+**Default behavior if tier_config is omitted:**
+- Free: 1 scenario, all key_metrics visible
+- Pro: 50 scenarios, all metrics (key + advanced) visible
+- AI: Disabled
+
+**Example tier_config:**
+```json
+{
+  "tier_config": {
+    "free_tier": {
+      "max_scenarios": 1,
+      "visible_outputs": ["monthly_payment", "total_interest"]
+    },
+    "pro_tier": {
+      "max_scenarios": 50,
+      "visible_outputs": ["monthly_payment", "total_interest", "dscr", "effective_apr", "total_cost"]
+    },
+    "ai_enabled": true
+  }
+}
+```
+
+**Tier gating enforcement:**
+- Calculator Engine checks user tier at runtime
+- Metrics not in `visible_outputs` are blurred with upgrade prompt
+- Scenario save blocked if user at max_scenarios (with upgrade prompt)
+- AI narrative button shown only if `ai_enabled: true` and user has AI tier
+
+---
+
+## Section 7: export_config
+
+**Purpose:** Defines how PDF and CSV exports are structured.
+
+**Schema:**
+```json
+{
+  "export_config": {
+    "pdf_sections": [
+      {
+        "section_id": "string (required)",
+        "section_title": "string (required)",
+        "include_inputs": "boolean (required)",
+        "include_outputs": ["array of metric_ids (required)"],
+        "include_chart": "boolean (optional)"
+      }
+    ],
+    "csv_columns": [
+      {
+        "column_id": "string (required)",
+        "column_name": "string (required)",
+        "value_source": "string (required)"
+      }
+    ],
+    "include_charts": "boolean (optional)"
+  }
+}
+```
+
+**PDF sections:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `section_id` | string | Yes | Unique section identifier |
+| `section_title` | string | Yes | Section heading in PDF |
+| `include_inputs` | boolean | Yes | Whether to show input values |
+| `include_outputs` | array | Yes | Which metrics to include |
+| `include_chart` | boolean | No | Whether to include a chart |
+
+**CSV columns:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `column_id` | string | Yes | Unique column identifier |
+| `column_name` | string | Yes | CSV header name |
+| `value_source` | string | Yes | field_id or output_variable to export |
+
+**Example export_config:**
+```json
+{
+  "export_config": {
+    "pdf_sections": [
+      {
+        "section_id": "inputs_summary",
+        "section_title": "Loan Details",
+        "include_inputs": true,
+        "include_outputs": [],
+        "include_chart": false
+      },
+      {
+        "section_id": "results",
+        "section_title": "Payment Analysis",
+        "include_inputs": false,
+        "include_outputs": ["monthly_payment", "total_interest", "dscr"],
+        "include_chart": true
+      }
+    ],
+    "csv_columns": [
+      {
+        "column_id": "loan_amount_col",
+        "column_name": "Loan Amount",
+        "value_source": "loan_amount"
+      },
+      {
+        "column_id": "rate_col",
+        "column_name": "Interest Rate (%)",
+        "value_source": "interest_rate"
+      },
+      {
+        "column_id": "payment_col",
+        "column_name": "Monthly Payment",
+        "value_source": "monthly_payment"
+      },
+      {
+        "column_id": "dscr_col",
+        "column_name": "DSCR",
+        "value_source": "dscr"
+      }
+    ],
+    "include_charts": true
+  }
+}
+```
+
+**Default behavior if export_config is omitted:**
+- PDF: Single section with all inputs and outputs
+- CSV: One column per input and output
+- No charts
+
+---
+
+## Section 8: ai_config
+
+**Purpose:** Defines calculator-specific AI narrative configuration.
+
+**Schema:**
+```json
+{
+  "ai_config": {
+    "ai_prompt_template": "string (required)",
+    "ai_response_length": "number (optional, default 150)",
+    "ai_tone": "string (optional, default 'professional')"
+  }
+}
+```
+
+**Field definitions:**
+
+| Field | Type | Required | Description | Validation |
+|-------|------|----------|-------------|------------|
+| `ai_prompt_template` | string | Yes | Calculator-specific prompt with variable placeholders | Max 1000 chars |
+| `ai_response_length` | number | No | Target word count (default: 150) | 50-500 |
+| `ai_tone` | string | No | Tone of AI response (default: 'professional') | professional, friendly, technical |
+
+**Prompt template syntax:**
+- Use `{{variable_name}}` to reference inputs or outputs
+- Example: `{{loan_amount}}`, `{{dscr}}`
+- Variables replaced with actual values at runtime
+
+**Example ai_config:**
+```json
+{
+  "ai_config": {
+    "ai_prompt_template": "You are a CFO advisor. Based on a business loan of {{loan_amount}} at {{interest_rate}}% for {{term_years}} years with a monthly payment of {{monthly_payment}} and a DSCR of {{dscr}}, provide a 2-3 paragraph analysis. Address: (1) Whether this loan is affordable based on DSCR, (2) Cash flow implications, (3) Recommendations for improving terms or preparing for lender discussions.",
+    "ai_response_length": 200,
+    "ai_tone": "professional"
+  }
+}
+```
+
+**AI integration:**
+- If `ai_config` is present, "Generate AI Narrative" button shown (if user has AI tier)
+- System prompt (Section 8.2) combined with `ai_prompt_template`
+- Variable placeholders replaced with actual scenario data
+- AI response displayed in dedicated section below outputs
+
+**Default behavior if ai_config is omitted:**
+- Generic AI narrative using default template
+- "Generate AI Narrative" button still shown for AI-tier users
+
+---
+
+## Complete JSON Example
+
+Here's a complete example combining all sections:
+
+```json
+{
+  "calculator_meta": {
+    "calculator_slug": "simple-loan-payment",
+    "calculator_name": "Simple Loan Payment Calculator",
+    "calculator_version": "1.0.0",
+    "category": "financing-lending",
+    "description": "Calculate monthly payments and total interest for a standard amortizing business loan.",
+    "business_role": "traffic_magnet",
+    "success_metric": "daily_active_users"
+  },
+  "inputs": [
+    {
+      "field_id": "loan_amount",
+      "field_name": "Loan Amount",
+      "field_type": "currency",
+      "units": "dollars",
+      "required": true,
+      "default_value": null,
+      "placeholder": "100000",
+      "tooltip": "The total amount you are borrowing.",
+      "validation": {
+        "min": 1000,
+        "max": 10000000,
+        "must_be_positive": true
+      }
+    },
+    {
+      "field_id": "interest_rate",
+      "field_name": "Annual Interest Rate",
+      "field_type": "percentage",
+      "units": "percent",
+      "required": true,
+      "default_value": 7.0,
+      "placeholder": "7.0",
+      "tooltip": "The annual interest rate (APR) for your loan.",
+      "validation": {
+        "min": 0.1,
+        "max": 30,
+        "must_be_positive": true
+      }
+    },
+    {
+      "field_id": "term_years",
+      "field_name": "Loan Term",
+      "field_type": "number",
+      "units": "years",
+      "required": true,
+      "default_value": 10,
+      "placeholder": "10",
+      "tooltip": "The length of the loan in years.",
+      "validation": {
+        "min": 1,
+        "max": 30,
+        "must_be_positive": true
+      }
+    }
+  ],
+  "calculations": [
+    {
+      "step_id": "calc_monthly_payment",
+      "formula_function": "calculateMonthlyPayment",
+      "inputs": ["loan_amount", "interest_rate", "term_years"],
+      "output_variable": "monthly_payment",
+      "notes": "Standard loan payment formula"
+    },
+    {
+      "step_id": "calc_total_payments",
+      "formula_function": "multiply",
+      "inputs": ["monthly_payment", "term_years"],
+      "output_variable": "total_payments",
+      "notes": "Monthly payment × term in months"
+    },
+    {
+      "step_id": "calc_total_interest",
+      "formula_function": "subtract",
+      "inputs": ["total_payments", "loan_amount"],
+      "output_variable": "total_interest",
+      "notes": "Total payments minus principal"
+    }
+  ],
+  "outputs": {
+    "key_metrics": [
+      {
+        "metric_id": "monthly_payment",
+        "metric_name": "Monthly Payment",
+        "variable": "monthly_payment",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Your monthly loan payment including principal and interest."
+      },
+      {
+        "metric_id": "total_interest",
+        "metric_name": "Total Interest Paid",
+        "variable": "total_interest",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Total interest over the life of the loan."
+      }
+    ],
+    "advanced_metrics": []
+  },
+  "warnings": [
+    {
+      "warning_id": "high_rate",
+      "condition": "interest_rate > 12",
+      "severity": "warning",
+      "message": "Your interest rate is above 12%, which is relatively high for a business loan. Consider shopping around for better rates."
+    }
+  ],
+  "tier_config": {
+    "free_tier": {
+      "max_scenarios": 1,
+      "visible_outputs": ["monthly_payment", "total_interest"]
+    },
+    "pro_tier": {
+      "max_scenarios": 50,
+      "visible_outputs": ["monthly_payment", "total_interest"]
+    },
+    "ai_enabled": false
+  },
+  "export_config": {
+    "pdf_sections": [
+      {
+        "section_id": "summary",
+        "section_title": "Loan Payment Summary",
+        "include_inputs": true,
+        "include_outputs": ["monthly_payment", "total_interest"],
+        "include_chart": false
+      }
+    ],
+    "csv_columns": [
+      {
+        "column_id": "loan_col",
+        "column_name": "Loan Amount",
+        "value_source": "loan_amount"
+      },
+      {
+        "column_id": "rate_col",
+        "column_name": "Interest Rate (%)",
+        "value_source": "interest_rate"
+      },
+      {
+        "column_id": "payment_col",
+        "column_name": "Monthly Payment",
+        "value_source": "monthly_payment"
+      }
+    ],
+    "include_charts": false
+  }
+}
+```
+
+---
+
+## Schema Validation Rules
+
+### Uniqueness Constraints
+- `calculator_slug` must be unique across all calculators
+- `field_id` must be unique within inputs array
+- `step_id` must be unique within calculations array
+- `output_variable` must be unique within calculations array
+- `metric_id` must be unique across key_metrics + advanced_metrics
+- `warning_id` must be unique within warnings array
+
+### Reference Integrity
+- `calculations.inputs` must reference existing `field_id` or `output_variable`
+- `outputs.variable` must reference existing `output_variable`
+- `tier_config.visible_outputs` must reference existing `metric_id`
+- `warnings.condition` must reference existing `output_variable` names
+- `export_config.include_outputs` must reference existing `metric_id`
+
+### Dependency Validation
+- Calculations cannot have circular dependencies
+- A calculation step cannot reference an `output_variable` from a later step
+- All referenced formula_function names must exist in formula library (Section 12.3)
+
+### Format Validation
+- All currency values must be numeric (no $ symbols in JSON)
+- All percentage values must be numeric (no % symbols in JSON, store as 7.5 not 0.075)
+- calculator_version must match semantic versioning pattern (X.Y.Z)
+- calculator_slug must be kebab-case (lowercase, hyphens only)
+- field_id, step_id, output_variable must be snake_case
+
+---
+
+## Versioning JSON Schemas
+
+When a calculator JSON changes, increment `calculator_version` following semantic versioning:
+
+**Major version (X.0.0):**
+- Breaking changes (remove inputs, change calculation logic fundamentally)
+- Require data migration for saved scenarios
+
+**Minor version (X.Y.0):**
+- New features (add inputs, add calculations, add warnings)
+- Backward compatible with existing scenarios
+
+**Patch version (X.Y.Z):**
+- Bug fixes (correct formula, fix typo in labels)
+- No functional changes
+
+**Example evolution:**
+- 1.0.0 – Initial release
+- 1.1.0 – Add DSCR calculation (new feature, backward compatible)
+- 1.1.1 – Fix typo in tooltip (patch)
+- 2.0.0 – Remove deprecated input field (breaking change)
+
+---
+
+## Next Steps
+
+- **Section 12.3:** Formula library API with function signatures
+- **Section 12.4:** Deployment pipeline with validation steps
+- **Section 12.5:** Complete calculator examples (simple, moderate, complex)
+
+
+# 12.3 Formula Library API
+
+## Overview
+
+The Formula Library is a centralized, versioned collection of pure mathematical functions that all calculators can call. This library is the computational backbone of the JSON Assembly Line system.
+
+**Key principles:**
+- **Pure functions** – No side effects, same inputs always produce same outputs
+- **Versioned** – Formula library has semantic versioning (v1.0.0, v1.1.0, etc.)
+- **Tested** – Each formula has golden scenarios ensuring correctness
+- **Reusable** – Write once, use in 450+ calculators
+- **Type-safe** – Strict input/output contracts with TypeScript
+
+**Current version:** v1.0.0
+**Location:** `/src/lib/formulas/`
+**Language:** TypeScript
+
+---
+
+## Formula Structure
+
+Every formula in the library follows this structure:
+
+```typescript
+interface FormulaMetadata {
+  name: string;              // Function name (camelCase)
+  version: string;           // Semantic version when introduced
+  category: string;          // Formula category
+  description: string;       // What this formula calculates
+  introduced: string;        // Library version when added
+  lastModified: string;      // Library version when last changed
+}
+
+interface FormulaContract {
+  inputs: Array<{
+    name: string;            // Parameter name
+    type: string;            // TypeScript type
+    required: boolean;       // Is this parameter required?
+    default?: any;           // Default value if optional
+    validation?: {           // Validation rules
+      min?: number;
+      max?: number;
+      mustBePositive?: boolean;
+    };
+  }>;
+  output: {
+    type: string;            // Return type
+    structure?: object;      // Structure if returning object
+  };
+}
+
+interface Formula {
+  metadata: FormulaMetadata;
+  contract: FormulaContract;
+  execute: (...args: any[]) => any;
+}
+```
+
+---
+
+## Formula Categories
+
+### 1. Loan & Debt Formulas
+
+#### calculateMonthlyPayment
+
+**Description:** Calculate monthly payment for an amortizing loan using standard loan payment formula.
+
+**Formula:**
+```
+P = L × [r(1+r)^n] / [(1+r)^n - 1]
+
+Where:
+  P = Monthly payment
+  L = Loan principal
+  r = Monthly interest rate (annual rate / 12 / 100)
+  n = Number of payments (term in months)
+```
+
+**Function signature:**
+```typescript
+function calculateMonthlyPayment(
+  principal: number,
+  annualRate: number,
+  termMonths: number
+): number
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| principal | number | Yes | Loan amount in dollars | > 0 |
+| annualRate | number | Yes | Annual interest rate as percentage (e.g., 7.5) | 0.01 - 30 |
+| termMonths | number | Yes | Loan term in months | > 0, integer |
+
+**Returns:** Monthly payment amount (number)
+
+**Edge cases:**
+- If annualRate = 0: Return principal / termMonths (interest-free loan)
+- If principal ≤ 0: Throw error "Principal must be positive"
+- If termMonths ≤ 0: Throw error "Term must be positive"
+
+**Example usage:**
+```typescript
+const payment = calculateMonthlyPayment(100000, 7.5, 120);
+// Returns: 1161.08
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### calculateTotalInterest
+
+**Description:** Calculate total interest paid over the life of a loan.
+
+**Formula:**
+```
+Total Interest = (Monthly Payment × Number of Payments) - Principal
+```
+
+**Function signature:**
+```typescript
+function calculateTotalInterest(
+  monthlyPayment: number,
+  termMonths: number,
+  principal: number
+): number
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| monthlyPayment | number | Yes | Monthly payment amount | > 0 |
+| termMonths | number | Yes | Loan term in months | > 0, integer |
+| principal | number | Yes | Original loan amount | > 0 |
+
+**Returns:** Total interest paid (number)
+
+**Example usage:**
+```typescript
+const totalInterest = calculateTotalInterest(1161.08, 120, 100000);
+// Returns: 39329.60
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### calculateAmortizationSchedule
+
+**Description:** Generate a complete amortization schedule with principal/interest breakdown for each payment.
+
+**Function signature:**
+```typescript
+function calculateAmortizationSchedule(
+  principal: number,
+  annualRate: number,
+  termMonths: number
+): AmortizationSchedule
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| principal | number | Yes | Loan amount in dollars | > 0 |
+| annualRate | number | Yes | Annual interest rate as percentage | 0.01 - 30 |
+| termMonths | number | Yes | Loan term in months | > 0, integer |
+
+**Returns:** AmortizationSchedule object
+
+```typescript
+interface AmortizationSchedule {
+  monthlyPayment: number;
+  totalInterest: number;
+  totalCost: number;
+  schedule: Array<{
+    month: number;
+    payment: number;
+    principal: number;
+    interest: number;
+    balance: number;
+  }>;
+}
+```
+
+**Example usage:**
+```typescript
+const schedule = calculateAmortizationSchedule(100000, 7.5, 120);
+// Returns object with monthlyPayment: 1161.08 and 120-row schedule array
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### calculateDSCR
+
+**Description:** Calculate Debt Service Coverage Ratio, a key metric for commercial lending.
+
+**Formula:**
+```
+DSCR = Net Operating Income / Annual Debt Service
+
+Where:
+  Net Operating Income = Revenue - Operating Expenses (excluding debt payments)
+  Annual Debt Service = Total annual loan payments (principal + interest)
+```
+
+**Function signature:**
+```typescript
+function calculateDSCR(
+  netOperatingIncome: number,
+  annualDebtService: number
+): number
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| netOperatingIncome | number | Yes | Annual NOI in dollars | Can be negative |
+| annualDebtService | number | Yes | Annual debt payments in dollars | > 0 |
+
+**Returns:** DSCR as ratio (number, typically 0.5 - 5.0)
+
+**Edge cases:**
+- If annualDebtService = 0: Throw error "Annual debt service must be positive"
+- If NOI is negative: Return negative DSCR (valid, indicates inability to cover debt)
+
+**Example usage:**
+```typescript
+const dscr = calculateDSCR(300000, 210000);
+// Returns: 1.43 (meaning NOI is 1.43x annual debt service)
+```
+
+**Interpretation guidance:**
+- DSCR < 1.0: Insufficient income to cover debt (red flag)
+- DSCR 1.0 - 1.25: Tight coverage, risky for lenders
+- DSCR 1.25 - 1.5: Minimum acceptable for most lenders
+- DSCR > 1.5: Strong coverage, favorable for approval
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### calculateEffectiveAPR
+
+**Description:** Calculate effective Annual Percentage Rate including all fees and costs.
+
+**Formula:**
+```
+Effective APR = [(Total Cost / Principal) / Term in Years] × 100
+```
+
+**Function signature:**
+```typescript
+function calculateEffectiveAPR(
+  principal: number,
+  totalCost: number,
+  termMonths: number
+): number
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| principal | number | Yes | Original loan/financing amount | > 0 |
+| totalCost | number | Yes | Total cost including all fees and interest | > principal |
+| termMonths | number | Yes | Term in months | > 0, integer |
+
+**Returns:** Effective APR as percentage (number)
+
+**Example usage:**
+```typescript
+const effectiveAPR = calculateEffectiveAPR(100000, 139329.60, 120);
+// Returns: 4.72% annualized effective rate
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+### 2. Cash Flow Formulas
+
+#### calculateBurnRate
+
+**Description:** Calculate monthly cash burn rate (how much cash is consumed per month).
+
+**Formula:**
+```
+Burn Rate = Monthly Expenses - Monthly Revenue
+```
+
+**Function signature:**
+```typescript
+function calculateBurnRate(
+  monthlyRevenue: number,
+  monthlyExpenses: number
+): number
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| monthlyRevenue | number | Yes | Average monthly revenue | ≥ 0 |
+| monthlyExpenses | number | Yes | Average monthly expenses | ≥ 0 |
+
+**Returns:** Monthly burn rate (number, positive = burning cash, negative = generating cash)
+
+**Example usage:**
+```typescript
+const burnRate = calculateBurnRate(50000, 75000);
+// Returns: 25000 (burning $25k/month)
+
+const burnRate2 = calculateBurnRate(100000, 75000);
+// Returns: -25000 (generating $25k/month)
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### calculateRunway
+
+**Description:** Calculate cash runway in months (how long until cash runs out).
+
+**Formula:**
+```
+Runway = Cash Balance / Monthly Burn Rate
+
+(Only applicable if burning cash, i.e., burn rate > 0)
+```
+
+**Function signature:**
+```typescript
+function calculateRunway(
+  cashBalance: number,
+  monthlyBurn: number
+): number | null
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| cashBalance | number | Yes | Current cash on hand | ≥ 0 |
+| monthlyBurn | number | Yes | Monthly cash burn (positive number) | Can be any number |
+
+**Returns:**
+- Number of months (number) if burning cash
+- null if generating cash (monthlyBurn ≤ 0)
+
+**Edge cases:**
+- If monthlyBurn ≤ 0: Return null (not applicable, business is cash-positive)
+- If cashBalance = 0: Return 0 (no runway)
+
+**Example usage:**
+```typescript
+const runway = calculateRunway(150000, 25000);
+// Returns: 6 (6 months of runway)
+
+const runway2 = calculateRunway(150000, -10000);
+// Returns: null (generating cash, runway not applicable)
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### calculateBreakeven
+
+**Description:** Calculate breakeven point in units or revenue.
+
+**Formula (Units):**
+```
+Breakeven Units = Fixed Costs / Contribution Margin per Unit
+
+Where:
+  Contribution Margin per Unit = Selling Price - Variable Cost per Unit
+```
+
+**Formula (Revenue):**
+```
+Breakeven Revenue = Fixed Costs / Contribution Margin Ratio
+
+Where:
+  Contribution Margin Ratio = (Selling Price - Variable Cost) / Selling Price
+```
+
+**Function signature:**
+```typescript
+function calculateBreakeven(
+  fixedCosts: number,
+  contributionMarginPerUnit: number
+): number
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| fixedCosts | number | Yes | Total fixed costs per period | ≥ 0 |
+| contributionMarginPerUnit | number | Yes | Contribution margin per unit sold | > 0 |
+
+**Returns:** Breakeven quantity (number of units)
+
+**Edge cases:**
+- If contributionMarginPerUnit ≤ 0: Throw error "Contribution margin must be positive"
+- If fixedCosts = 0: Return 0 (breakeven immediately)
+
+**Example usage:**
+```typescript
+const breakevenUnits = calculateBreakeven(100000, 50);
+// Returns: 2000 (need to sell 2,000 units to break even)
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+### 3. Profitability Formulas
+
+#### calculateContributionMargin
+
+**Description:** Calculate contribution margin per unit and contribution margin ratio.
+
+**Formulas:**
+```
+Contribution Margin per Unit = Selling Price - Variable Cost per Unit
+Contribution Margin Ratio = (Selling Price - Variable Cost) / Selling Price × 100
+```
+
+**Function signature:**
+```typescript
+function calculateContributionMargin(
+  sellingPrice: number,
+  variableCost: number
+): ContributionMarginResult
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| sellingPrice | number | Yes | Price per unit | > 0 |
+| variableCost | number | Yes | Variable cost per unit | ≥ 0 |
+
+**Returns:** ContributionMarginResult object
+
+```typescript
+interface ContributionMarginResult {
+  marginPerUnit: number;      // Dollar contribution per unit
+  marginRatio: number;        // Contribution margin as percentage
+}
+```
+
+**Example usage:**
+```typescript
+const margin = calculateContributionMargin(100, 60);
+// Returns: {marginPerUnit: 40, marginRatio: 40.0}
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### calculateMarginOfSafety
+
+**Description:** Calculate margin of safety (how far above breakeven current revenue is).
+
+**Formula:**
+```
+Margin of Safety = (Current Revenue - Breakeven Revenue) / Current Revenue × 100
+```
+
+**Function signature:**
+```typescript
+function calculateMarginOfSafety(
+  currentRevenue: number,
+  breakevenRevenue: number
+): number
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| currentRevenue | number | Yes | Current revenue per period | > 0 |
+| breakevenRevenue | number | Yes | Breakeven revenue per period | > 0 |
+
+**Returns:** Margin of safety as percentage (number)
+
+**Example usage:**
+```typescript
+const safety = calculateMarginOfSafety(500000, 300000);
+// Returns: 40.0 (40% margin of safety)
+```
+
+**Interpretation:**
+- Negative value: Below breakeven (losing money)
+- 0-20%: Low margin of safety, vulnerable to revenue drops
+- 20-40%: Moderate safety
+- 40%+: Strong margin of safety
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### calculateGrossMargin
+
+**Description:** Calculate gross margin and gross margin percentage.
+
+**Formulas:**
+```
+Gross Profit = Revenue - Cost of Goods Sold (COGS)
+Gross Margin % = (Gross Profit / Revenue) × 100
+```
+
+**Function signature:**
+```typescript
+function calculateGrossMargin(
+  revenue: number,
+  cogs: number
+): GrossMarginResult
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| revenue | number | Yes | Total revenue | > 0 |
+| cogs | number | Yes | Cost of goods sold | ≥ 0 |
+
+**Returns:** GrossMarginResult object
+
+```typescript
+interface GrossMarginResult {
+  grossProfit: number;        // Dollar gross profit
+  grossMarginPercent: number; // Gross margin as percentage
+}
+```
+
+**Example usage:**
+```typescript
+const margin = calculateGrossMargin(1000000, 600000);
+// Returns: {grossProfit: 400000, grossMarginPercent: 40.0}
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+### 4. Valuation Formulas
+
+#### calculateNPV
+
+**Description:** Calculate Net Present Value of a series of cash flows.
+
+**Formula:**
+```
+NPV = Σ [CFt / (1 + r)^t] - Initial Investment
+
+Where:
+  CFt = Cash flow at time t
+  r = Discount rate (as decimal, e.g., 0.10 for 10%)
+  t = Time period (0, 1, 2, ...)
+```
+
+**Function signature:**
+```typescript
+function calculateNPV(
+  cashFlows: number[],
+  discountRate: number
+): number
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| cashFlows | number[] | Yes | Array of cash flows (year 0, year 1, ...) | Array length > 0 |
+| discountRate | number | Yes | Annual discount rate as percentage (e.g., 10 for 10%) | > 0 |
+
+**Returns:** NPV as dollar amount (number)
+
+**Example usage:**
+```typescript
+const npv = calculateNPV([-100000, 30000, 40000, 50000, 60000], 10);
+// Returns: 32,396.61
+// (Initial investment -$100k, then $30k, $40k, $50k, $60k over 4 years at 10% discount)
+```
+
+**Interpretation:**
+- NPV > 0: Investment is profitable at given discount rate
+- NPV = 0: Investment breaks even
+- NPV < 0: Investment loses money at given discount rate
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### calculateIRR
+
+**Description:** Calculate Internal Rate of Return for a series of cash flows.
+
+**Formula:**
+IRR is the discount rate that makes NPV = 0. Solved iteratively using Newton-Raphson method.
+
+**Function signature:**
+```typescript
+function calculateIRR(
+  cashFlows: number[]
+): number | null
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| cashFlows | number[] | Yes | Array of cash flows (year 0, year 1, ...) | Must have at least one negative and one positive value |
+
+**Returns:**
+- IRR as percentage (number) if solvable
+- null if IRR cannot be calculated (e.g., all cash flows same sign)
+
+**Edge cases:**
+- If all cash flows are positive or all negative: Return null (no IRR)
+- If IRR doesn't converge after 100 iterations: Return null
+
+**Example usage:**
+```typescript
+const irr = calculateIRR([-100000, 30000, 40000, 50000, 60000]);
+// Returns: 22.4% (annual return rate that makes NPV = 0)
+```
+
+**Interpretation:**
+- IRR > required rate of return: Investment is attractive
+- IRR = required rate of return: Investment breaks even
+- IRR < required rate of return: Investment is unattractive
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### calculateMultipleValuation
+
+**Description:** Calculate business valuation using multiple-based approach (e.g., revenue multiple, EBITDA multiple).
+
+**Formula:**
+```
+Valuation Low = Metric × Multiple Low
+Valuation High = Metric × Multiple High
+Valuation Midpoint = (Valuation Low + Valuation High) / 2
+```
+
+**Function signature:**
+```typescript
+function calculateMultipleValuation(
+  metric: number,
+  multipleLow: number,
+  multipleHigh: number
+): ValuationRange
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| metric | number | Yes | Revenue, EBITDA, or other metric | > 0 |
+| multipleLow | number | Yes | Low end of multiple range | > 0 |
+| multipleHigh | number | Yes | High end of multiple range | ≥ multipleLow |
+
+**Returns:** ValuationRange object
+
+```typescript
+interface ValuationRange {
+  valuationLow: number;
+  valuationHigh: number;
+  valuationMidpoint: number;
+}
+```
+
+**Example usage:**
+```typescript
+const valuation = calculateMultipleValuation(5000000, 2.5, 4.0);
+// Returns: {valuationLow: 12500000, valuationHigh: 20000000, valuationMidpoint: 16250000}
+// (Business with $5M revenue valued at 2.5-4.0× revenue = $12.5M - $20M)
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+### 5. Utility Formulas
+
+#### formatCurrency
+
+**Description:** Format a number as US currency with commas and decimal places.
+
+**Function signature:**
+```typescript
+function formatCurrency(
+  value: number,
+  decimals: number = 2
+): string
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| value | number | Yes | Number to format | Any number |
+| decimals | number | No | Decimal places (default: 2) | 0-4 |
+
+**Returns:** Formatted currency string
+
+**Example usage:**
+```typescript
+formatCurrency(1234567.89);
+// Returns: "$1,234,567.89"
+
+formatCurrency(1234567.89, 0);
+// Returns: "$1,234,568"
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### formatPercentage
+
+**Description:** Format a number as percentage with decimal places.
+
+**Function signature:**
+```typescript
+function formatPercentage(
+  value: number,
+  decimals: number = 2
+): string
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| value | number | Yes | Number to format (stored as 7.5, not 0.075) | Any number |
+| decimals | number | No | Decimal places (default: 2) | 0-4 |
+
+**Returns:** Formatted percentage string
+
+**Example usage:**
+```typescript
+formatPercentage(7.5);
+// Returns: "7.50%"
+
+formatPercentage(7.5, 1);
+// Returns: "7.5%"
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### validatePositive
+
+**Description:** Validate that a value is positive (> 0).
+
+**Function signature:**
+```typescript
+function validatePositive(
+  value: number,
+  fieldName: string
+): void
+```
+
+**Parameters:**
+
+| Name | Type | Required | Description | Validation |
+|------|------|----------|-------------|------------|
+| value | number | Yes | Value to validate | - |
+| fieldName | string | Yes | Field name for error message | - |
+
+**Returns:** void (throws error if validation fails)
+
+**Example usage:**
+```typescript
+validatePositive(100, "loan_amount");
+// No error, validation passes
+
+validatePositive(-100, "loan_amount");
+// Throws: "loan_amount must be positive (received: -100)"
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### multiply
+
+**Description:** Multiply two numbers (utility for simple calculations).
+
+**Function signature:**
+```typescript
+function multiply(
+  a: number,
+  b: number
+): number
+```
+
+**Example usage:**
+```typescript
+const result = multiply(12, 1161.08);
+// Returns: 13932.96
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+#### subtract
+
+**Description:** Subtract second number from first (utility for simple calculations).
+
+**Function signature:**
+```typescript
+function subtract(
+  a: number,
+  b: number
+): number
+```
+
+**Example usage:**
+```typescript
+const result = subtract(139329.60, 100000);
+// Returns: 39329.60
+```
+
+**Version history:**
+- v1.0.0: Initial implementation
+
+---
+
+## Formula Calling from JSON
+
+Calculator JSON files reference formulas by name in the `calculations` array:
+
+```json
+{
+  "calculations": [
+    {
+      "step_id": "calc_monthly_payment",
+      "formula_function": "calculateMonthlyPayment",
+      "inputs": ["loan_amount", "interest_rate", "term_years"],
+      "output_variable": "monthly_payment"
+    }
+  ]
+}
+```
+
+**How the Calculator Engine processes this:**
+
+1. Parse `formula_function`: "calculateMonthlyPayment"
+2. Look up formula in library
+3. Validate input count matches formula signature (3 inputs expected)
+4. Extract input values from user inputs or previous calculation outputs:
+   - `loan_amount` → 100000
+   - `interest_rate` → 7.5
+   - `term_years` → 10
+5. Convert term_years to months: 10 × 12 = 120 (if formula expects months)
+6. Call formula: `calculateMonthlyPayment(100000, 7.5, 120)`
+7. Store result in `output_variable`: `monthly_payment = 1161.08`
+
+---
+
+## Error Handling
+
+All formulas follow consistent error handling patterns:
+
+### Validation Errors
+Thrown when inputs violate validation rules:
+
+```typescript
+throw new Error("Principal must be positive (received: -100)");
+throw new Error("Term must be a positive integer (received: 0)");
+```
+
+### Calculation Errors
+Thrown when calculation cannot be performed:
+
+```typescript
+throw new Error("Cannot calculate IRR: all cash flows must not have the same sign");
+throw new Error("Cannot calculate runway: monthly burn must be positive");
+```
+
+### Edge Case Handling
+Formulas handle edge cases gracefully:
+
+```typescript
+// Interest-free loan
+if (annualRate === 0) {
+  return principal / termMonths;
+}
+
+// Cash-positive business (no runway applicable)
+if (monthlyBurn <= 0) {
+  return null;
+}
+```
+
+---
+
+## Testing & Golden Scenarios
+
+Every formula has golden scenarios (test cases with known correct outputs).
+
+**Example golden scenario for calculateMonthlyPayment:**
+
+```json
+{
+  "formula_name": "calculateMonthlyPayment",
+  "test_cases": [
+    {
+      "name": "Standard 7% loan",
+      "inputs": {
+        "principal": 100000,
+        "annualRate": 7.0,
+        "termMonths": 120
+      },
+      "expected_output": 1161.08,
+      "tolerance": 0.01
+    },
+    {
+      "name": "Interest-free loan",
+      "inputs": {
+        "principal": 120000,
+        "annualRate": 0,
+        "termMonths": 120
+      },
+      "expected_output": 1000.00,
+      "tolerance": 0.01
+    }
+  ]
+}
+```
+
+**Test suite runs:**
+- On every formula library code change
+- During calculator JSON validation (if calculator has golden scenarios)
+- Before deployment to production
+
+---
+
+## Versioning & Backward Compatibility
+
+**Formula Library versioning:**
+- Current version: v1.0.0
+- Follows semantic versioning
+
+**Version bump rules:**
+
+| Change Type | Version Bump | Example |
+|-------------|--------------|---------|
+| New formula added | Minor (1.0.0 → 1.1.0) | Add calculateROI() |
+| Formula bug fix (no signature change) | Patch (1.0.0 → 1.0.1) | Fix rounding in calculateNPV() |
+| Formula signature change | Major (1.0.0 → 2.0.0) | Change calculateMonthlyPayment to require 4th parameter |
+| Formula removed | Major (1.0.0 → 2.0.0) | Remove deprecated function |
+
+**Backward compatibility:**
+- Calculators specify which formula library version they depend on
+- Breaking changes require updating calculator JSON files
+- Deprecated formulas maintained for 2 major versions before removal
+
+---
+
+## Adding New Formulas
+
+**Process for adding a new formula:**
+
+1. **Define formula contract** (inputs, outputs, validation)
+2. **Write TypeScript implementation** with type safety
+3. **Create golden scenarios** with 3-5 test cases
+4. **Write documentation** following this format
+5. **Add to formula library index** with metadata
+6. **Run test suite** to ensure all golden scenarios pass
+7. **Increment formula library version** (minor version bump)
+8. **Update formula library documentation** (this file)
+
+**Example pull request checklist:**
+- [ ] Formula implementation in `/src/lib/formulas/{category}/{formulaName}.ts`
+- [ ] Golden scenarios in `/tests/formulas/{formulaName}.test.ts`
+- [ ] Documentation added to this file (12.3)
+- [ ] Formula added to library index with metadata
+- [ ] All tests passing (100% pass rate required)
+- [ ] Version bumped in `package.json`
+
+---
+
+## Next Steps
+
+- **Section 12.4:** Deployment pipeline with CI/CD validation
+- **Section 12.5:** Complete calculator examples showing formula usage
+
+
+# 12.4 Deployment Pipeline
+
+## Overview
+
+The deployment pipeline is the automated system that takes a calculator JSON file from creation to production in approximately 5-10 minutes. This pipeline ensures quality, consistency, and reliability through automated validation and testing.
+
+**Pipeline goals:**
+- **Speed:** 5-10 minutes from commit to live calculator
+- **Quality:** Catch errors before production through automated validation
+- **Zero-downtime:** Blue-green deployments with instant rollback
+- **Traceability:** Full audit trail of all changes via Git
+
+**Technology stack:**
+- **Version control:** Git + GitHub
+- **CI/CD:** GitHub Actions
+- **Hosting:** Railway (Phase 1), AWS (Phase 2+)
+- **Deployment strategy:** Blue-green with health checks
+
+---
+
+## Deployment Flow Overview
+
+```
+Developer creates/edits JSON
+         ↓
+Commit to feature branch
+         ↓
+Push to GitHub
+         ↓
+GitHub Actions triggered
+         ↓
+[VALIDATION STAGE]
+  ├─ JSON schema validation
+  ├─ Formula library check
+  ├─ Tier config validation
+  └─ Golden scenario testing
+         ↓
+All validations pass?
+  ├─ YES → PR approved, merge allowed
+  └─ NO → Build fails, PR blocked
+         ↓
+Merge to main branch
+         ↓
+[BUILD STAGE]
+  ├─ UI components generated
+  ├─ Formula library wired
+  ├─ Export templates created
+  └─ WordPress shortcode generated
+         ↓
+Deploy to staging
+         ↓
+[STAGING QA]
+  ├─ Health check (calculator loads)
+  ├─ Smoke test (run one calculation)
+  └─ Golden scenario validation
+         ↓
+Deploy to production (blue-green)
+         ↓
+[PRODUCTION VERIFICATION]
+  ├─ Health check
+  ├─ Smoke test
+  └─ Monitor error rates (24 hours)
+         ↓
+Calculator live ✓
+```
+
+**Total time:** ~5-10 minutes (commit to live)
+
+---
+
+## Stage 1: Create/Edit JSON Config
+
+**Developer workflow:**
+
+1. **Clone repository**
+   ```bash
+   git clone https://github.com/smartprofit/calculator-suite.git
+   cd calculator-suite
+   ```
+
+2. **Create feature branch**
+   ```bash
+   git checkout -b calculators/add-roi-calculator
+   ```
+
+3. **Create JSON config**
+   - Location: `/calculators/configs/roi-calculator.json`
+   - Copy from template or existing calculator
+   - Follow schema from Section 12.2
+
+4. **(Optional) Create golden scenarios**
+   - Location: `/calculators/configs/roi-calculator.golden.json`
+   - Define expected inputs and outputs for testing
+
+**Time:** ~3-5 minutes (for experienced developer)
+
+---
+
+## Stage 2: Automated Validation (CI/CD)
+
+**Triggered by:** Push to any branch
+
+**GitHub Actions workflow file:** `.github/workflows/validate-calculator.yml`
+
+```yaml
+name: Validate Calculator JSON
+
+on:
+  push:
+    branches: ['**']
+    paths:
+      - 'calculators/configs/**/*.json'
+  pull_request:
+    paths:
+      - 'calculators/configs/**/*.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: JSON Schema Validation
+        run: npm run validate:schema
+
+      - name: Formula Library Check
+        run: npm run validate:formulas
+
+      - name: Tier Config Validation
+        run: npm run validate:tiers
+
+      - name: Golden Scenario Testing
+        run: npm run test:golden-scenarios
+
+      - name: Generate validation report
+        if: failure()
+        run: npm run report:validation-errors
+```
+
+**Validation steps:**
+
+### 2.1 JSON Schema Validation
+
+**Purpose:** Ensure JSON file is syntactically valid and matches schema (Section 12.2)
+
+**Script:** `npm run validate:schema`
+
+**Checks:**
+- Is the file valid JSON?
+- Does it have all required top-level sections? (calculator_meta, inputs, calculations, outputs)
+- Are all field types correct? (strings, numbers, booleans, arrays)
+- Do all enum fields have valid values? (category, field_type, severity, etc.)
+- Are all required fields present?
+- Do all fields meet validation constraints? (min, max, string length, etc.)
+
+**Example validation output (success):**
+```
+✓ calculators/configs/roi-calculator.json
+  ✓ JSON syntax valid
+  ✓ Schema structure valid
+  ✓ All required fields present
+  ✓ All field types correct
+  ✓ All enum values valid
+  ✓ All validation constraints satisfied
+
+Schema validation: PASSED
+```
+
+**Example validation output (failure):**
+```
+✗ calculators/configs/roi-calculator.json
+  ✓ JSON syntax valid
+  ✓ Schema structure valid
+  ✗ Field validation error:
+    - inputs[2].field_type: "slider" is not a valid field_type
+      Valid values: number, currency, percentage, dropdown, slider
+    - calculations[0].formula_function: "calculateROI" not found in formula library
+    - tier_config.free_tier.visible_outputs[0]: "monthly_roi" does not reference a valid metric_id
+
+Schema validation: FAILED (3 errors)
+```
+
+**Exit code:** 0 = success, 1 = failure (blocks PR merge)
+
+---
+
+### 2.2 Formula Library Check
+
+**Purpose:** Ensure all referenced formula functions exist in the formula library
+
+**Script:** `npm run validate:formulas`
+
+**Checks:**
+- Do all `formula_function` values in calculations array exist in formula library?
+- Do input counts match formula signatures? (e.g., calculateMonthlyPayment expects 3 inputs)
+- Are output_variable names unique?
+
+**Example validation output (success):**
+```
+✓ Formula library check: calculators/configs/roi-calculator.json
+  ✓ calculateROI: Found in formula library v1.2.0
+  ✓ calculatePaybackPeriod: Found in formula library v1.2.0
+  ✓ Input count matches signature (3 inputs expected, 3 provided)
+  ✓ All output_variable names unique
+
+Formula validation: PASSED
+```
+
+**Example validation output (failure):**
+```
+✗ Formula library check: calculators/configs/roi-calculator.json
+  ✗ calculateROI: Not found in formula library v1.2.0
+    Available similar formulas:
+      - calculateNPV
+      - calculateIRR
+    Suggestion: Add calculateROI to formula library or use existing formula
+
+Formula validation: FAILED (1 error)
+```
+
+**Exit code:** 0 = success, 1 = failure (blocks PR merge)
+
+---
+
+### 2.3 Tier Config Validation
+
+**Purpose:** Ensure tier gating rules are logically consistent
+
+**Script:** `npm run validate:tiers`
+
+**Checks:**
+- Do all metric_ids in `visible_outputs` exist in outputs section?
+- Is `free_tier.max_scenarios` ≤ `pro_tier.max_scenarios`?
+- Are scenario limits valid numbers (> 0)?
+- If `ai_enabled: true`, is there an `ai_config` section?
+
+**Example validation output (success):**
+```
+✓ Tier config validation: calculators/configs/roi-calculator.json
+  ✓ All free_tier.visible_outputs reference valid metric_ids
+  ✓ All pro_tier.visible_outputs reference valid metric_ids
+  ✓ Scenario limits logical (free: 1, pro: 50)
+  ✓ AI config present (ai_enabled: true)
+
+Tier validation: PASSED
+```
+
+**Example validation output (failure):**
+```
+✗ Tier config validation: calculators/configs/roi-calculator.json
+  ✗ free_tier.visible_outputs[2]: "total_roi" does not exist in outputs
+    Available metric_ids: monthly_roi, annual_roi, payback_period
+  ✗ ai_enabled: true but ai_config section missing
+
+Tier validation: FAILED (2 errors)
+```
+
+**Exit code:** 0 = success, 1 = failure (blocks PR merge)
+
+---
+
+### 2.4 Golden Scenario Testing
+
+**Purpose:** Validate calculator outputs against known correct values (if golden scenarios provided)
+
+**Script:** `npm run test:golden-scenarios`
+
+**Checks:**
+- If `/calculators/configs/{calculator-slug}.golden.json` exists, run tests
+- Execute calculations with golden inputs
+- Compare outputs to expected values (within tolerance, typically ±0.01 for currency)
+- Report any mismatches
+
+**Golden scenario file format:**
+```json
+{
+  "calculator_slug": "roi-calculator",
+  "scenarios": [
+    {
+      "name": "Standard investment",
+      "inputs": {
+        "initial_investment": 100000,
+        "annual_return": 15000,
+        "holding_period_years": 5
+      },
+      "expected_outputs": {
+        "total_roi": 75000,
+        "roi_percentage": 75.0,
+        "annualized_roi": 15.0
+      },
+      "tolerance": 0.01
+    }
+  ]
+}
+```
+
+**Example validation output (success):**
+```
+✓ Golden scenario testing: calculators/configs/roi-calculator.json
+  ✓ Scenario 1: "Standard investment"
+    Inputs: initial_investment=100000, annual_return=15000, holding_period_years=5
+    Expected: total_roi=75000, roi_percentage=75.0, annualized_roi=15.0
+    Actual:   total_roi=75000.00, roi_percentage=75.00, annualized_roi=15.00
+    Status: PASSED (all outputs within tolerance ±0.01)
+
+Golden scenario validation: PASSED (1/1 scenarios)
+```
+
+**Example validation output (failure):**
+```
+✗ Golden scenario testing: calculators/configs/roi-calculator.json
+  ✗ Scenario 1: "Standard investment"
+    Inputs: initial_investment=100000, annual_return=15000, holding_period_years=5
+    Expected: total_roi=75000, roi_percentage=75.0, annualized_roi=15.0
+    Actual:   total_roi=75000.00, roi_percentage=75.00, annualized_roi=12.50
+    Status: FAILED
+      - annualized_roi: Expected 15.0, got 12.50 (difference: 2.50, tolerance: ±0.01)
+
+Golden scenario validation: FAILED (0/1 scenarios passed)
+```
+
+**Exit code:** 0 = success, 1 = failure (blocks PR merge)
+
+**Note:** Golden scenarios are optional but highly recommended for complex calculators (5+ calculation steps)
+
+---
+
+### Validation Summary Report
+
+After all validation steps, a summary report is generated:
+
+**Success report:**
+```
+═══════════════════════════════════════════════════
+  CALCULATOR VALIDATION REPORT
+═══════════════════════════════════════════════════
+Calculator: roi-calculator.json
+Status: ✓ PASSED
+
+Validation Results:
+  ✓ JSON Schema Validation       PASSED
+  ✓ Formula Library Check         PASSED
+  ✓ Tier Config Validation        PASSED
+  ✓ Golden Scenario Testing       PASSED (1/1)
+
+Summary:
+  Total checks: 4
+  Passed: 4
+  Failed: 0
+
+This calculator is ready for deployment.
+Pull request can be merged to main branch.
+═══════════════════════════════════════════════════
+```
+
+**Failure report:**
+```
+═══════════════════════════════════════════════════
+  CALCULATOR VALIDATION REPORT
+═══════════════════════════════════════════════════
+Calculator: roi-calculator.json
+Status: ✗ FAILED
+
+Validation Results:
+  ✓ JSON Schema Validation       PASSED
+  ✗ Formula Library Check         FAILED (1 error)
+  ✓ Tier Config Validation        PASSED
+  ✗ Golden Scenario Testing       FAILED (0/1 scenarios passed)
+
+Errors:
+  1. Formula Library Check:
+     - calculateROI: Not found in formula library v1.2.0
+
+  2. Golden Scenario Testing:
+     - Scenario "Standard investment": annualized_roi mismatch
+       Expected: 15.0, Got: 12.50
+
+Summary:
+  Total checks: 4
+  Passed: 2
+  Failed: 2
+
+This calculator cannot be deployed.
+Please fix errors and push again.
+═══════════════════════════════════════════════════
+```
+
+**Time:** ~1-2 minutes (validation scripts run in parallel)
+
+---
+
+## Stage 3: Build Stage
+
+**Triggered by:** Merge to main branch
+
+**GitHub Actions workflow file:** `.github/workflows/build-deploy.yml`
+
+### 3.1 UI Component Generation
+
+**Script:** `npm run generate:ui`
+
+**Process:**
+1. Read calculator JSON
+2. Parse `inputs` array
+3. For each input, generate React component based on `field_type`:
+   - `currency` → `<CurrencyInput />`
+   - `percentage` → `<PercentageInput />`
+   - `number` → `<NumberInput />`
+   - `dropdown` → `<DropdownInput />`
+4. Apply validation rules (min, max, required, etc.)
+5. Wire onChange handlers to state management
+6. Apply design system styles (Section 4)
+
+**Generated file:** `/src/components/calculators/generated/ROICalculator.tsx`
+
+**Example generated component (simplified):**
+```typescript
+// Auto-generated by JSON Assembly Line
+// DO NOT EDIT MANUALLY
+
+import React from 'react';
+import { CurrencyInput, NumberInput } from '@/components/inputs';
+import { useCalculator } from '@/hooks/useCalculator';
+
+export const ROICalculator: React.FC = () => {
+  const { inputs, setInput, calculate, results } = useCalculator('roi-calculator');
+
+  return (
+    <div className="calculator-container">
+      <div className="inputs-section">
+        <CurrencyInput
+          id="initial_investment"
+          label="Initial Investment"
+          value={inputs.initial_investment}
+          onChange={(value) => setInput('initial_investment', value)}
+          required={true}
+          min={1000}
+          max={100000000}
+          placeholder="100000"
+          tooltip="The total amount you are investing."
+        />
+
+        {/* More inputs generated... */}
+      </div>
+
+      <button onClick={calculate}>Calculate</button>
+
+      <div className="results-section">
+        {results && <ResultsDisplay results={results} config={calculatorConfig} />}
+      </div>
+    </div>
+  );
+};
+```
+
+---
+
+### 3.2 Formula Library Wiring
+
+**Script:** `npm run generate:formulas`
+
+**Process:**
+1. Read `calculations` array from JSON
+2. Generate calculation execution logic
+3. Wire formula library function calls
+4. Handle dependencies (step B depends on step A output)
+5. Generate execution order (topological sort of dependencies)
+
+**Generated file:** `/src/lib/calculators/generated/roi-calculator.ts`
+
+**Example generated logic (simplified):**
+```typescript
+// Auto-generated calculation logic
+import { calculateROI, calculatePaybackPeriod } from '@/lib/formulas';
+
+export function executeROICalculations(inputs: ROIInputs): ROIOutputs {
+  // Step 1: calc_total_roi
+  const total_roi = calculateROI(
+    inputs.initial_investment,
+    inputs.annual_return,
+    inputs.holding_period_years
+  );
+
+  // Step 2: calc_roi_percentage (depends on step 1)
+  const roi_percentage = (total_roi / inputs.initial_investment) * 100;
+
+  // Step 3: calc_payback_period
+  const payback_period = calculatePaybackPeriod(
+    inputs.initial_investment,
+    inputs.annual_return
+  );
+
+  return {
+    total_roi,
+    roi_percentage,
+    payback_period
+  };
+}
+```
+
+---
+
+### 3.3 Export Template Generation
+
+**Script:** `npm run generate:exports`
+
+**Process:**
+1. Read `export_config` section from JSON
+2. Generate PDF template based on `pdf_sections`
+3. Generate CSV structure based on `csv_columns`
+4. Include watermark logic for Free tier
+
+**Generated files:**
+- `/src/lib/exports/templates/roi-calculator-pdf.ts`
+- `/src/lib/exports/templates/roi-calculator-csv.ts`
+
+---
+
+### 3.4 WordPress Shortcode Generation
+
+**Script:** `npm run generate:shortcodes`
+
+**Process:**
+1. Generate WordPress shortcode for embedding calculator
+2. Document shortcode parameters
+3. Update shortcode documentation
+
+**Generated shortcode:**
+```
+[cfo_calculator slug="roi-calculator"]
+```
+
+**Shortcode parameters:**
+```
+[cfo_calculator slug="roi-calculator" tier="pro" hide_export="false"]
+```
+
+**Documentation updated:** `/docs/wordpress-shortcodes.md`
+
+**Time (Build Stage):** ~2-3 minutes
+
+---
+
+## Stage 4: Deploy to Staging
+
+**Environment:** staging.smartprofit.com
+
+**Deployment method:** Blue-green (zero downtime)
+
+**Process:**
+1. Build Docker container with new calculator
+2. Deploy to staging environment (green instance)
+3. Run health checks
+4. Run smoke tests
+5. If all pass, switch traffic to green instance
+6. If any fail, keep traffic on blue instance (current production)
+
+**Health checks:**
+- Calculator page loads (HTTP 200)
+- JSON config loads correctly
+- UI components render without errors
+
+**Smoke tests:**
+- Enter sample inputs
+- Trigger calculation
+- Verify outputs are numbers (not NaN or undefined)
+- Verify at least one output is non-zero
+
+**Time:** ~1-2 minutes
+
+---
+
+## Stage 5: Deploy to Production
+
+**Environment:** app.smartprofit.com
+
+**Deployment method:** Blue-green (zero downtime)
+
+**Process:**
+1. Build production Docker container
+2. Deploy to production green instance
+3. Run health checks
+4. Run smoke tests
+5. Run golden scenarios (if provided)
+6. If all pass, switch traffic to green instance
+7. Monitor error rates for first 24 hours
+
+**Post-deployment monitoring (first 24 hours):**
+- Error rate < 0.1% (Section 1.6)
+- p95 calculation latency < 150ms (Section 1.6)
+- No crashes or unhandled exceptions
+- Calculator usage events tracked (Section 7)
+
+**Rollback trigger:**
+- Error rate > 1% for 5 consecutive minutes
+- 3+ crashes in first hour
+- Critical bug reported by user
+
+**Rollback process:**
+1. Revert Git commit: `git revert HEAD`
+2. Push to main branch
+3. Deployment pipeline re-runs automatically
+4. Previous version deployed in < 5 minutes
+
+**Time (Production Deployment):** ~2-3 minutes
+
+---
+
+## Post-Deployment Verification
+
+### Health Check
+
+**Script:** `npm run health:check`
+
+**Checks:**
+- Calculator page accessible (HTTP 200)
+- JSON config loads
+- Formula library functions available
+- No JavaScript errors in console
+
+**Example output:**
+```
+✓ Health Check: roi-calculator
+  ✓ GET /calculators/roi-calculator → 200 OK
+  ✓ JSON config loaded successfully
+  ✓ Formula library initialized
+  ✓ No console errors
+
+Health check: PASSED
+```
+
+---
+
+### Smoke Test
+
+**Script:** `npm run smoke:test`
+
+**Process:**
+1. Navigate to calculator page
+2. Enter sample inputs (from golden scenario if available, or defaults)
+3. Click "Calculate"
+4. Verify results display
+5. Verify no errors
+
+**Example output:**
+```
+✓ Smoke Test: roi-calculator
+  ✓ Page loaded
+  ✓ Input fields rendered (3 inputs)
+  ✓ Entered sample inputs
+  ✓ Clicked "Calculate"
+  ✓ Results displayed (3 outputs)
+  ✓ No errors in console
+
+Smoke test: PASSED
+```
+
+---
+
+### Monitoring (First 24 Hours)
+
+**Metrics tracked (Section 7):**
+- `calculator_loaded` event count
+- `calculation_executed` event count
+- `calculation_error` event count (should be near zero)
+- p95 calculation latency (should be < 150ms)
+
+**Alert thresholds:**
+- Error rate > 1% for 5 minutes → Slack alert to #engineering
+- p95 latency > 500ms for 10 minutes → Slack alert to #engineering
+- Zero `calculator_loaded` events in first hour → Slack alert (possible deployment issue)
+
+**Time (Post-Deployment):** Ongoing for 24 hours
+
+---
+
+## Complete Timeline
+
+| Stage | Time | Cumulative |
+|-------|------|------------|
+| Create/edit JSON config | 3-5 min | 3-5 min |
+| Commit and push to GitHub | 30 sec | 3.5-5.5 min |
+| Automated validation (CI/CD) | 1-2 min | 4.5-7.5 min |
+| Build stage (UI, formulas, exports) | 2-3 min | 6.5-10.5 min |
+| Deploy to staging | 1-2 min | 7.5-12.5 min |
+| Deploy to production | 2-3 min | 9.5-15.5 min |
+| Post-deployment verification | 1 min | 10.5-16.5 min |
+
+**Typical total time:** ~10-12 minutes (from JSON creation to live calculator)
+
+**Best case:** ~7 minutes (experienced developer, simple calculator, all validations pass first try)
+
+**Worst case:** ~20 minutes (validation failures, need to fix and re-run)
+
+---
+
+## Rollback Process
+
+**When to rollback:**
+- Critical bug discovered in production
+- Error rate > 1% for 5 consecutive minutes
+- Calculator crashes or returns incorrect results
+
+**Rollback steps:**
+
+1. **Revert Git commit**
+   ```bash
+   git revert HEAD
+   git push origin main
+   ```
+
+2. **Deployment pipeline runs automatically**
+   - Previous calculator version re-deployed
+   - Same validation + build + deploy process
+   - Takes ~5 minutes
+
+3. **Verify rollback successful**
+   - Run health check
+   - Run smoke test
+   - Confirm error rate returns to normal
+
+4. **Investigate and fix issue**
+   - Analyze error logs
+   - Fix bug in JSON config or formula library
+   - Create new feature branch with fix
+   - Re-run deployment pipeline
+
+**Rollback time:** < 5 minutes (from decision to rollback to previous version live)
+
+---
+
+## CI/CD Configuration
+
+**GitHub Actions workflow files:**
+
+### `.github/workflows/validate-calculator.yml`
+Runs on push to any branch, validates JSON files.
+
+### `.github/workflows/build-deploy.yml`
+Runs on merge to main, builds and deploys to production.
+
+### `.github/workflows/rollback.yml`
+Manual workflow for emergency rollbacks.
+
+**Environment variables (GitHub Secrets):**
+- `RAILWAY_TOKEN` (Phase 1 deployment)
+- `AWS_ACCESS_KEY_ID` (Phase 2 deployment)
+- `AWS_SECRET_ACCESS_KEY` (Phase 2 deployment)
+- `SLACK_WEBHOOK_URL` (for alerts)
+
+---
+
+## Deployment Checklist
+
+**Before creating calculator JSON:**
+- [ ] Calculator design approved (Section 11 calculator PDR template)
+- [ ] Required formulas exist in formula library (Section 12.3)
+- [ ] Tier gating strategy defined (Free vs Pro features)
+- [ ] Golden scenarios prepared (recommended for complex calculators)
+
+**Before pushing to GitHub:**
+- [ ] JSON file follows schema (Section 12.2)
+- [ ] All referenced formulas exist in library
+- [ ] Tier config is logically consistent
+- [ ] Golden scenarios included (optional but recommended)
+- [ ] Calculator slug is unique (checked against existing calculators)
+
+**Before merging to main:**
+- [ ] All CI/CD validations passed
+- [ ] Code review approved (if team has code review policy)
+- [ ] Documentation updated (if needed)
+
+**After deployment:**
+- [ ] Health check passed
+- [ ] Smoke test passed
+- [ ] WordPress shortcode documented (if embedding in WordPress)
+- [ ] Monitor error rates for first 24 hours
+
+---
+
+## Next Steps
+
+- **Section 12.5:** Complete calculator examples (simple, moderate, complex) showing full JSON configurations and deployment results
+
+
+# 12.5 Calculator Examples
+
+## Overview
+
+This section provides three complete calculator JSON examples demonstrating the range of complexity supported by the JSON Assembly Line system:
+
+1. **Simple Calculator:** Loan Payment Calculator (3 inputs, 1 calculation, 2 outputs)
+2. **Moderate Complexity:** Business Loan + DSCR Calculator (5 inputs, 3 calculations, 5 outputs, tier gating)
+3. **Complex Calculator:** Equipment Lease vs Buy Calculator (7 inputs, 6 calculations, 8 outputs, AI integration)
+
+Each example includes:
+- Complete JSON configuration (copy-paste ready)
+- Explanation of each section
+- UI wireframe description
+- Notes on design decisions
+
+---
+
+## Example 1: Simple Loan Payment Calculator
+
+### Overview
+
+**Purpose:** Calculate monthly payment and total interest for a basic amortizing loan
+
+**Complexity:** Low
+- 3 inputs
+- 1 calculation step
+- 2 outputs (key metrics only)
+- 1 warning
+- No tier gating (all features available to Free users)
+- No AI integration
+
+**Business role:** Traffic magnet (SEO-optimized, high-volume usage)
+
+**Target deployment time:** 5 minutes
+
+---
+
+### Complete JSON Configuration
+
+**File:** `/calculators/configs/simple-loan-payment.json`
+
+```json
+{
+  "calculator_meta": {
+    "calculator_slug": "simple-loan-payment",
+    "calculator_name": "Simple Loan Payment Calculator",
+    "calculator_version": "1.0.0",
+    "category": "financing-lending",
+    "description": "Calculate monthly payments and total interest for a standard amortizing business loan.",
+    "business_role": "traffic_magnet",
+    "success_metric": "daily_active_users"
+  },
+  "inputs": [
+    {
+      "field_id": "loan_amount",
+      "field_name": "Loan Amount",
+      "field_type": "currency",
+      "units": "dollars",
+      "required": true,
+      "default_value": null,
+      "placeholder": "100000",
+      "tooltip": "The total amount you are borrowing from the lender.",
+      "validation": {
+        "min": 1000,
+        "max": 10000000,
+        "must_be_positive": true
+      }
+    },
+    {
+      "field_id": "interest_rate",
+      "field_name": "Annual Interest Rate",
+      "field_type": "percentage",
+      "units": "percent",
+      "required": true,
+      "default_value": 7.0,
+      "placeholder": "7.0",
+      "tooltip": "The annual interest rate (APR) for your loan.",
+      "validation": {
+        "min": 0.1,
+        "max": 30,
+        "must_be_positive": true
+      }
+    },
+    {
+      "field_id": "term_years",
+      "field_name": "Loan Term",
+      "field_type": "number",
+      "units": "years",
+      "required": true,
+      "default_value": 10,
+      "placeholder": "10",
+      "tooltip": "The length of the loan in years.",
+      "validation": {
+        "min": 1,
+        "max": 30,
+        "must_be_positive": true
+      }
+    }
+  ],
+  "calculations": [
+    {
+      "step_id": "calc_monthly_payment",
+      "formula_function": "calculateMonthlyPayment",
+      "inputs": ["loan_amount", "interest_rate", "term_years"],
+      "output_variable": "monthly_payment",
+      "notes": "Standard amortizing loan payment formula"
+    },
+    {
+      "step_id": "calc_term_months",
+      "formula_function": "multiply",
+      "inputs": ["term_years", 12],
+      "output_variable": "term_months",
+      "notes": "Convert years to months for total interest calculation"
+    },
+    {
+      "step_id": "calc_total_payments",
+      "formula_function": "multiply",
+      "inputs": ["monthly_payment", "term_months"],
+      "output_variable": "total_payments",
+      "notes": "Total amount paid over loan term"
+    },
+    {
+      "step_id": "calc_total_interest",
+      "formula_function": "subtract",
+      "inputs": ["total_payments", "loan_amount"],
+      "output_variable": "total_interest",
+      "notes": "Total interest = total payments minus principal"
+    }
+  ],
+  "outputs": {
+    "key_metrics": [
+      {
+        "metric_id": "monthly_payment",
+        "metric_name": "Monthly Payment",
+        "variable": "monthly_payment",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Your estimated monthly loan payment including principal and interest."
+      },
+      {
+        "metric_id": "total_interest",
+        "metric_name": "Total Interest Paid",
+        "variable": "total_interest",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Total interest you will pay over the life of the loan."
+      }
+    ],
+    "advanced_metrics": []
+  },
+  "warnings": [
+    {
+      "warning_id": "high_rate",
+      "condition": "interest_rate > 12",
+      "severity": "warning",
+      "message": "Your interest rate is above 12%, which is relatively high for a business loan. Consider shopping around for better rates or improving your credit profile."
+    }
+  ],
+  "tier_config": {
+    "free_tier": {
+      "max_scenarios": 1,
+      "visible_outputs": ["monthly_payment", "total_interest"]
+    },
+    "pro_tier": {
+      "max_scenarios": 50,
+      "visible_outputs": ["monthly_payment", "total_interest"]
+    },
+    "ai_enabled": false
+  },
+  "export_config": {
+    "pdf_sections": [
+      {
+        "section_id": "summary",
+        "section_title": "Loan Payment Summary",
+        "include_inputs": true,
+        "include_outputs": ["monthly_payment", "total_interest"],
+        "include_chart": false
+      }
+    ],
+    "csv_columns": [
+      {
+        "column_id": "loan_col",
+        "column_name": "Loan Amount",
+        "value_source": "loan_amount"
+      },
+      {
+        "column_id": "rate_col",
+        "column_name": "Interest Rate (%)",
+        "value_source": "interest_rate"
+      },
+      {
+        "column_id": "term_col",
+        "column_name": "Term (Years)",
+        "value_source": "term_years"
+      },
+      {
+        "column_id": "payment_col",
+        "column_name": "Monthly Payment",
+        "value_source": "monthly_payment"
+      },
+      {
+        "column_id": "interest_col",
+        "column_name": "Total Interest",
+        "value_source": "total_interest"
+      }
+    ],
+    "include_charts": false
+  }
+}
+```
+
+---
+
+### UI Wireframe Description
+
+```
+┌────────────────────────────────────────────────────┐
+│ Simple Loan Payment Calculator                      │
+├────────────────────────────────────────────────────┤
+│                                                     │
+│ INPUTS                                             │
+│ ┌────────────────────────────────────────────┐    │
+│ │ Loan Amount                          [?]    │    │
+│ │ [$____________] (placeholder: 100000)       │    │
+│ └────────────────────────────────────────────┘    │
+│                                                     │
+│ ┌────────────────────────────────────────────┐    │
+│ │ Annual Interest Rate                  [?]   │    │
+│ │ [______%] (default: 7.0)                    │    │
+│ └────────────────────────────────────────────┘    │
+│                                                     │
+│ ┌────────────────────────────────────────────┐    │
+│ │ Loan Term                             [?]   │    │
+│ │ [______] years (default: 10)                │    │
+│ └────────────────────────────────────────────┘    │
+│                                                     │
+│              [ Calculate ]                          │
+│                                                     │
+├────────────────────────────────────────────────────┤
+│ RESULTS                                            │
+│                                                     │
+│ ┌────────────────────────────────────────────┐    │
+│ │ Monthly Payment                             │    │
+│ │ $1,161.08                                   │    │
+│ │ (Your estimated monthly loan payment)       │    │
+│ └────────────────────────────────────────────┘    │
+│                                                     │
+│ ┌────────────────────────────────────────────┐    │
+│ │ Total Interest Paid                         │    │
+│ │ $39,329.60                                  │    │
+│ │ (Total interest over the life of the loan)  │    │
+│ └────────────────────────────────────────────┘    │
+│                                                     │
+│        [Export to PDF] [Export to CSV]              │
+│                                                     │
+└────────────────────────────────────────────────────┘
+```
+
+---
+
+### Golden Scenario
+
+**File:** `/calculators/configs/simple-loan-payment.golden.json`
+
+```json
+{
+  "calculator_slug": "simple-loan-payment",
+  "scenarios": [
+    {
+      "name": "Standard 7% loan",
+      "inputs": {
+        "loan_amount": 100000,
+        "interest_rate": 7.0,
+        "term_years": 10
+      },
+      "expected_outputs": {
+        "monthly_payment": 1161.08,
+        "total_interest": 39329.60
+      },
+      "tolerance": 0.01
+    },
+    {
+      "name": "High interest rate warning",
+      "inputs": {
+        "loan_amount": 50000,
+        "interest_rate": 15.0,
+        "term_years": 5
+      },
+      "expected_outputs": {
+        "monthly_payment": 1189.29,
+        "total_interest": 21357.40
+      },
+      "tolerance": 0.01,
+      "expected_warnings": ["high_rate"]
+    }
+  ]
+}
+```
+
+---
+
+### Design Notes
+
+**Why this structure?**
+- **Simplicity:** Only essential inputs, no advanced features
+- **SEO-optimized:** Common search term "loan payment calculator"
+- **Fast calculation:** Single formula call, sub-100ms execution
+- **No tier gating:** All features free to maximize traffic
+- **Clear value prop:** Users immediately see monthly payment and total interest
+
+**Target users:**
+- Small business owners exploring loan options
+- Founders researching financing costs
+- Individuals comparing loan offers
+
+**Expected usage:**
+- 1,000+ daily active users (traffic magnet)
+- Average session: 1-2 scenarios
+- Primary discovery: organic search
+
+---
+
+## Example 2: Business Loan + DSCR Calculator (Moderate Complexity)
+
+### Overview
+
+**Purpose:** Calculate loan payments and Debt Service Coverage Ratio for commercial lending analysis
+
+**Complexity:** Moderate
+- 5 inputs
+- 3 calculation steps
+- 5 outputs (2 key metrics, 3 advanced metrics)
+- 2 warnings (DSCR-based)
+- Tier gating (advanced metrics behind Pro tier)
+- No AI integration
+
+**Business role:** Pro driver (advanced DSCR metric drives Pro upgrades)
+
+**Target deployment time:** 8 minutes
+
+---
+
+### Complete JSON Configuration
+
+**File:** `/calculators/configs/business-loan-dscr.json`
+
+```json
+{
+  "calculator_meta": {
+    "calculator_slug": "business-loan-dscr",
+    "calculator_name": "Business Loan + DSCR Calculator",
+    "calculator_version": "1.0.0",
+    "category": "financing-lending",
+    "description": "Calculate monthly loan payments and Debt Service Coverage Ratio (DSCR) to assess loan affordability for commercial lending.",
+    "business_role": "pro_driver",
+    "success_metric": "pro_upgrade_rate"
+  },
+  "inputs": [
+    {
+      "field_id": "loan_amount",
+      "field_name": "Loan Amount",
+      "field_type": "currency",
+      "units": "dollars",
+      "required": true,
+      "default_value": null,
+      "placeholder": "250000",
+      "tooltip": "The total amount you are borrowing from the lender.",
+      "validation": {
+        "min": 10000,
+        "max": 100000000,
+        "must_be_positive": true
+      }
+    },
+    {
+      "field_id": "interest_rate",
+      "field_name": "Annual Interest Rate",
+      "field_type": "percentage",
+      "units": "percent",
+      "required": true,
+      "default_value": 7.5,
+      "placeholder": "7.5",
+      "tooltip": "The annual interest rate (APR) for the loan.",
+      "validation": {
+        "min": 0.1,
+        "max": 30,
+        "must_be_positive": true
+      }
+    },
+    {
+      "field_id": "term_years",
+      "field_name": "Loan Term",
+      "field_type": "number",
+      "units": "years",
+      "required": true,
+      "default_value": 10,
+      "placeholder": "10",
+      "tooltip": "The length of the loan in years.",
+      "validation": {
+        "min": 1,
+        "max": 30,
+        "must_be_positive": true
+      }
+    },
+    {
+      "field_id": "annual_revenue",
+      "field_name": "Annual Revenue",
+      "field_type": "currency",
+      "units": "dollars",
+      "required": true,
+      "default_value": null,
+      "placeholder": "1500000",
+      "tooltip": "Your business's total annual revenue.",
+      "validation": {
+        "min": 0,
+        "max": 1000000000,
+        "must_be_positive": false
+      }
+    },
+    {
+      "field_id": "annual_operating_expenses",
+      "field_name": "Annual Operating Expenses",
+      "field_type": "currency",
+      "units": "dollars",
+      "required": true,
+      "default_value": null,
+      "placeholder": "1200000",
+      "tooltip": "Your business's total annual operating expenses (excluding debt payments).",
+      "validation": {
+        "min": 0,
+        "max": 1000000000,
+        "must_be_positive": false
+      }
+    }
+  ],
+  "calculations": [
+    {
+      "step_id": "calc_monthly_payment",
+      "formula_function": "calculateMonthlyPayment",
+      "inputs": ["loan_amount", "interest_rate", "term_years"],
+      "output_variable": "monthly_payment",
+      "notes": "Standard loan payment calculation"
+    },
+    {
+      "step_id": "calc_annual_debt_service",
+      "formula_function": "multiply",
+      "inputs": ["monthly_payment", 12],
+      "output_variable": "annual_debt_service",
+      "notes": "Monthly payment × 12 for annual debt service"
+    },
+    {
+      "step_id": "calc_net_operating_income",
+      "formula_function": "subtract",
+      "inputs": ["annual_revenue", "annual_operating_expenses"],
+      "output_variable": "net_operating_income",
+      "notes": "NOI = Revenue - Operating Expenses"
+    },
+    {
+      "step_id": "calc_dscr",
+      "formula_function": "calculateDSCR",
+      "inputs": ["net_operating_income", "annual_debt_service"],
+      "output_variable": "dscr",
+      "notes": "DSCR = NOI / Annual Debt Service"
+    },
+    {
+      "step_id": "calc_total_interest",
+      "formula_function": "calculateTotalInterest",
+      "inputs": ["monthly_payment", "term_years", "loan_amount"],
+      "output_variable": "total_interest",
+      "notes": "Total interest paid over loan term"
+    }
+  ],
+  "outputs": {
+    "key_metrics": [
+      {
+        "metric_id": "monthly_payment",
+        "metric_name": "Monthly Payment",
+        "variable": "monthly_payment",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Your estimated monthly loan payment including principal and interest."
+      },
+      {
+        "metric_id": "total_interest",
+        "metric_name": "Total Interest Paid",
+        "variable": "total_interest",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Total interest you will pay over the life of the loan."
+      }
+    ],
+    "advanced_metrics": [
+      {
+        "metric_id": "dscr",
+        "metric_name": "Debt Service Coverage Ratio (DSCR)",
+        "variable": "dscr",
+        "format": "ratio",
+        "decimals": 2,
+        "tooltip": "DSCR measures your ability to cover loan payments. Lenders typically require 1.25 or higher."
+      },
+      {
+        "metric_id": "annual_debt_service",
+        "metric_name": "Annual Debt Service",
+        "variable": "annual_debt_service",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Total annual loan payments (monthly payment × 12)."
+      },
+      {
+        "metric_id": "net_operating_income",
+        "metric_name": "Net Operating Income (NOI)",
+        "variable": "net_operating_income",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Your business's net operating income (revenue minus operating expenses)."
+      }
+    ]
+  },
+  "warnings": [
+    {
+      "warning_id": "dscr_too_low",
+      "condition": "dscr < 1.25",
+      "severity": "danger",
+      "message": "Your DSCR is below 1.25. Most commercial lenders require a minimum DSCR of 1.25 to approve a loan. Consider reducing the loan amount, increasing revenue, or reducing operating expenses."
+    },
+    {
+      "warning_id": "dscr_excellent",
+      "condition": "dscr >= 2.0",
+      "severity": "info",
+      "message": "Your DSCR is excellent (2.0+). You have strong cash flow coverage for this loan and may qualify for better rates or terms."
+    }
+  ],
+  "tier_config": {
+    "free_tier": {
+      "max_scenarios": 1,
+      "visible_outputs": ["monthly_payment", "total_interest"]
+    },
+    "pro_tier": {
+      "max_scenarios": 50,
+      "visible_outputs": ["monthly_payment", "total_interest", "dscr", "annual_debt_service", "net_operating_income"]
+    },
+    "ai_enabled": false
+  },
+  "export_config": {
+    "pdf_sections": [
+      {
+        "section_id": "loan_details",
+        "section_title": "Loan Details",
+        "include_inputs": true,
+        "include_outputs": [],
+        "include_chart": false
+      },
+      {
+        "section_id": "payment_analysis",
+        "section_title": "Payment Analysis",
+        "include_inputs": false,
+        "include_outputs": ["monthly_payment", "total_interest", "annual_debt_service"],
+        "include_chart": false
+      },
+      {
+        "section_id": "dscr_analysis",
+        "section_title": "DSCR Analysis",
+        "include_inputs": false,
+        "include_outputs": ["dscr", "net_operating_income"],
+        "include_chart": true
+      }
+    ],
+    "csv_columns": [
+      {
+        "column_id": "loan_col",
+        "column_name": "Loan Amount",
+        "value_source": "loan_amount"
+      },
+      {
+        "column_id": "rate_col",
+        "column_name": "Interest Rate (%)",
+        "value_source": "interest_rate"
+      },
+      {
+        "column_id": "payment_col",
+        "column_name": "Monthly Payment",
+        "value_source": "monthly_payment"
+      },
+      {
+        "column_id": "dscr_col",
+        "column_name": "DSCR",
+        "value_source": "dscr"
+      },
+      {
+        "column_id": "noi_col",
+        "column_name": "Net Operating Income",
+        "value_source": "net_operating_income"
+      }
+    ],
+    "include_charts": true
+  }
+}
+```
+
+---
+
+### UI Wireframe Description (Pro Tier User)
+
+```
+┌────────────────────────────────────────────────────┐
+│ Business Loan + DSCR Calculator                     │
+├────────────────────────────────────────────────────┤
+│ LOAN DETAILS                                       │
+│ [Loan Amount: $250,000]                            │
+│ [Interest Rate: 7.5%]                              │
+│ [Term: 10 years]                                   │
+│                                                     │
+│ BUSINESS FINANCIALS                                │
+│ [Annual Revenue: $1,500,000]                       │
+│ [Annual Operating Expenses: $1,200,000]            │
+│                                                     │
+│              [ Calculate ]                          │
+├────────────────────────────────────────────────────┤
+│ KEY RESULTS                                        │
+│ ┌────────────────┐ ┌──────────────────┐           │
+│ │ Monthly Payment│ │ Total Interest   │           │
+│ │ $2,958.04      │ │ $104,964.80      │           │
+│ └────────────────┘ └──────────────────┘           │
+│                                                     │
+│ ADVANCED METRICS (Pro)                             │
+│ ┌────────────────────────────────────────────┐    │
+│ │ Debt Service Coverage Ratio (DSCR)         │    │
+│ │ 1.42                                       │    │
+│ │ ✓ Above minimum threshold (1.25+)          │    │
+│ └────────────────────────────────────────────┘    │
+│                                                     │
+│ ┌─────────────────┐ ┌───────────────────┐         │
+│ │ Annual Debt     │ │ Net Operating     │         │
+│ │ Service         │ │ Income (NOI)      │         │
+│ │ $35,496.48      │ │ $300,000.00       │         │
+│ └─────────────────┘ └───────────────────┘         │
+│                                                     │
+│ ⓘ Your DSCR is above the minimum threshold but    │
+│    relatively tight. Consider building in a buffer.│
+│                                                     │
+│        [Export to PDF] [Export to CSV]              │
+└────────────────────────────────────────────────────┘
+```
+
+**Free tier experience:**
+- Advanced metrics section shows blurred placeholder
+- Upgrade prompt: "Upgrade to Pro to see DSCR analysis"
+- After 1 scenario saved, save button shows upgrade prompt
+
+---
+
+### Design Notes
+
+**Why tier gating?**
+- DSCR is a professional-grade metric used in commercial lending
+- Free tier shows basic payment info (valuable for everyone)
+- Pro tier unlocks DSCR analysis (critical for CFOs and lenders)
+- Expected conversion: 15-20% of Free users upgrade for DSCR
+
+**Calculation dependencies:**
+1. `monthly_payment` (independent, uses loan inputs only)
+2. `annual_debt_service` (depends on monthly_payment)
+3. `net_operating_income` (independent, uses business financials)
+4. `dscr` (depends on net_operating_income and annual_debt_service)
+
+**Warning logic:**
+- `dscr < 1.25` → Red warning (loan likely won't be approved)
+- `dscr >= 2.0` → Blue info (excellent coverage, favorable terms)
+
+---
+
+## Example 3: Equipment Lease vs Buy Calculator (Complex)
+
+### Overview
+
+**Purpose:** Compare leasing vs buying equipment using NPV analysis and AI-generated recommendations
+
+**Complexity:** High
+- 7 inputs
+- 6 calculation steps
+- 8 outputs (3 key, 5 advanced)
+- 3 warnings (lease expensive, buy expensive, close comparison)
+- Tier gating (NPV/IRR behind Pro tier)
+- AI integration (recommendation narrative)
+
+**Business role:** AI showcase (highlights AI narrative capabilities)
+
+**Target deployment time:** 12 minutes
+
+---
+
+### Complete JSON Configuration
+
+**File:** `/calculators/configs/equipment-lease-buy.json`
+
+```json
+{
+  "calculator_meta": {
+    "calculator_slug": "equipment-lease-buy",
+    "calculator_name": "Equipment Lease vs Buy Calculator",
+    "calculator_version": "1.0.0",
+    "category": "financing-lending",
+    "description": "Compare the financial impact of leasing vs buying equipment using NPV analysis and AI-powered recommendations.",
+    "business_role": "ai_showcase",
+    "success_metric": "ai_narrative_generation_rate"
+  },
+  "inputs": [
+    {
+      "field_id": "equipment_cost",
+      "field_name": "Equipment Purchase Price",
+      "field_type": "currency",
+      "units": "dollars",
+      "required": true,
+      "default_value": null,
+      "placeholder": "100000",
+      "tooltip": "The upfront cost to purchase the equipment outright.",
+      "validation": {
+        "min": 1000,
+        "max": 50000000,
+        "must_be_positive": true
+      }
+    },
+    {
+      "field_id": "lease_payment",
+      "field_name": "Monthly Lease Payment",
+      "field_type": "currency",
+      "units": "dollars",
+      "required": true,
+      "default_value": null,
+      "placeholder": "2500",
+      "tooltip": "The monthly payment if you lease the equipment.",
+      "validation": {
+        "min": 100,
+        "max": 1000000,
+        "must_be_positive": true
+      }
+    },
+    {
+      "field_id": "lease_term_years",
+      "field_name": "Lease Term",
+      "field_type": "number",
+      "units": "years",
+      "required": true,
+      "default_value": 5,
+      "placeholder": "5",
+      "tooltip": "The length of the lease agreement in years.",
+      "validation": {
+        "min": 1,
+        "max": 20,
+        "must_be_positive": true
+      }
+    },
+    {
+      "field_id": "loan_rate",
+      "field_name": "Loan Interest Rate (if buying)",
+      "field_type": "percentage",
+      "units": "percent",
+      "required": true,
+      "default_value": 6.5,
+      "placeholder": "6.5",
+      "tooltip": "The annual interest rate if you finance the purchase with a loan.",
+      "validation": {
+        "min": 0,
+        "max": 30,
+        "must_be_positive": false
+      }
+    },
+    {
+      "field_id": "tax_rate",
+      "field_name": "Corporate Tax Rate",
+      "field_type": "percentage",
+      "units": "percent",
+      "required": true,
+      "default_value": 21,
+      "placeholder": "21",
+      "tooltip": "Your corporate tax rate (for tax deduction calculations).",
+      "validation": {
+        "min": 0,
+        "max": 50,
+        "must_be_positive": false
+      }
+    },
+    {
+      "field_id": "residual_value",
+      "field_name": "Estimated Residual Value",
+      "field_type": "currency",
+      "units": "dollars",
+      "required": true,
+      "default_value": null,
+      "placeholder": "20000",
+      "tooltip": "Estimated value of the equipment at the end of the lease term if you own it.",
+      "validation": {
+        "min": 0,
+        "max": 50000000,
+        "must_be_positive": false
+      }
+    },
+    {
+      "field_id": "purchase_option_price",
+      "field_name": "Lease End Purchase Option Price",
+      "field_type": "currency",
+      "units": "dollars",
+      "required": false,
+      "default_value": null,
+      "placeholder": "15000",
+      "tooltip": "The price to purchase the equipment at the end of the lease (if applicable). Leave blank if not offered.",
+      "validation": {
+        "min": 0,
+        "max": 50000000,
+        "must_be_positive": false
+      }
+    }
+  ],
+  "calculations": [
+    {
+      "step_id": "calc_total_lease_cost",
+      "formula_function": "multiply",
+      "inputs": ["lease_payment", "lease_term_years"],
+      "output_variable": "total_lease_cost",
+      "notes": "Total lease payments (monthly payment × term in months)"
+    },
+    {
+      "step_id": "calc_loan_payment",
+      "formula_function": "calculateMonthlyPayment",
+      "inputs": ["equipment_cost", "loan_rate", "lease_term_years"],
+      "output_variable": "monthly_loan_payment",
+      "notes": "Monthly payment if financing purchase with loan"
+    },
+    {
+      "step_id": "calc_total_loan_cost",
+      "formula_function": "multiply",
+      "inputs": ["monthly_loan_payment", "lease_term_years"],
+      "output_variable": "total_loan_cost",
+      "notes": "Total loan payments over term"
+    },
+    {
+      "step_id": "calc_lease_npv",
+      "formula_function": "calculateNPV",
+      "inputs": ["lease_payment", "lease_term_years", "tax_rate"],
+      "output_variable": "lease_npv",
+      "notes": "NPV of lease payments (after-tax)"
+    },
+    {
+      "step_id": "calc_buy_npv",
+      "formula_function": "calculateNPV",
+      "inputs": ["monthly_loan_payment", "lease_term_years", "tax_rate", "residual_value"],
+      "output_variable": "buy_npv",
+      "notes": "NPV of buying (loan payments + residual value, after-tax)"
+    },
+    {
+      "step_id": "calc_npv_difference",
+      "formula_function": "subtract",
+      "inputs": ["buy_npv", "lease_npv"],
+      "output_variable": "npv_difference",
+      "notes": "NPV difference (positive = buying is better, negative = leasing is better)"
+    }
+  ],
+  "outputs": {
+    "key_metrics": [
+      {
+        "metric_id": "total_lease_cost",
+        "metric_name": "Total Lease Cost",
+        "variable": "total_lease_cost",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Total amount you will pay over the lease term."
+      },
+      {
+        "metric_id": "total_loan_cost",
+        "metric_name": "Total Purchase Cost (Financed)",
+        "variable": "total_loan_cost",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Total cost to buy the equipment with a loan (including interest)."
+      },
+      {
+        "metric_id": "npv_difference",
+        "metric_name": "NPV Difference (Buy - Lease)",
+        "variable": "npv_difference",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Net present value difference. Positive = buying is better, negative = leasing is better."
+      }
+    ],
+    "advanced_metrics": [
+      {
+        "metric_id": "monthly_loan_payment",
+        "metric_name": "Monthly Loan Payment (if buying)",
+        "variable": "monthly_loan_payment",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Monthly payment if you finance the purchase."
+      },
+      {
+        "metric_id": "lease_npv",
+        "metric_name": "Lease NPV (After-Tax)",
+        "variable": "lease_npv",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Net present value of leasing (after tax deductions)."
+      },
+      {
+        "metric_id": "buy_npv",
+        "metric_name": "Buy NPV (After-Tax)",
+        "variable": "buy_npv",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Net present value of buying (after tax deductions and residual value)."
+      },
+      {
+        "metric_id": "residual_value_impact",
+        "metric_name": "Residual Value Impact",
+        "variable": "residual_value",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "Estimated equipment value at end of term (only realized if you own)."
+      },
+      {
+        "metric_id": "breakeven_residual",
+        "metric_name": "Breakeven Residual Value",
+        "variable": "breakeven_residual",
+        "format": "currency",
+        "decimals": 2,
+        "tooltip": "The residual value needed for buying and leasing to have equal NPV."
+      }
+    ]
+  },
+  "warnings": [
+    {
+      "warning_id": "lease_expensive",
+      "condition": "npv_difference > 10000",
+      "severity": "warning",
+      "message": "Buying appears significantly better than leasing (NPV difference > $10,000). Consider financing a purchase instead of leasing to save money over the long term."
+    },
+    {
+      "warning_id": "buy_expensive",
+      "condition": "npv_difference < -10000",
+      "severity": "warning",
+      "message": "Leasing appears significantly better than buying (NPV difference < -$10,000). Leasing may offer better cash flow and flexibility for your business."
+    },
+    {
+      "warning_id": "close_comparison",
+      "condition": "npv_difference >= -10000 && npv_difference <= 10000",
+      "severity": "info",
+      "message": "The NPV difference is relatively small (within $10,000). Consider non-financial factors like equipment obsolescence risk, maintenance responsibilities, and cash flow flexibility."
+    }
+  ],
+  "tier_config": {
+    "free_tier": {
+      "max_scenarios": 1,
+      "visible_outputs": ["total_lease_cost", "total_loan_cost", "npv_difference"]
+    },
+    "pro_tier": {
+      "max_scenarios": 50,
+      "visible_outputs": ["total_lease_cost", "total_loan_cost", "npv_difference", "monthly_loan_payment", "lease_npv", "buy_npv", "residual_value_impact", "breakeven_residual"]
+    },
+    "ai_enabled": true
+  },
+  "export_config": {
+    "pdf_sections": [
+      {
+        "section_id": "equipment_details",
+        "section_title": "Equipment & Financing Details",
+        "include_inputs": true,
+        "include_outputs": [],
+        "include_chart": false
+      },
+      {
+        "section_id": "cost_comparison",
+        "section_title": "Cost Comparison",
+        "include_inputs": false,
+        "include_outputs": ["total_lease_cost", "total_loan_cost", "npv_difference"],
+        "include_chart": true
+      },
+      {
+        "section_id": "npv_analysis",
+        "section_title": "Net Present Value Analysis",
+        "include_inputs": false,
+        "include_outputs": ["lease_npv", "buy_npv", "breakeven_residual"],
+        "include_chart": true
+      }
+    ],
+    "csv_columns": [
+      {
+        "column_id": "equipment_cost_col",
+        "column_name": "Equipment Cost",
+        "value_source": "equipment_cost"
+      },
+      {
+        "column_id": "lease_payment_col",
+        "column_name": "Monthly Lease Payment",
+        "value_source": "lease_payment"
+      },
+      {
+        "column_id": "total_lease_col",
+        "column_name": "Total Lease Cost",
+        "value_source": "total_lease_cost"
+      },
+      {
+        "column_id": "total_buy_col",
+        "column_name": "Total Buy Cost",
+        "value_source": "total_loan_cost"
+      },
+      {
+        "column_id": "npv_diff_col",
+        "column_name": "NPV Difference",
+        "value_source": "npv_difference"
+      },
+      {
+        "column_id": "recommendation_col",
+        "column_name": "Recommendation",
+        "value_source": "ai_narrative"
+      }
+    ],
+    "include_charts": true
+  },
+  "ai_config": {
+    "ai_prompt_template": "You are a CFO advisor analyzing a lease vs buy decision for equipment. Based on the following inputs:\n\n- Equipment purchase price: {{equipment_cost}}\n- Monthly lease payment: {{lease_payment}}\n- Lease term: {{lease_term_years}} years\n- Loan interest rate: {{loan_rate}}%\n- Corporate tax rate: {{tax_rate}}%\n- Estimated residual value: {{residual_value}}\n\nAnd the calculated results:\n- Total lease cost: {{total_lease_cost}}\n- Total purchase cost (financed): {{total_loan_cost}}\n- NPV difference (buy - lease): {{npv_difference}}\n- Lease NPV (after-tax): {{lease_npv}}\n- Buy NPV (after-tax): {{buy_npv}}\n\nProvide a 3-paragraph analysis addressing:\n1. Financial recommendation: Should this business lease or buy? Why?\n2. Cash flow considerations: How does each option impact monthly cash flow?\n3. Strategic factors: What non-financial factors should be considered (obsolescence risk, maintenance, flexibility, tax implications)?\n\nBe specific, actionable, and professional. Use dollar amounts from the calculations.",
+    "ai_response_length": 250,
+    "ai_tone": "professional"
+  }
+}
+```
+
+---
+
+### UI Wireframe Description (AI Tier User)
+
+```
+┌────────────────────────────────────────────────────┐
+│ Equipment Lease vs Buy Calculator                  │
+├────────────────────────────────────────────────────┤
+│ EQUIPMENT DETAILS                                  │
+│ [Equipment Purchase Price: $100,000]               │
+│ [Monthly Lease Payment: $2,500]                    │
+│ [Lease Term: 5 years]                              │
+│                                                     │
+│ FINANCING & TAX                                    │
+│ [Loan Interest Rate: 6.5%]                         │
+│ [Corporate Tax Rate: 21%]                          │
+│ [Estimated Residual Value: $20,000]                │
+│ [Purchase Option Price: $15,000] (optional)        │
+│                                                     │
+│              [ Calculate ]                          │
+├────────────────────────────────────────────────────┤
+│ COST COMPARISON                                    │
+│ ┌──────────────────┐ ┌────────────────────┐       │
+│ │ Total Lease Cost │ │ Total Purchase     │       │
+│ │ $150,000.00      │ │ Cost (Financed)    │       │
+│ │                  │ │ $154,738.20        │       │
+│ └──────────────────┘ └────────────────────┘       │
+│                                                     │
+│ ┌────────────────────────────────────────────┐    │
+│ │ NPV Difference (Buy - Lease)               │    │
+│ │ $12,450.00                                 │    │
+│ │ ✓ Buying is better (positive NPV diff)     │    │
+│ └────────────────────────────────────────────┘    │
+│                                                     │
+│ ⚠ Buying appears significantly better than        │
+│   leasing (NPV difference > $10,000).              │
+│                                                     │
+│ ADVANCED NPV ANALYSIS (Pro)                        │
+│ [Lease NPV, Buy NPV, Breakeven Residual shown]    │
+│                                                     │
+│ ┌────────────────────────────────────────────┐    │
+│ │ 🤖 AI RECOMMENDATION                        │    │
+│ │                                             │    │
+│ │ [ Generate AI Analysis ]                    │    │
+│ │                                             │    │
+│ │ (After clicking:)                           │    │
+│ │ Based on your inputs, purchasing the        │    │
+│ │ equipment appears financially superior      │    │
+│ │ to leasing, with an NPV advantage of        │    │
+│ │ $12,450. Here's why...                      │    │
+│ │                                             │    │
+│ │ [Full 3-paragraph AI narrative]             │    │
+│ └────────────────────────────────────────────┘    │
+│                                                     │
+│        [Export to PDF] [Export to CSV]              │
+└────────────────────────────────────────────────────┘
+```
+
+---
+
+### Design Notes
+
+**Why AI integration?**
+- Lease vs buy decisions involve multiple factors beyond pure math
+- AI can synthesize financial + strategic considerations
+- Demonstrates value of AI tier ($20/month add-on)
+- Expected AI narrative generation rate: 40-50% of AI-tier users
+
+**Calculation complexity:**
+- 6 calculation steps with dependencies
+- NPV calculations require after-tax cash flow modeling
+- Residual value creates asymmetry (only realized if buying)
+
+**Tier gating strategy:**
+- Free: Basic cost comparison (sufficient for simple decisions)
+- Pro: Full NPV analysis (critical for CFO-grade analysis)
+- AI: Strategic recommendations (helps users make final decision)
+
+**Expected conversion funnel:**
+- 1,000 Free users
+- → 200 upgrade to Pro (20% conversion, want NPV analysis)
+- → 80 add AI tier (40% of Pro users, want recommendation)
+
+---
+
+## Deployment Comparison
+
+| Example | Complexity | Inputs | Calculations | Outputs | Tier Gating | AI | Deployment Time |
+|---------|------------|--------|--------------|---------|-------------|----|-----------------|
+| Simple Loan Payment | Low | 3 | 1 | 2 | No | No | 5 min |
+| Business Loan + DSCR | Moderate | 5 | 3 | 5 | Yes | No | 8 min |
+| Equipment Lease vs Buy | High | 7 | 6 | 8 | Yes | Yes | 12 min |
+
+**Scalability:**
+- **8 calculators (MVP):** ~2 hours total (all simple/moderate complexity)
+- **450 calculators:** ~75 hours (~2 weeks for one developer)
+- **Maintenance:** Update formula library once, all calculators benefit
+
+---
+
+## Summary
+
+These three examples demonstrate the full range of calculators supported by the JSON Assembly Line:
+
+1. **Simple:** Fast creation, high-volume traffic magnets
+2. **Moderate:** Professional-grade metrics, drive Pro upgrades
+3. **Complex:** Advanced analysis, showcase AI capabilities
+
+All three follow the same JSON schema (Section 12.2), call the same formula library (Section 12.3), and deploy through the same pipeline (Section 12.4). The assembly line system enables creating all three complexity levels in 5-12 minutes each.
 
 
 ---
