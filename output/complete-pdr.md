@@ -3,7 +3,7 @@
 
 **Version:** 2.0.0  
 **Date:** November 18, 2025  
-**Status:** Complete (Including JSON Assembly Line)
+**Status:** Complete (12 Sections + 14 AI Agent Specifications)
 
 ---
 
@@ -88,6 +88,30 @@
 - 12.3 Formula Library API
 - 12.4 Deployment Pipeline
 - 12.5 Calculator Examples
+
+## Section 13: AI Agent Specifications
+
+### Phase 1: Core Development Agents (4 agents)
+- Calculator Builder Agent
+- Schema Validator Agent
+- Formula Validator Agent
+- Golden Scenario Tester Agent
+
+### Phase 2: Production Automation Agents (4 agents)
+- UI Generator Agent
+- Export Builder Agent
+- Deployment Pipeline Agent
+- WordPress Shortcode Generator Agent
+
+### Phase 3: Documentation & Marketing Agents (3 agents)
+- Calculator Documentation Generator Agent
+- SEO Optimizer Agent
+- Changelog Generator Agent
+
+### Phase 4: Monitoring & Analytics Agents (3 agents)
+- Error Monitor Agent
+- Usage Analytics Agent
+- Performance Monitor Agent
 
 ---
 
@@ -29053,6 +29077,5301 @@ These three examples demonstrate the full range of calculators supported by the 
 
 All three follow the same JSON schema (Section 12.2), call the same formula library (Section 12.3), and deploy through the same pipeline (Section 12.4). The assembly line system enables creating all three complexity levels in 5-12 minutes each.
 
+
+---
+
+
+# Section 13: AI Agent Specifications
+
+This section defines the 14 AI agents that power the JSON Assembly Line system. These agents automate calculator development, deployment, documentation, and monitoring.
+
+## Agent System Overview
+
+The JSON Assembly Line is powered by 14 specialized AI agents organized into 4 phases:
+
+**Phase 1: Core Development Agents (4 agents)**
+- Foundation agents that enable JSON-to-calculator workflow
+- Handle validation, testing, and calculator creation
+- Required for basic assembly line functionality
+
+**Phase 2: Production Automation Agents (4 agents)**
+- Automate UI generation, exports, and deployment
+- Enable one-click deployment to production
+- Generate WordPress integration automatically
+
+**Phase 3: Documentation & Marketing Agents (3 agents)**
+- Automatically generate documentation and SEO content
+- Maintain changelog and version history
+- Support content marketing and discoverability
+
+**Phase 4: Monitoring & Analytics Agents (3 agents)**
+- Monitor errors, performance, and usage in production
+- Provide real-time insights and alerts
+- Support continuous improvement and optimization
+
+---
+
+
+## Phase 1: Core Development Agents
+
+# Calculator Builder Agent
+
+## Purpose
+Transform a JSON calculator configuration into a working, deployable calculator with UI components, formula logic, and tier gating.
+
+## Input
+- Path to JSON config file (e.g., `calculators/configs/business-loan-dscr.json`)
+- Target output directory (e.g., `calculators/built/business-loan-dscr/`)
+
+## Process
+
+### Step 1: Validate JSON Config
+- Read the JSON file
+- Validate against schema from Section 12.2
+- Check all referenced formulas exist in formula library
+- Verify tier_config is valid
+- If validation fails: output errors and stop
+
+### Step 2: Generate Input Components
+- For each input in `inputs` array:
+  - Create React input component based on field_type
+  - Apply validation rules (min, max, must_be_positive)
+  - Add tooltip with help text
+  - Wire up onChange handlers
+  - Generate field according to Section 4 UX standards
+
+### Step 3: Generate Calculation Logic
+- For each step in `calculations` array:
+  - Map formula_function to formula library function
+  - Create function call with correct inputs
+  - Store result in output_variable
+  - Handle edge cases (null, undefined, division by zero)
+  - Execute calculations in order (respect dependencies)
+
+### Step 4: Generate Output Components
+- For key_metrics:
+  - Create result cards (always visible)
+  - Apply formatting (currency, percentage, decimals)
+  - Add tooltips
+- For advanced_metrics:
+  - Create result cards with Pro gate
+  - Show lock icon and upgrade prompt for Free tier
+  - Display values for Pro tier
+
+### Step 5: Generate Warning Logic
+- For each warning in `warnings` array:
+  - Evaluate condition after calculations complete
+  - If condition true: display warning with severity styling
+  - Use warning message text from JSON
+  - Apply Section 4 warning styles (info/warning/danger colors)
+
+### Step 6: Apply Tier Gating
+- Read tier_config
+- Implement scenario limits (1 for Free, 50 for Pro)
+- Gate advanced metrics visibility
+- Add upgrade prompts where appropriate
+- Follow Section 6 tier gating patterns
+
+### Step 7: Generate Export Templates
+- Create PDF template based on export_config
+  - Include all inputs and outputs
+  - Add calculator version, timestamp
+  - Add watermark for Free tier (Section 6.1)
+- Create CSV structure
+- Create Excel structure (if specified)
+
+### Step 8: Generate AI Integration (if ai_enabled)
+- Use ai_prompt_template from JSON
+- Wire up "Explain this result" button
+- Follow Section 8 AI framework (redaction, disclaimers)
+- Implement usage caps (50 requests/month for AI tier)
+
+### Step 9: Output Built Calculator
+- Write all generated files to output directory:
+  - `Calculator.tsx` (main React component)
+  - `calculations.ts` (calculation logic)
+  - `types.ts` (TypeScript interfaces)
+  - `config.json` (runtime config for tier gating)
+  - `export-templates/` (PDF, CSV, Excel templates)
+- Generate deployment manifest
+- Create WordPress shortcode definition
+
+## Output
+- Built calculator in `calculators/built/{calculator-slug}/`
+- Deployment manifest with:
+  - Calculator slug
+  - Version
+  - Files generated
+  - Dependencies (formula library functions used)
+  - Deployment instructions
+
+## Success Criteria
+- All files generated without errors
+- Calculator passes schema validation
+- Generated code follows TypeScript standards
+- UI matches Section 4 design system
+- Tier gating matches Section 6 rules
+
+## Error Handling
+- If formula not found: List missing formulas, provide formula library reference
+- If validation fails: Output specific validation errors with line numbers
+- If tier_config invalid: Explain what's wrong, provide example
+- If AI config present but ai_enabled false: Warning (config ignored)
+
+## Usage Example
+```bash
+# Run the agent
+claude-code "Use calculator-builder-agent to build calculator from calculators/configs/business-loan-dscr.json"
+
+# Expected output
+✓ JSON validated
+✓ Input components generated (5 fields)
+✓ Calculation logic generated (3 steps)
+✓ Output components generated (2 key, 3 advanced)
+✓ Warnings generated (2 conditions)
+✓ Tier gating applied
+✓ Export templates created (PDF, CSV)
+✓ Calculator built successfully
+
+Output: calculators/built/business-loan-dscr/
+```
+
+## Dependencies
+- Section 12.2: JSON schema specification
+- Section 3.3: Formula library API
+- Section 4: UX design standards
+- Section 6: Tier gating rules
+- Section 8: AI framework (if ai_enabled)
+
+---
+
+# Schema Validator Agent
+
+## Purpose
+Validate JSON calculator configurations against the schema defined in Section 12.2 before deployment.
+
+## Input
+- Path to JSON config file to validate
+- Schema definition (from Section 12.2)
+
+## Process
+
+### Step 1: Load and Parse JSON
+- Read JSON file
+- Attempt to parse as valid JSON
+- If parse fails: output syntax errors with line numbers
+
+### Step 2: Validate Root Structure
+- Check all required root keys present:
+  - calculator_meta ✓
+  - inputs ✓
+  - calculations ✓
+  - outputs ✓
+  - warnings ✓
+  - tier_config ✓
+  - export_config ✓
+- Check no unexpected keys present
+
+### Step 3: Validate calculator_meta
+- calculator_slug: string, matches pattern [a-z0-9-]+
+- calculator_name: string, not empty
+- calculator_version: string, matches semantic versioning (X.Y.Z)
+- category: enum (financing-lending, cash-flow, profitability, valuation, planning)
+- description: string, 10-500 characters
+- business_role: enum (traffic_magnet, pro_driver, ai_showcase, b2b_demo)
+- success_metric: string, not empty
+
+### Step 4: Validate inputs Array
+For each input object:
+- field_id: string, unique within inputs, matches [a-z_]+
+- field_name: string, not empty
+- field_type: enum (number, currency, percentage, dropdown, slider)
+- units: string
+- required: boolean
+- default_value: number or null
+- placeholder: string
+- tooltip: string, 10-200 characters
+- validation object:
+  - min: number or null
+  - max: number or null
+  - must_be_positive: boolean
+
+Check for duplicate field_ids
+
+### Step 5: Validate calculations Array
+For each calculation:
+- step_id: string, unique within calculations
+- formula_function: string, must exist in formula library (check against Section 12.3)
+- inputs: array of strings (field_ids or step_ids that exist)
+- output_variable: string, unique across all calculations
+- Verify calculation order (no forward references)
+
+### Step 6: Validate outputs Object
+- key_metrics: array of metric objects
+- advanced_metrics: array of metric objects
+
+For each metric:
+- metric_id: string, unique
+- metric_name: string, not empty
+- variable: string, references a calculation output_variable
+- format: enum (currency, percentage, number, ratio)
+- decimals: number, 0-4
+- tooltip: string, 10-200 characters
+
+### Step 7: Validate warnings Array
+For each warning:
+- warning_id: string, unique
+- condition: string, valid formula expression (references variables)
+- severity: enum (info, warning, danger)
+- message: string, 20-500 characters
+
+### Step 8: Validate tier_config
+- free_tier object:
+  - max_scenarios: number, typically 1
+  - visible_outputs: array of metric_ids (all must exist in outputs)
+- pro_tier object:
+  - max_scenarios: number, typically 50
+  - visible_outputs: array of metric_ids
+- ai_enabled: boolean
+
+### Step 9: Validate export_config
+- pdf_sections: array of strings
+- csv_columns: array of strings
+- include_charts: boolean
+
+### Step 10: Validate ai_config (if present)
+- ai_prompt_template: string, contains {variable} placeholders
+- ai_response_length: number, 50-500
+
+## Output
+
+### If Valid:
+```
+✓ JSON syntax valid
+✓ Root structure valid
+✓ calculator_meta valid
+✓ inputs valid (5 fields)
+✓ calculations valid (3 steps)
+✓ outputs valid (2 key, 3 advanced)
+✓ warnings valid (2 conditions)
+✓ tier_config valid
+✓ export_config valid
+
+✅ Configuration is VALID and ready for deployment
+```
+
+### If Invalid:
+```
+✗ JSON syntax valid
+✓ Root structure valid
+✗ calculator_meta: category "invalid-category" not in allowed values
+✓ inputs valid (5 fields)
+✗ calculations: formula_function "calculateXYZ" not found in formula library
+  Available formulas: [list from Section 12.3]
+✗ outputs: metric references undefined variable "total_xyz"
+✓ warnings valid (2 conditions)
+✓ tier_config valid
+✓ export_config valid
+
+❌ Configuration has 3 ERRORS - must be fixed before deployment
+```
+
+## Success Criteria
+- All validation checks pass
+- No errors reported
+- All referenced formulas exist
+- All variable references are valid
+- Tier config is consistent
+
+## Error Categories
+- **Syntax errors**: JSON parsing fails
+- **Schema errors**: Missing required fields, wrong types
+- **Reference errors**: Variables or formulas don't exist
+- **Logic errors**: Circular dependencies, forward references
+- **Consistency errors**: Tier config doesn't match outputs
+
+## Usage Example
+```bash
+# Validate a config
+claude-code "Use schema-validator-agent to validate calculators/configs/business-loan-dscr.json"
+```
+
+## Dependencies
+- Section 12.2: JSON schema specification
+- Section 12.3: Formula library API (for formula validation)
+
+---
+
+# Formula Validator Agent
+
+## Purpose
+Test all formulas in the formula library against golden scenarios to ensure mathematical accuracy and catch regressions.
+
+## Input
+- Formula library path (e.g., `src/formulas/`)
+- Golden scenarios directory (e.g., `tests/golden-scenarios/`)
+- Tolerance settings (e.g., ±0.01 for percentages, ±$1 for currency)
+
+## Process
+
+### Step 1: Load Formula Library
+- Read all formula functions from formula library
+- List available formulas with signatures
+- Verify each formula has:
+  - Function name
+  - Input parameters with types
+  - Return type
+  - Documentation
+
+### Step 2: Load Golden Scenarios
+- Read all JSON files from golden scenarios directory
+- Parse each scenario file (format from Section 10.2)
+- Group scenarios by calculator
+- Count total scenarios to test
+
+### Step 3: Execute Each Golden Scenario
+For each scenario:
+- Read scenario inputs
+- Call referenced formulas with inputs
+- Capture actual outputs
+- Compare actual vs expected outputs
+- Check if within tolerance
+
+### Step 4: Validate Output Accuracy
+For each output:
+- Expected value from golden scenario
+- Actual value from formula execution
+- Tolerance from golden scenario (or default)
+- Calculate difference: |actual - expected|
+- Check: difference <= tolerance
+- Record: PASS or FAIL
+
+### Step 5: Validate Expected Warnings
+- Execute warning conditions with scenario outputs
+- Check if expected warnings triggered
+- Check if unexpected warnings triggered
+- Record: PASS (all match) or FAIL (mismatch)
+
+### Step 6: Check for Edge Cases
+Test each formula with edge case inputs:
+- Zero values (where applicable)
+- Negative values (where not allowed)
+- Very large values (test overflow)
+- Very small values (test underflow)
+- Division by zero scenarios
+- Verify graceful error handling
+
+### Step 7: Performance Testing
+For each formula:
+- Execute 1000 times with typical inputs
+- Measure average execution time
+- Check: average time < 1ms per calculation
+- Flag formulas that are too slow
+
+### Step 8: Generate Test Report
+Create detailed report:
+- Total scenarios tested
+- Pass/fail count per formula
+- Pass/fail count per calculator
+- Tolerance violations with details
+- Edge case failures
+- Performance issues
+- Overall pass rate
+
+## Output
+
+### Summary Report:
+```
+Formula Validation Report
+=========================
+Generated: 2025-11-18 18:15:00
+Formula Library Version: v1.0.0
+
+Golden Scenarios Tested: 24
+Calculators Covered: 8
+
+Results:
+✓ calculateMonthlyPayment: 8/8 scenarios passed
+✓ calculateTotalInterest: 8/8 scenarios passed
+✓ calculateDSCR: 8/8 scenarios passed
+✗ calculateNPV: 2/3 scenarios passed
+  - FAIL: equipment-lease-buy_golden_2.json
+    Expected: $95,432.10 ± $10
+    Actual: $95,455.32
+    Difference: $23.22 (EXCEEDS TOLERANCE)
+✓ calculateIRR: 3/3 scenarios passed
+
+Overall: 22/24 scenarios passed (91.7%)
+
+⚠️ 1 formula has failures - review required before deployment
+```
+
+### Detailed Failure Report:
+```
+FAILURE DETAILS
+===============
+
+Calculator: equipment-lease-buy
+Scenario: equipment-lease-buy_golden_2.json
+Formula: calculateNPV
+
+Inputs:
+  cash_flows: [-100000, 25000, 30000, 35000, 40000]
+  discount_rate: 0.08
+
+Expected Output:
+  npv: 95432.10 ± 10.00
+
+Actual Output:
+  npv: 95455.32
+
+Difference: 23.22 (tolerance: 10.00)
+Status: FAIL - exceeds tolerance
+
+Recommendation:
+  - Review NPV formula implementation
+  - Check discount rate compounding logic
+  - Update golden scenario if formula is correct
+```
+
+## Success Criteria
+- All golden scenarios pass (100% pass rate)
+- No tolerance violations
+- All edge cases handled gracefully
+- All formulas execute within performance budget (<1ms average)
+- No unexpected warnings triggered
+
+## Failure Actions
+- **Critical failures (>5% scenarios fail):** Block deployment
+- **Minor failures (1-5% scenarios fail):** Warning, requires review
+- **Tolerance violations:** Investigate formula or update golden scenario
+- **Performance failures:** Optimize formula or flag for refactoring
+
+## Usage Example
+```bash
+# Validate all formulas
+claude-code "Use formula-validator-agent to test all formulas against golden scenarios"
+
+# Validate specific formula
+claude-code "Use formula-validator-agent to test calculateDSCR formula only"
+
+# Validate specific calculator
+claude-code "Use formula-validator-agent to test business-loan-dscr calculator scenarios"
+```
+
+## Dependencies
+- Section 10.2: Golden scenario framework
+- Section 12.3: Formula library API
+- Section 1.6: Quality goals (95% accuracy target)
+
+## Integration with CI/CD
+- Run automatically on every commit
+- Block merge if failures detected
+- Generate report artifact for review
+- Update dashboard with test results
+
+---
+
+# Golden Scenario Tester Agent
+
+## Purpose
+Run end-to-end tests of complete calculators using golden scenarios to ensure the entire system (inputs → calculations → outputs → warnings) works correctly.
+
+## Input
+- Calculator to test (e.g., `business-loan-dscr`)
+- Golden scenarios for that calculator (e.g., `tests/golden-scenarios/business-loan-dscr_golden_*.json`)
+- Tolerance settings (from scenario files or defaults)
+
+## Process
+
+### Step 1: Load Calculator Configuration
+- Read calculator JSON config from `calculators/configs/{calculator-slug}.json`
+- Validate config is valid (use Schema Validator Agent)
+- Load calculator build artifacts from `calculators/built/{calculator-slug}/`
+- Verify calculator is deployed and accessible
+
+### Step 2: Load Golden Scenarios for Calculator
+- Find all golden scenario files for this calculator
+- Expected naming: `{calculator-slug}_golden_1.json`, `{calculator-slug}_golden_2.json`, etc.
+- Parse each scenario file
+- Verify each scenario has:
+  - scenario_name
+  - description
+  - inputs (all required fields present)
+  - expected_outputs (with values and tolerances)
+  - expected_warnings (array, can be empty)
+
+### Step 3: Execute Each Golden Scenario End-to-End
+
+For each scenario:
+
+#### 3a. Load Input Values
+- Set all input fields to values from scenario
+- Verify all required inputs provided
+- Verify input validation passes
+
+#### 3b. Trigger Calculation
+- Execute calculator calculation logic
+- Run all calculation steps in order
+- Capture all output variables
+
+#### 3c. Compare Outputs
+For each expected output:
+- Get actual value from calculator
+- Get expected value from golden scenario
+- Get tolerance from golden scenario
+- Calculate: |actual - expected|
+- Check: difference <= tolerance
+- Record: PASS or FAIL with details
+
+#### 3d. Validate Warnings
+- Check which warnings triggered
+- Compare to expected_warnings array
+- Expected warning present but not triggered: FAIL
+- Unexpected warning triggered: FAIL
+- All match: PASS
+
+#### 3e. Validate Tier Gating
+- If calculator has advanced metrics:
+  - Simulate Free tier: verify advanced metrics hidden
+  - Simulate Pro tier: verify advanced metrics visible
+- Verify upgrade prompts appear for gated features
+
+#### 3f. Test Export Generation
+- Generate PDF export with scenario results
+- Verify PDF contains:
+  - All inputs and outputs
+  - Calculator version and timestamp
+  - Watermark (if Free tier simulation)
+- Check: PDF generation completes within 3 seconds (Section 1.6 SLA)
+
+#### 3g. Test AI Integration (if ai_enabled)
+- Trigger AI explanation request
+- Verify AI prompt constructed correctly (Section 8 redaction rules)
+- Check: AI response returned within 8 seconds (or timeout)
+- Verify disclaimer present in AI output
+
+### Step 4: Performance Testing
+For each scenario:
+- Measure calculation time (input → output)
+- Check: p95 < 150ms (Section 1.6 SLA)
+- Measure export generation time
+- Check: p95 < 3 seconds (Section 1.6 SLA)
+- Flag any scenarios exceeding SLAs
+
+### Step 5: Generate Test Report
+
+Create detailed report with:
+- Scenario summary (total, passed, failed)
+- Output accuracy results
+- Warning validation results
+- Tier gating test results
+- Export test results
+- AI test results (if applicable)
+- Performance metrics
+- Overall pass/fail status
+
+## Output
+
+### Summary Report:
+
+---
+
+
+## Phase 2: Production Automation Agents
+
+# UI Generator Agent
+
+## Purpose
+Generate React/TypeScript UI components from JSON calculator configuration, following Section 4 UX design standards.
+
+## Input
+- Calculator JSON config (validated by Schema Validator Agent)
+- UI component library path (shared components from Section 3.3)
+- Design system configuration (from Section 4)
+
+## Process
+
+### Step 1: Analyze Calculator Config
+- Read calculator_meta (name, description)
+- Read inputs array (count, types, validation rules)
+- Read outputs (key vs advanced metrics split)
+- Read warnings array
+- Read tier_config (Free vs Pro behavior)
+- Determine layout complexity (simple vs complex)
+
+### Step 2: Generate Calculator Shell Component
+Create main Calculator component:
+- Component name: `{CalculatorSlugPascalCase}Calculator.tsx`
+- Import shared UI components (from Section 4.1):
+  - InputPanel
+  - ResultsPanel
+  - ScenarioTabs
+  - WarningAlert
+  - ExportButton
+  - AIButton
+- Apply layout from Section 4.1:
+  - Left panel: inputs
+  - Right panel: outputs
+  - Top bar: scenario tabs (if Pro tier)
+  - Bottom bar: actions (export, AI)
+
+### Step 3: Generate Input Components
+For each input in JSON config:
+
+#### 3a. Determine Input Component Type
+Based on field_type:
+- `number` → `<NumberInput />`
+- `currency` → `<CurrencyInput />` (with $ formatting)
+- `percentage` → `<PercentageInput />` (with % formatting)
+- `dropdown` → `<DropdownSelect />`
+- `slider` → `<SliderInput />`
+
+#### 3b. Apply Validation Rules
+From validation object:
+- min/max: Set HTML min/max attributes
+- must_be_positive: Add client-side check
+- custom_rule: Generate validation function
+
+#### 3c. Add Input Metadata
+- Label: field_name from JSON
+- Placeholder: placeholder text
+- Tooltip: Create `<Tooltip>` component with tooltip text
+- Required indicator: Red asterisk if required=true
+- Units display: Show units after input (e.g., "years", "%", "$")
+
+#### 3d. Wire onChange Handlers
+- Update state on change
+- Trigger validation on blur
+- Auto-calculate if all required inputs valid (Section 4.2.1)
+
+### Step 4: Generate Calculation Wiring
+- Create calculation function that:
+  - Reads all input values from state
+  - Calls formula library functions in order (from calculations array)
+  - Stores intermediate results
+  - Handles errors gracefully (try/catch)
+  - Updates output state
+
+### Step 5: Generate Output Components
+
+#### 5a. Key Metrics (Always Visible)
+For each metric in key_metrics:
+- Create `<ResultCard>` component
+- Display metric_name as card title
+- Format value based on format field:
+  - `currency`: `$X,XXX.XX`
+  - `percentage`: `X.X%`
+  - `number`: `X,XXX`
+  - `ratio`: `X.XX`
+- Apply decimals setting
+- Add tooltip with explanation
+
+#### 5b. Advanced Metrics (Pro-Gated)
+For each metric in advanced_metrics:
+- Create `<ResultCard>` with Pro gate
+- Free tier:
+  - Show card with blur overlay
+  - Display lock icon
+  - Show "Unlock with Pro" badge
+  - Click → Upgrade modal (Section 6.3)
+- Pro tier:
+  - Show card normally
+  - No lock icon
+
+### Step 6: Generate Warning Components
+For each warning in warnings array:
+- Create warning evaluation logic (checks condition)
+- If condition true, render `<WarningAlert>`:
+  - severity → CSS class (info/warning/danger colors from Section 4.3.1)
+  - message → Alert text
+  - Icon based on severity (info icon, warning triangle, danger circle)
+- Position below results (Section 4.1.5)
+
+### Step 7: Generate Tier Gating Logic
+Based on tier_config:
+- Scenario tabs:
+  - Free: Hide tabs, single scenario only
+  - Pro: Show tabs, "Add Scenario" button enabled
+- Advanced metrics visibility:
+  - Free: Apply blur + lock + upgrade prompt
+  - Pro: Show all metrics
+- Generate upgrade trigger functions:
+  - onClick handlers that show upgrade modal
+  - Track trigger reason (for analytics, Section 7.2)
+
+### Step 8: Generate Action Buttons
+
+#### 8a. Export Button
+- Always visible
+- Free tier: Shows upgrade prompt on click
+- Pro tier: Opens export options (PDF, CSV, Excel)
+- Follows Section 6.3 upgrade flow
+
+#### 8b. AI Explanation Button
+- Only visible if ai_enabled=true in JSON
+- Free/Pro tier: Shows AI tier upgrade prompt
+- AI tier: Triggers AI request (follows Section 8)
+- Shows loading state during AI request
+- Displays result in modal
+
+### Step 9: Apply Design System Standards
+From Section 4.3:
+- Colors:
+  - Primary actions: brand blue (#0066CC or configured)
+  - Success: green
+  - Warning: yellow
+  - Danger: red
+- Typography:
+  - Headings: defined font family and sizes
+  - Body text: consistent size and line height
+  - Numbers: monospace or tabular figures
+- Spacing:
+  - Consistent padding/margin (8px grid)
+  - Card spacing
+  - Input field spacing
+- Accessibility:
+  - ARIA labels on all inputs
+  - ARIA roles on interactive elements
+  - Focus indicators (keyboard navigation)
+  - Contrast ratios meet WCAG 2.1 AA
+
+### Step 10: Generate TypeScript Interfaces
+Create types file (`types.ts`):
+- Input interface (all input fields)
+- Output interface (all output variables)
+- Calculation result interface
+- Component props interfaces
+- Enum types for dropdowns
+
+### Step 11: Add Analytics Tracking
+Instrument with events from Section 7.2:
+- calculator_viewed (on component mount)
+- calculator_calculated (on calculation trigger)
+- upgrade_prompt_shown (when gate hit)
+- export_requested (on export button click)
+- ai_narrative_requested (on AI button click)
+
+## Output
+
+Generated files in `calculators/built/{calculator-slug}/components/`:
+```
+├── Calculator.tsx (main component)
+├── types.ts (TypeScript interfaces)
+├── styles.module.css (component-specific styles)
+└── README.md (component usage instructions)
+```
+
+### Example Generated Component Structure:
+```typescript
+// Calculator.tsx
+import React, { useState, useEffect } from 'react';
+import { InputPanel, ResultCard, WarningAlert, ExportButton, AIButton } from '@/components/shared';
+import { calculateMonthlyPayment, calculateDSCR } from '@/formulas';
+import { trackEvent } from '@/analytics';
+import { BusinessLoanInputs, BusinessLoanOutputs } from './types';
+
+export const BusinessLoanDSCRCalculator: React.FC = () => {
+  // State management
+  const [inputs, setInputs] = useState<BusinessLoanInputs>({...});
+  const [outputs, setOutputs] = useState<BusinessLoanOutputs | null>(null);
+  const [warnings, setWarnings] = useState<Warning[]>([]);
+  
+  // Track view
+  useEffect(() => {
+    trackEvent('calculator_viewed', {
+      calculator_slug: 'business-loan-dscr',
+      tier: userTier
+    });
+  }, []);
+  
+  // Calculate function
+  const handleCalculate = () => {
+    try {
+      const monthlyPayment = calculateMonthlyPayment(
+        inputs.loan_amount,
+        inputs.interest_rate,
+        inputs.term_years * 12
+      );
+      
+      const dscr = calculateDSCR(
+        inputs.annual_revenue - inputs.annual_expenses,
+        monthlyPayment * 12
+      );
+      
+      setOutputs({ monthlyPayment, dscr, ... });
+      
+      // Evaluate warnings
+      if (dscr < 1.25) {
+        setWarnings([{ severity: 'warning', message: '...' }]);
+      }
+      
+      trackEvent('calculator_calculated', {...});
+    } catch (error) {
+      handleError(error);
+    }
+  };
+  
+  // Render
+  return (
+    <div className="calculator-container">
+      <div className="input-panel">
+        {/* Generated input components */}
+      </div>
+      <div className="results-panel">
+        {/* Generated result cards */}
+      </div>
+      {warnings.map(w => <WarningAlert {...w} />)}
+      <div className="actions">
+        <ExportButton tier={userTier} />
+        <AIButton tier={userTier} aiEnabled={true} />
+      </div>
+    </div>
+  );
+};
+```
+
+## Success Criteria
+- All input components generated with correct types
+- All validation rules applied
+- All outputs formatted correctly
+- Tier gating works (Free vs Pro behavior)
+- Analytics events tracked
+- Accessibility standards met (WCAG 2.1 AA)
+- TypeScript compiles without errors
+- Follows Section 4 UX standards exactly
+
+## Quality Checks
+- Run ESLint: No errors
+- Run TypeScript compiler: No errors
+- Check accessibility: WCAG 2.1 AA compliant
+- Visual review: Matches design system
+- Responsive test: Works on mobile/tablet/desktop
+
+## Usage Example
+```bash
+# Generate UI for a calculator
+claude-code "Use ui-generator-agent to generate UI components for business-loan-dscr calculator"
+```
+
+## Dependencies
+- Section 4: UX design standards (complete reference)
+- Section 6: Tier gating rules
+- Section 7.2: Analytics events
+- Section 12.2: JSON schema (for reading config)
+- Schema Validator Agent: ensures valid input
+
+---
+
+# Export Builder Agent
+
+## Purpose
+Generate PDF, CSV, and Excel export templates and logic from calculator configuration and results.
+
+## Input
+- Calculator JSON config (export_config section)
+- Calculator results (inputs + outputs from a calculation)
+- User tier (Free, Pro, AI, B2B)
+- Export format requested (PDF, CSV, Excel)
+
+## Process
+
+### Step 1: Read Export Configuration
+From JSON export_config:
+- pdf_sections: array of sections to include in PDF
+- csv_columns: array of columns for CSV
+- include_charts: boolean (whether to generate charts)
+- Additional metadata:
+  - Calculator version
+  - Formula library version
+  - Timestamp
+  - Disclaimers
+
+### Step 2: Determine Tier-Specific Behavior
+Based on user tier (Section 6.1):
+- **Free tier:**
+  - PDF: Add watermark "Generated with Free Tier - Upgrade for clean exports"
+  - PDF footer: "plusonecapital.com/upgrade"
+  - CSV: Add header row "# Generated with Free Tier"
+- **Pro tier:**
+  - PDF: Clean, no watermark
+  - PDF: Professional branding
+  - CSV: Clean, professional header
+- **AI tier:**
+  - Same as Pro
+  - If AI narrative generated, include in PDF
+- **B2B:**
+  - Custom branding from tenant config
+  - No watermark
+  - Custom disclaimers if configured
+
+### Step 3: Generate PDF Export
+
+#### 3a. Create PDF Structure
+Based on pdf_sections array (or defaults):
+- **Title Page:**
+  - Calculator name
+  - Scenario name (if applicable)
+  - Generation date and time
+  - Prepared by (if user logged in)
+  - Version stamps
+
+- **Summary Section:**
+  - Key inputs (table format)
+  - Key outputs (highlight box)
+  - Warnings (if any, colored boxes)
+
+- **Detailed Results:**
+  - All outputs table (key + advanced if Pro)
+  - Formatted with proper units
+  - Visual separators
+
+- **Charts/Visualizations (if include_charts=true):**
+  - Generate chart images
+  - Embed in PDF
+  - Add captions
+
+- **AI Narrative (if AI tier and narrative generated):**
+  - Section titled "AI Analysis"
+  - Narrative text with disclaimer
+  - Disclaimer: "This analysis is for informational purposes only..."
+
+- **Methodology Section:**
+  - Formulas used (references)
+  - Calculation steps
+  - Assumptions
+
+- **Footer on Every Page:**
+  - Page numbers
+  - Calculator version + formula version
+  - Generated timestamp
+  - Disclaimer text (Section 5.3.2)
+  - Watermark (if Free tier)
+
+#### 3b. Apply PDF Styling
+From Section 4.3:
+- Brand colors
+- Typography (fonts, sizes, weights)
+- Layout grid (margins, padding)
+- Professional appearance (board-ready)
+
+#### 3c. Generate PDF File
+- Use PDF library (e.g., PDFKit, jsPDF, or server-side)
+- Render all sections
+- Optimize file size
+- Target: Generation time < 3 seconds (Section 1.6 SLA)
+
+### Step 4: Generate CSV Export
+
+#### 4a. Define CSV Structure
+From csv_columns or defaults:
+- Column headers (from metric names)
+- Data rows (one row per scenario, or structured differently)
+
+#### 4b. Format CSV Data
+- Currency: Remove $ symbol, use plain numbers (12345.67)
+- Percentages: Use decimal format (0.075 for 7.5%)
+- Dates: ISO format (YYYY-MM-DD)
+- Include units in column headers (e.g., "Monthly Payment (USD)")
+
+#### 4c. Add CSV Metadata
+Header rows (commented with #):
+```csv
+# Calculator: Business Loan + DSCR Intelligence Calculator
+# Version: v2.1.0
+# Formula Library: v1.0.0
+# Generated: 2025-11-18T18:30:00Z
+# Tier: Pro
+# Disclaimer: This is decision support only, not financial advice
+#
+Input,Value,Unit
+Loan Amount,250000,USD
+Interest Rate,7.5,%
+...
+```
+
+### Step 5: Generate Excel Export
+
+#### 5a. Create Excel Workbook Structure
+Multiple sheets:
+- **Summary Sheet:**
+  - Calculator info (name, version, date)
+  - Key results highlighted
+  - Warnings section
+  
+- **Inputs Sheet:**
+  - All input values
+  - Descriptions from tooltips
+  - Units clearly labeled
+
+- **Outputs Sheet:**
+  - All outputs (key + advanced)
+  - Formatted with Excel number formats
+  - Color coding for warnings
+
+- **Charts Sheet (if include_charts=true):**
+  - Embedded charts
+  - Chart data tables
+
+- **Methodology Sheet:**
+  - Formulas used
+  - Calculation breakdown
+  - References
+
+#### 5b. Apply Excel Formatting
+- Currency format: $#,##0.00
+- Percentage format: 0.0%
+- Number format: #,##0.00
+- Bold headers
+- Freeze top row
+- Auto-column width
+- Conditional formatting for warnings (red if DSCR < 1.25)
+
+#### 5c. Add Excel Metadata
+Workbook properties:
+- Title: Calculator name
+- Author: "SmartProfit Calculator Suite"
+- Subject: Calculator description
+- Keywords: Category tags
+- Comments: Version info, disclaimers
+
+### Step 6: Include Version Stamps
+In all export formats:
+- Calculator slug and version (e.g., "business-loan-dscr v2.1.0")
+- Formula library version (e.g., "formulas v1.0.0")
+- Export generation timestamp (ISO 8601)
+- User tier (Free, Pro, AI, B2B)
+- Prepared by (user email or "Anonymous" if not logged in)
+- Reviewed by (if applicable, from scenario metadata)
+
+### Step 7: Add Disclaimers
+From Section 5.3.2, include in all exports:
+- "Decision support tool only" disclaimer
+- "Not a substitute for professional advice" disclaimer
+- AI disclaimer (if AI narrative included)
+- Custom disclaimers (if B2B tenant configured)
+
+Position in exports:
+- PDF: Footer on every page + dedicated section
+- CSV: Header comment rows
+- Excel: Separate "Disclaimers" sheet
+
+### Step 8: Handle Multi-Scenario Exports
+If exporting multiple scenarios (Pro tier):
+- PDF: Section per scenario, comparison table at end
+- CSV: One row per scenario
+- Excel: One sheet per scenario + summary comparison sheet
+
+### Step 9: Generate Download Link
+- Save export file to temp storage
+- Generate download URL (expires in 24 hours for anonymous, 90 days for Pro)
+- Return URL to frontend
+- Track export event (Section 7.2: export_generated, export_downloaded)
+
+### Step 10: Cleanup and Retention
+Based on Section 5.4:
+- Anonymous users: Delete export after 24 hours
+- Pro users: Keep for 90 days
+- Store metadata only after file deletion (for analytics)
+
+## Output
+
+### Success Response:
+```json
+{
+  "status": "success",
+  "export_id": "exp_abc123xyz",
+  "format": "pdf",
+  "download_url": "https://exports.smartprofit.com/exp_abc123xyz.pdf",
+  "expires_at": "2025-11-19T18:30:00Z",
+  "file_size_bytes": 245760,
+  "generation_time_ms": 2340,
+  "metadata": {
+    "calculator_slug": "business-loan-dscr",
+    "calculator_version": "v2.1.0",
+    "formula_version": "v1.0.0",
+    "scenario_count": 1,
+    "tier": "pro"
+  }
+}
+```
+
+### Error Response:
+```json
+{
+  "status": "error",
+  "error_code": "EXPORT_GENERATION_FAILED",
+  "error_message": "PDF generation timed out after 6 seconds",
+  "details": {
+    "calculator_slug": "business-loan-dscr",
+    "format": "pdf",
+    "scenario_count": 3
+  }
+}
+```
+
+## Success Criteria
+- Export generates successfully within SLA (p95 < 3 seconds)
+- All data included and formatted correctly
+- Tier-specific behavior applied (watermarks, disclaimers)
+- Version stamps present
+- Download link works and expires correctly
+- File size reasonable (PDF < 5MB typical)
+
+## Quality Checks
+- Visual review of PDF (looks professional, board-ready)
+- CSV opens correctly in Excel/Google Sheets
+- Excel file opens without errors, formulas work
+- Watermark visible on Free tier exports
+- Disclaimers present and readable
+- All numbers formatted with correct decimals and units
+
+## Performance Optimization
+- Cache common templates
+- Generate charts asynchronously if slow
+- Use streaming for large exports
+- Queue large exports (>3 scenarios) for async processing
+
+## Usage Example
+```bash
+# Generate PDF export
+claude-code "Use export-builder-agent to generate PDF export for business-loan-dscr results"
+
+# Generate all formats
+claude-code "Use export-builder-agent to generate PDF, CSV, and Excel exports for business-loan-dscr results"
+
+# Generate multi-scenario comparison
+claude-code "Use export-builder-agent to generate comparison PDF for 3 business-loan-dscr scenarios"
+```
+
+## Dependencies
+- Section 1.6: Performance SLAs (3 second target)
+- Section 4.3: Design system (PDF styling)
+- Section 5.3.2: Disclaimer text
+- Section 5.4: Retention policies
+- Section 6.1: Tier-specific behavior
+- Section 7.2: Analytics events
+- Section 12.2: JSON schema (export_config)
+
+---
+
+# Deployment Pipeline Agent
+
+## Purpose
+Orchestrate the automated deployment of calculators from JSON configuration to live production, following the process defined in Section 12.4.
+
+## Input
+- Calculator JSON config file path (e.g., `calculators/configs/new-calculator.json`)
+- Target environment (staging, production)
+- Deployment mode (standard, canary, rollback)
+
+## Process
+
+### Step 1: Pre-Deployment Validation
+
+#### 1a. Schema Validation
+- Call Schema Validator Agent
+- Verify JSON config is valid
+- Check all referenced formulas exist
+- Verify tier_config is valid
+- **If fails:** Stop deployment, output errors
+
+#### 1b. Golden Scenario Validation (if scenarios provided)
+- Call Golden Scenario Tester Agent
+- Run all golden scenarios for this calculator
+- Check all outputs within tolerance
+- **If fails:** Stop deployment, output failures
+
+#### 1c. Security Scan
+- Check JSON for suspicious patterns:
+  - No external URLs in formulas
+  - No eval() or dangerous functions
+  - No hardcoded credentials
+- **If fails:** Flag for security review, stop deployment
+
+#### 1d. Version Check
+- Read calculator_version from JSON
+- Check if version already deployed
+- If version exists: Error (must increment version)
+- If new version: Proceed
+
+### Step 2: Build Calculator
+
+#### 2a. Generate UI Components
+- Call UI Generator Agent
+- Generate React/TypeScript components
+- Output to `calculators/built/{calculator-slug}/`
+- **If fails:** Stop deployment, output build errors
+
+#### 2b. Generate Export Templates
+- Call Export Builder Agent template generation
+- Create PDF/CSV/Excel templates
+- Output to `calculators/built/{calculator-slug}/exports/`
+- **If fails:** Warning (exports may not work), proceed with caution
+
+#### 2c. Wire Formula Library
+- Link calculation steps to formula functions
+- Generate calculation execution logic
+- Add error handling for each formula call
+- **If fails:** Stop deployment, output wiring errors
+
+#### 2d. Apply Tier Gating
+- Read tier_config from JSON
+- Generate tier check logic
+- Wire upgrade prompts
+- Add analytics tracking
+- **If fails:** Stop deployment, tier gating required
+
+#### 2e. Compile TypeScript
+- Run TypeScript compiler
+- Check for type errors
+- Generate JavaScript bundles
+- **If fails:** Stop deployment, output TypeScript errors
+
+#### 2f. Run Tests
+- Unit tests for calculation logic
+- Component tests for UI
+- Integration tests for full calculator
+- **If fails:** Stop deployment, output test failures
+
+### Step 3: Staging Deployment
+
+#### 3a. Deploy to Staging Environment
+- Build Docker container (if applicable)
+- Deploy to staging server
+- Update routing to include new calculator
+- Generate staging URL
+
+#### 3b. Smoke Test in Staging
+- Load calculator in staging
+- Run one sample calculation
+- Verify output correct
+- Test export generation
+- Test AI integration (if enabled)
+- **If fails:** Stop deployment, output smoke test errors
+
+#### 3c. Staging QA Review (Manual Step)
+- Notify team: "Calculator X ready for QA in staging"
+- Wait for manual approval or 24 hours timeout
+- **If rejected:** Stop deployment, return to development
+- **If approved:** Proceed to production
+
+### Step 4: Production Deployment
+
+#### 4a. Determine Deployment Strategy
+Based on deployment mode:
+- **Standard (default):** Deploy to all users immediately
+- **Canary:** Deploy to 10% of users, monitor, then 50%, then 100%
+- **Rollback:** Revert to previous version
+
+#### 4b. Create Deployment Backup
+- Snapshot current production state
+- Store previous calculator version
+- Enable one-click rollback if needed
+
+#### 4c. Deploy to Production
+- Update production build
+- Deploy new calculator files
+- Update routing/load balancer
+- Clear CDN cache for calculator assets
+
+#### 4d. Generate WordPress Shortcode
+- Create shortcode: `[smartprofit_calculator slug="business-loan-dscr"]`
+- Generate embed documentation
+- Output shortcode to deployment notes
+- Add to WordPress plugin registry
+
+#### 4e. Update Calculator Registry
+- Add new calculator to registry database
+- Include metadata:
+  - slug, name, version
+  - category, business_role
+  - created_at, deployed_at
+  - formula_library_version
+- Make available to Calculator Management Dashboard (Section 1.8.8)
+
+### Step 5: Post-Deployment Verification
+
+#### 5a. Health Check
+- Hit calculator endpoint: `GET /api/calculators/{slug}/health`
+- Expected response: `{"status": "healthy", "version": "X.Y.Z"}`
+- **If fails:** Immediate rollback
+
+#### 5b. Functional Smoke Test
+- Run automated test:
+  - Load calculator in production
+  - Execute one calculation with known inputs
+  - Verify output matches expected
+  - Generate one export
+  - Test AI call (if enabled)
+- **If fails:** Immediate rollback
+
+#### 5c. Performance Check
+- Monitor first 100 calculations
+- Check p95 latency < 150ms (Section 1.6 SLA)
+- Check export time < 3s
+- **If fails:** Alert team, may need rollback
+
+#### 5d. Error Rate Monitoring (First Hour)
+- Track error rate every 5 minutes
+- Alert if error rate > 1%
+- Alert if error rate > 5% (critical, automatic rollback)
+- Track errors by type (calculation, export, AI)
+
+### Step 6: Canary Deployment (if mode=canary)
+
+#### 6a. Deploy to 10% Traffic
+- Route 10% of users to new calculator version
+- 90% still on previous version (if exists) or baseline
+- Monitor for 2 hours
+
+#### 6b. Monitor Canary Metrics
+- Error rate (compare to baseline)
+- Latency (compare to baseline)
+- Conversion rate (Free → Pro)
+- User feedback (support tickets)
+- **If metrics degrade > 20%:** Rollback canary
+
+#### 6c. Expand to 50% Traffic
+- If canary successful, route 50% traffic
+- Monitor for 2 hours
+- **If metrics degrade:** Rollback
+
+#### 6d. Deploy to 100% Traffic
+- If 50% successful, route all traffic
+- Monitor for 24 hours
+- Mark deployment as complete
+
+### Step 7: Rollback (if mode=rollback or auto-triggered)
+
+#### 7a. Detect Rollback Trigger
+Automatic rollback if:
+- Error rate > 5% in 5 minutes
+- Smoke test fails
+- Manual rollback requested
+
+#### 7b. Execute Rollback
+- Restore previous calculator version from backup
+- Update routing to previous version
+- Clear CDN cache
+- Takes < 5 minutes (Section 12.4)
+
+#### 7c. Notify Team
+- Alert: "Calculator X rolled back due to [reason]"
+- Include error logs
+- Include metrics that triggered rollback
+
+#### 7d. Post-Rollback Analysis
+- Review what went wrong
+- Update golden scenarios if needed
+- Fix issues before re-deploying
+
+### Step 8: Documentation & Notification
+
+#### 8a. Update Changelog
+- Add entry to CHANGELOG.md:
+  - Calculator name and version
+  - Date deployed
+  - What's new (features, fixes)
+  - Breaking changes (if any)
+
+#### 8b. Generate Deployment Report
+```
+Deployment Report
+=================
+Calculator: business-loan-dscr
+Version: v2.1.0
+Deployed: 2025-11-18 18:45:00 UTC
+Environment: Production
+Mode: Standard (100% traffic)
+
+Pre-Deployment:
+✓ Schema validation passed
+✓ Golden scenarios: 3/3 passed
+✓ Security scan: No issues
+✓ Version check: New version
+
+Build:
+✓ UI generated successfully
+✓ Exports generated
+✓ TypeScript compiled
+✓ Tests passed: 45/45
+
+Deployment:
+✓ Staging deployed and approved
+✓ Production deployed
+✓ Health check passed
+✓ Smoke test passed
+✓ WordPress shortcode: [smartprofit_calculator slug="business-loan-dscr"]
+
+Post-Deployment (1 hour):
+✓ Error rate: 0.3% (threshold: 1%)
+✓ p95 latency: 92ms (target: <150ms)
+✓ Export time: 2.1s (target: <3s)
+
+Status: ✅ DEPLOYMENT SUCCESSFUL
+```
+
+#### 8c. Notify Stakeholders
+- Email/Slack: "Calculator X v2.1.0 deployed to production"
+- Include shortcode for WordPress embedding
+- Include link to Calculator Management Dashboard
+- Include deployment report
+
+### Step 9: Enable Monitoring
+
+#### 9a. Set Up Dashboard Alerts
+- Configure alerts in Section 1.8 dashboards:
+  - API Management Dashboard: Monitor health
+  - Calculator Management Dashboard: Track usage
+  - Business Intelligence Dashboard: Track conversions
+
+#### 9b. Enable Analytics
+- Ensure calculator_viewed events tracking
+- Ensure calculator_calculated events tracking
+- Ensure export/AI events tracking
+- Verify events appearing in Section 7 dashboards
+
+## Output
+
+### Success:
+```
+🎉 Deployment Successful
+
+Calculator: business-loan-dscr v2.1.0
+Environment: Production
+Deployed: 2025-11-18 18:45:00 UTC
+Time: 8m 32s
+
+WordPress Shortcode:
+[smartprofit_calculator slug="business-loan-dscr"]
+
+Links:
+- Calculator: https://smartprofit.com/calculators/business-loan-dscr
+- Dashboard: https://admin.smartprofit.com/calculators/business-loan-dscr
+- Deployment Report: /deployments/business-loan-dscr-v2.1.0.md
+
+Next Steps:
+1. Embed calculator on WordPress using shortcode above
+2. Monitor usage in Calculator Management Dashboard
+3. Track conversion rates in Business Intelligence Dashboard
+```
+
+### Failure:
+```
+❌ Deployment Failed
+
+Calculator: business-loan-dscr v2.1.0
+Failed at: Post-Deployment Health Check
+Reason: Health check endpoint returned 500 error
+
+Error Details:
+GET /api/calculators/business-loan-dscr/health
+Response: 500 Internal Server Error
+Body: {"error": "Formula library function not found: calculateXYZ"}
+
+Action Taken: Automatic rollback initiated
+
+Status: Rolled back to previous version (v2.0.5)
+
+Next Steps:
+1. Fix formula reference error in JSON config
+2. Run Schema Validator Agent to catch error early
+3. Re-deploy after fix
+```
+
+## Success Criteria
+- All validation passes
+- Build succeeds
+- Staging deployment works
+- Production deployment works
+- Health checks pass
+- Error rate < 1% after 1 hour
+- Performance SLAs met
+- WordPress shortcode generated
+
+## Timeline
+- **Standard deployment:** ~10 minutes (JSON to live)
+- **Canary deployment:** ~6 hours (including monitoring phases)
+- **Rollback:** < 5 minutes
+
+## Usage Example
+```bash
+# Deploy new calculator to production
+claude-code "Use deployment-pipeline-agent to deploy business-loan-dscr calculator to production"
+
+# Deploy with canary mode
+claude-code "Use deployment-pipeline-agent to deploy business-loan-dscr calculator to production with canary mode"
+
+# Rollback to previous version
+claude-code "Use deployment-pipeline-agent to rollback business-loan-dscr calculator"
+```
+
+## Dependencies
+- Section 1.6: Performance SLAs
+- Section 12.4: Deployment pipeline specification
+- Schema Validator Agent
+- Golden Scenario Tester Agent
+- UI Generator Agent
+- Export Builder Agent
+
+---
+
+# WordPress Shortcode Generator Agent
+
+## Purpose
+Automatically generate WordPress shortcodes and embed documentation for calculators, enabling easy integration into WordPress sites.
+
+## Input
+- Calculator slug (e.g., `business-loan-dscr`)
+- Calculator metadata (name, version, category)
+- Embed configuration options (optional customization)
+
+## Process
+
+### Step 1: Read Calculator Metadata
+- Read calculator JSON config
+- Extract:
+  - calculator_slug
+  - calculator_name
+  - calculator_version
+  - category
+  - description
+- Verify calculator is deployed and accessible
+
+### Step 2: Generate Basic Shortcode
+
+#### 2a. Standard Shortcode Format
+```
+[smartprofit_calculator slug="business-loan-dscr"]
+```
+
+#### 2b. Shortcode with Options
+```
+[smartprofit_calculator 
+  slug="business-loan-dscr" 
+  theme="light"
+  width="100%"
+  height="auto"
+  show_title="true"
+  show_description="true"
+]
+```
+
+#### 2c. Define Supported Attributes
+- **slug** (required): Calculator identifier
+- **theme** (optional): "light" or "dark" (default: "light")
+- **width** (optional): CSS width value (default: "100%")
+- **height** (optional): CSS height value (default: "auto")
+- **show_title** (optional): Display calculator title (default: "true")
+- **show_description** (optional): Display description (default: "true")
+- **custom_class** (optional): Additional CSS class for styling
+- **language** (optional): "en", "es" (future, default: "en")
+
+### Step 3: Generate WordPress Plugin Code
+
+#### 3a. Register Shortcode Handler
+Create PHP function for WordPress plugin:
+```php
+<?php
+// File: wordpress-plugins/calculators-plus/shortcodes/business-loan-dscr.php
+
+function smartprofit_calculator_business_loan_dscr($atts) {
+    // Parse attributes
+    $atts = shortcode_atts(
+        array(
+            'slug' => 'business-loan-dscr',
+            'theme' => 'light',
+            'width' => '100%',
+            'height' => 'auto',
+            'show_title' => 'true',
+            'show_description' => 'true',
+            'custom_class' => '',
+        ),
+        $atts,
+        'smartprofit_calculator'
+    );
+    
+    // Build iframe URL
+    $base_url = 'https://calculators.smartprofit.com';
+    $iframe_url = $base_url . '/embed/' . esc_attr($atts['slug']);
+    $iframe_url .= '?theme=' . esc_attr($atts['theme']);
+    $iframe_url .= '&show_title=' . esc_attr($atts['show_title']);
+    $iframe_url .= '&show_description=' . esc_attr($atts['show_description']);
+    
+    // Build iframe HTML
+    $output = '<div class="smartprofit-calculator-wrapper ' . esc_attr($atts['custom_class']) . '">';
+    $output .= '<iframe ';
+    $output .= 'src="' . esc_url($iframe_url) . '" ';
+    $output .= 'width="' . esc_attr($atts['width']) . '" ';
+    $output .= 'height="' . esc_attr($atts['height']) . '" ';
+    $output .= 'frameborder="0" ';
+    $output .= 'style="border: none; min-height: 600px;" ';
+    $output .= 'title="' . esc_attr($atts['slug']) . ' Calculator" ';
+    $output .= 'loading="lazy"';
+    $output .= '></iframe>';
+    $output .= '</div>';
+    
+    // Enqueue responsive script
+    wp_enqueue_script('smartprofit-iframe-resizer');
+    
+    return $output;
+}
+
+// Register shortcode
+add_shortcode('smartprofit_calculator', 'smartprofit_calculator_business_loan_dscr');
+```
+
+#### 3b. Add Iframe Resizing Script
+```javascript
+// File: wordpress-plugins/calculators-plus/js/iframe-resizer.js
+
+(function() {
+    // Listen for resize messages from iframe
+    window.addEventListener('message', function(event) {
+        if (event.data.type === 'smartprofit-resize') {
+            const iframe = document.querySelector('iframe[src*="' + event.data.slug + '"]');
+            if (iframe) {
+                iframe.style.height = event.data.height + 'px';
+            }
+        }
+    });
+})();
+```
+
+### Step 4: Generate Embed Documentation
+
+#### 4a. Create Usage Guide
+Generate markdown documentation:
+```markdown
+# Business Loan + DSCR Calculator - WordPress Embed Guide
+
+## Quick Start
+
+Add this shortcode to any WordPress page or post:
+```
+[smartprofit_calculator slug="business-loan-dscr"]
+```
+
+## Customization Options
+
+### Theme
+Choose light or dark theme:
+```
+[smartprofit_calculator slug="business-loan-dscr" theme="dark"]
+```
+
+### Size
+Control width and height:
+```
+[smartprofit_calculator slug="business-loan-dscr" width="800px" height="600px"]
+```
+
+### Visibility
+Hide title or description:
+```
+[smartprofit_calculator slug="business-loan-dscr" show_title="false" show_description="false"]
+```
+
+### Custom Styling
+Add custom CSS class:
+```
+[smartprofit_calculator slug="business-loan-dscr" custom_class="my-custom-style"]
+
+---
+
+
+## Phase 3: Documentation & Marketing Agents
+
+# Calculator Doc Generator Agent
+
+## Purpose
+Automatically generate comprehensive documentation for calculators from their JSON configuration files, ensuring consistent, accurate, and complete documentation across all 450+ calculators.
+
+## Input
+- Calculator JSON config file (e.g., `calculators/configs/business-loan-dscr.json`)
+- Documentation template (from Section 11 template)
+- Target output directory (e.g., `docs/calculators/`)
+
+## Process
+
+### Step 1: Read Calculator Configuration
+- Parse JSON config file
+- Extract all metadata:
+  - calculator_meta (name, description, version, category, business_role)
+  - inputs (all fields with validation rules, tooltips)
+  - calculations (all formulas used)
+  - outputs (key and advanced metrics)
+  - warnings (conditions and messages)
+  - tier_config (Free vs Pro behavior)
+  - ai_config (if AI-enabled)
+
+### Step 2: Generate Calculator Overview Section
+
+#### 2a. Title and Metadata
+```markdown
+# Business Loan + DSCR Calculator
+
+**Version:** 2.1.0  
+**Category:** Financing & Lending Intelligence  
+**Status:** Production  
+**Last Updated:** 2025-11-18
+
+## Overview
+
+Calculate monthly loan payments and Debt Service Coverage Ratio (DSCR) for business loans. This calculator helps business owners and lenders evaluate loan affordability and assess whether a business generates sufficient cash flow to cover debt obligations.
+
+**Primary Use Cases:**
+- SBA loan evaluation
+- Conventional business loan analysis
+- Lender underwriting assessment
+- Business loan comparison
+
+**Business Role:** Pro Upgrade Driver  
+**Success Metric:** Pro conversion rate from DSCR calculation
+```
+
+### Step 3: Generate User Scenarios Section
+
+Extract from calculator's intended use:
+```markdown
+## Who Uses This Calculator
+
+**Business Owners:**
+- Evaluating loan affordability before applying
+- Understanding how much debt their business can support
+- Preparing for lender conversations
+
+**Lenders & Underwriters:**
+- Quick DSCR calculation during initial screening
+- Assessing loan risk and covenant compliance
+- Determining appropriate loan terms
+
+**Financial Advisors:**
+- Helping clients evaluate financing options
+- Modeling different loan scenarios
+- Preparing loan applications
+```
+
+### Step 4: Generate Inputs Documentation
+
+For each input field, create detailed documentation:
+```markdown
+## Calculator Inputs
+
+### Required Inputs
+
+#### Loan Amount
+- **Field Type:** Currency (USD)
+- **Validation:** Must be positive, $1,000 minimum
+- **Tooltip:** Total amount you want to borrow
+- **Example:** $250,000
+- **Notes:** Include any upfront fees or costs in the total loan amount if they're being financed
+
+#### Interest Rate
+- **Field Type:** Percentage
+- **Validation:** Must be positive, 0.01% to 50%
+- **Tooltip:** Annual interest rate for the loan
+- **Example:** 7.5%
+- **Notes:** Use the annual percentage rate (APR) provided by the lender
+
+#### Loan Term
+- **Field Type:** Number (years)
+- **Validation:** Must be positive, 1 to 30 years
+- **Tooltip:** How many years to repay the loan
+- **Example:** 10 years
+- **Notes:** Common terms are 5, 10, 15, 20, or 25 years depending on loan type
+
+#### Annual Revenue
+- **Field Type:** Currency (USD)
+- **Validation:** Must be positive
+- **Tooltip:** Your business's total annual revenue
+- **Example:** $1,500,000
+- **Notes:** Use trailing 12-month revenue or projected annual revenue
+
+#### Annual Operating Expenses
+- **Field Type:** Currency (USD)
+- **Validation:** Must be positive, must be less than annual revenue
+- **Tooltip:** Your business's total annual operating costs (excluding debt service)
+- **Example:** $1,200,000
+- **Notes:** Include all operating expenses except debt payments (payroll, rent, supplies, etc.)
+```
+
+### Step 5: Generate Outputs Documentation
+
+For each output metric:
+```markdown
+## Calculator Outputs
+
+### Key Metrics (Free Tier)
+
+#### Monthly Payment
+- **Format:** Currency (USD)
+- **Formula:** Standard amortization formula: P * [r(1+r)^n] / [(1+r)^n - 1]
+- **Example:** $2,958.00
+- **Interpretation:** This is your required monthly loan payment including principal and interest
+
+#### Total Interest
+- **Format:** Currency (USD)
+- **Formula:** (Monthly Payment * Number of Payments) - Loan Amount
+- **Example:** $104,960
+- **Interpretation:** Total interest paid over the life of the loan
+
+### Advanced Metrics (Pro Tier)
+
+#### Debt Service Coverage Ratio (DSCR)
+- **Format:** Ratio (X.XX)
+- **Formula:** Net Operating Income / Annual Debt Service
+- **Example:** 1.42
+- **Interpretation:** 
+  - DSCR > 1.25: Generally acceptable for most lenders
+  - DSCR 1.15-1.25: Marginal, may require additional collateral
+  - DSCR < 1.15: High risk, likely to be declined
+- **Why It Matters:** Lenders use DSCR to assess whether your business generates enough cash flow to comfortably cover loan payments
+
+#### Net Operating Income (NOI)
+- **Format:** Currency (USD)
+- **Formula:** Annual Revenue - Annual Operating Expenses
+- **Example:** $300,000
+- **Interpretation:** Your business's cash flow available to service debt
+
+#### Annual Debt Service
+- **Format:** Currency (USD)
+- **Formula:** Monthly Payment * 12
+- **Example:** $35,496
+- **Interpretation:** Total annual loan payments (principal + interest)
+
+#### Covenant Headroom
+- **Format:** Percentage
+- **Formula:** (DSCR - Minimum Required DSCR) / Minimum Required DSCR * 100
+- **Example:** 13.6%
+- **Interpretation:** How much cushion you have above the typical lender minimum (1.25 DSCR)
+```
+
+### Step 6: Generate Formulas & Calculations Section
+
+Document calculation logic:
+```markdown
+## Formulas & Calculation Logic
+
+### Calculation Steps
+
+**Step 1: Calculate Monthly Payment**
+```
+Formula: PMT(rate, nper, pv)
+Where:
+- rate = annual_interest_rate / 12
+- nper = term_years * 12
+- pv = -loan_amount (negative because it's money borrowed)
+
+Implementation: Uses calculateMonthlyPayment() from formula library v1.0.0
+Reference: Standard amortization formula (financial mathematics)
+```
+
+**Step 2: Calculate Total Interest**
+```
+Formula: (monthly_payment * term_years * 12) - loan_amount
+
+Implementation: Simple arithmetic
+```
+
+**Step 3: Calculate Net Operating Income**
+```
+Formula: annual_revenue - annual_operating_expenses
+
+Implementation: Simple subtraction
+```
+
+**Step 4: Calculate Annual Debt Service**
+```
+Formula: monthly_payment * 12
+
+Implementation: Simple multiplication
+```
+
+**Step 5: Calculate DSCR**
+```
+Formula: net_operating_income / annual_debt_service
+
+Implementation: Uses calculateDSCR() from formula library v1.0.0
+Reference: Standard lending metric
+```
+
+### Edge Cases & Error Handling
+
+**Zero or Negative Inputs:**
+- Validation prevents negative values from being entered
+- Zero values handled gracefully with error messages
+
+**Division by Zero:**
+- If annual_debt_service is zero (shouldn't happen with positive loan amount)
+- Returns error: "Cannot calculate DSCR with zero debt service"
+
+**Extremely Long Terms:**
+- Terms over 30 years may be unrealistic for business loans
+- Warning shown: "Loan term unusually long, verify with lender"
+```
+
+### Step 7: Generate Warnings Documentation
+
+For each warning condition:
+```markdown
+## Warnings & Alerts
+
+### Info Warnings
+
+**"DSCR is above typical lender minimum"**
+- **Condition:** DSCR >= 1.50
+- **Severity:** Info (blue)
+- **Meaning:** Your debt service coverage ratio is strong. Most lenders will view this favorably.
+- **Action:** This is a positive indicator. No action needed.
+
+### Warning Alerts
+
+**"DSCR is below typical lender minimum"**
+- **Condition:** DSCR < 1.25
+- **Severity:** Warning (yellow)
+- **Meaning:** Your DSCR is below the typical minimum lenders require (1.25).
+- **Action:** Consider:
+  - Reducing loan amount
+  - Extending loan term to lower monthly payments
+  - Increasing revenue or reducing expenses before applying
+
+### Danger Alerts
+
+**"DSCR indicates insufficient cash flow"**
+- **Condition:** DSCR < 1.10
+- **Severity:** Danger (red)
+- **Meaning:** Your business may not generate enough cash flow to reliably cover loan payments.
+- **Action:** 
+  - Loan application likely to be declined
+  - Review business financials carefully
+  - Consider alternative financing options
+  - Consult with a financial advisor
+```
+
+### Step 8: Generate Golden Test Scenarios Section
+
+Document the golden scenarios:
+```markdown
+## Golden Test Scenarios
+
+These scenarios are used for automated testing to ensure calculator accuracy.
+
+### Scenario 1: Typical SBA Loan - Restaurant
+
+**Description:** Standard SBA 7(a) loan for a restaurant purchasing equipment
+
+**Inputs:**
+- Loan Amount: $250,000
+- Interest Rate: 7.5%
+- Term: 10 years
+- Annual Revenue: $1,500,000
+- Annual Operating Expenses: $1,200,000
+
+**Expected Outputs:**
+- Monthly Payment: $2,958.00 (±$1.00)
+- Total Interest: $104,960 (±$100)
+- DSCR: 1.42 (±0.01)
+- Net Operating Income: $300,000 (±$100)
+- Annual Debt Service: $35,496 (±$50)
+
+**Expected Warnings:**
+- Info: "DSCR is above typical lender minimum"
+
+**Test Status:** ✅ Passing (last verified: 2025-11-18)
+
+### Scenario 2: Low DSCR - Retail Business
+
+**Description:** Retail business with tight cash flow, DSCR near minimum threshold
+
+**Inputs:**
+- Loan Amount: $250,000
+- Interest Rate: 8.0%
+- Term: 10 years
+- Annual Revenue: $1,200,000
+- Annual Operating Expenses: $1,158,000
+
+**Expected Outputs:**
+- Monthly Payment: $3,033.19 (±$1.00)
+- DSCR: 1.18 (±0.01)
+
+**Expected Warnings:**
+- Warning: "DSCR is below typical lender minimum"
+
+**Test Status:** ✅ Passing (last verified: 2025-11-18)
+
+### Scenario 3: Strong DSCR - Service Business
+
+**Description:** Service business with strong cash flow and low debt burden
+
+**Inputs:**
+- Loan Amount: $150,000
+- Interest Rate: 6.5%
+- Term: 7 years
+- Annual Revenue: $2,000,000
+- Annual Operating Expenses: $1,500,000
+
+**Expected Outputs:**
+- DSCR: 2.10 (±0.01)
+
+**Expected Warnings:**
+- Info: "DSCR is above typical lender minimum"
+
+**Test Status:** ✅ Passing (last verified: 2025-11-18)
+```
+
+### Step 9: Generate Tier Behavior Section
+
+Document Free vs Pro features:
+```markdown
+## Tier-Specific Behavior
+
+### Free Tier
+**Included:**
+- Single scenario
+- Monthly payment calculation
+- Total interest calculation
+- Basic loan information
+
+**Gated (Pro Upgrade Required):**
+- DSCR calculation and analysis
+- Net Operating Income
+- Annual Debt Service
+- Covenant Headroom
+- Multiple scenario comparison
+- Clean exports (PDF watermarked in Free)
+
+**Upgrade Triggers:**
+- Clicking on locked DSCR metric
+- Attempting to create second scenario
+- Clicking export button (shows upgrade prompt)
+
+### Pro Tier ($19.99/month)
+**Unlocked:**
+- All advanced metrics (DSCR, NOI, debt service)
+- Up to 50 scenarios
+- Scenario comparison
+- Clean PDF exports
+- CSV and Excel exports
+- Priority support
+
+### AI Tier ($19.99/month additional)
+**Unlocked:**
+- AI-powered explanations of DSCR results
+- Scenario recommendations
+- Risk analysis narrative
+- 50 AI requests per month
+```
+
+### Step 10: Generate AI Integration Section (if applicable)
+
+If ai_enabled=true:
+```markdown
+## AI Features
+
+### AI Explanation: "What does my DSCR mean?"
+
+**Trigger:** Click "Explain this result" button next to DSCR output
+
+**What AI Explains:**
+- What your specific DSCR value means
+- How lenders will interpret this ratio
+- What risks or strengths it indicates
+- Suggestions for improving DSCR if needed
+
+**Example AI Response:**
+> "Your DSCR of 1.42 indicates that your business generates $1.42 in operating income for every $1 in debt service. This is a healthy ratio that most lenders will view favorably, as it provides a 42% cushion above the typical 1.25 minimum threshold. This suggests your business has adequate cash flow to comfortably handle the loan payments with room for unexpected expenses or revenue fluctuations."
+
+**Important:** AI responses are for informational purposes only and do not constitute financial advice.
+
+**Redaction & Privacy:**
+- Only numerical results sent to AI (no business names, no free-text notes)
+- No personally identifiable information included
+- See Section 8 for full AI privacy policy
+```
+
+### Step 11: Generate Export Documentation
+
+Document export formats:
+```markdown
+## Exports
+
+### PDF Export
+**Includes:**
+- All inputs and outputs
+- Charts (if generated)
+- Warnings and alerts
+- Calculator version and timestamp
+- Methodology section
+- Disclaimers
+
+**Free Tier:** Watermarked with "Generated with Free Tier - Upgrade for clean exports"
+**Pro Tier:** Clean, professional PDF suitable for lenders or board presentations
+
+**Generation Time:** Typically 2-3 seconds
+
+### CSV Export (Pro Only)
+**Includes:**
+- All inputs and outputs in tabular format
+- Metadata header rows
+- Easy to import into Excel or Google Sheets
+
+### Excel Export (Pro Only)
+**Includes:**
+- Multiple sheets: Summary, Inputs, Outputs, Methodology
+- Formatted with proper number formats
+- Charts embedded
+- Professional styling
+```
+
+### Step 12: Generate FAQs Section
+
+Auto-generate common questions:
+```markdown
+## Frequently Asked Questions
+
+**Q: What is a good DSCR for a business loan?**
+A: Most lenders require a minimum DSCR of 1.25, meaning your business should generate $1.25 in operating income for every $1 in debt payments. A DSCR of 1.50 or higher is considered strong. Below 1.25 may result in loan denial or require additional collateral.
+
+**Q: Should I include my salary in operating expenses?**
+A: Yes, if you're an employee of the business. Include all payroll costs in operating expenses. However, owner draws or distributions should NOT be included—these come from net operating income.
+
+**Q: Can I use this calculator for personal loans?**
+A: No, this calculator is designed for business loans with DSCR analysis. For personal loans, use a standard loan calculator without the DSCR component.
+
+**Q: What if my business is seasonal?**
+A: Use your trailing 12-month revenue and expenses, or project annual figures based on seasonal patterns. Lenders typically evaluate annual cash flow, not monthly fluctuations.
+
+**Q: How accurate is this calculator?**
+A: The payment calculations use standard amortization formulas and are accurate to the cent. However, your actual loan terms may vary based on lender-specific fees, prepayment penalties, or other factors. Always verify final terms with your lender.
+
+**Q: Why can't I see the DSCR metric?**
+A: DSCR calculation is a Pro tier feature. Upgrade to Pro to unlock DSCR analysis and advanced metrics. Click the locked metric for upgrade options.
+```
+
+### Step 13: Generate Related Calculators Section
+```markdown
+## Related Calculators
+
+**For more complete loan analysis, also use:**
+- **SBA 7(a) Loan Analyzer:** Includes SBA guarantee fees and effective APR
+- **Equipment Lease vs Buy:** Compare financing options for equipment purchases
+- **Cash Runway Calculator:** Understand how loan payments affect your runway
+
+**For business planning:**
+- **Breakeven Analysis:** Determine required revenue to cover all costs including loan payments
+- **Business Valuation:** Estimate business value considering debt load
+```
+
+### Step 14: Generate Version History Section
+```markdown
+## Version History
+
+### v2.1.0 (2025-11-18)
+- Added covenant headroom metric
+- Improved DSCR warning thresholds
+- Enhanced AI explanations
+- Updated golden test scenarios
+
+### v2.0.0 (2025-10-15)
+- Major redesign with new UI
+- Added multiple scenario support (Pro tier)
+- Implemented tier gating
+- Added AI integration
+
+### v1.0.0 (2025-08-01)
+- Initial release
+- Basic loan payment calculation
+- DSCR calculation (Pro tier)
+```
+
+### Step 15: Generate Support & Contact Section
+```markdown
+## Support & Resources
+
+**Documentation:** https://docs.smartprofit.com/calculators/business-loan-dscr  
+**WordPress Shortcode:** `[smartprofit_calculator slug="business-loan-dscr"]`  
+**API Endpoint:** `https://api.smartprofit.com/v1/calculate/business-loan-dscr`  
+**Support:** support@smartprofit.com  
+**Feature Requests:** https://feedback.smartprofit.com
+
+**Disclaimers:**
+This calculator is for informational and educational purposes only. It does not constitute financial, legal, or professional advice. Actual loan terms and DSCR requirements vary by lender. Consult with qualified professionals before making financial decisions.
+```
+
+## Output
+
+### Generated Documentation File:
+`docs/calculators/business-loan-dscr.md` (10-15 pages)
+
+### Success Message:
+```
+✅ Calculator Documentation Generated
+
+Calculator: business-loan-dscr
+Version: v2.1.0
+Output: docs/calculators/business-loan-dscr.md
+
+Documentation Sections:
+✓ Overview and metadata
+✓ User scenarios (3 personas)
+✓ Input documentation (5 fields)
+✓ Output documentation (5 metrics)
+✓ Formulas and calculations (5 steps)
+✓ Warnings documentation (3 conditions)
+✓ Golden scenarios (3 scenarios)
+✓ Tier behavior (Free/Pro/AI)
+✓ AI integration details
+✓ Export formats
+✓ FAQs (5 questions)
+✓ Related calculators
+✓ Version history
+✓ Support information
+
+Total Length: ~12 pages
+Last Updated: 2025-11-18
+```
+
+## Success Criteria
+- All JSON config sections documented
+- All inputs have detailed descriptions
+- All outputs have interpretation guides
+- Formulas clearly explained with references
+- Golden scenarios included
+- Tier behavior clearly stated
+- FAQs answer common questions
+- No missing sections
+
+## Quality Checks
+- Technical accuracy (formulas match implementation)
+- Clarity (understandable by non-technical users)
+- Completeness (no missing information)
+- Consistency (matches other calculator docs)
+- Proper markdown formatting
+
+## Usage Example
+```bash
+# Generate docs for one calculator
+claude-code "Use calculator-doc-generator-agent to generate documentation for business-loan-dscr calculator"
+
+# Regenerate docs for all calculators
+claude-code "Use calculator-doc-generator-agent to regenerate documentation for all calculators"
+
+# Update docs after calculator version change
+claude-code "Use calculator-doc-generator-agent to update documentation for business-loan-dscr calculator version 2.2.0"
+```
+
+## Dependencies
+- Section 11: Calculator PDR template (structure reference)
+- Section 12.2: JSON schema (for reading config)
+- Calculator JSON config files
+- Golden scenario files (Section 10.2)
+
+---
+
+# SEO Optimizer Agent
+
+## Purpose
+Automatically generate SEO-optimized content for calculator pages including meta tags, structured data, and on-page SEO elements to maximize organic search visibility.
+
+## Input
+- Calculator JSON config (meta, description, category)
+- Calculator documentation (generated by Calculator Doc Generator Agent)
+- Target keywords (optional, or auto-extracted from calculator purpose)
+- Competitor analysis data (optional)
+
+## Process
+
+### Step 1: Extract Calculator Metadata
+From JSON config:
+- calculator_name: "Business Loan + DSCR Calculator"
+- description: Brief description of calculator
+- category: "financing-lending"
+- business_role: "traffic_magnet" (important for SEO priority)
+
+### Step 2: Generate Primary Keywords
+
+#### 2a. Extract Core Keywords
+From calculator name and description:
+- Primary: "business loan calculator", "DSCR calculator"
+- Secondary: "debt service coverage ratio calculator", "loan payment calculator"
+- Long-tail: "calculate business loan payments", "business loan DSCR calculator online"
+
+#### 2b. Research Search Volume (if API available)
+- Use keyword research API (e.g., SEMrush, Ahrefs API)
+- Prioritize keywords by:
+  - Search volume (higher is better)
+  - Competition (lower is better for new calculators)
+  - Intent match (calculator, tool, vs information queries)
+
+#### 2c. Identify Keyword Variations
+- Plural/singular: "loan calculator" vs "loan calculators"
+- Synonyms: "business loan" vs "commercial loan" vs "small business loan"
+- Related terms: "SBA loan", "term loan", "business financing"
+- Question formats: "how to calculate DSCR", "what is a good DSCR"
+
+### Step 3: Generate Page Title (Title Tag)
+
+#### 3a. Title Formula
+```
+[Primary Keyword] | [Benefit/Feature] | [Brand]
+```
+
+#### 3b. Title Variations (Choose Best)
+Option 1: Direct and keyword-rich
+```
+Business Loan Calculator with DSCR Analysis | Free Tool | SmartProfit
+```
+
+Option 2: Benefit-focused
+```
+Calculate Loan Payments & DSCR Instantly | Business Loan Calculator
+```
+
+Option 3: Question format
+```
+How Much Can Your Business Borrow? | Business Loan & DSCR Calculator
+```
+
+#### 3c. Title Optimization Rules
+- Length: 50-60 characters (to avoid truncation in search results)
+- Primary keyword in first 50% of title
+- Brand name at end (if space allows)
+- Compelling and click-worthy
+- No keyword stuffing
+
+**Selected Title:**
+```html
+<title>Business Loan Calculator with DSCR Analysis | Free Tool</title>
+```
+
+### Step 4: Generate Meta Description
+
+#### 4a. Meta Description Formula
+```
+[Action verb] + [Primary benefit] + [Secondary benefit] + [Call to action]
+```
+
+#### 4b. Meta Description Content
+```
+Calculate monthly loan payments and Debt Service Coverage Ratio (DSCR) for business loans. Free tool helps you determine loan affordability and assess cash flow. Compare multiple scenarios. Get instant results.
+```
+
+#### 4c. Meta Description Optimization Rules
+- Length: 150-160 characters (optimal for display)
+- Include primary keyword naturally
+- Action-oriented (starts with verb: Calculate, Analyze, Compare)
+- Include benefit or unique value proposition
+- Call to action if space allows ("Try it free", "Get instant results")
+- No truncation mid-sentence
+
+**Generated Meta Description:**
+```html
+<meta name="description" content="Calculate monthly loan payments and Debt Service Coverage Ratio (DSCR) for business loans. Free tool with instant results. Compare multiple scenarios and assess loan affordability." />
+```
+
+### Step 5: Generate Structured Data (Schema.org)
+
+#### 5a. SoftwareApplication Schema
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Business Loan + DSCR Calculator",
+  "applicationCategory": "FinanceApplication",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "operatingSystem": "Web Browser",
+  "description": "Calculate monthly loan payments and Debt Service Coverage Ratio (DSCR) for business loans. Free online calculator with instant results.",
+  "featureList": [
+    "Loan payment calculation",
+    "DSCR analysis",
+    "Multiple scenario comparison",
+    "PDF export",
+    "AI-powered insights"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "127"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "SmartProfit",
+    "url": "https://smartprofit.com"
+  }
+}
+```
+
+#### 5b. HowTo Schema (for calculator usage)
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Calculate Business Loan Payments and DSCR",
+  "description": "Step-by-step guide to using the Business Loan Calculator",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Enter Loan Amount",
+      "text": "Input the total amount you want to borrow"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Enter Interest Rate",
+      "text": "Input the annual interest rate offered by the lender"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Enter Loan Term",
+      "text": "Input the number of years to repay the loan"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Enter Revenue and Expenses",
+      "text": "Input your annual revenue and operating expenses"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 5,
+      "name": "Calculate",
+      "text": "Click Calculate to see your monthly payment and DSCR"
+    }
+  ]
+}
+```
+
+#### 5c. FAQPage Schema
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a good DSCR for a business loan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most lenders require a minimum DSCR of 1.25, meaning your business should generate $1.25 in operating income for every $1 in debt payments. A DSCR of 1.50 or higher is considered strong."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is DSCR calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "DSCR is calculated by dividing Net Operating Income (NOI) by Annual Debt Service. For example, if your business has $300,000 in NOI and $200,000 in annual debt payments, your DSCR is 1.50."
+      }
+    }
+  ]
+}
+```
+
+### Step 6: Generate Open Graph Tags (Social Sharing)
+```html
+<meta property="og:title" content="Business Loan Calculator with DSCR Analysis | Free Tool" />
+<meta property="og:description" content="Calculate monthly loan payments and Debt Service Coverage Ratio for business loans. Free instant results." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://smartprofit.com/calculators/business-loan-dscr" />
+<meta property="og:image" content="https://smartprofit.com/images/calculators/business-loan-dscr-og.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content="SmartProfit" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Business Loan Calculator with DSCR Analysis" />
+<meta name="twitter:description" content="Calculate loan payments and DSCR for business loans. Free instant results." />
+<meta name="twitter:image" content="https://smartprofit.com/images/calculators/business-loan-dscr-twitter.jpg" />
+<meta name="twitter:site" content="@smartprofit" />
+```
+
+### Step 7: Generate On-Page SEO Content
+
+#### 7a. H1 Heading (Page Title)
+```html
+<h1>Business Loan Calculator with DSCR Analysis</h1>
+```
+
+Rules:
+- Only one H1 per page
+- Includes primary keyword
+- Clear and descriptive
+- 20-70 characters
+
+#### 7b. H2 Subheadings (Structure)
+```html
+<h2>Calculate Your Business Loan Payment</h2>
+<h2>What is Debt Service Coverage Ratio (DSCR)?</h2>
+<h2>How to Use This Calculator</h2>
+<h2>Understanding Your Results</h2>
+<h2>Frequently Asked Questions</h2>
+```
+
+Rules:
+- Includes related keywords naturally
+- Structures content for readability
+- Answers user questions
+- Supports featured snippet targeting
+
+#### 7c. Introductory Paragraph (Above the Fold)
+```html
+<p>
+Calculate your business loan monthly payment and analyze your Debt Service Coverage Ratio (DSCR) 
+with our free online calculator. Determine loan affordability, assess cash flow capacity, and 
+understand whether your business qualifies for financing. Get instant results and compare multiple 
+loan scenarios side-by-side.
+</p>
+```
+
+Rules:
+- 100-150 words
+- Primary keyword in first sentence
+- Secondary keywords naturally included
+- Clear value proposition
+- Action-oriented
+
+#### 7d. Educational Content Section
+```html
+<h2>What is Debt Service Coverage Ratio (DSCR)?</h2>
+<p>
+Debt Service Coverage Ratio (DSCR) is a financial metric that lenders use to evaluate whether 
+a business generates sufficient cash flow to cover its debt obligations. DSCR is calculated by 
+dividing your Net Operating Income (NOI) by your Annual Debt Service.
+</p>
+
+<p>
+<strong>DSCR Formula:</strong> DSCR = Net Operating Income / Annual Debt Service
+</p>
+
+<h3>DSCR Benchmarks</h3>
+<ul>
+  <li><strong>DSCR ≥ 1.50:</strong> Strong cash flow, favorable for lenders</li>
+  <li><strong>DSCR 1.25-1.49:</strong> Acceptable, meets most lender minimums</li>
+  <li><strong>DSCR 1.10-1.24:</strong> Marginal, may require additional collateral</li>
+  <li><strong>DSCR < 1.10:</strong> High risk, likely loan denial</li>
+</ul>
+```
+
+Rules:
+- Answers "what is" queries for featured snippets
+- Uses simple, clear language
+- Includes examples
+- Supports long-tail keyword targeting
+
+### Step 8: Generate Internal Linking Strategy
+
+#### 8a. Identify Related Calculators
+```
+Related calculators for internal links:
+- SBA 7(a) Loan Analyzer
+- Equipment Lease vs Buy Calculator
+- Cash Runway Calculator
+- Business Valuation Calculator
+```
+
+#### 8b. Generate Contextual Internal Links
+```html
+<p>
+For SBA-specific loans with guarantee fees, use our 
+<a href="/calculators/sba-7a-analyzer">SBA 7(a) Loan Analyzer</a> to calculate 
+effective APR including all fees.
+</p>
+
+<p>
+After calculating your loan payment, check how it affects your 
+<a href="/calculators/cash-runway">cash runway and burn rate</a> to ensure 
+adequate working capital.
+</p>
+```
+
+Rules:
+- Link to 2-4 related calculators
+- Use descriptive anchor text (not "click here")
+- Links are contextually relevant
+- Opens in same window (internal links)
+
+### Step 9: Generate URL Slug
+
+#### 9a. URL Structure
+```
+https://smartprofit.com/calculators/business-loan-dscr
+```
+
+Rules:
+- Lowercase only
+- Hyphens separate words (not underscores)
+- Includes primary keyword
+- Short and descriptive
+- No unnecessary words (the, a, an)
+- Canonical version (no trailing slash unless directory)
+
+#### 9b. Canonical Tag
+```html
+<link rel="canonical" href="https://smartprofit.com/calculators/business-loan-dscr" />
+```
+
+### Step 10: Generate Breadcrumb Navigation
+```html
+<nav aria-label="Breadcrumb">
+  <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="https://smartprofit.com">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </li>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="https://smartprofit.com/calculators">
+        <span itemprop="name">Calculators</span>
+      </a>
+      <meta itemprop="position" content="2" />
+    </li>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="https://smartprofit.com/calculators/financing-lending">
+        <span itemprop="name">Financing & Lending</span>
+      </a>
+      <meta itemprop="position" content="3" />
+    </li>
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <span itemprop="name">Business Loan Calculator</span>
+      <meta itemprop="position" content="4" />
+    </li>
+  </ol>
+</nav>
+```
+
+### Step 11: Generate Alt Text for Images
+
+For calculator screenshots, diagrams, or UI elements:
+```html
+<img 
+  src="/images/business-loan-calculator-screenshot.jpg" 
+  alt="Business loan calculator showing monthly payment of $2,958 and DSCR of 1.42 for a $250,000 loan at 7.5% over 10 years"
+  width="800"
+  height="600"
+/>
+```
+
+Rules:
+- Descriptive, includes context
+- Includes keywords naturally (not stuffed)
+- Describes what's in the image
+- 100-125 characters
+
+### Step 12: Generate Meta Keywords (Legacy, Optional)
+```html
+<meta name="keywords" content="business loan calculator, DSCR calculator, debt service coverage ratio, loan payment calculator, business loan payment, commercial loan calculator, SBA loan calculator" />
+```
+
+Note: Meta keywords are largely ignored by Google but may be used by other search engines.
+
+### Step 13: Generate Mobile Optimization Tags
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="theme-color" content="#0066CC" />
+```
+
+### Step 14: Generate Sitemap Entry
+```xml
+<url>
+  <loc>https://smartprofit.com/calculators/business-loan-dscr</loc>
+  <lastmod>2025-11-18</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+  <image:image>
+    <image:loc>https://smartprofit.com/images/calculators/business-loan-dscr-og.jpg</image:loc>
+    <image:title>Business Loan Calculator Screenshot</image:title>
+  </image:image>
+</url>
+```
+
+Priority guidelines:
+- Homepage: 1.0
+- Category pages: 0.8
+- High-value calculators (traffic magnets): 0.8
+- Standard calculators: 0.6
+- Documentation pages: 0.4
+
+### Step 15: Generate Robots Meta Tag
+```html
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+```
+
+Options:
+- `index, follow`: Standard for all public calculators
+- `noindex, nofollow`: For internal/draft calculators
+- `index, nofollow`: For user-generated content pages
+
+## Output
+
+### SEO Package File:
+`output/seo/business-loan-dscr-seo.json`
+```json
+{
+  "calculator_slug": "business-loan-dscr",
+  "page_url": "https://smartprofit.com/calculators/business-loan-dscr",
+  "title_tag": "Business Loan Calculator with DSCR Analysis | Free Tool",
+  "meta_description": "Calculate monthly loan payments and Debt Service Coverage Ratio (DSCR) for business loans. Free tool with instant results. Compare multiple scenarios and assess loan affordability.",
+  "primary_keywords": [
+    "business loan calculator",
+    "DSCR calculator",
+    "debt service coverage ratio calculator"
+  ],
+  "secondary_keywords": [
+    "loan payment calculator",
+    "business loan payment",
+    "commercial loan calculator"
+  ],
+  "h1": "Business Loan Calculator with DSCR Analysis",
+  "structured_data": {
+    "software_application": {...},
+    "how_to": {...},
+    "faq": {...}
+  },
+  "open_graph": {...},
+  "twitter_card": {...},
+  "canonical_url": "https://smartprofit.com/calculators/business-loan-dscr",
+  "sitemap_priority": 0.8,
+  "internal_links": [
+    {"text": "SBA 7(a) Loan Analyzer", "url": "/calculators/sba-7a-analyzer"},
+    {"text": "cash runway and burn rate", "url": "/calculators/cash-runway"}
+  ],
+  "estimated_search_volume": 4400,
+  "keyword_difficulty": 42,
+  "last_updated": "2025-11-18"
+}
+```
+
+### HTML Head Section:
+`output/seo/business-loan-dscr-head.html`
+
+Contains all meta tags, structured data, and SEO elements ready to insert into page `<head>`.
+
+### Success Message:
+```
+✅ SEO Optimization Complete
+
+Calculator: business-loan-dscr
+Page: https://smartprofit.com/calculators/business-loan-dscr
+
+Generated Elements:
+✓ Title tag (58 characters)
+✓ Meta description (157 characters)
+✓ Structured data (3 schemas: SoftwareApplication, HowTo, FAQ)
+✓ Open Graph tags (7 tags)
+✓ Twitter Card tags (4 tags)
+✓ H1 and H2 headings (5 subheadings)
+✓ Introductory paragraph (142 words)
+✓ Internal links (3 related calculators)
+✓ Breadcrumb navigation with schema
+✓ Image alt text guidance
+✓ Sitemap entry
+✓ Canonical tag
+
+Primary Keyword: "business loan calculator"
+Estimated Monthly Searches: 4,400
+Keyword Difficulty: 42/100 (Medium)
+
+SEO Score: 95/100
+- Title optimization: ✓
+- Meta description: ✓
+- Structured data: ✓
+- Mobile optimization: ✓
+- Internal linking: ✓
+- Content quality: ✓
+
+Next Steps:
+1. Insert head.html into calculator page template
+2. Add internal links to related calculators
+3. Submit updated sitemap to Google Search Console
+4. Monitor rankings and traffic in 2-4 weeks
+```
+
+## Success Criteria
+- Title tag 50-60 characters
+- Meta description 150-160 characters
+- All structured data validates (schema.org validator)
+- Primary keyword in title, H1, meta description, first paragraph
+- At least 2 internal links to related calculators
+- Mobile optimization tags present
+- Passes SEO audit tools (90+ score)
+
+## Quality Checks
+- Run through Google Rich Results Test (structured data valid)
+- Run through PageSpeed Insights (Core Web Vitals)
+- Check mobile-friendliness (Google Mobile-Friendly Test)
+- Validate meta tags (no truncation in search results)
+- Check for keyword stuffing (natural language)
+
+## Usage Example
+```bash
+# Generate SEO for one calculator
+claude-code "Use seo-optimizer-agent to generate SEO content for business-loan-dscr calculator"
+
+# Regenerate SEO for all calculators (after keyword research update)
+claude-code "Use seo-optimizer-agent to regenerate SEO for all calculators with updated keywords"
+
+# Update SEO after calculator change
+claude-code "Use seo-optimizer-agent to update SEO for business-loan-dscr calculator version 2.2.0"
+```
+
+## Dependencies
+- Section 2.1: Calculator categories (for breadcrumbs)
+- Section 7.2: Analytics (for tracking SEO performance)
+- Calculator Doc Generator Agent: for FAQ content
+- Calculator JSON config: for metadata
+
+---
+
+# Changelog Generator Agent
+
+## Purpose
+Automatically generate structured changelog entries from Git commits, version updates, and deployment history, maintaining a comprehensive record of all calculator and system changes.
+
+## Input
+- Git repository history
+- Calculator version changes (from JSON configs)
+- Deployment logs
+- Date range (optional, defaults to latest changes)
+- Format preference (markdown, JSON, HTML)
+
+## Process
+
+### Step 1: Parse Git Commit History
+
+#### 1a. Fetch Commits Since Last Release
+```bash
+git log --since="2025-10-01" --oneline --no-merges
+```
+
+#### 1b. Categorize Commits by Type
+Parse commit messages using conventional commit format:
+- `feat:` → New Features
+- `fix:` → Bug Fixes
+- `perf:` → Performance Improvements
+- `docs:` → Documentation Updates
+- `style:` → UI/UX Changes
+- `refactor:` → Code Refactoring
+- `test:` → Test Updates
+- `chore:` → Maintenance Tasks
+
+Example commit:
+```
+feat(business-loan-dscr): add covenant headroom metric
+fix(sba-7a): correct guarantee fee calculation for loans >$500k
+perf(formula-library): optimize DSCR calculation by 30%
+docs(api): update REST API documentation for v2 endpoints
+```
+
+#### 1c. Extract Calculator-Specific Changes
+Group commits by calculator slug:
+- business-loan-dscr: 3 commits
+- sba-7a-analyzer: 2 commits
+- formula-library: 1 commit
+- ui-components: 2 commits
+
+### Step 2: Detect Version Changes
+
+#### 2a. Read Calculator JSON Configs
+Compare current vs previous versions:
+```
+calculators/configs/business-loan-dscr.json
+- Previous version: 2.0.0
+- Current version: 2.1.0
+- Version bump: MINOR (new features added)
+```
+
+#### 2b. Identify Breaking Changes
+Scan commits for:
+- `BREAKING CHANGE:` in commit body
+- Major version bump (2.0.0 → 3.0.0)
+- API endpoint changes
+- Input/output schema changes
+
+### Step 3: Categorize Changes by Impact
+
+#### 3a. User-Facing Changes
+Changes that affect end users:
+- New calculators
+- New features in existing calculators
+- UI/UX improvements
+- Bug fixes that resolve user-reported issues
+- Performance improvements (faster load times)
+
+#### 3b. Developer-Facing Changes
+Changes that affect developers/integrators:
+- API changes
+- Formula library updates
+- WordPress plugin updates
+- Breaking changes requiring code updates
+
+#### 3c. Internal Changes
+Changes not visible to users:
+- Code refactoring
+- Test improvements
+- Build process updates
+- Infrastructure changes
+
+### Step 4: Generate Changelog Entries by Calculator
+
+#### 4a. Per-Calculator Changelog Format
+```markdown
+## Business Loan + DSCR Calculator v2.1.0 (2025-11-18)
+
+### ✨ New Features
+- Added covenant headroom metric showing cushion above lender minimum DSCR
+- Added scenario comparison table (Pro tier only)
+- Enabled AI explanations for DSCR interpretation (AI tier)
+
+### 🐛 Bug Fixes
+- Fixed rounding error in DSCR calculation for edge cases
+- Corrected validation allowing zero interest rates
+- Fixed PDF export formatting on mobile devices
+
+### ⚡ Performance Improvements
+- Reduced calculation time from 120ms to 85ms (29% faster)
+- Optimized PDF generation, now completes in <2 seconds
+
+### 📚 Documentation
+- Updated FAQs with DSCR benchmark guidance
+- Added video tutorial for using multiple scenarios
+- Improved tooltip text for all input fields
+
+### 🔧 Technical Changes
+- Upgraded to formula library v1.1.0
+- Migrated to TypeScript 5.0
+- Added 5 new golden test scenarios
+
+### ⚠️ Breaking Changes
+None
+
+---
+```
+
+#### 4b. System-Wide Changelog Format
+```markdown
+# SmartProfit Calculator Suite - Changelog
+
+## Version 1.2.0 (2025-11-18)
+
+### 🎉 New Calculators
+- **Invoice Factoring Calculator** - Calculate effective APR and compare to line of credit
+- **Line of Credit Utilization Calculator** - Analyze cost at different utilization levels
+
+### ✨ Platform Features
+- **Multi-scenario comparison view** - Compare up to 5 scenarios side-by-side (Pro tier)
+- **Enhanced export templates** - New board-ready PDF layouts
+- **AI narrative improvements** - More detailed scenario-specific recommendations
+
+### 🐛 Bug Fixes
+- Fixed export watermark not appearing on Free tier PDFs
+- Corrected tier gating logic for B2B white-label customers
+- Fixed mobile responsive issues on iPad mini
+- Resolved intermittent AI timeout errors
+
+### ⚡ Performance Improvements
+- Reduced average page load time from 1.8s to 1.2s (33% faster)
+- Optimized formula library execution (15-30% faster calculations)
+- Implemented CDN caching for static assets
+- Reduced bundle size by 200KB through code splitting
+
+### 📊 Analytics & Monitoring
+- Added conversion funnel tracking for Free → Pro upgrades
+- Implemented error tracking with Sentry integration
+- Added performance monitoring dashboard (Section 1.8.3)
+
+### 🔐 Security & Compliance
+- Updated data retention policies per GDPR requirements
+- Added tenant-level AI opt-out controls (B2B)
+- Implemented stricter input validation to prevent XSS
+
+### 📚 Documentation
+- Published API v2 documentation at docs.smartprofit.com/api
+- Added WordPress embed guide with video tutorials
+- Updated calculator user guides with new screenshots
+
+### 🛠️ Developer Experience
+- Released Calculator Builder Agent v1.0
+- Published JSON schema specification (Section 12.2)
+- Added deployment pipeline automation (10 min JSON → production)
+
+### ⚠️ Breaking Changes
+- **API v1 deprecated** - Will be sunset on 2026-06-01. Migrate to API v2.
+  - Migration guide: docs.smartprofit.com/api/v1-to-v2-migration
+- **Old WordPress shortcode format deprecated** - Use new format: `[smartprofit_calculator slug="..."]`
+  - Old format still works but will be removed in v2.0.0
+
+### 🔄 Updated Calculators
+- **Business Loan + DSCR Calculator**: v2.0.0 → v2.1.0 (see above)
+- **SBA 7(a) Loan Analyzer**: v1.5.2 → v1.6.0 (updated fee structure)
+- **Cash Runway Calculator**: v1.2.1 → v1.2.2 (bug fixes only)
+
+### 📦 Dependencies
+- Upgraded React 18.2 → 18.3
+- Upgraded TypeScript 4.9 → 5.0
+- Upgraded formula-library 1.0.0 → 1.1.0
+
+### 👥 Contributors
+- 8 commits by engineering team
+- 2 bug reports from community users (thank you!)
+- 1 feature request implemented from feedback
+
+---
+```
+
+### Step 5: Generate Version Summary
+```markdown
+## Version 1.2.0 at a Glance
+
+**Released:** November 18, 2025  
+**Type:** Minor Release (new features, backward compatible)
+
+**Highlights:**
+- 2 new calculators (Invoice Factoring, Line of Credit)
+- Multi-scenario comparison (Pro tier feature)
+- 33% faster page loads
+- Enhanced AI narratives
+- 15 bug fixes
+
+**Impact:**
+- **Users:** New features, better performance, bug fixes
+- **Developers:** API v1 deprecated (6 month sunset), WordPress shortcode updated
+- **System:** More reliable, faster, better monitoring
+
+**Upgrade Priority:** Recommended for all users  
+**Estimated Downtime:** None (rolling deployment)
+
+**Next Release:** Version 1.3.0 planned for December 15, 2025
+```
+
+### Step 6: Generate Release Notes (User-Friendly Version)
+
+Transform technical changelog into user-friendly announcement:
+```markdown
+# What's New in SmartProfit Calculators - November 2025
+
+## 🚀 Two New Calculators
+
+We've added two powerful new financial calculators to help you make better business decisions:
+
+**Invoice Factoring Calculator**  
+Wondering if invoice factoring is worth the cost? This calculator compares factoring fees to alternative financing and shows you the true effective APR.
+
+**Line of Credit Calculator**  
+Optimize your line of credit usage. See how utilization rates affect your costs and find the sweet spot for your working capital needs.
+
+## ⚡ Faster, Smoother, Better
+
+- **33% faster loading** - Calculators now load in just over 1 second
+- **Smoother calculations** - Results appear even faster with our optimized formula engine
+- **Better mobile experience** - Improved layouts for tablets and phones
+
+## 🎯 New Pro Features
+
+**Multi-Scenario Comparison** (Pro tier)  
+Compare up to 5 different scenarios side-by-side. Perfect for evaluating multiple loan offers or running what-if analyses.
+
+**Enhanced PDF Exports**  
+New professional templates designed for board presentations and lender submissions.
+
+## 🤖 Smarter AI Insights
+
+Our AI explanations are now more detailed and scenario-specific. Ask "What does this mean?" and get personalized insights based on your exact numbers.
+
+## 🐛 Bug Fixes
+
+We fixed 15 bugs including:
+- Export watermarks now appear correctly on Free tier
+- Mobile display issues on iPad resolved
+- AI explanations no longer time out
+
+## 📖 Learn More
+
+- [Watch video tutorials](https://smartprofit.com/tutorials)
+- [Read full changelog](https://smartprofit.com/changelog)
+- [Contact support](mailto:support@smartprofit.com)
+
+## Coming Next Month
+
+December release preview:
+- Equipment financing calculator
+- Breakeven analysis improvements
+- More export format options
+
+---
+
+*Have feedback or feature requests? We'd love to hear from you at [feedback@smartprofit.com](mailto:feedback@smartprofit.com)*
+```
+
+### Step 7: Generate Changelog Formats
+
+#### 7a. Markdown Format (CHANGELOG.md)
+Standard markdown file in repo root
+
+#### 7b. JSON Format (for API consumption)
+```json
+{
+  "version": "1.2.0",
+  "release_date": "2025-11-18",
+  "release_type": "minor",
+  "breaking_changes": false,
+  "changes": {
+    "new_features": [
+      {
+        "title": "Invoice Factoring Calculator",
+        "description": "Calculate effective APR and compare to line of credit",
+        "tier": "free",
+        "impact": "user-facing"
+      }
+    ],
+    "bug_fixes": [
+      {
+        "title": "Fixed export watermark issue",
+        "description": "Watermarks now appear correctly on Free tier PDFs",
+        "severity": "medium",
+        "calculator": "all"
+      }
+    ],
+    "performance_improvements": [
+      {
+        "title": "Reduced page load time",
+        "description": "Average load time reduced from 1.8s to 1.2s",
+        "improvement_percent": 33
+      }
+    ]
+  },
+  "deprecated": [
+    {
+      "item": "API v1",
+      "sunset_date": "2026-06-01",
+      "migration_guide": "https://docs.smartprofit.com/api/v1-to-v2-migration"
+    }
+  ],
+  "contributors": 8,
+  "commits": 47
+}
+```
+
+#### 7c. HTML Format (for website display)
+```html
+<div class="changelog-entry">
+  <h2>Version 1.2.0 <span class="badge badge-success">Latest</span></h2>
+  <p class="release-date">Released November 18, 2025</p>
+  
+  <div class="section new-features">
+    <h3>✨ New Features</h3>
+    <ul>
+      <li><strong>Invoice Factoring Calculator</strong> - Calculate effective APR and compare to line of credit</li>
+      <li><strong>Multi-scenario comparison</strong> - Compare up to 5 scenarios side-by-side (Pro tier)</li>
+    </ul>
+  </div>
+  
+  <div class="section bug-fixes">
+    <h3>🐛 Bug Fixes</h3>
+    <ul>
+      <li>Fixed export watermark not appearing on Free tier PDFs</li>
+      <li>Corrected tier gating logic for B2B customers</li>
+    </ul>
+  </div>
+  
+  <a href="/changelog/1.2.0" class="btn btn-link">View Full Changelog →</a>
+</div>
+```
+
+### Step 8: Generate Deprecation Warnings
+
+For breaking changes or deprecations:
+```markdown
+## ⚠️ Deprecation Notice
+
+### API v1 Sunset
+
+**Effective Date:** June 1, 2026 (6 months from release)
+
+**What's Changing:**
+API v1 endpoints will be shut down and will return 410 Gone status.
+
+**Who's Affected:**
+- Developers using direct API integration
+- Third-party apps using old API
+- Custom WordPress plugins using v1 endpoints
+
+**What You Need to Do:**
+1. Review your API usage: Check which endpoints you're calling
+2. Read migration guide: https://docs.smartprofit.com/api/v1-to-v2-migration
+3. Update to API v2: Most endpoints have direct equivalents
+4. Test thoroughly: Use staging environment first
+5. Deploy updated code: Before June 1, 2026
+
+**Support:**
+Contact api-support@smartprofit.com for migration assistance.
+```
+
+### Step 9: Tag and Link Changelog Entries
+```markdown
+## Tags
+
+#new-calculator #performance #bug-fix #breaking-change #api #wordpress
+
+## Related
+
+- [API v2 Documentation](https://docs.smartprofit.com/api/v2)
+- [Migration Guide: API v1 → v2](https://docs.smartprofit.com/api/v1-to-v2-migration)
+- [Video: What's New in November 2025](https://youtube.com/watch?v=...)
+- [Blog Post: Introducing Multi-Scenario Comparison](https://blog.smartprofit.com/multi-scenario)
+
+## Resources
+
+- Download release: https://github.com/smartprofit/calculators/releases/tag/v1.2.0
+- Docker image: `smartprofit/calculators:1.2.0`
+- NPM package: `@smartprofit/calculator-sdk@1.2.0`
+```
+
+### Step 10: Notify Stakeholders
+
+Generate notification content for different channels:
+
+#### 10a. Email to Users
+```
+Subject: New Calculators + Faster Performance 🚀
+
+Hi [Name],
+
+We just released SmartProfit Calculators v1.2.0 with some exciting updates:
+
+✨ 2 New Calculators
+- Invoice Factoring Calculator
+- Line of Credit Calculator
+
+⚡ 33% Faster
+Pages load in just over 1 second now.
+
+🎯 New Pro Feature
+Compare up to 5 scenarios side-by-side.
+
+[See What's New] → smartprofit.com/whats-new
+
+Questions? Reply to this email.
+
+The SmartProfit Team
+```
+
+#### 10b. Slack Notification (Internal Team)
+```
+🎉 Version 1.2.0 Deployed to Production
+
+✅ 2 new calculators live
+✅ 15 bug fixes deployed
+✅ Performance improved 33%
+⚠️ API v1 deprecated (6 month sunset)
+
+📊 Deployment Stats:
+- Build time: 8m 23s
+- Tests passed: 287/287
+- Zero downtime deployment
+
+🔗 Full changelog: https://smartprofit.com/changelog/1.2.0
+📈 Monitor: https://dashboard.smartprofit.com
+```
+
+#### 10c. Twitter/Social Media
+```
+🚀 SmartProfit v1.2.0 is live!
+
+✨ 2 new business calculators
+⚡ 33% faster performance  
+🎯 Multi-scenario comparison (Pro)
+
+Try them free: smartprofit.com
+
+#fintech #businesstools #smallbusiness
+```
+
+## Output
+
+### Generated Files:
+
+**Main Changelog:**
+- `CHANGELOG.md` (cumulative, all versions)
+- `docs/changelog/1.2.0.md` (version-specific detailed)
+- `docs/releases/1.2.0-release-notes.md` (user-friendly)
+
+**Structured Data:**
+- `changelog/1.2.0.json` (machine-readable)
+- `changelog/1.2.0.html` (website display)
+
+**Notifications:**
+- `notifications/1.2.0-email.txt`
+- `notifications/1.2.0-slack.txt`
+- `notifications/1.2.0-social.txt`
+
+### Success Message:
+```
+✅ Changelog Generated
+
+Version: 1.2.0
+Release Date: 2025-11-18
+Type: Minor Release
+
+Summary:
+- 2 new calculators
+- 8 new features
+- 15 bug fixes
+- 5 performance improvements
+- 1 breaking change (API v1 deprecated)
+
+Files Generated:
+✓ CHANGELOG.md updated
+✓ docs/changelog/1.2.0.md created
+✓ docs/releases/1.2.0-release-notes.md created
+✓ changelog/1.2.0.json created
+✓ changelog/1.2.0.html created
+✓ Email notification draft ready
+✓ Slack notification ready
+✓ Social media post ready
+
+Commits Analyzed: 47
+Contributors: 8
+Calculators Updated: 3
+
+Next Steps:
+1. Review generated changelog for accuracy
+2. Send email notification to users
+3. Post announcement on social media
+4. Update website /changelog page
+5. Tag release in Git: git tag v1.2.0
+```
+
+## Success Criteria
+- All commits categorized correctly
+- Breaking changes clearly marked
+- Version numbers accurate
+- User-facing vs technical changes separated
+- Deprecation warnings included
+- Links and references valid
+- Notification content ready for distribution
+
+## Quality Checks
+- Changelog follows Keep a Changelog format
+- Semantic versioning applied correctly
+- All calculator version changes documented
+- Breaking changes have migration guides
+- No duplicate entries
+- Proper markdown formatting
+- Links all valid (no 404s)
+
+## Usage Example
+```bash
+# Generate changelog for latest release
+claude-code "Use changelog-generator-agent to generate changelog for version 1.2.0"
+
+# Generate changelog since specific date
+claude-code "Use changelog-generator-agent to generate changelog for all changes since 2025-10-01"
+
+# Regenerate full changelog (all versions)
+claude-code "Use changelog-generator-agent to regenerate complete CHANGELOG.md from Git history"
+
+# Generate release notes only (user-friendly)
+claude-code "Use changelog-generator-agent to generate release notes for version 1.2.0"
+```
+
+## Dependencies
+- Git repository with commit history
+- Calculator JSON configs (for version tracking)
+- Deployment logs (Section 12.4)
+- Section 10.3: Release process and versioning standards
+- Conventional Commits format for commit messages
+
+---
+
+
+## Phase 4: Monitoring & Analytics Agents
+
+# Error Monitor Agent
+
+## Purpose
+Monitor calculator errors in real-time, categorize by severity, alert appropriate teams, and track error trends to maintain high reliability and user satisfaction.
+
+## Input
+- Error logs from application (frontend and backend)
+- Calculator slug (which calculator errored)
+- Error type and stack trace
+- User context (tier, session ID, anonymized)
+- Timestamp and frequency
+
+## Process
+
+### Step 1: Capture and Parse Errors
+
+#### 1a. Error Sources
+Monitor errors from:
+- **Frontend JavaScript errors** (React component crashes, calculation failures)
+- **Backend API errors** (formula library errors, database failures)
+- **Export generation errors** (PDF/CSV/Excel failures)
+- **AI service errors** (timeouts, API failures, rate limits)
+- **Integration errors** (WordPress plugin, third-party APIs)
+
+#### 1b. Error Data Structure
+```json
+{
+  "error_id": "err_abc123xyz",
+  "timestamp": "2025-11-18T18:45:32Z",
+  "calculator_slug": "business-loan-dscr",
+  "error_type": "calculation_error",
+  "error_message": "Cannot calculate DSCR: division by zero",
+  "stack_trace": "...",
+  "user_context": {
+    "session_id": "sess_xyz789",
+    "user_tier": "free",
+    "browser": "Chrome 120",
+    "device": "desktop"
+  },
+  "inputs": {
+    "loan_amount": 250000,
+    "interest_rate": 7.5,
+    "term_years": 10,
+    "annual_revenue": 1500000,
+    "annual_expenses": 1500000
+  },
+  "severity": "high",
+  "impact": "calculation_failed"
+}
+```
+
+### Step 2: Categorize Errors by Type
+
+#### 2a. Error Type Classification
+
+**Calculation Errors**
+- Formula execution failures (divide by zero, invalid inputs)
+- Numerical overflow/underflow
+- Missing formula library functions
+- Invalid calculation results (NaN, Infinity)
+
+**Validation Errors**
+- Input validation failures (out of range, wrong type)
+- Schema validation errors (JSON config invalid)
+- Tier gating violations (user accessing Pro features on Free tier)
+
+**Integration Errors**
+- API timeouts or failures
+- Database connection errors
+- External service failures (AI provider down)
+- WordPress embed errors
+
+**Export Errors**
+- PDF generation failures
+- CSV/Excel formatting errors
+- Export timeout (>3 seconds)
+- Missing data in exports
+
+**UI/UX Errors**
+- Component render failures
+- JavaScript runtime errors
+- CSS/layout issues causing non-functional UI
+- Browser compatibility issues
+
+**Performance Errors**
+- Calculation exceeding SLA (>150ms p95)
+- Export exceeding SLA (>3s p95)
+- AI request exceeding timeout (>8s)
+- Page load time exceeding target (>2s)
+
+### Step 3: Assess Error Severity
+
+#### 3a. Severity Levels
+
+**Critical (P0) - Immediate Action Required**
+- Calculator completely non-functional
+- All calculations failing
+- Data loss or corruption
+- Security breach detected
+- Payment processing failures
+
+Criteria:
+- Affects >50% of users
+- No workaround available
+- Revenue impact immediate
+- Security/compliance risk
+
+**High (P1) - Urgent**
+- One calculator completely broken
+- Major feature non-functional (exports, AI)
+- Frequent errors affecting many users (>5% error rate)
+- Performance SLA violations (>2x target)
+
+Criteria:
+- Affects 10-50% of users
+- Limited workaround available
+- Significant user impact
+- Degraded experience
+
+**Medium (P2) - Important**
+- Specific scenario/edge case failing
+- Minor feature broken (one export format)
+- Intermittent errors affecting some users (<5% error rate)
+- Warning messages not displaying correctly
+
+Criteria:
+- Affects <10% of users
+- Workaround available
+- Moderate user impact
+- Does not block core functionality
+
+**Low (P3) - Monitor**
+- Cosmetic issues (styling, tooltips)
+- Non-critical warnings
+- Logging/telemetry issues
+- Known limitations (documented)
+
+Criteria:
+- Minimal user impact
+- Easy workaround
+- Does not affect functionality
+- Quality-of-life improvement
+
+### Step 4: Determine Impact and Blast Radius
+
+#### 4a. Impact Assessment
+- **User Impact:** How many users affected? (count, percentage)
+- **Feature Impact:** Which features broken? (core vs optional)
+- **Calculator Impact:** Which calculators affected? (one vs multiple)
+- **Tier Impact:** Which tiers affected? (Free, Pro, AI, B2B)
+- **Revenue Impact:** Estimated revenue loss (blocked upgrades, churn risk)
+
+#### 4b. Blast Radius Calculation
+```
+Blast Radius = (Users Affected / Total Active Users) × Feature Criticality
+
+Where:
+- Feature Criticality:
+  - Core calculation: 1.0
+  - Export: 0.7
+  - AI: 0.5
+  - UI/cosmetic: 0.2
+
+Example:
+- 500 users affected out of 10,000 active = 5%
+- Core calculation broken = 1.0 criticality
+- Blast Radius = 5% × 1.0 = 5% (HIGH severity)
+```
+
+### Step 5: Alert Appropriate Teams
+
+#### 5a. Alerting Rules
+
+**Critical (P0) Alerts**
+- **Who:** On-call engineer (immediate page), CTO, product manager
+- **How:** PagerDuty page, SMS, phone call
+- **When:** Immediately (within 1 minute of detection)
+- **Escalation:** If no response in 5 minutes, escalate to backup engineer
+
+**High (P1) Alerts**
+- **Who:** Engineering team lead, product manager
+- **How:** Slack alert, email
+- **When:** Within 5 minutes
+- **Escalation:** If no response in 30 minutes, page on-call
+
+**Medium (P2) Alerts**
+- **Who:** Engineering team (general channel)
+- **How:** Slack message
+- **When:** Within 1 hour (or bundled in daily digest)
+- **Escalation:** None unless error rate increases
+
+**Low (P3) Alerts**
+- **Who:** Engineering team
+- **How:** Daily digest email, Jira ticket auto-created
+- **When:** Next business day
+- **Escalation:** None
+
+#### 5b. Alert Message Format
+
+**Slack Alert (P1 Example):**
+```
+🚨 HIGH SEVERITY ERROR DETECTED
+
+Calculator: business-loan-dscr
+Error Type: calculation_error
+Error Rate: 8.2% (41 errors in last 10 minutes)
+Impact: Calculation failing for DSCR when expenses equal revenue
+
+Affected Users: ~200 (estimated)
+First Seen: 2025-11-18 18:45:32 UTC
+Last Seen: 2025-11-18 18:55:12 UTC
+
+Error Message: "Cannot calculate DSCR: division by zero"
+
+Dashboard: https://dashboard.smartprofit.com/errors/err_abc123xyz
+Logs: https://logs.smartprofit.com/search?error_id=err_abc123xyz
+
+Action Required:
+1. Investigate root cause (likely formula library edge case)
+2. Apply hotfix or rollback if necessary
+3. Update golden scenarios to catch this case
+
+Assigned: @engineering-oncall
+Priority: P1 (resolve within 24 hours)
+```
+
+### Step 6: Track Error Trends and Patterns
+
+#### 6a. Error Aggregation
+Group errors by:
+- Calculator (which calculators have highest error rates?)
+- Error type (what types of errors most common?)
+- Time of day (errors spike at certain times?)
+- User tier (Free vs Pro error rates different?)
+- Browser/device (mobile vs desktop error rates?)
+
+#### 6b. Trend Analysis
+```
+Weekly Error Report:
+====================
+
+Total Errors: 347 (up 12% from last week)
+Error Rate: 0.8% (target: <1%)
+
+Top 5 Error Sources:
+1. business-loan-dscr: 89 errors (26% of total)
+   - Root cause: Division by zero when expenses = revenue
+   - Status: Fix deployed 2025-11-17
+   
+2. sba-7a-analyzer: 67 errors (19% of total)
+   - Root cause: Guarantee fee calculation incorrect for loans >$500k
+   - Status: Investigating
+   
+3. AI service timeouts: 54 errors (16% of total)
+   - Root cause: Anthropic API intermittent latency
+   - Status: Monitoring, no action needed
+   
+4. Export PDF generation: 45 errors (13% of total)
+   - Root cause: Large scenarios (>10 pages) timing out
+   - Status: Optimization in progress
+   
+5. Mobile UI crashes: 32 errors (9% of total)
+   - Root cause: Safari iOS 16 compatibility issue
+   - Status: Fix scheduled for next release
+
+Trends:
+- Error rate increasing on mobile devices (2.1% vs 0.5% desktop)
+- AI timeouts increased 40% (external issue, monitoring)
+- Export errors decreased 15% after optimization
+```
+
+### Step 7: Auto-Triage Common Errors
+
+#### 7a. Known Error Patterns
+Maintain database of known errors:
+```json
+{
+  "error_pattern": "division_by_zero_dscr",
+  "error_message_regex": "Cannot calculate DSCR.*division by zero",
+  "root_cause": "Annual debt service is zero (invalid loan amount or term)",
+  "severity": "medium",
+  "auto_action": "reject_calculation",
+  "user_message": "Unable to calculate DSCR. Please verify your loan amount and term are greater than zero.",
+  "fix_status": "known_limitation",
+  "documentation": "https://docs.smartprofit.com/errors/dscr-division-zero"
+}
+```
+
+#### 7b. Auto-Resolution Actions
+For known errors:
+- Return helpful error message to user (not technical stack trace)
+- Log error for tracking but don't alert (unless frequency spikes)
+- Suggest corrective action to user ("Try increasing loan term")
+- Link to documentation or FAQ
+
+### Step 8: Generate Error Dashboards
+
+#### 8a. Real-Time Error Dashboard
+Display in Section 1.8.6 Security & Compliance Dashboard:
+- **Error rate chart** (last 24 hours, last 7 days, last 30 days)
+- **Top errors** (by frequency)
+- **Errors by calculator** (which calculators most problematic?)
+- **Errors by severity** (P0, P1, P2, P3 counts)
+- **Mean Time To Resolution (MTTR)** (average time to fix errors)
+- **Error-free uptime** (percentage of time with zero errors)
+
+#### 8b. Weekly Error Report
+Auto-generated every Monday:
+- Error summary (total, rate, trend)
+- Top issues (root causes, status, owners)
+- Fixed issues (closed this week)
+- Action items (what needs attention)
+- SLA performance (% of P0 resolved <4 hours, P1 <24 hours)
+
+### Step 9: Integrate with Incident Management
+
+#### 9a. Auto-Create Incidents
+For P0/P1 errors:
+- Create incident in incident management system (PagerDuty, Opsgenie)
+- Assign to on-call engineer
+- Track status (investigating, fixing, resolved)
+- Post-mortem required for all P0 incidents
+
+#### 9b. Incident Timeline
+```
+Incident #1247: business-loan-dscr calculation failures
+=======================================================
+
+Status: RESOLVED
+Severity: P1 (High)
+Duration: 2 hours 18 minutes
+Impact: ~400 users unable to calculate DSCR
+
+Timeline:
+18:45 UTC - Error detected (automated alert)
+18:47 UTC - On-call engineer acknowledged
+18:52 UTC - Root cause identified (division by zero)
+19:15 UTC - Hotfix developed and tested
+19:32 UTC - Hotfix deployed to production
+20:05 UTC - Verification: error rate returned to normal
+21:03 UTC - Incident closed
+
+Root Cause:
+Formula library did not handle edge case where annual expenses exactly equal annual revenue, resulting in division by zero when calculating DSCR.
+
+Fix:
+Added validation check: if (annualDebtService === 0) return error with user-friendly message.
+
+Prevention:
+- Added golden test scenario for this edge case
+- Updated input validation to warn when expenses ≥ revenue
+- Improved formula library error handling
+
+Post-Mortem: https://docs.smartprofit.com/postmortems/2025-11-18-dscr-calculation
+```
+
+### Step 10: Learn and Improve
+
+#### 10a. Error Pattern Recognition
+Use ML/heuristics to:
+- Identify recurring error patterns
+- Predict when errors likely to occur (time of day, traffic spikes)
+- Suggest preventive measures (input validation, better error handling)
+
+#### 10b. Proactive Improvements
+Based on error trends:
+- **If mobile errors high:** Prioritize mobile testing and compatibility
+- **If export errors high:** Optimize export generation, add timeouts
+- **If AI errors high:** Implement better retry logic, fallback messaging
+- **If specific calculator errors high:** Review formula library, add golden scenarios
+
+## Output
+
+### Real-Time Alert Example:
+```
+🚨 CRITICAL ERROR ALERT
+
+Calculator: business-loan-dscr
+Severity: P0 (CRITICAL)
+Error Rate: 52% (104 errors in last 5 minutes)
+
+Impact: Calculator non-functional for majority of users
+Blast Radius: 50%+ of active users affected
+
+Error: "Formula library function 'calculateDSCR' not found"
+
+Likely Cause: Deployment issue - formula library not loaded
+
+IMMEDIATE ACTION REQUIRED:
+1. Check if formula library deployed correctly
+2. Rollback deployment if necessary
+3. Verify formula library version matches calculator config
+
+Incident: INC-1248 created
+Assigned: @oncall-engineer
+Dashboard: https://dashboard.smartprofit.com/incidents/1248
+
+⏰ Response Time Target: 15 minutes
+```
+
+### Weekly Error Summary:
+```
+📊 Error Monitor Weekly Report (Nov 11-18, 2025)
+
+Overall Health: 🟢 HEALTHY
+Error Rate: 0.7% (target <1%) ✅
+Uptime: 99.4% (target >99%) ✅
+
+Errors This Week: 312 (down 8% from last week)
+
+Severity Breakdown:
+- P0 (Critical): 0 ✅
+- P1 (High): 2 (both resolved <24 hours) ✅
+- P2 (Medium): 47 (avg resolution time: 3.2 days)
+- P3 (Low): 263 (triaged to backlog)
+
+Top Issues Resolved:
+✅ business-loan-dscr division by zero (P1) - fixed
+✅ PDF export timeout for large scenarios (P2) - optimized
+✅ Safari iOS 16 UI crash (P2) - compatibility fix deployed
+
+Active Issues:
+🔧 sba-7a guarantee fee calculation (P1) - investigating
+🔧 AI service intermittent timeouts (P2) - monitoring external issue
+
+Action Items:
+- [ ] Add golden scenarios for edge cases (prevent future P1 errors)
+- [ ] Improve mobile error handling (reduce mobile error rate)
+- [ ] Review and update error documentation
+
+MTTR This Week:
+- P0: N/A (no P0 incidents)
+- P1: 3.5 hours (target <24 hours) ✅
+- P2: 2.8 days (target <7 days) ✅
+
+Full report: https://dashboard.smartprofit.com/errors/weekly/2025-W47
+```
+
+## Success Criteria
+- All errors captured and logged
+- P0/P1 errors alerted within 1 minute
+- Error trends identified and reported
+- Auto-triage for common errors working
+- MTTR meeting SLA targets
+- Weekly report generated automatically
+
+## Quality Checks
+- Alert noise is low (no alert fatigue)
+- Severity classification accurate (not over/under-alerting)
+- Error messages helpful to users (not technical jargon)
+- Dashboards provide actionable insights
+- Post-mortems completed for all P0 incidents
+
+## Usage Example
+```bash
+# Monitor errors in real-time
+claude-code "Use error-monitor-agent to start monitoring calculator errors"
+
+# Generate error report for date range
+claude-code "Use error-monitor-agent to generate error report for Nov 11-18 2025"
+
+# Investigate specific error pattern
+claude-code "Use error-monitor-agent to investigate division by zero errors in business-loan-dscr"
+
+# Check error trends
+claude-code "Use error-monitor-agent to analyze error trends and identify patterns"
+```
+
+## Dependencies
+- Section 1.6: SLA targets (for detecting SLA violations)
+- Section 7.2: Analytics events (error tracking)
+- Section 1.8.6: Security & Compliance Dashboard (error display)
+- Section 10.4: Support & Maintenance (bug triage process)
+- Error tracking service (Sentry, Rollbar, or similar)
+- Incident management system (PagerDuty, Opsgenie)
+
+---
+
+# Usage Analytics Agent
+
+## Purpose
+Track calculator usage patterns, user behavior, conversion funnels, and generate actionable insights to optimize product decisions and business growth.
+
+## Input
+- Analytics events from Section 7.2 (calculator_viewed, calculator_calculated, etc.)
+- User session data (tier, device, location)
+- Conversion data (Free → Pro upgrades, AI tier adoption)
+- Time range for analysis (daily, weekly, monthly)
+
+## Process
+
+### Step 1: Collect and Normalize Events
+
+#### 1a. Event Types Tracked (from Section 7.2)
+**Calculator Interaction Events:**
+- `calculator_viewed` - Calculator page loaded
+- `calculator_calculated` - User triggered calculation
+- `scenario_created` - New scenario created (Pro tier)
+- `scenario_compared` - Multiple scenarios compared
+- `input_changed` - User modified input field
+
+**Export Events:**
+- `export_requested` - User clicked export button
+- `export_generated` - Export successfully created
+- `export_downloaded` - User downloaded export file
+- `export_failed` - Export generation failed
+
+**Tier Gating Events:**
+- `upgrade_prompt_shown` - User hit tier gate (saw upgrade modal)
+- `upgrade_prompt_clicked` - User clicked "Upgrade" button
+- `upgrade_completed` - User completed payment
+
+**AI Events:**
+- `ai_narrative_requested` - User requested AI explanation
+- `ai_narrative_shown` - AI response displayed
+- `ai_narrative_helpful_yes` - User marked AI helpful
+- `ai_narrative_helpful_no` - User marked AI not helpful
+
+**Error Events:**
+- `calculation_error` - Calculation failed
+- `export_error` - Export generation failed
+- `ai_error` - AI request failed
+
+#### 1b. Event Data Structure
+```json
+{
+  "event_id": "evt_abc123",
+  "event_type": "calculator_calculated",
+  "timestamp": "2025-11-18T18:45:32Z",
+  "session_id": "sess_xyz789",
+  "user_id": "usr_anonymous_123" or "usr_abc456",
+  "calculator_slug": "business-loan-dscr",
+  "user_tier": "free",
+  "device_type": "desktop",
+  "browser": "Chrome 120",
+  "location": "US-CA",
+  "properties": {
+    "calculation_time_ms": 87,
+    "inputs_filled": 5,
+    "warnings_shown": 1
+  }
+}
+```
+
+### Step 2: Calculate Core Metrics
+
+#### 2a. Usage Metrics
+
+**Daily Active Users (DAU)**
+```
+DAU = Unique users who viewed at least one calculator in last 24 hours
+```
+
+**Weekly Active Users (WAU)**
+```
+WAU = Unique users who viewed at least one calculator in last 7 days
+```
+
+**Monthly Active Users (MAU)**
+```
+MAU = Unique users who viewed at least one calculator in last 30 days
+```
+
+**Stickiness Ratio**
+```
+Stickiness = DAU / MAU
+Target: >20% (indicates users return frequently)
+```
+
+**Session Duration**
+```
+Session Duration = Time from first event to last event in session
+Average Target: >3 minutes
+```
+
+**Calculations Per Session**
+```
+Calculations Per Session = Total calculations / Total sessions
+Target: >2 (indicates exploration and scenario testing)
+```
+
+#### 2b. Calculator Performance Metrics
+
+**Calculator Views**
+```
+Total views per calculator per time period
+Rank calculators by popularity
+```
+
+**Calculation Completion Rate**
+```
+Completion Rate = calculator_calculated events / calculator_viewed events
+Target: >60% (users who view actually use the calculator)
+```
+
+**Bounce Rate**
+```
+Bounce Rate = Sessions with only 1 page view / Total sessions
+Target: <40%
+```
+
+**Time to First Calculation**
+```
+Time to First Calculation = Time from calculator_viewed to calculator_calculated
+Target: <30 seconds (indicates intuitive UX)
+```
+
+**Repeat Usage Rate**
+```
+Repeat Usage = Users with >1 calculation / Total users
+Target: >40%
+```
+
+#### 2c. Export Metrics
+
+**Export Conversion Rate**
+```
+Export Rate = export_generated events / calculator_calculated events
+Target: >25% (Pro tier), >5% (Free tier with upgrade prompts)
+```
+
+**Export Format Preferences**
+```
+PDF: X%
+CSV: Y%
+Excel: Z%
+```
+
+**Export Success Rate**
+```
+Success Rate = export_generated / export_requested
+Target: >95%
+```
+
+### Step 3: Analyze Conversion Funnels
+
+#### 3a. Free → Pro Conversion Funnel
+
+**Funnel Steps:**
+```
+1. Calculator View (100% baseline)
+   ↓
+2. Calculation Complete (60% typical)
+   ↓
+3. Upgrade Prompt Shown (30% hit tier gate)
+   ↓
+4. Upgrade Prompt Clicked (40% of those who see it)
+   ↓
+5. Upgrade Page Visited (80% of clicks)
+   ↓
+6. Upgrade Completed (20% of visits)
+
+Overall Conversion: 100% → 0.6 → 0.3 → 0.4 → 0.8 → 0.2 = 2.3% Free → Pro
+```
+
+**Trigger Analysis:**
+Which tier gates drive most conversions?
+```
+Triggers by Conversion Rate:
+1. Multiple scenarios (Pro gate) - 8.2% convert
+2. DSCR calculation (Pro gate) - 5.4% convert
+3. Clean PDF export (Pro gate) - 4.1% convert
+4. CSV/Excel export (Pro gate) - 2.8% convert
+```
+
+#### 3b. Pro → AI Tier Conversion Funnel
+```
+1. Pro User Calculated (100% baseline)
+   ↓
+2. Saw "Explain this" Button (80%)
+   ↓
+3. Clicked AI Button (25%)
+   ↓
+4. AI Upgrade Prompt Shown (100% of clicks)
+   ↓
+5. AI Upgrade Completed (15% of prompts)
+
+Overall Conversion: 3% Pro → AI
+```
+
+#### 3c. Drop-off Analysis
+
+**Identify drop-off points:**
+```
+Biggest Drop-offs:
+1. Calculator View → Calculation: 40% abandon
+   - Reason: Unclear instructions? Too many inputs?
+   - Action: Simplify UI, add "Try Example" button
+
+2. Upgrade Prompt Clicked → Upgrade Completed: 80% abandon
+   - Reason: Pricing too high? Lack of trust?
+   - Action: A/B test pricing, add testimonials
+
+3. Export Requested → Export Downloaded: 15% abandon
+   - Reason: Export takes too long? Format not useful?
+   - Action: Optimize export speed, survey users
+```
+
+### Step 4: Segment Users for Insights
+
+#### 4a. User Segments
+
+**By Tier:**
+- Free users (90% of total)
+- Pro users (8% of total)
+- AI tier users (2% of total)
+- B2B customers (separate analysis)
+
+**By Engagement:**
+- Power users (>10 calculations/week)
+- Regular users (3-10 calculations/week)
+- Occasional users (1-2 calculations/week)
+- One-time users (never return)
+
+**By Calculator:**
+- Financing users (business loan, SBA calculators)
+- Cash flow users (runway, burn rate)
+- Profitability users (breakeven, margin)
+- Multi-category users (use 3+ categories)
+
+**By Device:**
+- Desktop users (70%)
+- Mobile users (25%)
+- Tablet users (5%)
+
+#### 4b. Cohort Analysis
+
+**Monthly Cohorts:**
+```
+Cohort: Nov 2025 (1,000 users acquired)
+Week 1 retention: 45% (450 users returned)
+Week 2 retention: 28% (280 users)
+Week 4 retention: 18% (180 users)
+Week 8 retention: 12% (120 users)
+```
+
+**Retention by Tier:**
+```
+Free tier retention (Week 4): 15%
+Pro tier retention (Week 4): 78%
+AI tier retention (Week 4): 82%
+
+Insight: Paying users 5x more likely to return
+```
+
+### Step 5: Calculate Business Metrics
+
+#### 5a. Revenue Metrics
+
+**Monthly Recurring Revenue (MRR)**
+```
+MRR = (Pro users × $19.99) + (AI users × $39.98)
+Example: (800 × $19.99) + (200 × $39.98) = $23,988/month
+```
+
+**Average Revenue Per User (ARPU)**
+```
+ARPU = Total MRR / Total Active Users
+Example: $23,988 / 10,000 = $2.40 per user per month
+```
+
+**Customer Lifetime Value (LTV)**
+```
+LTV = ARPU × Average Customer Lifespan (months) × Gross Margin
+Example: $2.40 × 18 months × 0.85 = $36.72
+```
+
+**Customer Acquisition Cost (CAC)**
+```
+CAC = Total Marketing Spend / New Customers Acquired
+Example: $5,000 / 250 = $20 per customer
+```
+
+**LTV:CAC Ratio**
+```
+LTV:CAC = $36.72 / $20 = 1.84
+Target: >3.0 (need to improve retention or reduce CAC)
+```
+
+#### 5b. Conversion Revenue
+
+**Revenue from Free → Pro Conversions**
+```
+Conversions This Month: 50
+Value: 50 × $19.99 × 12 months (assumed lifetime) = $11,994
+```
+
+**Revenue from AI Tier Upsells**
+```
+Conversions This Month: 12
+Value: 12 × $19.99 × 12 months = $2,879
+```
+
+### Step 6: Identify Top Calculators
+
+#### 6a. Calculator Ranking
+
+**By Views:**
+```
+1. Business Loan + DSCR: 12,500 views (32%)
+2. SBA 7(a) Analyzer: 8,200 views (21%)
+3. Cash Runway: 6,800 views (17%)
+4. Breakeven Analysis: 4,500 views (12%)
+5. Equipment Lease vs Buy: 3,200 views (8%)
+...
+```
+
+**By Conversions (Free → Pro):**
+```
+1. Business Loan + DSCR: 8.2% conversion rate (traffic magnet working!)
+2. Cash Runway: 6.4% conversion
+3. SBA 7(a): 5.1% conversion
+4. Equipment Lease: 4.8% conversion
+```
+
+**By Engagement (Calculations per User):**
+```
+1. Cash Runway: 3.8 calculations per user (high exploration)
+2. Breakeven Analysis: 3.2 calculations per user
+3. Business Loan: 2.6 calculations per user
+4. SBA 7(a): 1.9 calculations per user (more one-and-done)
+```
+
+#### 6b. Calculator Health Score
+```
+Health Score = (Completion Rate × 0.3) + (Repeat Usage × 0.3) + (Conversion Rate × 0.4)
+
+Example: Business Loan + DSCR
+- Completion Rate: 72% → 0.72 × 0.3 = 0.216
+- Repeat Usage: 45% → 0.45 × 0.3 = 0.135
+- Conversion Rate: 8.2% → 0.082 × 0.4 = 0.033
+Health Score: 0.384 = 38.4/100
+
+Interpretation:
+- 80-100: Excellent (optimize and scale)
+- 60-79: Good (maintain and improve)
+- 40-59: Fair (needs optimization)
+- 0-39: Poor (investigate or consider deprecating)
+```
+
+### Step 7: Track Feature Adoption
+
+#### 7a. Pro Feature Usage
+
+**Among Pro Users:**
+```
+Multiple Scenarios: 78% adoption (most use this feature)
+Clean PDF Exports: 92% adoption (nearly universal)
+CSV Exports: 34% adoption (niche use case)
+Scenario Comparison: 45% adoption (room for growth)
+```
+
+**Insight:** Scenario comparison at 45% means we need better education or UX improvements.
+
+#### 7b. AI Feature Usage
+
+**Among AI Tier Users:**
+```
+AI Explanations Used: 67% of AI tier users
+Average AI Requests per User: 8.2/month (under 50 cap)
+AI Helpfulness Rating: 4.2/5 stars
+Requests by Calculator:
+- Business Loan: 42%
+- Cash Runway: 28%
+- Valuation: 18%
+- Others: 12%
+```
+
+### Step 8: Generate Usage Dashboards
+
+#### 8a. Executive Dashboard (High-Level)
+Display in Section 1.8.3 Business Intelligence Dashboard:
+- **MAU trend** (growing, flat, declining?)
+- **MRR trend** (revenue growth)
+- **Conversion rate trend** (Free → Pro over time)
+- **Top 5 calculators** (by usage and revenue)
+- **Key metrics vs targets** (color-coded: green = meeting, yellow = at risk, red = missing)
+
+#### 8b. Product Dashboard (Detailed)
+- **Usage by calculator** (views, calculations, completion rate)
+- **Funnel analysis** (drop-off points)
+- **Feature adoption** (which Pro features used most?)
+- **Cohort retention curves** (by acquisition month)
+- **Device and browser breakdown**
+
+#### 8c. Marketing Dashboard
+Display in Section 1.8.4:
+- **Traffic sources** (organic, paid, referral, direct)
+- **Conversion by source** (which channels convert best?)
+- **CAC by channel**
+- **LTV:CAC by channel**
+
+### Step 9: Generate Automated Insights
+
+#### 9a. Anomaly Detection
+
+**Detect unusual patterns:**
+```
+🚨 Alert: Business Loan Calculator
+
+Usage dropped 35% in last 24 hours
+Normal: 500 views/day → Current: 325 views/day
+
+Possible causes:
+1. Technical issue? (check error logs)
+2. SEO ranking drop? (check Google Search Console)
+3. Competitor launched similar tool?
+4. Seasonal variation? (compare to same day last month)
+
+Action: Investigate immediately
+```
+
+#### 9b. Trend Insights
+
+**Identify trends:**
+```
+📈 Insight: Mobile Usage Growing
+
+Mobile usage increased 45% over last 3 months
+Now represents 30% of total traffic (up from 21%)
+
+However: Mobile conversion rate is only 2.1% vs 5.4% desktop
+
+Recommendation: Prioritize mobile UX optimization
+- Simplify mobile input forms
+- Optimize mobile export experience
+- A/B test mobile upgrade prompts
+```
+
+#### 9c. Opportunity Identification
+```
+💡 Opportunity: Untapped Calculator Potential
+
+"Equipment Lease vs Buy" calculator has:
+- High completion rate (78%)
+- High engagement (3.5 calculations/user)
+- But LOW conversion rate (2.1%)
+
+This suggests users love the calculator but aren't hitting tier gates.
+
+Recommendation: Add Pro features to this calculator
+- Scenario comparison
+- Multi-year analysis
+- Tax impact calculation
+Could increase conversion 2-3x
+```
+
+### Step 10: Generate Reports
+
+#### 10a. Daily Usage Report (Auto-Sent at 9am)
+```
+📊 SmartProfit Daily Usage Report - Nov 18, 2025
+
+Yesterday's Highlights:
+✅ DAU: 1,247 (up 5% from yesterday)
+✅ Calculations: 3,892 (up 8%)
+✅ New Pro Signups: 12 (MRR +$240/month)
+⚠️ Export errors: 23 (up from usual 8, investigate)
+
+Top Calculator: Business Loan + DSCR (427 uses)
+Top Traffic Source: Organic search (58%)
+
+Action Items:
+1. Investigate export error spike
+2. Review why SBA calculator usage down 12%
+
+Full dashboard: https://dashboard.smartprofit.com/usage
+```
+
+#### 10b. Weekly Usage Report
+```
+📈 SmartProfit Weekly Report (Nov 11-18, 2025)
+
+Overview:
+- WAU: 4,523 (up 3% from last week)
+- Total Calculations: 18,204 (up 7%)
+- New Users: 892
+- Returning Users: 3,631 (80% of WAU - healthy retention!)
+
+Conversion Funnel:
+- Free → Pro: 2.4% (target: 3%, needs improvement)
+- Pro → AI: 3.1% (target: 5%, needs improvement)
+
+Top Performers:
+1. Business Loan Calculator: 8.2% conversion (excellent!)
+2. Cash Runway Calculator: 6.4% conversion (strong)
+
+Needs Attention:
+1. Equipment Lease Calculator: 2.1% conversion (add Pro features)
+2. Mobile conversion: 2.1% vs 5.4% desktop (optimize mobile UX)
+
+New This Week:
+✨ Launched Invoice Factoring Calculator
+- 234 views in first 3 days
+- 62% completion rate (good start)
+- 1 Pro conversion so far
+
+Next Week Goals:
+- Increase Free → Pro conversion to 2.7%
+- Launch mobile UX improvements
+- Add Pro features to Equipment Lease calculator
+
+Full report: https://dashboard.smartprofit.com/weekly/2025-W47
+```
+
+#### 10c. Monthly Business Review
+```
+💼 SmartProfit Monthly Business Review - November 2025
+
+Financial Performance:
+- MRR: $24,200 (up 12% from Oct)
+- New MRR: $3,800
+- Churned MRR: $420
+- Net New MRR: $3,380 (healthy growth!)
+- LTV:CAC: 1.84 (target >3.0, need improvement)
+
+User Metrics:
+- MAU: 9,850 (up 8% from Oct)
+- DAU/MAU: 22% (target >20%, meeting goal!)
+- Free users: 8,860 (90%)
+- Pro users: 800 (8%)
+- AI users: 190 (2%)
+
+Product Performance:
+- 8 calculators live
+- Average 2.8 calculations per user
+- 72% calculation completion rate
+- 26% export rate (Pro users)
+
+Top Insights:
+1. Mobile traffic growing 45% but converting poorly - prioritize mobile optimization
+2. Equipment Lease calculator has engagement but no tier gates - add Pro features
+3. AI tier adoption slow (3.1% of Pro) - improve AI value communication
+
+Strategic Recommendations:
+1. Launch mobile optimization sprint (Dec)
+2. Add Pro features to high-engagement calculators
+3. A/B test Free → Pro conversion (pricing, messaging, features)
+4. Launch 2 new calculators in Dec (Equipment Financing, 13-week Cash Flow)
+
+Full business review: https://dashboard.smartprofit.com/monthly/2025-11
+```
+
+## Output
+
+### Real-Time Dashboard Data:
+```json
+{
+  "timestamp": "2025-11-18T18:45:32Z",
+  "current_metrics": {
+    "users_online_now": 47,
+    "dau": 1247,
+    "calculations_today": 3892,
+    "conversions_today": 12,
+    "mrr": 24200
+  },
+  "trends": {
+    "dau_change_7d": "+5%",
+    "calculations_change_7d": "+8%",
+    "conversion_rate_change_7d": "-0.2%",
+    "mrr_change_30d": "+12%"
+  }
+}
+```
+
+### Success Message:
+```
+✅ Usage Analytics Report Generated
+
+Time Period: Nov 11-18, 2025
+Report Type: Weekly
+
+Key Metrics:
+- WAU: 4,523 (up 3%)
+- Calculations: 18,204 (up 7%)
+- Free → Pro Conversion: 2.4%
+- MRR: $24,200 (up 12%)
+
+Top Calculator: Business Loan + DSCR
+- 3,427 views
+- 8.2% conversion rate
+- $1,968 MRR attributed
+
+Insights Generated: 5
+- 2 opportunities identified
+- 1 anomaly detected
+- 2 trends highlighted
+
+Reports:
+✓ Executive dashboard updated
+✓ Product dashboard updated
+✓ Weekly email report sent
+✓ Business review generated
+
+Next Report: Nov 25, 2025 (weekly)
+Full analytics: https://dashboard.smartprofit.com/usage
+```
+
+## Success Criteria
+- All events tracked and logged
+- Metrics calculated accurately
+- Dashboards update in real-time
+- Reports generated and sent on schedule
+- Insights actionable and prioritized
+- No PII collected or exposed
+
+## Quality Checks
+- Event tracking fires correctly (test in staging)
+- Conversion funnels match reality (spot-check manual calculations)
+- Cohort analysis accurate (verify against database queries)
+- Dashboards performant (load <2 seconds)
+- Reports readable and actionable
+
+## Usage Example
+```bash
+# Generate usage report for date range
+claude-code "Use usage-analytics-agent to generate usage report for Nov 11-18 2025"
+
+# Analyze specific calculator performance
+claude-code "Use usage-analytics-agent to analyze business-loan-dscr calculator performance"
+
+# Identify conversion opportunities
+claude-code "Use usage-analytics-agent to identify calculators with conversion opportunities"
+
+# Generate cohort retention analysis
+claude-code "Use usage-analytics-agent to analyze cohort retention for Nov 2025 cohort"
+```
+
+## Dependencies
+- Section 7.2: Analytics event taxonomy (all events tracked)
+- Section 7.3: Event tracking implementation
+- Section 1.8.3: Business Intelligence Dashboard (display metrics)
+- Section 1.8.4: Marketing Dashboard (traffic and conversion)
+- Section 6: Tier gating rules (for conversion funnel)
+- Analytics platform (Mixpanel, Amplitude, or similar)
+
+---
+
+# Performance Monitor Agent
+
+## Purpose
+Monitor calculator performance metrics in real-time, detect SLA violations, identify optimization opportunities, and ensure system meets performance targets from Section 1.6.
+
+## Input
+- Performance metrics (latency, throughput, resource usage)
+- SLA targets from Section 1.6
+- Calculator slug (specific calculator or all)
+- Time range for analysis
+
+## Process
+
+### Step 1: Define Performance SLAs (from Section 1.6)
+
+#### 1a. Response Time SLAs
+
+**Calculation Engine:**
+```
+Target: p95 latency < 150ms
+Warning: p95 > 120ms (80% of target)
+Critical: p95 > 150ms (SLA violation)
+```
+
+**Export Generation:**
+```
+Target: p95 latency < 3 seconds
+Warning: p95 > 2.5s (83% of target)
+Critical: p95 > 3s (SLA violation)
+```
+
+**AI Requests:**
+```
+Target: p95 latency < 8 seconds (or timeout gracefully)
+Warning: p95 > 6s (75% of target)
+Critical: p95 > 8s or >10% timeout rate
+```
+
+**Page Load Time:**
+```
+Target: p95 < 2 seconds (full page load)
+Warning: p95 > 1.6s (80% of target)
+Critical: p95 > 2s (SLA violation)
+```
+
+#### 1b. Availability SLAs
+
+**Uptime Target:**
+```
+Target: 99.0% monthly uptime
+Warning: <99.5% (approaching target)
+Critical: <99.0% (SLA violation)
+
+Allowed downtime:
+- Monthly: 7.2 hours (99.0%)
+- Weekly: 1.68 hours
+- Daily: 14.4 minutes
+```
+
+**Error Rate:**
+```
+Target: <1% error rate
+Warning: >0.5% error rate
+Critical: >1% error rate (SLA violation)
+```
+
+### Step 2: Collect Performance Metrics
+
+#### 2a. Real-Time Metrics Collection
+
+**Application Performance Monitoring (APM):**
+Monitor with tools like New Relic, Datadog, or custom instrumentation:
+```javascript
+// Example metric capture
+const startTime = performance.now();
+
+// Execute calculation
+const result = await calculateBusinessLoan(inputs);
+
+const endTime = performance.now();
+const duration = endTime - startTime;
+
+// Log metric
+trackMetric({
+  metric_type: 'calculation_latency',
+  calculator_slug: 'business-loan-dscr',
+  duration_ms: duration,
+  p50: calculatePercentile(durations, 50),
+  p95: calculatePercentile(durations, 95),
+  p99: calculatePercentile(durations, 99)
+});
+```
+
+#### 2b. Metrics to Track
+
+**Latency Metrics:**
+- Calculation time (input → output)
+- Export generation time
+- AI request time
+- Page load time (TTFB, FCP, LCP)
+- API response time
+
+**Throughput Metrics:**
+- Requests per second (RPS)
+- Calculations per minute
+- Exports per hour
+- Concurrent users
+
+**Resource Metrics:**
+- CPU utilization (%)
+- Memory usage (MB)
+- Database query time
+- Cache hit rate (%)
+- CDN cache hit rate (%)
+
+**Web Vitals (Google Core Web Vitals):**
+- Largest Contentful Paint (LCP): <2.5s
+- First Input Delay (FID): <100ms
+- Cumulative Layout Shift (CLS): <0.1
+
+### Step 3: Monitor SLA Compliance
+
+#### 3a. Continuous SLA Monitoring
+
+**Every 5 Minutes:**
+Check current p95 latency for:
+- All calculators (aggregate)
+- Each calculator individually
+- Export service
+- AI service
+
+**Alert if:**
+```
+If p95 > Warning Threshold for 10 minutes → Warning alert
+If p95 > Critical Threshold for 5 minutes → Critical alert
+```
+
+#### 3b. SLA Compliance Dashboard
+```
+SLA Compliance Report - Nov 18, 2025 18:45 UTC
+=====================================================
+
+Calculation Engine:
+✅ p95 latency: 92ms (target <150ms)
+✅ p99 latency: 128ms
+✅ Error rate: 0.3% (target <1%)
+Status: HEALTHY
+
+Export Service:
+⚠️ p95 latency: 2.8s (target <3s, warning at >2.5s)
+✅ p99 latency: 3.4s
+✅ Success rate: 96.2% (target >95%)
+Status: WARNING - Approaching SLA limit
+
+AI Service:
+✅ p95 latency: 3.2s (target <8s)
+⚠️ Timeout rate: 8% (target <10%)
+✅ Success rate: 92%
+Status: WARNING - Timeouts elevated
+
+Page Load:
+✅ p95 LCP: 1.6s (target <2.5s)
+✅ p95 FID: 42ms (target <100ms)
+✅ CLS: 0.05 (target <0.1)
+Status: HEALTHY
+
+Overall System Health: 🟡 FAIR
+- 2 services in warning state
+- 0 services in critical state
+- No SLA violations detected
+```
+
+### Step 4: Identify Performance Bottlenecks
+
+#### 4a. Latency Breakdown Analysis
+
+**For slow calculations, analyze:**
+```
+Total Calculation Time: 287ms (exceeds 150ms target)
+
+Breakdown:
+1. Input validation: 8ms (3%)
+2. Formula library calls:
+   - calculateMonthlyPayment(): 45ms (16%)
+   - calculateDSCR(): 182ms (63%) ← BOTTLENECK
+   - Other formulas: 12ms (4%)
+3. Output formatting: 18ms (6%)
+4. Warning evaluation: 22ms (8%)
+
+Root Cause: DSCR calculation inefficient
+- Performing redundant calculations
+- Not using cached values
+
+Recommendation: Optimize DSCR formula
+- Cache intermediate results
+- Simplify calculation logic
+- Expected improvement: 182ms → 60ms
+```
+
+#### 4b. Resource Utilization Analysis
+```
+Resource Utilization - Last Hour
+================================
+
+CPU Usage:
+- Average: 42%
+- Peak: 78% (during export generation spike)
+- Headroom: 22% (healthy)
+
+Memory Usage:
+- Average: 1.2 GB / 4 GB (30%)
+- Peak: 2.1 GB (52%)
+- Memory leaks detected: None
+
+Database:
+- Average query time: 12ms
+- Slow queries (>100ms): 3 detected
+  - Scenario retrieval: 145ms ← INVESTIGATE
+  - User lookup: 8ms (fast)
+  - Export metadata: 122ms ← INVESTIGATE
+
+Cache Performance:
+- Hit rate: 87% (target >80%)
+- Miss rate: 13%
+- Eviction rate: 2%
+
+Recommendations:
+1. Add index to scenarios table (improve retrieval)
+2. Increase cache TTL for export metadata
+3. Monitor CPU during peak hours (may need scaling)
+```
+
+### Step 5: Track Performance by Calculator
+
+#### 5a. Per-Calculator Performance
+```
+Calculator Performance Ranking (p95 latency)
+============================================
+
+Fast (< 100ms):
+✅ Cash Runway Calculator: 68ms
+✅ Breakeven Analysis: 74ms
+✅ Simple Valuation: 82ms
+
+Acceptable (100-150ms):
+🟢 Business Loan + DSCR: 115ms
+🟢 SBA 7(a) Analyzer: 128ms
+🟢 Line of Credit: 142ms
+
+Warning (>150ms):
+⚠️ Equipment Lease vs Buy: 187ms
+⚠️ Invoice Factoring: 203ms
+
+Recommendations:
+- Optimize Equipment Lease calculator (NPV calculations slow)
+- Optimize Invoice Factoring (effective APR calculation inefficient)
+```
+
+#### 5b. Performance Trends Over Time
+```
+Business Loan + DSCR Calculator - 7-Day Trend
+==============================================
+
+Nov 12: p95 = 98ms ✅
+Nov 13: p95 = 102ms ✅
+Nov 14: p95 = 156ms ⚠️ (deployed v2.1.0 - regression?)
+Nov 15: p95 = 148ms ⚠️
+Nov 16: p95 = 122ms 🟢 (optimization deployed)
+Nov 17: p95 = 115ms 🟢
+Nov 18: p95 = 115ms 🟢
+
+Insight: v2.1.0 deployment caused 50% latency increase
+- Root cause identified: New covenant headroom metric added inefficient calculation
+- Fix deployed Nov 16: Optimized calculation logic
+- Performance now stable at acceptable level
+```
+
+### Step 6: Monitor External Dependencies
+
+#### 6a. Third-Party Service Performance
+
+**AI Provider (Anthropic API):**
+```
+Anthropic API Performance - Last 24 Hours
+==========================================
+
+Latency:
+- p50: 1.8s
+- p95: 4.2s (target <8s) ✅
+- p99: 9.1s (occasional slow requests)
+
+Success Rate: 94.2%
+Timeout Rate: 5.8% (acceptable)
+
+Status Codes:
+- 200 OK: 94.2%
+- 429 Rate Limit: 2.1% (expected during spikes)
+- 500 Server Error: 1.8%
+- 503 Service Unavailable: 1.1%
+- Timeouts: 0.8%
+
+Recommendation: Current performance acceptable
+- Monitor 429 rate limits (consider request queuing)
+- Implement retry logic for 5xx errors
+```
+
+**CDN Performance (CloudFlare):**
+```
+CDN Cache Performance
+=====================
+
+Hit Rate: 92% (excellent)
+Miss Rate: 8%
+Average Response Time: 45ms
+
+Geographic Distribution:
+- US-East: 38ms (best)
+- US-West: 52ms
+- Europe: 78ms
+- Asia: 145ms (slowest, investigate)
+
+Recommendation:
+- Excellent overall performance
+- Consider adding Asia CDN edge locations for better latency
+```
+
+### Step 7: Detect Performance Anomalies
+
+#### 7a. Anomaly Detection
+
+**Statistical Anomaly Detection:**
+```
+🚨 Performance Anomaly Detected
+
+Calculator: business-loan-dscr
+Metric: Calculation latency
+Current p95: 324ms (vs normal 115ms)
+Deviation: +181% (2.8 standard deviations)
+Duration: 23 minutes
+Impact: 847 slow calculations
+
+Possible Causes:
+1. Database slowdown? (check DB metrics)
+2. Formula library issue? (check error logs)
+3. Increased traffic? (check concurrent users)
+4. Infrastructure issue? (check CPU/memory)
+
+Action Taken:
+- Alerted on-call engineer
+- Monitoring closely
+- Prepared rollback if needed
+
+Status: INVESTIGATING
+```
+
+#### 7b. Pattern Recognition
+```
+📊 Performance Pattern Identified
+
+Pattern: Daily latency spike at 9-10am EST
+Observation: p95 latency increases 40% during this window
+Affected: All calculators
+Cause: Traffic spike (business hours starting on East Coast)
+
+Current Handling: No issues, within SLA
+Recommendation: Pre-emptive scaling
+- Add auto-scaling trigger at 8:30am EST
+- Scale up 2 additional instances
+- Expected improvement: Reduce spike from 40% to 15%
+```
+
+### Step 8: Generate Performance Reports
+
+#### 8a. Hourly Performance Summary (Auto-Generated)
+```
+⏱️ Hourly Performance Summary - 18:00-19:00 UTC
+================================================
+
+Overall: ✅ HEALTHY
+
+Calculation Engine:
+- p95 latency: 98ms (target <150ms) ✅
+- Throughput: 1,247 calculations
+- Error rate: 0.2%
+
+Export Service:
+- p95 latency: 2.1s (target <3s) ✅
+- Exports generated: 312
+- Success rate: 97.4%
+
+AI Service:
+- p95 latency: 3.8s (target <8s) ✅
+- Requests: 89
+- Success rate: 93.3%
+
+Page Load:
+- p95 LCP: 1.4s ✅
+- p95 FID: 38ms ✅
+- Traffic: 2,134 page views
+
+Top Performers:
+🏆 Cash Runway: 62ms (fastest)
+🏆 Breakeven: 71ms
+
+Needs Attention:
+⚠️ Equipment Lease: 192ms (slow, investigate)
+
+Next Report: 19:00-20:00 UTC
+```
+
+#### 8b. Daily Performance Report
+```
+📈 Daily Performance Report - Nov 18, 2025
+===========================================
+
+SLA Compliance: ✅ 100%
+- All metrics within target
+- Zero SLA violations
+- System uptime: 100%
+
+Key Metrics:
+- Total calculations: 18,204
+- Average p95 latency: 105ms (target <150ms)
+- Average export time: 2.3s (target <3s)
+- Error rate: 0.4% (target <1%)
+
+Performance Highlights:
+✨ Calculation latency improved 12% vs yesterday
+✨ Export success rate 97.8% (up from 96.1%)
+⚠️ AI timeout rate increased to 7.2% (monitor)
+
+Slowest Hour: 9-10am EST (expected traffic spike)
+Fastest Hour: 2-3am EST (low traffic)
+
+Optimization Opportunities:
+1. Equipment Lease calculator: 198ms avg (optimize NPV)
+2. Invoice Factoring calculator: 215ms avg (optimize APR)
+3. Database slow queries: 3 queries >100ms (add indexes)
+
+Actions Taken Today:
+✅ Deployed optimization to Business Loan calculator
+✅ Increased cache TTL for formula library
+✅ Added database index for scenario retrieval
+
+Tomorrow's Goals:
+- Maintain p95 < 150ms for all calculators
+- Reduce AI timeout rate below 5%
+- Deploy optimization for Equipment Lease calculator
+```
+
+#### 8c. Monthly Performance Review
+```
+📊 Monthly Performance Review - November 2025
+==============================================
+
+Executive Summary:
+🎯 Overall SLA Compliance: 99.8% (target: 99.0%)
+✅ All performance targets met or exceeded
+🚀 Average latency improved 18% vs October
+
+Detailed Metrics:
+
+Availability:
+- Uptime: 99.92% (target 99.0%) ✅
+- Total downtime: 5.8 hours allowed vs 0.6 hours actual
+- Incidents: 1 minor (resolved in 45 minutes)
+
+Latency Performance:
+- Calculation p95: 108ms average (target <150ms) ✅
+- Export p95: 2.4s average (target <3s) ✅
+- AI p95: 4.1s average (target <8s) ✅
+- Page load p95: 1.6s average (target <2s) ✅
+
+Throughput:
+- Total calculations: 547,000 (up 22% vs Oct)
+- Peak RPS: 47 (handled smoothly)
+- Concurrent users peak: 312
+
+Optimizations Deployed:
+✅ Nov 4: Optimized formula library (15% latency reduction)
+✅ Nov 12: Added database caching (improved export speed 20%)
+✅ Nov 16: Fixed DSCR calculation regression
+✅ Nov 23: Implemented CDN for static assets
+
+Performance Improvements:
+- Calculation latency: 128ms → 108ms (16% faster)
+- Export generation: 2.9s → 2.4s (17% faster)
+- Page load time: 1.9s → 1.6s (16% faster)
+
+Known Issues:
+⚠️ Equipment Lease calculator slow (avg 198ms, target <150ms)
+- Root cause: NPV calculation inefficient
+- Fix planned: December optimization sprint
+
+🔮 AI timeout rate elevated (6.8% average)
+- Root cause: External (Anthropic API intermittent latency)
+- Mitigation: Implemented retry logic, monitoring
+
+Trends:
+📈 Traffic growing 8% month-over-month
+📈 Mobile traffic increasing (now 28% of total)
+📱 Mobile performance 12% slower than desktop (investigate)
+
+December Goals:
+1. Optimize Equipment Lease calculator (<150ms)
+2. Improve mobile performance (reduce gap to 5%)
+3. Reduce AI timeout rate below 5%
+4. Maintain 99.0%+ uptime
+5. Prepare for 2x traffic scaling (holiday season)
+```
+
+### Step 9: Auto-Optimize Performance
+
+#### 9a. Automated Optimizations
+
+**Cache Warming:**
+```
+Detected: Formula library cache cold after deployment
+Action: Pre-warm cache with common calculations
+Result: First-request latency reduced from 450ms to 120ms
+```
+
+**Auto-Scaling:**
+```
+Detected: CPU utilization >75% for 5 minutes
+Action: Scale from 2 to 4 instances
+Result: CPU utilization reduced to 42%
+Wait for traffic to decrease, then scale down
+```
+
+**Query Optimization:**
+```
+Detected: Slow query (scenarios table, 145ms)
+Action: Suggested adding index on user_id + calculator_slug
+Result: Query time reduced to 8ms (94% improvement)
+```
+
+#### 9b. Proactive Recommendations
+```
+💡 Performance Optimization Recommendations
+
+Based on analysis of last 30 days:
+
+High Priority:
+1. Add database index: scenarios(user_id, calculator_slug)
+   - Impact: 94% faster scenario retrieval
+   - Effort: 5 minutes
+   - Risk: Low
+
+2. Optimize Equipment Lease NPV calculation
+   - Impact: 40% faster calculation (198ms → 120ms)
+   - Effort: 4 hours development
+   - Risk: Medium (formula change, needs thorough testing)
+
+3. Implement result caching for repeated calculations
+   - Impact: 80% faster for cached results
+   - Effort: 8 hours development
+   - Risk: Low
+
+Medium Priority:
+4. Upgrade to HTTP/2 for API endpoints
+   - Impact: 15-20% faster page loads
+   - Effort: 2 hours infrastructure
+   - Risk: Low
+
+5. Lazy-load AI explanation feature
+   - Impact: 10% faster initial page load
+   - Effort: 3 hours development
+   - Risk: Low
+
+Low Priority:
+6. Compress JSON API responses
+   - Impact: 5% faster API calls
+   - Effort: 1 hour
+   - Risk: Very low
+```
+
+### Step 10: Alert on Performance Issues
+
+#### 10a. Alerting Rules
+
+**Critical Alerts (Page Immediately):**
+```
+- p95 latency > 150ms for 5 consecutive minutes
+- Error rate > 5% for any 5-minute window
+- Uptime < 99.0% (SLA violation)
+- All calculations failing (100% error rate)
+```
+
+**Warning Alerts (Slack Notification):**
+```
+- p95 latency > 120ms for 10 consecutive minutes
+- Error rate > 0.5% for 15 minutes
+- Export success rate < 95%
+- AI timeout rate > 10%
+```
+
+**Info Alerts (Daily Digest):**
+```
+- Performance optimization opportunities identified
+- Slow queries detected
+- Cache hit rate below 80%
+```
+
+#### 10b. Alert Message Example
+```
+🚨 CRITICAL PERFORMANCE ALERT
+
+Metric: Calculation Latency (p95)
+Current: 187ms (target <150ms)
+Duration: 8 minutes
+Calculator: business-loan-dscr
+
+Impact: SLA VIOLATION
+Affected Users: ~200 (estimated)
+
+Trend: ⬆️ Increasing (was 165ms 5 min ago)
+
+Dashboard: https://dashboard.smartprofit.com/performance
+Logs: https://logs.smartprofit.com/search?calculator=business-loan-dscr
+
+Recommended Actions:
+1. Check error logs for calculation failures
+2. Verify database performance (slow queries?)
+3. Check if recent deployment caused regression
+4. Consider rollback if issue persists
+
+Assigned: @oncall-engineer
+Incident: INC-1249 created automatically
+```
+
+## Output
+
+### Real-Time Performance Dashboard:
+```json
+{
+  "timestamp": "2025-11-18T19:00:00Z",
+  "sla_compliance": {
+    "calculation_latency": {
+      "p95_ms": 105,
+      "target_ms": 150,
+      "status": "healthy",
+      "compliance_percent": 70
+    },
+    "export_latency": {
+      "p95_ms": 2400,
+      "target_ms": 3000,
+      "status": "healthy",
+      "compliance_percent": 80
+    },
+    "uptime": {
+      "current_percent": 99.92,
+      "target_percent": 99.0,
+      "status": "healthy"
+    }
+  },
+  "current_metrics": {
+    "requests_per_second": 8.2,
+    "concurrent_users": 47,
+    "cpu_percent": 42,
+    "memory_mb": 1247
+  }
+}
+```
+
+### Success Message:
+```
+✅ Performance Monitoring Report Generated
+
+Time Period: Nov 18, 2025 (Daily)
+SLA Compliance: 100% ✅
+
+Performance Summary:
+- Calculation p95: 105ms (target <150ms) ✅
+- Export p95: 2.4s (target <3s) ✅
+- AI p95: 4.1s (target <8s) ✅
+- Error rate: 0.4% (target <1%) ✅
+- Uptime: 100%
+
+Improvements vs Yesterday:
+- Calculation latency: 12% faster
+- Export success rate: +1.7%
+- Page load time: 8% faster
+
+Issues Detected: 2
+- Equipment Lease calculator slow (198ms, needs optimization)
+- AI timeout rate elevated (7.2%, monitoring)
+
+Optimizations Deployed: 1
+- Business Loan calculator optimization (115ms → 92ms)
+
+Next Actions:
+- Optimize Equipment Lease NPV calculation
+- Add database index for scenario retrieval
+- Monitor AI service performance
+
+Full dashboard: https://dashboard.smartprofit.com/performance
+```
+
+## Success Criteria
+- All SLA metrics tracked in real-time
+- Alerts fire when thresholds exceeded
+- Performance trends identified
+- Optimization recommendations actionable
+- Reports generated automatically
+- Zero false positives on critical alerts
+
+## Quality Checks
+- Metrics accurate (spot-check against logs)
+- Alerts appropriate (not too noisy, not too quiet)
+- Dashboards load quickly (<2s)
+- Recommendations practical and prioritized
+- Historical data retained (90 days minimum)
+
+## Usage Example
+```bash
+# Generate performance report
+claude-code "Use performance-monitor-agent to generate daily performance report for Nov 18 2025"
+
+# Analyze specific calculator performance
+claude-code "Use performance-monitor-agent to analyze business-loan-dscr calculator performance"
+
+# Identify optimization opportunities
+claude-code "Use performance-monitor-agent to identify performance optimization opportunities"
+
+# Check SLA compliance
+claude-code "Use performance-monitor-agent to check SLA compliance for last 7 days"
+```
+
+## Dependencies
+- Section 1.6: SLA targets and quality goals
+- Section 7.3: Performance monitoring implementation
+- Section 1.8.6: Security & Compliance Dashboard (performance display)
+- Error Monitor Agent: for correlating errors with performance
+- APM tool (New Relic, Datadog, or similar)
 
 ---
 
